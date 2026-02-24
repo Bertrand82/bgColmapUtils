@@ -3,7 +3,7 @@ set -euo pipefail
 
 
 echo "========================================"
-echo " COLMAP - feature_extractor v bg 01"
+echo " COLMAP - feature_extractor v bg 02"
 echo "========================================"
 echo
 source ./bgInitConfig.sh
