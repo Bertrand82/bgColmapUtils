@@ -22,11 +22,12 @@ docker run --rm \
   -v "${OUTPUT_DIR}:/output" \
   -v "${IMAGES_DIR}:/images" \
   colmap/colmap \
-  colmap feature_extractor \
+   colmap feature_extractor \
     --database_path /output/database.db \
     --image_path /images \
     --ImageReader.single_camera 1 \
     --ImageReader.camera_model SIMPLE_RADIAL \
-    --FeatureExtraction.use_gpu 0 \ 
-    --FeatureExtraction.num_threads	1 \
-    --log_level 2
+    --FeatureExtraction.use_gpu 0 \
+    --FeatureExtraction.num_threads 1 \
+    --SiftExtraction.num_threads 1 \
+    --log_level 0
