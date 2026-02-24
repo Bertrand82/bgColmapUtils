@@ -27,5 +27,6 @@ docker run --rm \
     --image_path /images \
     --ImageReader.single_camera 1 \
     --ImageReader.camera_model SIMPLE_RADIAL \
-    --FeatureExtraction.use_gpu 0 \    
+    --FeatureExtraction.use_gpu 0 \ 
+    --FeatureExtraction.num_threads	1 \
     --log_level 2
