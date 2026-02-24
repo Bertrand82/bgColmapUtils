@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+
 echo "========================================"
 echo " COLMAP - feature_extractor v bg 01"
 echo "========================================"
 echo
-
+source ./bgInitConfig.sh
 echo "IMAGES_DIR: $IMAGES_DIR"
 NB_IMAGES=$(find "$IMAGES_DIR" -maxdepth 1 -type f | wc -l)
 echo "Image count: $NB_IMAGES"
