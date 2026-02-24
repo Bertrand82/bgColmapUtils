@@ -6,7 +6,7 @@ echo "COLMAP -colmap model_analyzer "
 echo "========================================"
 echo
 
-
+source ./bgInitConfig.sh
 
 
 
