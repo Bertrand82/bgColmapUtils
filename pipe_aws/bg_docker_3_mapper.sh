@@ -14,12 +14,14 @@ docker run --rm \
   --memory="12g" \
   --memory-swap="16g" \
   --shm-size="4g" \
-  -v "${OUTPUT_DIR}:/data" \
+  -v "${OUTPUT_DIR}:/output" \
+  -v "${IMAGES_DIR}:/images" \
+
   colmap/colmap \
   colmap mapper \
-    --database_path /data/database.db \
-    --image_path /data/images \
-    --output_path /data/sparse
+    --database_path /output/database.db \
+    --image_path /images \
+    --output_path /output/sparse
 
 echo
 echo "========================================"
