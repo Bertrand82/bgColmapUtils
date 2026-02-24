@@ -5,9 +5,9 @@ echo "========================================"
 echo "COLMAP - Reconstruction 3D optimisee"
 echo "========================================"
 echo
-
+source ./bgInitConfig.sh
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
-
+echo process only sparse/0 TODO process all
 
 docker run --rm \
   -v "${OUTPUT_DIR}:/data" \
