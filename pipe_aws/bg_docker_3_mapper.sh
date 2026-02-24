@@ -16,7 +16,6 @@ docker run --rm \
   --shm-size="4g" \
   -v "${OUTPUT_DIR}:/output" \
   -v "${IMAGES_DIR}:/images" \
-
   colmap/colmap \
   colmap mapper \
     --database_path /output/database.db \
@@ -25,5 +24,5 @@ docker run --rm \
 
 echo
 echo "========================================"
-echo "Traitement termine colmap mapper
+echo "Traitement termine colmap mapper "
 echo "========================================"
