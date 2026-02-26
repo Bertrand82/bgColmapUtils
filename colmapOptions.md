@@ -7,11 +7,5 @@
 - `colmap transitive_matcher`: Completes/extends matches by transitivity (typically used as a complement).
 - `colmap image_retrieval` + matching: Use retrieval first, then run matching (depending on COLMAP version/workflow).
 
-## CLI Matchers Available in COLMAP
-In COLMAP, the “classic” command-line matchers are generally:
 
-- `colmap exhaustive_matcher`: Matches all image pairs (expensive, **O(N²)**).
-- `colmap sequential_matcher`: Matches mostly neighboring images in a sequence (video / ordered acquisition).
-- `colmap spatial_matcher`: Matches images that are close in space (useful with GPS/priors).
-- `colmap vocab_tree_matcher`: Matching via a visual vocabulary (scalable; “retrieval” then matching).
-- `colmap transitive_matcher`: Adds matches by transitivity from existing matches (usually as a complement, not used alone).
+Spatial matcher is the best since  we have access to the XYZ-location of each image.
