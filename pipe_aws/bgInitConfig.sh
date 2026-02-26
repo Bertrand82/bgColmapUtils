@@ -17,13 +17,13 @@ export NVIDIA_USE_GPU=0
 if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
   NVIDIA_USE_GPU=1
   echo "NVIDIA_GPU=YES" >> "$LOG"
-  nvidia-smi -L | sed 's/^/NVIDIA_GPU_INFO: /' >> "$LOG"
+  nvidia-smi -L | sed 's/^/NVIDIA_GPU_INFO: /'
 else
   echo "NVIDIA_GPU=NO" >> "$LOG"
 fi
 
 export NVIDIA_USE_GPU
-echo "NVIDIA_USE_GPU=$NVIDIA_USE_GPU" >> "$LOG"
+echo "NVIDIA_USE_GPU=$NVIDIA_USE_GPU" 
 echo " OUTPUT_DIR     : $OUTPUT_DIR  "
 echo " IMAGES_DIR     : $IMAGES_DIR "
 echo " COLMAP_MATCHER : $COLMAP_MATCHER"
