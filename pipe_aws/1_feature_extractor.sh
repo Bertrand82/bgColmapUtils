@@ -16,17 +16,9 @@ NB_THREADS=$(nproc)
 RAM_AVAIL_MB=$(free -m | awk '/Mem:/ {print $7}')
 
 echo "MACHINE: CPU=$CPU_MODEL | THREADS=$NB_THREADS | RAM_AVAIL_MB=${RAM_AVAIL_MB}MB" >> $LOG
-if command -v nvidia-smi >/dev/null 2>&1; then
-  if nvidia-smi -L >/dev/null 2>&1; then
-    echo " NVIDIA_GPU=YES" >> $LOG
-    nvidia-smi -L | sed 's/^/NVIDIA_GPU_INFO: /' >> $LOG
-  else
-    echo "- NVIDIA_GPU=NO (nvidia-smi present but no GPU detected)" >> $LOG
-  fi
-else
-  echo "- NVIDIA_GPU=NO (nvidia-smi not found)" >> $LOG
-fi
+echo "NVIDIA_USE_GPU : $NVIDIA_USE_GPU" >> "$LOG"
 
+export NVIDIA_USE_GPU
 echo "IMAGES_DIR: $IMAGES_DIR"
 
 NB_IMAGES=$(find "$IMAGES_DIR" -maxdepth 1 -type f | wc -l)

@@ -12,7 +12,19 @@ export COLMAP_MATCHER="sequential_matcher"
 export LOG="$OUTPUT_DIR/log.txt"
 export DATABASE_NAME="database.db"
 export DATABASE_PATH="$OUTPUT_DIR/$DATABASE_NAME"
+export NVIDIA_USE_GPU=0
+
+if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
+  NVIDIA_USE_GPU=1
+  echo "NVIDIA_GPU=YES" >> "$LOG"
+  nvidia-smi -L | sed 's/^/NVIDIA_GPU_INFO: /' >> "$LOG"
+else
+  echo "NVIDIA_GPU=NO" >> "$LOG"
+fi
+
+export NVIDIA_USE_GPU
+echo "NVIDIA_USE_GPU=$NVIDIA_USE_GPU" >> "$LOG"
 echo " OUTPUT_DIR     : $OUTPUT_DIR  "
 echo " IMAGES_DIR     : $IMAGES_DIR "
 echo " COLMAP_MATCHER : $COLMAP_MATCHER"
-
+echo " NVIDIA_USE_GPU : $NVIDIA_USE_GPU"
