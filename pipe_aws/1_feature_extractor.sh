@@ -53,11 +53,11 @@ docker run --rm \
     --FeatureExtraction.num_threads 1 \
     --log_level 0
 
-echo "Fin docker : ">>$LOG
+echo "End docker extractor: ">>$LOG
 END_EPOCH=$(date +%s)
 DURATION_SEC=$((END_EPOCH - START_EPOCH))
 DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
-echo "DURATION_MN : $DURATION_MIN" >> $LOG
+echo "DURATION_MN Extractor: $DURATION_MIN" >> $LOG
 NB_IMAGES_DB=$(sqlite3 "$DATABASE_PATH" "SELECT COUNT(*) FROM images;")
 echo "NB_IMAGES_DB : $NB_IMAGES_DB" >> $LOG
 # Table keypoints: (image_id, rows, cols, data). "rows" = nb keypoints pour l'image.

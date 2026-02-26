@@ -28,3 +28,9 @@ echo " OUTPUT_DIR     : $OUTPUT_DIR  "
 echo " IMAGES_DIR     : $IMAGES_DIR "
 echo " COLMAP_MATCHER : $COLMAP_MATCHER"
 echo " NVIDIA_USE_GPU : $NVIDIA_USE_GPU"
+
+DB_SIZE_BYTES=$(stat -c '%s' "$DATABASE_PATH" 2>/dev/null || echo 0)
+DB_SIZE_HUMAN=$(du -h "$DATABASE_PATH" 2>/dev/null | awk '{print $1}' || echo NA)
+
+echo "DB_SIZE_BYTES=$DB_SIZE_BYTES" >> "$LOG"
+echo "DB_SIZE_HUMAN=$DB_SIZE_HUMAN" >> "$LOG"

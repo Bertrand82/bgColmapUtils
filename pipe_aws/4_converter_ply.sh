@@ -7,7 +7,7 @@ echo "========================================"
 echo
 source ./bgInitConfig.sh
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
-
+START_EPOCH=$(date +%s)
 BASE="/data/images_test/output/sparse"
 
 i=0
@@ -29,7 +29,11 @@ docker run --rm \
 done
 
 echo "Fin Conversion en PLY  ${BASE}   (arrêt)."
+END_EPOCH=$(date +%s)
 
+DURATION_SEC=$((END_EPOCH - START_EPOCH))
+DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
+echo "DURATION_MN Converter: $DURATION_MIN" >> $LOG
 echo process only sparse/0 TODO process all
 
 

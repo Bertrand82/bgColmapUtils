@@ -2,6 +2,7 @@
 set -euo pipefail
 
 echo "======== mapper ================================"
+START_EPOCH=$(date +%s)
 
 source ./bgInitConfig.sh
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
@@ -24,5 +25,10 @@ docker run --rm \
 
 echo
 echo "========================================"
-echo "Traitement termine colmap mapper "
+echo "Process colmap mapper done"
 echo "========================================"
+END_EPOCH=$(date +%s)
+
+DURATION_SEC=$((END_EPOCH - START_EPOCH))
+DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
+echo "DURATION_MN Matcher: $DURATION_MIN" >> $LOG
