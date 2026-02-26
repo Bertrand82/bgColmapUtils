@@ -6,6 +6,7 @@ echo " COLMAP - exhaustive_matcher v bg 01"
 echo "========================================"
 source ./bgInitConfig.sh
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
+echo "COLMAP_MATCHER : $COLMAP_MATCHER"
 
 echo "======== exhaustive_matcher ================================"
 
@@ -15,7 +16,7 @@ docker run --rm \
   --shm-size="4g" \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
-  colmap exhaustive_matcher \
+  colmap ${COLMAP_MATCHER} \
     --database_path /data/database.db \
     --FeatureMatching.use_gpu 0
 
