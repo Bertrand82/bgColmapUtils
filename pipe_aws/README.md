@@ -12,4 +12,5 @@ TODO
   - a global sscript
   - implement other mapper 
   - clean output before start
+  - use gps infos
 
