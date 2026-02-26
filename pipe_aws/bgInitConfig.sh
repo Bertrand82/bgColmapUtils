@@ -16,10 +16,10 @@ export NVIDIA_USE_GPU=0
 
 if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
   NVIDIA_USE_GPU=1
-  echo "NVIDIA_GPU=YES" >> "$LOG"
+  echo "NVIDIA_GPU=YES" >> $LOG
   nvidia-smi -L | sed 's/^/NVIDIA_GPU_INFO: /'
 else
-  echo "NVIDIA_GPU=NO" >> "$LOG"
+  echo "NVIDIA_GPU=NO" >> $LOG
 fi
 
 export NVIDIA_USE_GPU
@@ -32,5 +32,5 @@ echo " NVIDIA_USE_GPU : $NVIDIA_USE_GPU"
 DB_SIZE_BYTES=$(stat -c '%s' "$DATABASE_PATH" 2>/dev/null || echo 0)
 DB_SIZE_HUMAN=$(du -h "$DATABASE_PATH" 2>/dev/null | awk '{print $1}' || echo NA)
 
-echo "DB_SIZE_BYTES=$DB_SIZE_BYTES" >> "$LOG"
-echo "DB_SIZE_HUMAN=$DB_SIZE_HUMAN" >> "$LOG"
+echo "DB_SIZE_BYTES=$DB_SIZE_BYTES" >> $LOG
+echo "DB_SIZE_HUMAN=$DB_SIZE_HUMAN" >> $LOG
