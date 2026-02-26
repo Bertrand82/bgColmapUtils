@@ -8,7 +8,7 @@ export WORK_DIRECTORY="/data/vol_0"
 export IMAGES_DIR="${WORK_DIRECTORY}/images"
 export OUTPUT_DIR="${WORK_DIRECTORY}/output"
 #exhaustive_matcher COLMAP_MATCHER, sequential_matcher , spatial_matcher , vocab_tree_matcher , transitive_matcher
-export COLMAP_MATCHER="exhaustive_matcher"
+export COLMAP_MATCHER="sequential_matcher"
 
 
 echo " OUTPUT_DIR     : $OUTPUT_DIR  "
