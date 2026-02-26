@@ -7,8 +7,9 @@ echo " COLMAP - feature_extractor v bg 02"
 echo "========================================"
 echo
 source ./bgInitConfig.sh
+mkdir -p "$OUTPUT_DIR"
 touch $LOG
-echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" > $LOG
+echo "Début du pipeline feature extraction : $(date '+%Y-%m-%d %H:%M:%S')  " > $LOG
 # CPU (modèle), nb threads, RAM dispo (en Mo)
 CPU_MODEL=$(lscpu | awk -F: '/Model name/ {gsub(/^[ \t]+/,"",$2); print $2; exit}')
 NB_THREADS=$(nproc)
@@ -34,7 +35,7 @@ echo "OUTPUT_DIR:  $OUTPUT_DIR">>$LOG
 echo "DATABASE_NAME : $DATABASE_NAME">>$LOG
 echo "DATABASE_PATH : $DATABASE_PATH">>$LOG
 echo "LOG        : $LOG"
-mkdir -p "$OUTPUT_DIR"
+
 
 echo "========  feature_extractor ================================"
 touch $LOG
