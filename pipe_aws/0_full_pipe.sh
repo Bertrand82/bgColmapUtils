@@ -31,6 +31,11 @@ echo
 echo "[4/4] converter_ply"
 ./4_converter_ply.sh
 
+
+echo 
+echo "5 archive and clean"
+./5_archive_and_clean.sh
+
 echo
 echo "========================================"
 echo "Pipeline terminé avec succès."
