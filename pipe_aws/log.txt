@@ -1,1 +1,1 @@
-2026-02-26 12:46:55 -   Début du pipeline feature extraction
+2026-02-26 13:04:07 -   Début du pipeline feature extraction

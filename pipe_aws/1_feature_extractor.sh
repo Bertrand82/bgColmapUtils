@@ -8,8 +8,15 @@ echo "========================================"
 echo
 source ./bgInitConfig.sh
 touch $LOG
-echo "IMAGES_DIR: $IMAGES_DIR"
 echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" > $LOG
+# CPU (modèle), nb threads, RAM dispo (en Mo)
+CPU_MODEL=$(lscpu | awk -F: '/Model name/ {gsub(/^[ \t]+/,"",$2); print $2; exit}')
+NB_THREADS=$(nproc)
+RAM_AVAIL_MB=$(free -m | awk '/Mem:/ {print $7}')
+
+echo "MACHINE: CPU=$CPU_MODEL | THREADS=$NB_THREADS | RAM_AVAIL_MB=${RAM_AVAIL_MB}MB" >> $LOG
+echo "IMAGES_DIR: $IMAGES_DIR"
+
 NB_IMAGES=$(find "$IMAGES_DIR" -maxdepth 1 -type f | wc -l)
 echo "Image count in file :   $NB_IMAGES">>$LOG
 echo "OUTPUT_DIR:  $OUTPUT_DIR">>$LOG
