@@ -9,7 +9,8 @@ echo
 source ./bgInitConfig.sh
 mkdir -p "$OUTPUT_DIR"
 touch $LOG
-echo "Début du pipeline feature extraction : $(date '+%Y-%m-%d %H:%M:%S')  " > $LOG
+echo "================= Extract =====================================================">$LOG
+echo "Start : $(date '+%Y-%m-%d %H:%M:%S')  " >> $LOG
 # CPU (modèle), nb threads, RAM dispo (en Mo)
 CPU_MODEL=$(lscpu | awk -F: '/Model name/ {gsub(/^[ \t]+/,"",$2); print $2; exit}')
 NB_THREADS=$(nproc)

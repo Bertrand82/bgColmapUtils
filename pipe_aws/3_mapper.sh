@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "======== mapper ================================"
+echo "======== mapper =============================================================="
 START_EPOCH=$(date +%s)
 
 source ./bgInitConfig.sh
-echo "OUTPUT_DIR:  $OUTPUT_DIR"
+echo "OUTPUT_DIR:  $OUTPUT_DIR" >> $LOG
+echo "===================================================Mapper =========================">>$LOG
 
 
 # S'assure que /data/sparse existe côté host
@@ -31,4 +32,4 @@ END_EPOCH=$(date +%s)
 
 DURATION_SEC=$((END_EPOCH - START_EPOCH))
 DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
-echo "DURATION_MN Matcher: $DURATION_MIN" >> $LOG
+echo "DURATION_MN Mapper : $DURATION_MIN" >> $LOG

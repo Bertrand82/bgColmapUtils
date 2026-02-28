@@ -6,6 +6,7 @@ echo "COLMAP - Reconstruction 3D optimisee"
 echo "========================================"
 echo
 source ./bgInitConfig.sh
+echo "============================================================ 4 Convert result ================="
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
 START_EPOCH=$(date +%s)
 BASE="/data/images_test/output/sparse"

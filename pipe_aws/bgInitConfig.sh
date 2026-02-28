@@ -10,6 +10,7 @@ export OUTPUT_DIR="${WORK_DIRECTORY}/output"
 #exhaustive_matcher COLMAP_MATCHER, sequential_matcher , spatial_matcher , vocab_tree_matcher , transitive_matcher
 export COLMAP_MATCHER="sequential_matcher"
 export LOG="$OUTPUT_DIR/log.txt"
+mkdir -p $OUTPUT_DIR
 touch $LOG
 export DATABASE_NAME="database.db"
 export DATABASE_PATH="$OUTPUT_DIR/$DATABASE_NAME"
