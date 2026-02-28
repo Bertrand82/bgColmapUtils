@@ -33,3 +33,5 @@ END_EPOCH=$(date +%s)
 DURATION_SEC=$((END_EPOCH - START_EPOCH))
 DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
 echo "DURATION_MN Mapper : $DURATION_MIN" >> $LOG
+NB_POSE_PRIORS=$(sqlite3 "$DATABASE_PATH" "SELECT COUNT(*) FROM pose_priors;" 2>/dev/null || echo NA)
+echo "NB_POSE_PRIORS=$NB_POSE_PRIORS" >> "$LOG"
