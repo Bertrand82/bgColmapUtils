@@ -9,7 +9,7 @@ source ./bgInitConfig.sh
 echo "============================================================ 4 Convert result ================="
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
 START_EPOCH=$(date +%s)
-BASE="/data/images_test/output/sparse"
+BASE="/$OUTPUT_DIR/sparse"
 
 i=0
 while [ -d "${BASE}/${i}" ]; do
