@@ -9,7 +9,7 @@ echo
 source ./bgInitConfig.sh
 mkdir -p "$OUTPUT_DIR"
 touch $LOG
-echo "================= point_triangulator  =====================================================">$LOG
+echo "================= point_triangulator  =====================================================">>$LOG
 echo "Start : $(date '+%Y-%m-%d %H:%M:%S')  " >> $LOG
 # CPU (modèle), nb threads, RAM dispo (en Mo)
 CPU_MODEL=$(lscpu | awk -F: '/Model name/ {gsub(/^[ \t]+/,"",$2); print $2; exit}')
@@ -36,7 +36,7 @@ touch $LOG
 echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" >> $LOG
 START_EPOCH=$(date +%s)
 
-mkdir -p "${OUTPUT_DIR}/sparse" 2>$LOG || true
+mkdir -p "${OUTPUT_DIR}/sparse" 2>>$LOG || true
 
 if [ -d "${OUTPUT_DIR}/model" ]; then
   # Copie le contenu sans écraser ce qui existe déjà
