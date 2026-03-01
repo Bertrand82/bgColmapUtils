@@ -13,10 +13,12 @@ BASE="/$OUTPUT_DIR/sparse"
 
 i=0
 while [ -d "${BASE}/${i}" ]; do
-	echo "=== Processing sparse/${i} ==="
+	echo "=== Processing sparse/${i} === ">>$LOG
 	
 
 docker run --rm \
+  --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
   colmap model_converter \

@@ -31,16 +31,16 @@ echo "MODEL_DIR     : $MODEL_DIR">>$LOG
 echo "LOG        : $LOG"
 
 
-echo "========  point_triangulator  ================================"
+echo "========  point_triangulator  ================================">>$LOG
 touch $LOG
-echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" > log.txt
+echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" >> $LOG
 START_EPOCH=$(date +%s)
 
-mkdir -p "${OUTPUT_DIR}/sparse" 2>/dev/null || true
+mkdir -p "${OUTPUT_DIR}/sparse" 2>$LOG || true
 
 if [ -d "${OUTPUT_DIR}/model" ]; then
   # Copie le contenu sans écraser ce qui existe déjà
-  cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>/dev/null || true
+  cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>>$LOG || true
 fi
 
 
@@ -51,6 +51,8 @@ docker run --rm \
   --user "$(id -u):$(id -g)" \
   --group-add "$(getent group bg_shared | cut -d: -f3)" \
   --shm-size="4g" \
+  --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/output" \
   -v "${IMAGES_DIR}:/images" \
   -v "${MODEL_DIR}:/model" \
@@ -66,5 +68,5 @@ echo "End docker extractor: ">>$LOG
 END_EPOCH=$(date +%s)
 DURATION_SEC=$((END_EPOCH - START_EPOCH))
 DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
-echo "DURATION_MN Extractor: $DURATION_MIN" >> $LOG
+echo "DURATION_MN Points_Triangulator: $DURATION_MIN" >> $LOG
 

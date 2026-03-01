@@ -6,7 +6,7 @@ echo "COLMAP - conversion bin en txt"
 echo "========================================"
 echo
 source ./bgInitConfig.sh
-echo "============================================================ 4 Convert result ================="
+echo "============================================================ 4 Convert result ================= ">>$LOG
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
 START_EPOCH=$(date +%s)
 BASE="$OUTPUT_DIR/sparse"
@@ -17,6 +17,8 @@ while [ -d "${BASE}/${i}" ]; do
 	
 
 docker run --rm \
+  --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
   colmap model_converter \
