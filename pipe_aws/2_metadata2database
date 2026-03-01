@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+
+echo "========================================"
+echo " COLMAP - copy metadata to  database"
+echo "========================================"
+echo
+source ./bgInitConfig.sh
+mkdir -p "$OUTPUT_DIR"
+touch $LOG
+echo "================= Copy metadata to database.db  =====================================================">$LOG
+echo "Start : $(date '+%Y-%m-%d %H:%M:%S')  " >> $LOG
+echo "DATABASE_PATH : $DATABASE_PATH"
+echo "WORK_DIRECTORY : $WORK_DIRECTORY"
+echo "METADATA_PATH  : ${METADATA_PATH}"
+[ -f "$METADATA_PATH" ] && METADATA_EXISTS=1 || METADATA_EXISTS=0
+echo "METADATA_EXISTS : $METADATA_EXISTS"
+export EXECUTABLE=metadata2database
+./metadata2database --help
+chmod u+w $DATABASE_PATH
+./$EXECUTABLE $METADATA_PATH $DATABASE_PATH
+
+
+
+
+
