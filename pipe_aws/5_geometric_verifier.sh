@@ -21,9 +21,7 @@ docker run --rm \
   colmap/colmap \
   colmap geometric_verifier \
     --database_path /output/database.db \
-    --image_path /images \
-    --output_path /output/sparse
-
+    --FeatureMatching.use_gpu 0
 echo
 echo "========================================"
 echo "Process colmap geometric_verifier done"
