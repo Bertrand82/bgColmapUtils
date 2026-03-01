@@ -8,7 +8,7 @@ source ./bgInitConfig.sh
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
 echo "COLMAP_MATCHER : $COLMAP_MATCHER"
 
-echo "======== exhaustive_matcher =====================================================">>$LOG
+echo "============================ matcher =====================================================">>$LOG
 START_EPOCH=$(date +%s)
 
 docker run --rm \

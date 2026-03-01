@@ -9,7 +9,7 @@ echo
 source ./bgInitConfig.sh
 mkdir -p "$OUTPUT_DIR"
 touch $LOG
-echo "================= Copy metadata to database.db  =====================================================">$LOG
+echo "================= Copy metadata to database.db  =====================================================">>$LOG
 echo "Start : $(date '+%Y-%m-%d %H:%M:%S')  " >> $LOG
 echo "DATABASE_PATH : $DATABASE_PATH"
 echo "WORK_DIRECTORY : $WORK_DIRECTORY"
