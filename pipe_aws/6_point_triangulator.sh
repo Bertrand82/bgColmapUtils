@@ -36,6 +36,12 @@ touch $LOG
 echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" > log.txt
 START_EPOCH=$(date +%s)
 
+mkdir -p "${OUTPUT_DIR}/sparse" 2>/dev/null || true
+
+if [ -d "${OUTPUT_DIR}/model" ]; then
+  # Copie le contenu sans écraser ce qui existe déjà
+  cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>/dev/null || true
+fi
 
 
 

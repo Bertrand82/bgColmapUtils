@@ -10,6 +10,12 @@ echo "COLMAP_MATCHER : $COLMAP_MATCHER"
 
 echo "============================ matcher =====================================================">>$LOG
 START_EPOCH=$(date +%s)
+mkdir -p "${OUTPUT_DIR}/sparse" 2>/dev/null || true
+
+if [ -d "${OUTPUT_DIR}/model" ]; then
+  # Copie le contenu sans écraser ce qui existe déjà
+  cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>/dev/null || true
+fi
 
 docker run --rm \
   --memory="12g" \
