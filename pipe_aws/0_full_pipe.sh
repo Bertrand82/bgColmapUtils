@@ -3,14 +3,6 @@ set -euo pipefail
 
 # Lance tout le pipeline COLMAP dans l'ordre.
 # À exécuter depuis le répertoire pipe_aws :
-0_full_pipe.sh
-1_feature_extractor.sh
-2_metadata2database
-3_matcher.sh
-4_mapper.sh
-5_converter_ply.sh
-6_converter_txt.sh
-7_archive_and_clean.sh
 #   cd pipe_aws
 #   ./0_all.sh
 
