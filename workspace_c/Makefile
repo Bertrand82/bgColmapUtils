@@ -4,7 +4,7 @@ LDFLAGS ?= -lsqlite3
 
 SRC := src/process-metadata.cpp src/get_imageId_by_filename.cpp src/list_images.cpp src/update-database.cpp src/main.cpp
 BUILD_DIR := build
-BIN := $(BUILD_DIR)/process-metadata
+BIN := $(BUILD_DIR)/metadata2database
 CSV := data_test/metadata.csv
 
 .PHONY: all run clean
