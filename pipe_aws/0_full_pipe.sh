@@ -3,6 +3,14 @@ set -euo pipefail
 
 # Lance tout le pipeline COLMAP dans l'ordre.
 # À exécuter depuis le répertoire pipe_aws :
+0_full_pipe.sh
+1_feature_extractor.sh
+2_metadata2database
+3_matcher.sh
+4_mapper.sh
+5_converter_ply.sh
+6_converter_txt.sh
+7_archive_and_clean.sh
 #   cd pipe_aws
 #   ./0_all.sh
 
@@ -12,30 +20,14 @@ cd "$SCRIPT_DIR"
 echo "========================================"
 echo "Pipeline complet: 1 -> 4"
 echo "Working dir: $(pwd)"
-echo "========================================"
 
-
-echo
-echo "[1/4] feature_extractor"
 ./1_feature_extractor.sh
-
-echo
-echo "[2/4] exhaustive_matcher"
-./2_exhaustive_matcher.sh
-
-echo
-echo "[3/4] mapper"
-./3_mapper.sh
-
-echo
-echo "[4/4] converter_ply"
-./4_converter_ply.sh
-
-
-echo 
-echo "5 archive and clean"
-./5_archive_and_clean.sh
-
+./2_metadata2database
+./3_matcher.sh
+./4_mapper.sh
+./5_converter_ply.sh
+./6_converter_txt.sh
+./7_archive_and_clean.sh
 echo
 echo "========================================"
 echo "Pipeline terminé avec succès."
