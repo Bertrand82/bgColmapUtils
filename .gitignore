@@ -43,3 +43,6 @@
 # bg
 *.db
 *.bin
+
+# Build artifacts
+build/
