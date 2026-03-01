@@ -17,10 +17,13 @@ echo "Working dir: $(pwd)"
 ./2_metadata2database
 ./3_matcher.sh
 ./4_mapper.sh
-./5_converter_ply.sh
-./6_converter_txt.sh
-./7_archive_and_clean.sh
+./5_geometric_verifier.sh
+./6_point_triangulator.sh
+./7_converter_ply.sh
+./8_converter_txt.sh
+./9_archive_and_clean.sh
 echo
 echo "========================================"
 echo "Pipeline terminé avec succès."
 echo "========================================"
+
