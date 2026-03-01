@@ -6,6 +6,7 @@ export WORK_DIRECTORY="/data/vol_0"
 
 # (optionnel) quelques chemins utiles
 export IMAGES_DIR="${WORK_DIRECTORY}/images"
+export MODEL_DIR="${WORK_DIRECTORY}/model"
 export OUTPUT_DIR="${WORK_DIRECTORY}/output"
 #exhaustive_matcher COLMAP_MATCHER, sequential_matcher , spatial_matcher , vocab_tree_matcher , transitive_matcher
 export COLMAP_MATCHER="sequential_matcher"
@@ -26,7 +27,7 @@ else
 fi
 
 export NVIDIA_USE_GPU
-echo "NVIDIA_USE_GPU=$NVIDIA_USE_GPU" 
+echo " NVIDIA_USE_GPU : $NVIDIA_USE_GPU" 
 echo " OUTPUT_DIR     : $OUTPUT_DIR  "
 echo " IMAGES_DIR     : $IMAGES_DIR "
 echo " COLMAP_MATCHER : $COLMAP_MATCHER"
