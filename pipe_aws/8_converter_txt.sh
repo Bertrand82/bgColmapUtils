@@ -27,8 +27,9 @@ docker run --rm \
     --output_type TXT
 
   
+  echo "Terminé: dossier  ${BASE}/${i} .">>$LOG
+  wc -l ${BASE}/${i}/images.txt>>$LOG
   i=$((i+1))
-  echo "Terminé: aucun dossier ${BASE}/${i} ."
 done
 
 echo "Fin Conversion en PLY  ${BASE}   (arrêt)."

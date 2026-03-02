@@ -36,12 +36,10 @@ touch $LOG
 echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" >> $LOG
 START_EPOCH=$(date +%s)
 
-mkdir -p "${OUTPUT_DIR}/sparse" 2>>$LOG || true
-
-if [ -d "${OUTPUT_DIR}/model" ]; then
-  # Copie le contenu sans écraser ce qui existe déjà
-  cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>>$LOG || true
-fi
+mkdir -p  "${OUTPUT_DIR}/manually/sparse/model"
+mkdir -p  "${OUTPUT_DIR}/triangulated/sparse/model"
+echo Copie le contenu sans écraser ce qui existe déjà>>$LOG
+cp -r "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/manually/sparse/model" 2>>$LOG || true
 
 
 
@@ -55,13 +53,12 @@ docker run --rm \
   --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/output" \
   -v "${IMAGES_DIR}:/images" \
-  -v "${MODEL_DIR}:/model" \
   colmap/colmap \
    colmap point_triangulator \
     --database_path /output/database.db \
     --image_path /images \
-    --input_path /model \
-    --output_path /output \
+    --input_path /output/manually/sparse/model \
+    --output_path /output/triangulated/sparse/model \
     --log_level 0
 
 echo "End docker extractor: ">>$LOG
