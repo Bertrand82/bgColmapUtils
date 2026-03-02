@@ -10,7 +10,16 @@ echo "============================================================ 4 Convert res
 echo "OUTPUT_DIR:  $OUTPUT_DIR"
 START_EPOCH=$(date +%s)
 BASE="/$OUTPUT_DIR/sparse"
-
+docker run --rm \
+  --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group bg_shared | cut -d: -f3)" \
+  -v "${OUTPUT_DIR}:/data" \
+  colmap/colmap \
+  colmap model_converter \
+    --input_path /data/sparse/${MERGED} \
+    --output_path /data/sparse/${MERGED}/points3D.ply \
+    --output_type PLY
+echo "Terminé:  dossier ${MERGED} ."
 i=0
 while [ -d "${BASE}/${i}" ]; do
 	echo "=== Processing sparse/${i} === ">>$LOG
@@ -26,9 +35,9 @@ docker run --rm \
     --output_path /data/sparse/${i}/points3D.ply \
     --output_type PLY
 
-  
+  echo "Terminé: dossier ${BASE}/${i} ."
   i=$((i+1))
-  echo "Terminé: aucun dossier ${BASE}/${i} ."
+  
 done
 
 echo "Fin Conversion en PLY  ${BASE}   (arrêt)."

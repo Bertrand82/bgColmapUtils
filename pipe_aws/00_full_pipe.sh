@@ -13,15 +13,16 @@ echo "========================================"
 echo "Pipeline complet: 1 -> 4"
 echo "Working dir: $(pwd)"
 
-./1_feature_extractor.sh
-./2_metadata2database
-./3_matcher.sh
-./4_mapper.sh
-./5_geometric_verifier.sh
-./6_point_triangulator.sh
-./7_converter_ply.sh
-./8_converter_txt.sh
-./9_archive_and_clean.sh
+./01_feature_extractor.sh
+./02_metadata2database
+./03_matcher.sh
+./04_mapper.sh
+./05_model_merger.sh
+./06_geometric_verifier.sh
+./07_point_triangulator.sh
+./08_converter_ply.sh
+./09_converter_txt.sh
+./10_archive_and_clean.sh
 echo
 echo "========================================"
 echo "Pipeline terminé avec succès."

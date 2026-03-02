@@ -14,9 +14,9 @@ mkdir -p "${OUTPUT_DIR}/sparse"
 mkdir -p "${OUTPUT_DIR}/sparse/model"
 export i=0
 export j=1
-export MERGED2="merged2"
-mkdir -p ${OUTPUT_DIR}/sparse/${MERGED2}
-cp -a ${OUTPUT_DIR}/sparse/0/. /${OUTPUT_DIR}/sparse/$MERGED2/
+
+mkdir -p ${OUTPUT_DIR}/sparse/${MERGED}
+cp -a ${OUTPUT_DIR}/sparse/0/. /${OUTPUT_DIR}/sparse/$MERGED/
 export BASE=${OUTPUT_DIR}/sparse
 while [ -d "${BASE}/${j}" ]; do
 echo "=== Processing ${BASE}/${i} ==="
@@ -35,7 +35,7 @@ docker run --rm \
   -v "${OUTPUT_DIR}:/output" \
   colmap/colmap \
   colmap  model_merger \
-    --input_path1 /output/sparse/$MERGED2 \
+    --input_path1 /output/sparse/$MERGED \
     --input_path2 /output/sparse/$j \
     --output_path /output/sparse/$MERGED_OUT \
     --max_reproj_error 64
@@ -58,7 +58,7 @@ echo "---------> start converting"
   wc -l ${BASE}/${MERGED_OUT}/images.txt>>$LOG
   echo "Terminé: dossier  $MERGED_OUT  ">>$LOG
   wc -l ${BASE}/${MERGED_OUT}/images.txt>>$LOG
-  cp -a ${OUTPUT_DIR}/sparse/${MERGED_OUT}/. /${OUTPUT_DIR}/sparse/$MERGED2/
+  cp -a ${OUTPUT_DIR}/sparse/${MERGED_OUT}/. /${OUTPUT_DIR}/sparse/$MERGED/
 # rm -rf ${OUTPUT_DIR}/sparse/${MERGED_OUT}
   i=$((i+1))
   j=$((j+1))

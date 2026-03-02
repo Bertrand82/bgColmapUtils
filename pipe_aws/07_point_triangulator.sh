@@ -57,7 +57,7 @@ docker run --rm \
    colmap point_triangulator \
     --database_path /output/database.db \
     --image_path /images \
-    --input_path /output/manually/sparse/model \
+    --input_path /output/sparse/$MERGED \
     --output_path /output/triangulated/sparse/model \
     --log_level 0
 

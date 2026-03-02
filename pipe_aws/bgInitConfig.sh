@@ -17,6 +17,7 @@ export DATABASE_NAME="database.db"
 export DATABASE_PATH="$OUTPUT_DIR/$DATABASE_NAME"
 export METADATA_PATH="${WORK_DIRECTORY}/metadata.csv"
 export NVIDIA_USE_GPU=0
+export MERGED="merged"
 
 if command -v nvidia-smi >/dev/null 2>&1 && nvidia-smi -L >/dev/null 2>&1; then
   NVIDIA_USE_GPU=1
