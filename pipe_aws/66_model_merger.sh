@@ -17,6 +17,7 @@ export j=1
 export MERGED2="merged2"
 mkdir -p ${OUTPUT_DIR}/sparse/${MERGED2}
 cp -a ${OUTPUT_DIR}/sparse/0/. /${OUTPUT_DIR}/sparse/$MERGED2/
+export BASE=${OUTPUT_DIR}/sparse
 while [ -d "${BASE}/${j}" ]; do
 echo "=== Processing ${BASE}/${i} ==="
 MERGED_OUT="merged_out__${i}_${j}"
@@ -52,7 +53,7 @@ echo "---------> start converting"
     --output_type TXT
 
   
-  echo "convert done : dossier  $MERGED_">>$LOG
+  echo "convert done : dossier  $MERGED_OUT">>$LOG
   export BASE="$OUTPUT_DIR/sparse"
   wc -l ${BASE}/${MERGED_OUT}/images.txt>>$LOG
   echo "Terminé: dossier  $MERGED_OUT  ">>$LOG
