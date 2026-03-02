@@ -14,9 +14,10 @@ mkdir -p "${OUTPUT_DIR}/sparse"
 mkdir -p "${OUTPUT_DIR}/sparse/model"
 export i=0
 export j=1
-merged="merged_${i}_${j}"
-export merged
-mkdir ${OUTPUT_DIR}/sparse/${merged}
+MERGED="merged_${i}_${j}"
+export MERGED
+mkdir -p ${OUTPUT_DIR}/sparse/${MERGED}
+echo "-------------------->start merging"
 docker run --rm \
   --memory="12g" \
   --memory-swap="16g" \
@@ -28,26 +29,27 @@ docker run --rm \
   colmap  model_merger \
     --input_path1 /output/sparse/$i \
     --input_path2 /output/sparse/$j \
-    --output_path /output/sparse/$merged \
+    --output_path /output/sparse/$MERGED \
     --max_reproj_error 64
 
+echo "--------> merge done  $MERGED "
+echo "---------> start converting"
  docker run --rm \
   --user "$(id -u):$(id -g)" \
   --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/output" \
   colmap/colmap \
   colmap model_converter \
-    --input_path /output/sparse/${merged} \
-    --output_path /output/sparse/${merged} \
+    --input_path /output/sparse/${MERGED} \
+    --output_path /output/sparse/${MERGED} \
     --output_type TXT
 
   
-  echo "Terminé: dossier  ${BASE}/${i} .">>$LOG
-  wc -l ${BASE}/${i}/images.txt>>$LOG
-  i=$((i+1))
-  echo "Terminé: dossier  $merged ">>$LOG
+  echo "convert done : dossier  $MERGED">>$LOG
   export BASE="$OUTPUT_DIR/sparse"
-  wc -l ${BASE}/${merged}/images.txt>>$LOG
+  wc -l ${BASE}/${MERGED}/images.txt>>$LOG
+  echo "Terminé: dossier  $MERGED  ">>$LOG
+  wc -l ${BASE}/${MERGED}/images.txt>>$LOG
     
 echo
 echo "========================================"
