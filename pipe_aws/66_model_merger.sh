@@ -24,17 +24,12 @@ docker run --rm \
   --user "$(id -u):$(id -g)" \
   --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/output" \
-  -v "${IMAGES_DIR}:/images" \
   colmap/colmap \
   colmap  model_merger \
     --input_path1 /output/sparse/$i \
     --input_path2 /output/sparse/$j \
     --output_path /output/sparse/$merged \
     --max_reproj_error 64
-  colmap model_converter \
-    --input_path /data/sparse/$merged \
-    --output_path /data/sparse/$merged\
-    --output_type TXT
 
   
   echo "Terminé: dossier  $merged ">>$LOG
