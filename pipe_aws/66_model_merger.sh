@@ -14,7 +14,9 @@ mkdir -p "${OUTPUT_DIR}/sparse"
 mkdir -p "${OUTPUT_DIR}/sparse/model"
 export i=0
 export j=1
-export merged ="merged_"+$i+"_"+$j
+merged="merged_${i}_${j}"
+export merged
+mkdir ${OUTPUT_DIR}/sparse/${merged}
 docker run --rm \
   --memory="12g" \
   --memory-swap="16g" \
@@ -25,10 +27,10 @@ docker run --rm \
   -v "${IMAGES_DIR}:/images" \
   colmap/colmap \
   colmap  model_merger \
-	--input_path1 /output/sparse/$i
-    --input_path2 /output/sparse/$j
-    --output_path /output/sparse/$merged
-    --max_reproj_error arg (=64)
+    --input_path1 /output/sparse/$i \
+    --input_path2 /output/sparse/$j \
+    --output_path /output/sparse/$merged \
+    --max_reproj_error 64
   colmap model_converter \
     --input_path /data/sparse/$merged \
     --output_path /data/sparse/$merged\
