@@ -31,7 +31,20 @@ docker run --rm \
     --output_path /output/sparse/$merged \
     --max_reproj_error 64
 
+ docker run --rm \
+  --user "$(id -u):$(id -g)" \
+  --group-add "$(getent group bg_shared | cut -d: -f3)" \
+  -v "${OUTPUT_DIR}:/output" \
+  colmap/colmap \
+  colmap model_converter \
+    --input_path /output/sparse/${merged} \
+    --output_path /output/sparse/${merged} \
+    --output_type TXT
+
   
+  echo "Terminé: dossier  ${BASE}/${i} .">>$LOG
+  wc -l ${BASE}/${i}/images.txt>>$LOG
+  i=$((i+1))
   echo "Terminé: dossier  $merged ">>$LOG
   export BASE="$OUTPUT_DIR/sparse"
   wc -l ${BASE}/${merged}/images.txt>>$LOG
