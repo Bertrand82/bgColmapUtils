@@ -11,6 +11,7 @@ echo "===================================================Geometric_verifier ====
 
 # S'assure que /data/sparse existe côté host
 mkdir -p "${OUTPUT_DIR}/sparse"
+mkdir -p "${OUTPUT_DIR}/sparse/model"
 
 docker run --rm \
   --memory="12g" \
