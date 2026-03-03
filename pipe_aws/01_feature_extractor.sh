@@ -61,9 +61,11 @@ echo "End docker extractor: ">>$LOG
 END_EPOCH=$(date +%s)
 DURATION_SEC=$((END_EPOCH - START_EPOCH))
 DURATION_MIN=$(( (DURATION_SEC + 59) / 60 ))  # arrondi à la minute supérieure
-echo "DURATION_MN Extractor: $DURATION_MIN" >> $LOG
+echo "DURATION_MN Extractor (minute): $DURATION_MIN" >> $LOG
 NB_IMAGES_DB=$(sqlite3 "$DATABASE_PATH" "SELECT COUNT(*) FROM images;")
 echo "NB_IMAGES_DB : $NB_IMAGES_DB" >> $LOG
+DUREE_EXTRACTION_MOYENNE=$(( DURATION_SEC / NB_IMAGES_DB ))
+echo "Duree moyenne (seconde) : $DUREE_EXTRACTION_MOYENNE" >> $LOG
 # Table keypoints: (image_id, rows, cols, data). "rows" = nb keypoints pour l'image.
 NB_KEYPOINTS_TOTAL="$(sqlite3 "$DATABASE_PATH" "SELECT COALESCE(SUM(rows),0) FROM keypoints;" 2>/dev/null || echo NA)"
 echo "NB_KEYPOINTS_TOTAL : $NB_KEYPOINTS_TOTAL">>$LOG
