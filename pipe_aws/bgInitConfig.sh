@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Chemin absolu du dossier où se trouve ce fichier (peu importe d'où tu le "source")
-export WORK_DIRECTORY="/data/vol_0"
+export WORK_DIRECTORY="/data/vol_full"
 
 
 # (optionnel) quelques chemins utiles
