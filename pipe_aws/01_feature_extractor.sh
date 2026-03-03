@@ -54,8 +54,8 @@ docker run --rm \
     --ImageReader.single_camera 1 \
     --ImageReader.camera_model SIMPLE_RADIAL \
     --FeatureExtraction.use_gpu 0 \
-    --FeatureExtraction.num_threads $(nproc) \
-    --log_level 0
+    --log_level 0 \
+#    --FeatureExtraction.num_threads 1 \
 
 echo "End docker extractor: ">>$LOG
 END_EPOCH=$(date +%s)

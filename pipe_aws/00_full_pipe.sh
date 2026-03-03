@@ -22,7 +22,10 @@ echo "Working dir: $(pwd)"
 ./07_point_triangulator.sh
 ./08_converter_ply.sh
 ./09_converter_txt.sh
-./10_archive_and_clean.sh
+./21_image_undistorber.sh
+./22_patch_match_stereo.sh
+./23_stereo_fusion.sh
+# ./10_archive_and_clean.sh
 echo
 echo "========================================"
 echo "Pipeline terminé avec succès."

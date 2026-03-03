@@ -46,7 +46,7 @@ docker run --rm \
   colmap/colmap \
    colmap image_undistorter \
     --image_path /images \
-    --input_path /path/sparse/$MERGED \
+    --input_path /output/sparse/$MERGED \
     --output_path /output/dense \
     --output_type COLMAP \
     --log_level 0
