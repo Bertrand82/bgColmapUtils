@@ -32,8 +32,9 @@ echo "LOG        : $LOG"
 
 echo "========  feature_extractor ================================"
 touch $LOG
-echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction" > log.txt
+echo "$(date '+%Y-%m-%d %H:%M:%S') -   Début du pipeline feature extraction xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" >> $LOG
 START_EPOCH=$(date +%s)
+echo "Nb nombre de CPU logiques visibles : $(nproc)"
 
 
 
@@ -53,7 +54,7 @@ docker run --rm \
     --ImageReader.single_camera 1 \
     --ImageReader.camera_model SIMPLE_RADIAL \
     --FeatureExtraction.use_gpu 0 \
-    --FeatureExtraction.num_threads 1 \
+    --FeatureExtraction.num_threads $(nproc) \
     --log_level 0
 
 echo "End docker extractor: ">>$LOG
