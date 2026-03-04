@@ -46,8 +46,6 @@ cp -r "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/manually/sparse/model" 2>>$LOG 
 docker run --rm \
   --memory="12g" \
   --memory-swap="16g" \
-  --user "$(id -u):$(id -g)" \
-  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   --shm-size="4g" \
   --user "$(id -u):$(id -g)" \
   --group-add "$(getent group bg_shared | cut -d: -f3)" \

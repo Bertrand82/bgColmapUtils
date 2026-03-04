@@ -11,8 +11,6 @@ echo "OUTPUT_DIR:  $OUTPUT_DIR"
 START_EPOCH=$(date +%s)
 BASE="/$OUTPUT_DIR/sparse"
 docker run --rm \
-  --user "$(id -u):$(id -g)" \
-  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
   colmap model_converter \
