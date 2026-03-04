@@ -19,23 +19,33 @@ docker run --rm \
     --output_type PLY
 echo "Terminé:  dossier ${MERGED} ."
 i=0
-while [ -d "${BASE}/${i}" ]; do
-	echo "=== Processing sparse/${i} === ">>$LOG
+# Boucle sur le NOM de chaque sous-répertoire (niveau 1) de $BASE
+# Ex: si $BASE=/data/sparse et qu'il contient /data/sparse/0 /data/sparse/1 /data/sparse/merged
+# alors subdir_name prendra: 0, 1, merged
+# Niveau 1 sous $BASE, en ignorant "." et ".." (au cas où)
+for dir in "$BASE"/*/; do
+  [ -d "$dir" ] || break
+
+  subdir_name="$(basename "${dir%/}")"
+  [[ "$subdir_name" == "." || "$subdir_name" == ".." || "$subdir_name" == "model" ]] && continue
+
+#---------------------
+  echo "------dir--->$subdir_name"
+  ls -l ${OUTPUT_DIR}/sparse/${subdir_name}
 	
 
 docker run --rm \
-  --user "$(id -u):$(id -g)" \
-  --group-add "$(getent group bg_shared | cut -d: -f3)" \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
   colmap model_converter \
-    --input_path /data/sparse/${i} \
-    --output_path /data/sparse/${i}/points3D.ply \
+    --input_path /data/sparse/${subdir_name} \
+    --output_path /data/sparse/${subdir_name}/points3D.ply \
     --output_type PLY
 
-  echo "Terminé: dossier ${BASE}/${i} ."
+  echo "Terminé: dossier ${BASE}/$subdir_name ."
   i=$((i+1))
-  
+mkdir -p  ${OUTPUT_DIR}/result
+cp ${OUTPUT_DIR}/sparse/${subdir_name}/points3D.ply ${OUTPUT_DIR}/result/points3D_${subdir_name}.ply   
 done
 
 echo "Fin Conversion en PLY  ${BASE}   (arrêt)."
