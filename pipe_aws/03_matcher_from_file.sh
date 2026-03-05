@@ -16,14 +16,13 @@ if [ -d "${OUTPUT_DIR}/model" ]; then
   # Copie le contenu sans écraser ce qui existe déjà
   cp -an "${WORK_DIRECTORY}/model/." "${OUTPUT_DIR}/sparse/" 2>/dev/null || true
 fi
-cp -an "${WORK_DIRECTORY}/match.txt/." "${OUTPUT_DIR}" 
+cp -an "${WORK_DIRECTORY}/match.txt" "${OUTPUT_DIR}" 
 docker run --rm \
   -v "${OUTPUT_DIR}:/data" \
   colmap/colmap \
   colmap matches_importer \
     --database_path /data/database.db \
-	--match_list_path  /data/match.txt \
-	--SiftMatching.guided_matching 1 \
+    --match_list_path  /data/match.txt \
     --FeatureMatching.use_gpu 0
 	
 echo "End docker matcher: ">>$LOG
