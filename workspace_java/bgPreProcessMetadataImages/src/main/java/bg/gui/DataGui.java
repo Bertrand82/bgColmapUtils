@@ -18,8 +18,9 @@ import javax.swing.Timer;
 
 import bg.MetaData;
 import bg.MetaDatasCsv;
-import bg.util.GpsExifExtractor;
-import bg.util.GpsExifExtractor.GpsPosition;
+import bg.util.GpsPositionFactory;
+import bg.util.GpsPosition2;
+
 
 public class DataGui {
 
@@ -124,7 +125,7 @@ public class DataGui {
         double gpsLAtitude=0d;
         double gpsLongitude=0d;
         try {
-        	GpsPosition position =GpsExifExtractor.extractPosition(f);
+        	GpsPosition2 position =GpsPositionFactory.extractPosition(f);
         	gpsZ = position.getAltitudeMeters();
         	gpsLAtitude =position.getLatitude();
         	gpsLongitude = position.getLongitude();

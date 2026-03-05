@@ -1,45 +1,28 @@
 package bg.util;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.lang.GeoLocation;
 import com.drew.lang.Rational;
 import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 
-public final class GpsExifExtractor {
+public final class GpsPositionFactory {
 
-    private GpsExifExtractor() {}
-
-    /** Résultat (compatible Java 8, pas de record). */
-    public static final class GpsPosition {
-        private final double latitude;
-        private final double longitude;
-        private final Double altitudeMeters; // null si absente
-
-        public GpsPosition(double latitude, double longitude, Double altitudeMeters) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.altitudeMeters = altitudeMeters;
-        }
-
-        public double getLatitude() { return latitude; }
-        public double getLongitude() { return longitude; }
-        public Double getAltitudeMeters() { return altitudeMeters; }
-
-        @Override
-        public String toString() {
-            return "GpsPosition{lat=" + latitude + ", lon=" + longitude + ", alt=" + altitudeMeters + "}";
-        }
-    }
+    
 
     /**
      * Extrait latitude/longitude et altitude (si présente) depuis l'EXIF GPS.
      * @return null si aucune info GPS exploitable.
      */
-    public static GpsPosition extractPosition(File imageFile) throws IOException {
+    public static GpsPosition2 extractPosition(File imageFile) throws IOException {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
             GpsDirectory gps = metadata.getFirstDirectoryOfType(GpsDirectory.class);
@@ -66,11 +49,32 @@ public final class GpsExifExtractor {
                     altitude = -altitude;
                 }
             }
+            LocalDateTime takenAt = null;
 
-            return new GpsPosition(lat, lon, altitude);
+            ExifSubIFDDirectory subIfd = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
+            Date d = null;
+            if (subIfd != null) {
+                d = subIfd.getDateOriginal(); // DateTimeOriginal
+                if (d == null) d = subIfd.getDateDigitized(); // DateTimeDigitized
+            }
+            if (d == null) {
+                ExifIFD0Directory ifd0 = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+                if (ifd0 != null) d = ifd0.getDate(ExifIFD0Directory.TAG_DATETIME); // DateTime (fallback)
+            }
+
+            if (d != null) {
+                // Attention: EXIF n’a souvent pas de timezone -> on convertit avec la timezone locale.
+                takenAt = LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+            }
+
+
+            return new GpsPosition2(lat, lon, altitude,takenAt);
         } catch (ImageProcessingException e) {
             // format non supporté / EXIF illisible
             return null;
         }
     }
+   
+ 
+  
 }
