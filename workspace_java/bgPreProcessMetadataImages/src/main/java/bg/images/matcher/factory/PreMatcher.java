@@ -1,4 +1,4 @@
-package bg.images.matcher;
+package bg.images.matcher.factory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -99,6 +99,7 @@ public class PreMatcher {
 			w.write(line);
 		}
 		w.close();
+		System.out.println("nb images "+metaDatasCsv.getList().size());
 		System.out.println("Fichier ecrit dans "+fileOut.getPath());
 	}
 }

@@ -1,4 +1,4 @@
-package bg.images.matcher;
+package bg.images.matcher.factory;
 
 import java.io.File;
 
