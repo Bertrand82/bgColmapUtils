@@ -59,8 +59,9 @@ public class PairCheckerGUI {
 		panelNorth.add(infoField, BorderLayout.CENTER);
 		panelNorth.add(buttonNext, BorderLayout.EAST);
 		panelNorth.add(buttonPrevious, BorderLayout.WEST);
-		canvas1 = new PanelImage(pairChecker.list.get(0).imag1, dirImages);
-		canvas2 = new PanelImage(pairChecker.list.get(0).imag2, dirImages);
+		PaireSimple pair = pairChecker.list.get(0);
+		canvas1 = new PanelImage(pair.imag1,pair.nbRelations1, dirImages ,pairChecker);
+		canvas2 = new PanelImage(pair.imag2,pair.nbRelations2, dirImages,pairChecker);
 
 		GridLayout gridLayOut = new GridLayout(1, 2);
 		JPanel panel0 = new JPanel(gridLayOut);
@@ -86,8 +87,8 @@ public class PairCheckerGUI {
 			iCurrentPair=pairChecker.list.size()-1;
 		}
 		this.pairCurrent = pairChecker.list.get(iCurrentPair);
-		this.canvas1.updateImage(pairCurrent.imag1);
-		this.canvas2.updateImage(pairCurrent.imag2);
+		this.canvas1.updateImage(pairCurrent.imag1,pairCurrent.nbRelations1);
+		this.canvas2.updateImage(pairCurrent.imag2,pairCurrent.nbRelations2);
 	}
 
 }

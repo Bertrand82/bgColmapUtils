@@ -28,11 +28,12 @@ public class CanvasImage extends Canvas{
         g.fillRect(0, 0, cw, ch);
 
         if (image == null) return;
-
+        int iw0 = Math.max(image.getWidth(),image.getHeight());
+        int ih0 = Math.min(image.getWidth(),image.getHeight());
         int iw = image.getWidth();
         int ih = image.getHeight();
 
-        double scale = Math.min((double) cw / iw, (double) ch / ih);
+        double scale = Math.min((double) cw / iw0, (double) ch / ih0);
 
         int dw = (int) Math.round(iw * scale);
         int dh = (int) Math.round(ih * scale);

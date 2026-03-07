@@ -43,6 +43,10 @@ public class PairChecker {
 		for (Integer ii:hMapResultByNumVoisin.keySet()) {
 			System.out.println(" "+String.format("%2d", ii)+"   -----nb voisins --> "+hMapResultByNumVoisin.get(ii).i);
 		}
+		for(PaireSimple pair :list){
+			pair.nbRelations1=getNbPairWith(pair.imag1)	;
+			pair.nbRelations2=getNbPairWith(pair.imag2)	;
+		}
 		
 	}
 	private Compteur getCompteur(Integer nbVoisin) {
@@ -69,6 +73,10 @@ public class PairChecker {
 			this.listCloud.put(image1, cloud);
 		}
 		return cloud;
+	}
+	public int getNbPairWith(String imageName) {
+		
+		return getCloudImage(imageName).listContact.size();
 	}
 	
 
