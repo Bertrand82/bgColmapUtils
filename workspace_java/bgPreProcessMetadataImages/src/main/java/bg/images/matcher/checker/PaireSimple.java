@@ -10,6 +10,18 @@ public class PaireSimple {
 		imag1=sArray[0];
 		imag2=sArray[1];
 	}
+	public boolean searchMatch(String search) {
+		if (search == null) {
+			return false;
+		}
+		if (this.imag1.contains(search.trim())) {
+			return true;
+		}
+		if (this.imag2.contains(search.trim())) {
+			return true;
+		}
+		return false;
+	}
 	
 
 }

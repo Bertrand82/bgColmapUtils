@@ -36,12 +36,12 @@ public class PairChecker {
 			Integer nbVoisin = cloud.listContact.size();
 			Compteur compteur = getCompteur(nbVoisin);
 			compteur.i=compteur.i+1;
-			System.out.println(cloud.toString());
+			System.out.println("cloud ::: "+cloud.toString());
 			i++;
 		}
 		System.out.println("Nb images "+i);
 		for (Integer ii:hMapResultByNumVoisin.keySet()) {
-			System.out.println(" "+String.format("%2d", ii)+"   -----nb voisins --> "+hMapResultByNumVoisin.get(ii).i);
+			System.out.println(" -nb voisins :"+String.format("%2d", ii)+"   ---- nb d'images --> "+hMapResultByNumVoisin.get(ii).i);
 		}
 		for(PaireSimple pair :list){
 			pair.nbRelations1=getNbPairWith(pair.imag1)	;

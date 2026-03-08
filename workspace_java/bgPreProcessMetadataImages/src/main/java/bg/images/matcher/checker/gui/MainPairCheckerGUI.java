@@ -1,6 +1,7 @@
-package bg.images.matcher.checker;
+package bg.images.matcher.checker.gui;
 
-import bg.images.matcher.checker.gui.PairCheckerGUI;
+import bg.images.matcher.checker.MainPaiChecker;
+import bg.images.matcher.checker.PairChecker;
 
 public class MainPairCheckerGUI {
 
