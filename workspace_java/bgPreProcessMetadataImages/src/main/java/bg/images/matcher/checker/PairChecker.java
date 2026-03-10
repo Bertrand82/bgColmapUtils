@@ -15,6 +15,7 @@ public class PairChecker {
 	Map<Integer,Compteur> hMapResultByNumVoisin = new HashMap<Integer, Compteur>();
 	
 	public PairChecker(File filePairs) throws Exception{
+		System.out.println("File :"+filePairs.getCanonicalPath());
 		BufferedReader br = new BufferedReader(new FileReader(filePairs));
 		String line = null;
 		while((line=br.readLine()) !=null) {
@@ -28,7 +29,7 @@ public class PairChecker {
 			process(image2,image1)	;		
 		}
 		System.out.println(" nb PAires :"+list.size());
-		
+		System.out.println("File :"+filePairs.getCanonicalPath());
 		
 		int i=0;
 
@@ -77,6 +78,17 @@ public class PairChecker {
 	public int getNbPairWith(String imageName) {
 		
 		return getCloudImage(imageName).listContact.size();
+	}
+	public int getIndexPair(PaireSimple pairSimple) {
+		int i=0;
+		for( PaireSimple ps : this.list) {
+			if (ps.equals(pairSimple)) {
+				return i;
+			}
+			i++;
+		}
+		System.out.println("No Pair for "+pairSimple);
+		return 0;
 	}
 	
 
