@@ -79,6 +79,17 @@ public class PairChecker {
 		
 		return getCloudImage(imageName).listContact.size();
 	}
+	public int getIndexPair(PaireSimple pairSimple) {
+		int i=0;
+		for( PaireSimple ps : this.list) {
+			if (ps.equals(pairSimple)) {
+				return i;
+			}
+			i++;
+		}
+		System.out.println("No Pair for "+pairSimple);
+		return 0;
+	}
 	
 
 }

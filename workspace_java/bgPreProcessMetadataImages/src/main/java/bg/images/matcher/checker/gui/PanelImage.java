@@ -34,13 +34,15 @@ public class PanelImage extends JPanel {
 	File dirImages;
 	int w;
 	int h;
-	private CanvasImage canvas;
+	public CanvasImage canvas;
 	JLabel labelName = new JLabel("no name");
 	JLabel labelNbPairs = new JLabel("no ");
 	int nbImageInRelation = 0;
 	DatabaseColmap databaseColmap;
 	private List<Point> listPoints = null;
 	boolean isKeyPointsDisplayed=false;
+	boolean isMatchesDisplay=false;
+	List<Integer> listIndexMatches;
 
 	public PanelImage(String imageName, int nbImageInRelation, File dirImages, PairChecker pairChecker,
 			DatabaseColmap databaseColmap) {
@@ -86,10 +88,8 @@ public class PanelImage extends JPanel {
 		revalidate();
 		this.canvas.repaint();
 	}
-
-	public void displayKeyPoints() {
-		
-		isKeyPointsDisplayed = !isKeyPointsDisplayed;
+	
+	public void updateListPoints() {
 		if (this.listPoints == null) {
 			try {
 
@@ -104,6 +104,12 @@ public class PanelImage extends JPanel {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void displayKeyPoints() {
+		
+		isKeyPointsDisplayed = !isKeyPointsDisplayed;
+		updateListPoints();
 		System.out.println("displayKeyPoints "+isKeyPointsDisplayed+"   listPoints "+((listPoints==null)?"null":""+listPoints.size()));
 		for (Point p : listPoints) {
 			System.out.println("--x-->"+p);
@@ -131,6 +137,17 @@ public class PanelImage extends JPanel {
 
 	public boolean isKeyPointsDisplayed() {
 		return isKeyPointsDisplayed;
+	}
+
+	public List<Integer> getListIndexMatches() {
+		return listIndexMatches;
+	}
+
+	public void debugMatches() {
+		boolean b = (this.isMatchesDisplay) &&(this.getListPoints()!=null) && (this.getListIndexMatches() != null);
+		System.out.println("debugMatches b "+b);
+		System.out.println("listIndexMatches :"+listIndexMatches.size());
+		System.out.println("listPoints       : "+listPoints.size());
 	}
 	
 	

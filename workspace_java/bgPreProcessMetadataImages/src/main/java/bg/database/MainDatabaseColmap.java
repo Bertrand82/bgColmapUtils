@@ -14,7 +14,7 @@ public class MainDatabaseColmap {
 			imageId = Long.parseLong(args[1]);
 		}
 		DatabaseColmap colMapDb =new DatabaseColmap(dbPath);
-		colMapDb.printFirstRows(imageId);
+		
 		
 	}
 

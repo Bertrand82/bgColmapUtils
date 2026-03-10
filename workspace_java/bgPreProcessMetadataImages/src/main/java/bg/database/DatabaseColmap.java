@@ -8,7 +8,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * COLMAP SQLite database reader (Java 8).
@@ -71,6 +73,21 @@ public class DatabaseColmap implements AutoCloseable {
 					throw new java.util.NoSuchElementException("Image not found in DB: name='" + imageName + "'");
 				}
 				return rs.getLong(1);
+			}
+		}
+	}
+
+	public String getNameFromImageId(long imageId) throws SQLException {
+		ensureOpen();
+
+		final String sql = "SELECT name FROM images WHERE image_id = ? LIMIT 1";
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, imageId);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (!rs.next()) {
+					throw new java.util.NoSuchElementException("Image not found in DB: image_id=" + imageId);
+				}
+				return rs.getString(1);
 			}
 		}
 	}
@@ -192,5 +209,75 @@ public class DatabaseColmap implements AutoCloseable {
 			throw new IllegalArgumentException("Multiplication overflow: " + a + " * " + b);
 		}
 		return (int) r;
+	}
+
+	public List<Match> readVerifiedMatches(String imageName1, String imageName2) throws SQLException {
+		long id1 = getImageIdFromName(imageName1);
+		long id2 = getImageIdFromName(imageName2);
+		System.out.println("readVerifiedMatches id1 :" + id1 + "  id2 : " + id2);
+		return readVerifiedMatches(id1, id2);
+	}
+
+	/**
+	 * Lit les correspondances "géométriquement vérifiées" (two_view_geometries)
+	 * entre 2 images. Java 1.8: conversion bytes->int via ByteBuffer LE.
+	 *
+	 * @return liste de Match (peut être vide si pas de géométrie pour cette paire)
+	 */
+	public List<Match> readVerifiedMatches(long imageId1, long imageId2) throws SQLException {
+		ensureOpen();
+		long pid = UtilDataBase.pairId(imageId1, imageId2);
+
+		System.out.println("PairId " + pid);
+		final String sql = "SELECT rows, cols, data FROM two_view_geometries WHERE pair_id = ?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setLong(1, pid);
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				return new ArrayList<Match>(0);
+			}
+
+			int rows = rs.getInt(1);
+			int cols = rs.getInt(2);
+			byte[] blob = rs.getBytes(3);
+
+			if (cols != 2) {
+				throw new IllegalStateException("Expected cols=2 in two_view_geometries, got " + cols);
+			}
+
+			int expectedBytes = safeMul(safeMul(rows, cols), 4); // int32
+			if (blob == null) {
+				throw new IllegalStateException("two_view_geometries blob is null (pair_id=" + pid + ")");
+			}
+			if (blob.length != expectedBytes) {
+				throw new IllegalStateException("two_view_geometries blob size mismatch: got " + blob.length
+						+ " bytes, expected " + expectedBytes + " (rows=" + rows + ", cols=" + cols + ")");
+			}
+
+			ByteBuffer bb = ByteBuffer.wrap(blob).order(ByteOrder.LITTLE_ENDIAN);
+			ArrayList<Match> out = new ArrayList<Match>(rows);
+			for (int i = 0; i < rows; i++) {
+				int idx1 = bb.getInt();
+				int idx2 = bb.getInt();
+				out.add(new Match(idx1, idx2));
+			}
+			return out;
+
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (Exception ignore) {
+				}
+			if (ps != null)
+				try {
+					ps.close();
+				} catch (Exception ignore) {
+				}
+		}
 	}
 }
