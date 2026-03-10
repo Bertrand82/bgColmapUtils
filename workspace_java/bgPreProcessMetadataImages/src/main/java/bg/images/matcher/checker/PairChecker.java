@@ -15,6 +15,7 @@ public class PairChecker {
 	Map<Integer,Compteur> hMapResultByNumVoisin = new HashMap<Integer, Compteur>();
 	
 	public PairChecker(File filePairs) throws Exception{
+		System.out.println("File :"+filePairs.getCanonicalPath());
 		BufferedReader br = new BufferedReader(new FileReader(filePairs));
 		String line = null;
 		while((line=br.readLine()) !=null) {
@@ -28,7 +29,7 @@ public class PairChecker {
 			process(image2,image1)	;		
 		}
 		System.out.println(" nb PAires :"+list.size());
-		
+		System.out.println("File :"+filePairs.getCanonicalPath());
 		
 		int i=0;
 

@@ -4,13 +4,18 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.peer.CanvasPeer;
+
+import bg.database.Point;
 
 public class CanvasImage extends Canvas{
 
+	PanelImage panelImage;
 	BufferedImage image;
 	int w;
 	int h;
-	CanvasImage(int w, int h) {
+	CanvasImage(int w, int h, PanelImage panelImage) {
+		this.panelImage=panelImage;
 		this.w =w;
 		this.h =h;
 	}
@@ -42,6 +47,12 @@ public class CanvasImage extends Canvas{
         int dy = (ch - dh) / 2;
 
         g.drawImage(image, dx, dy, dw, dh, null);
+        if ((this.panelImage.isKeyPointsDisplayed) &&(this.panelImage.getListPoints()!=null)){
+        	g.setColor(Color.RED);
+        	for(Point p : this.panelImage.getListPoints()) {
+        		g.fillRect((int) ((scale *p.x )+dx),(int)((scale* p.y)+dy), 2, 2);
+        	}
+        }
 	}
 
 	public BufferedImage getImage() {

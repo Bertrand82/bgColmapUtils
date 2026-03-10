@@ -62,8 +62,9 @@ public class PreMatcher {
 	private void processLoopListClosers() throws Exception {
 		int i = 0;
 		for (MetaData metaData : metaDatasCsv.getList()) {
-			i++;
+			
 			metaData.searchCloseView(i, metaDatasCsv.getList());
+			i++;
 		}
 		System.out.println("Gps position corrected updated  " + metaDatasCsv.getList().size());
 
@@ -75,9 +76,11 @@ public class PreMatcher {
 			this.listPAires.addAll(list);
 		}
 		System.out.println("List Paires size " + listPAires.size() + "  ");
-		System.out.println("Moyenne Paires " + listPAires.size() / this.metaDatasCsv.getList().size() + "  ");
+		
 		this.setPairesUniques = new HashSet<>(listPAires);
 		System.out.println("Set Paires size " + setPairesUniques.size() + "  ");
+		System.out.println("Moyenne Paires / image: " + setPairesUniques.size() / this.metaDatasCsv.getList().size() + "  ");
+		
 	}
 
 	private List<PaireMetadataClose> createPaires(MetaData metaData) throws Exception {

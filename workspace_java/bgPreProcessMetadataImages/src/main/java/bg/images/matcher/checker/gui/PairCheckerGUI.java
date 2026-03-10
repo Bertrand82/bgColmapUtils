@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import bg.database.DatabaseColmap;
 import bg.gui.DataGui;
 import bg.images.matcher.checker.PairChecker;
 import bg.images.matcher.checker.PaireSimple;
@@ -28,9 +29,11 @@ public class PairCheckerGUI {
 	PaireSimple pairCurrent;
 	int iCurrentPair;
 	JTextField textFieldSearch = new JTextField(30) ;
+	DatabaseColmap databaseColmap;
 
-	public PairCheckerGUI(PairChecker pairChecker, File dirImages) {
+	public PairCheckerGUI(PairChecker pairChecker, File dirImages, File databaseColmapFile) throws Exception{
 		this.pairChecker = pairChecker;
+		this.databaseColmap= new DatabaseColmap(databaseColmapFile);
 		iCurrentPair = 0;
 		this.pairCurrent = this.pairChecker.list.get(iCurrentPair);
 		frame = new JFrame("bg");
@@ -77,8 +80,8 @@ public class PairCheckerGUI {
 		panelNorth.add(panelSearch, BorderLayout.CENTER);
 		
 		PaireSimple pair = pairChecker.list.get(0);
-		canvas1 = new PanelImage(pair.imag1,pair.nbRelations1, dirImages ,pairChecker);
-		canvas2 = new PanelImage(pair.imag2,pair.nbRelations2, dirImages,pairChecker);
+		canvas1 = new PanelImage(pair.imag1,pair.nbRelations1, dirImages ,pairChecker,databaseColmap);
+		canvas2 = new PanelImage(pair.imag2,pair.nbRelations2, dirImages,pairChecker,databaseColmap);
 
 		GridLayout gridLayOut = new GridLayout(1, 2);
 		JPanel panel0 = new JPanel(gridLayOut);

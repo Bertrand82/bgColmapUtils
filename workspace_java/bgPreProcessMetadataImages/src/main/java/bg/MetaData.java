@@ -1,12 +1,17 @@
 package bg;
 
 import java.io.File;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.drew.metadata.Metadata;
 
 import bg.util.GpsPositionFactory;
 import bg.util.GpsPosition2;
@@ -23,9 +28,9 @@ public class MetaData {
 	public double pitch;
 	public double roll;
 
-	int numeroSequence;
-	LocalDateTime date;
-	GpsPosition2 gpsPosition;
+	public int numeroSequence;
+	public LocalDateTime date;
+	public GpsPosition2 gpsPosition;
 
 	// DJI_20260207175436_0671_D.JPG,-207.0166253643368,-404.054606722876,-1.690999999999999,-71.8,-60.0,0.0
 	public MetaData(String line) {
@@ -119,30 +124,48 @@ public class MetaData {
 	}
 
 	List<MetaData> listClose = new ArrayList<MetaData>();
-
+	/**
+	 * Cherche les n images les plus proches, n étant compris entre 4 et 8
+	 * Si il y en a trop, le traitement est trop long (matcher); si il y en a moins,on presume que la qualité est dégradée. 
+	 * @param i
+	 * @param list2
+	 */
 	public void searchCloseView(int i, List<MetaData> list2) {
-		List<MetaData> listClose1 = searchCloseView2(i, list2, this.rView);// Pour traces uniquement
-		List<MetaData> listClose2 = new ArrayList<MetaData>();
+		MetaData metaData0 =  list2.get(i);
+		HashSet<MetaData> listClose1 = searchCloseView2(i, list2, this.rView);// Pour traces uniquement
+		HashSet<MetaData> listCloseByGps = new HashSet<MetaData>();
 		int n = 0;
 		double rView2 = this.rView;
-		while (((listClose2.size() >= 8) || (listClose2.size() <= 2)) && (n < 4)) {
+		while (((listCloseByGps.size() >= 8) || (listCloseByGps.size() <= 2)) && (n < 4)) {
 			if (listClose1.size() >= 8) {
 				rView2=rView2*0.8;
-				listClose2 = searchCloseView2(i, list2, rView2 );
+				listCloseByGps = searchCloseView2(i, list2, rView2 );
 			} else if (listClose1.size() <= 2) {
 				rView2=rView2*1.2;
-				listClose2 = searchCloseView2(i, list2, rView2);
+				listCloseByGps = searchCloseView2(i, list2, rView2);
 			} else {
-				listClose2 = listClose1;
+				listCloseByGps = listClose1;
 			}
 			n++;
 		}
-		this.listClose.addAll(listClose2);
-		System.out.println("listClose : " + listClose1.size() + " | " + listClose2.size() + "| rView2 :" + rView2+"   n: "+n);
+		HashSet<MetaData> listCloseByTime = new HashSet<MetaData>();
+		for (MetaData mt :list2) {
+			long delta = Math.abs(Duration.between(mt.date, metaData0.date).toMillis());
+			if (delta <3000l) {
+				if (!mt.equals(metaData0)) {
+					listCloseByTime.add(mt);
+				}
+			}
+		}
+		HashSet<MetaData> listCloser = new HashSet<MetaData>();
+		listCloser.addAll(listCloseByGps);
+		listCloser.addAll(listCloseByTime);
+		this.listClose.addAll(listCloser);
+		System.out.println("listClose :  " + String.format("%2d",listClose.size()) + " | listCloseByGps:" +String.format("%2d", listCloseByGps.size() )+ "| rView2 :" +String.format("%05.1f", rView2)+"   n: "+n+"   listCloseByTime :"+listCloseByTime.size()+"  | listCloser:  "+listCloser.size());
 	}
 
-	public List<MetaData> searchCloseView2(int i, List<MetaData> list2, double rView2) {
-		List<MetaData> listClose2 = new ArrayList<MetaData>();
+	public HashSet<MetaData> searchCloseView2(int i, List<MetaData> list2, double rView2) {
+		HashSet<MetaData> listClose2 = new HashSet<MetaData>();
 		int j = 0;
 		while (j < list2.size()) {
 
