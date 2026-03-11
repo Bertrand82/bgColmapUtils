@@ -22,8 +22,10 @@ public class ProcessDirImagesByVols {
 	List<Vol> listVols = new ArrayList<Vol>();
 	File dirGenerated;
 	File dirIn;
+	File dirImages ;
 	public ProcessDirImagesByVols(File dir) throws Exception {
 		dirIn = dir.getCanonicalFile();
+		dirImages= new File(dirIn,"images");
 		init();
 		processVols(this.listVols);
 	}
@@ -41,7 +43,7 @@ public class ProcessDirImagesByVols {
 		LocalDateTime Z_1_date = null;
 		for (File f : files) {
 			if (f.getName().endsWith(".csv")) {
-				this.processCsv= new MetaDatasCsv(f);
+				this.processCsv= new MetaDatasCsv(f,dirImages);
 			}
 		}
 		int numeroVol =0;

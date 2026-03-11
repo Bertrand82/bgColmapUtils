@@ -45,7 +45,8 @@ public class DataGui {
     /** Construit la GUI + charge les JPG du répertoire + démarre le diaporama. */
     public DataGui(File dir) throws Exception {
     	File metadataCsvFile= new File(dir,"metadata.csv");
-		this.metadatas= new MetaDatasCsv(metadataCsvFile);
+    	File dirImages= new File(dir,"images");
+		this.metadatas= new MetaDatasCsv(metadataCsvFile,dirImages);
 		
         initListFile(dir);
 

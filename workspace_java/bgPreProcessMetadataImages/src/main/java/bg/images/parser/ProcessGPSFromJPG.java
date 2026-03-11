@@ -21,8 +21,9 @@ public class ProcessGPSFromJPG {
 	
 	public ProcessGPSFromJPG(File dir) throws Exception {
 		metadataCsvFile= new File(dir,"metadata.csv");
-		this.processCsv = new MetaDatasCsv(metadataCsvFile);
-		System.out.println("metadata "+metadataCsvFile.getName()+" exists :"+metadataCsvFile.exists());
+		File dirImages = new File(dir,"images");
+		this.processCsv = new MetaDatasCsv(metadataCsvFile, dirImages);
+		System.out.println("metadata "+metadataCsvFile.getName()+" exists :"+metadataCsvFile.exists()+" | dirImages exists : "+dirImages.exists());
 		File[] files = dir.listFiles();
 		for (File f : files) {
 			if (f.getName().toLowerCase().endsWith(".jpg")) {

@@ -24,28 +24,35 @@ public class PreMatcher {
 	Set<PaireMetadataClose> setPairesUniques;
 
 	public PreMatcher(File fileMetadata, File dirImages) throws Exception {
-		this(new MetaDatasCsv(fileMetadata), dirImages);
+		this(new MetaDatasCsv(fileMetadata,dirImages), dirImages);
 
 	}
 
 	public PreMatcher(MetaDatasCsv metaDatasCsv, File dirImages) throws Exception {
 		this.metaDatasCsv = metaDatasCsv;
 		this.dirImages = dirImages;
-		loadGpsFromImages();
+		loadGpsFromDirImages();
 		processGpsFromView();
 		processLoopListClosers();
 		consolidationPaire();
 		exportListPaires();
 	}
 
-	private void loadGpsFromImages() throws Exception {
+	private void loadGpsFromDirImages() throws Exception {
 
 		int i = 0;
+		int iDoentexist=0;
 		for (MetaData metaData : metaDatasCsv.getList()) {
 			File fileImage = new File(dirImages, metaData.fileName);
-			i += metaData.updateGpsPosition(fileImage);
+			if (fileImage.exists()) {
+				i += metaData.updateGpsPosition(fileImage);
+			}else {
+				iDoentexist++;
+				System.err.println("File doesn't exists "+metaData.fileName+" in  dirImage exist: "+dirImages.exists()+"  "+dirImages.getAbsolutePath());
+			}
 		}
 		System.out.println("Gps position from jpg updated " + i + " / " + metaDatasCsv.getList().size());
+		System.out.println("File doen't exists  " + iDoentexist + " / " + metaDatasCsv.getList().size());
 
 	}
 

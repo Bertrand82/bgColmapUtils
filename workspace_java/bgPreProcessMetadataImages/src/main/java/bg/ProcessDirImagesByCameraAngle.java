@@ -22,8 +22,10 @@ public class ProcessDirImagesByCameraAngle {
 	List<Vol> listVols = new ArrayList<Vol>();
 	File dirGenerated;
 	File dirIn;
+	File dirImages;
 	public ProcessDirImagesByCameraAngle(File dir) throws Exception {
 		dirIn = dir.getCanonicalFile();
+		dirImages = new File(dirIn,"images");
 		init();
 		processVols(this.listVols);
 	}
@@ -41,7 +43,7 @@ public class ProcessDirImagesByCameraAngle {
 		
 		for (File f : files) {
 			if (f.getName().endsWith(".csv")) {
-				this.processCsv= new MetaDatasCsv(f);
+				this.processCsv= new MetaDatasCsv(f,dirImages);
 			}
 		}
 		int numeroVol =0;

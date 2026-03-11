@@ -12,13 +12,16 @@ public class MetaDatasCsv {
 	
 	List<MetaData> list =  new ArrayList<MetaData>();
 
-	public MetaDatasCsv(File f) throws Exception {
-		FileReader fr = new FileReader(f);
+	public MetaDatasCsv(File fMetadataCsv, File dirImages) throws Exception {
+		FileReader fr = new FileReader(fMetadataCsv);
 		BufferedReader br = new BufferedReader(fr);
 		String line = null;
 		while((line= br.readLine() ) != null) {
 			MetaData iv = new MetaData(line);
-			list.add(iv);
+			File fileImage = new File( dirImages,iv.fileName);
+			if (fileImage.exists()) {
+				list.add(iv);
+			}
 		}
 	}
 
@@ -31,11 +34,7 @@ public class MetaDatasCsv {
 		return null;
 	}
 	
-	public static void main(String[] a) throws Exception{
-		File fileMetadata = new File("metadata.csv");
-		new MetaDatasCsv(fileMetadata);
-	}
-
+	
 	public List<MetaData> getList() {
 		return list;
 	}
