@@ -10,7 +10,7 @@ DIR_HOME = Path("/data/vol_pitch_60/")
 DIR_IMAGES = DIR_HOME / "images"
 DIR_OUTPUT = DIR_HOME / "output"
 DB_PATH = DIR_OUTPUT / "database.db"
-METADATA_CSV = DIR_OUTPUT / "metadata.csv"
+METADATA_CSV = DIR_HOME / "metadata.csv"
 MATCH_TXT = DIR_OUTPUT / "match.txt"
 
 
