@@ -4,7 +4,6 @@ import sqlite3
 import sys
 from pathlib import Path
 
-
 DIR_HOME = Path("/data/vol_pitch_60/")
 DIR_IMAGES = DIR_HOME / "images"
 DIR_OUTPUT = DIR_HOME / "output"
@@ -28,7 +27,6 @@ def echo_and_check_dir(p: Path) -> None:
 
 
 def count_files_in_dir(p: Path) -> int:
-    # Regular files only (not directories). Not recursive.
     return sum(1 for x in p.iterdir() if x.is_file())
 
 
@@ -53,12 +51,36 @@ def count_lines_text(path: Path) -> int:
 
 
 def count_lines_csv(path: Path) -> int:
-    # Counts all rows, including header if present.
     if not path.exists():
         raise FileNotFoundError(f"Missing file: {path}")
     with path.open("r", encoding="utf-8", errors="replace", newline="") as f:
-        reader = csv.reader(f)
-        return sum(1 for _ in reader)
+        return sum(1 for _ in csv.reader(f))
+
+
+def count_colmap_data_lines(path: Path) -> int:
+    """Counts non-empty, non-comment lines (i.e., actual data rows)."""
+    if not path.exists():
+        raise FileNotFoundError(f"Missing file: {path}")
+    n = 0
+    with path.open("r", encoding="utf-8", errors="replace") as f:
+        for line in f:
+            s = line.strip()
+            if not s or s.startswith("#"):
+                continue
+            n += 1
+    return n
+
+
+def count_images_in_colmap_images_txt(path: Path) -> int:
+    """
+    COLMAP images.txt format: for each image:
+      - one data line with: IMAGE_ID, QW QX QY QZ, TX TY TZ, CAMERA_ID, NAME
+      - one data line with: POINTS2D[] (can be empty)
+    Comments start with '#'. Blank lines may appear.
+    So number of images = (number of non-comment data lines) / 2 (floor).
+    """
+    data_lines = count_colmap_data_lines(path)
+    return data_lines // 2
 
 
 def main() -> int:
@@ -71,32 +93,25 @@ def main() -> int:
         echo_and_check_dir(DIR_MERGED)
 
         print("\n== Counting files in images directory ==")
-        n_files_images_dir = count_files_in_dir(DIR_IMAGES)
-        print(f"Files in DIR_IMAGES: {n_files_images_dir}")
+        print(f"Files in DIR_IMAGES: {count_files_in_dir(DIR_IMAGES)}")
 
         print("\n== SQLite stats ==")
-        n_images_table = sqlite_count(DB_PATH, "SELECT COUNT(*) FROM images;")
-        print(f"Rows in database.images: {n_images_table}")
-
-        # Typically 1 row per image pair that has matches.
-        n_pairs_matches = sqlite_count(DB_PATH, "SELECT COUNT(*) FROM matches;")
-        print(f"Rows in database.matches (pairs): {n_pairs_matches}")
+        print(f"Rows in database.images: {sqlite_count(DB_PATH, 'SELECT COUNT(*) FROM images;')}")
+        print(f"Rows in database.matches (pairs): {sqlite_count(DB_PATH, 'SELECT COUNT(*) FROM matches;')}")
 
         print("\n== Counting lines in files ==")
-        n_metadata_lines = count_lines_csv(METADATA_CSV)
-        print(f"Lines in {METADATA_CSV.name}: {n_metadata_lines}")
+        print(f"Lines in {METADATA_CSV.name}: {count_lines_csv(METADATA_CSV)}")
+        print(f"Lines in {MATCH_TXT.name}: {count_lines_text(MATCH_TXT)}")
+        print(f"Lines in {MERGED_IMAGES_TXT}: {count_lines_text(MERGED_IMAGES_TXT)}")
+        print(f"Lines in {MERGED_POINTS3D_TXT}: {count_lines_text(MERGED_POINTS3D_TXT)}")
 
-        n_match_lines = count_lines_text(MATCH_TXT)
-        print(f"Lines in {MATCH_TXT.name}: {n_match_lines}")
-
-        n_merged_images_lines = count_lines_text(MERGED_IMAGES_TXT)
-        print(f"Lines in {MERGED_IMAGES_TXT}: {n_merged_images_lines}")
-
-        n_merged_points3d_lines = count_lines_text(MERGED_POINTS3D_TXT)
-        print(f"Lines in {MERGED_POINTS3D_TXT}: {n_merged_points3d_lines}")
+        print("\n== COLMAP model counts (excluding comments) ==")
+        n_model_images = count_images_in_colmap_images_txt(MERGED_IMAGES_TXT)
+        n_points3d = count_colmap_data_lines(MERGED_POINTS3D_TXT)
+        print(f"Reconstructed images in merged/images.txt: {n_model_images}")
+        print(f"Points3D in merged/points3D.txt: {n_points3d}")
 
         return 0
-
     except Exception as e:
         print(f"ERROR: {e}", file=sys.stderr)
         return 1
