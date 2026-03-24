@@ -1,4 +1,4 @@
-package bg;
+package bg.metadata;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,7 +25,7 @@ public class MetaDatasCsv {
 		}
 	}
 
-	public MetaData getImageDroneView(String name) {
+	public MetaData getMetaData(String name) {
 		for(MetaData idv :list) {
 			if(idv.fileName.equals(name)) {
 				return idv;

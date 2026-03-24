@@ -7,9 +7,9 @@ import java.util.HashMap;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 
-import bg.MetaData;
-import bg.MetaDatasCsv;
 import bg.util.GpsPositionFactory;
+import bg.metadata.MetaData;
+import bg.metadata.MetaDatasCsv;
 import bg.util.GpsPosition2;
 
 

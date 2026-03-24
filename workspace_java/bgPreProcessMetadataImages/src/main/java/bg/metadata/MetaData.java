@@ -1,4 +1,4 @@
-package bg;
+package bg.metadata;
 
 import java.io.File;
 import java.time.Duration;
@@ -84,7 +84,10 @@ public class MetaData {
 
 	public int updateGpsPosition(File fileImage) throws Exception {
 		this.gpsPosition = GpsPositionFactory.extractPosition(fileImage);
+		
 		if (this.gpsPosition == null) {
+			System.out.println("updateGpsPosition "+fileImage.getName()+ "  gps From Image ::  "+this.gpsPosition);
+			
 			return 0;
 		} else {
 			return 1;
@@ -102,8 +105,8 @@ public class MetaData {
 		double zz;
 		double xx;
 		double yy;
-		if (gpsPosition == null) {
-			zz = this.z;
+		if (this.gpsPosition == null) {
+			zz = this.z+50;
 			xx = this.x;
 			yy = this.y;
 		} else {

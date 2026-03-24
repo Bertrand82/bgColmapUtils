@@ -1,4 +1,4 @@
-package bg;
+package bg.metadata;
 
 import java.io.File;
 import java.io.IOException;

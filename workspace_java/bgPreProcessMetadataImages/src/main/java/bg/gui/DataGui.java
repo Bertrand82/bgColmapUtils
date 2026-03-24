@@ -16,16 +16,16 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import bg.MetaData;
-import bg.MetaDatasCsv;
 import bg.util.GpsPositionFactory;
+import bg.metadata.MetaData;
+import bg.metadata.MetaDatasCsv;
 import bg.util.GpsPosition2;
 
 
 public class DataGui {
 
     private final List<File> listFilesJPEG = new ArrayList<File>();
-    MetaDatasCsv metadatas;
+    final MetaDatasCsv metadatas;
     private int index = -1;
 
     private Image currentImage;
@@ -46,10 +46,11 @@ public class DataGui {
     public DataGui(File dir) throws Exception {
     	File metadataCsvFile= new File(dir,"metadata.csv");
     	File dirImages= new File(dir,"images");
+    	System.out.println("metadata.csv exists :"+metadataCsvFile.exists());
 		this.metadatas= new MetaDatasCsv(metadataCsvFile,dirImages);
-		
-        initListFile(dir);
-
+		System.out.println("MetaDatasCsv "+metadataCsvFile);
+        initListFile(dirImages);
+        System.out.println("listFilesJPEG size :"+this.listFilesJPEG.size());
         frame = new JFrame("bg");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -109,24 +110,12 @@ public class DataGui {
         File f = listFilesJPEG.get(index);
 
         currentImage = new ImageIcon(f.getAbsolutePath()).getImage();
-        MetaData metaData = this.metadatas.getImageDroneView(f.getName());
-        Double pitch =   metaData.pitch;
-        Double roll =   metaData.roll;
-        Double yaw = metaData.yaw;
-        double x =metaData.x;
-        double y =metaData.y;
-        double z =metaData.z;
-         String pitchStr = String.format("%7.2f", pitch);
-        String rollStr  = String.format("%7.2f", roll);
-        String yawStr  = String.format("%7.2f", yaw);
-        String xStr =  String.format("%7.2f", x);
-        String yStr =  String.format("%7.2f", y);
-        String zStr =  String.format("%7.2f", z);
         Double gpsZ =0d;
         double gpsLAtitude=0d;
         double gpsLongitude=0d;
+        GpsPosition2 position =null;
         try {
-        	GpsPosition2 position =GpsPositionFactory.extractPosition(f);
+        	position =GpsPositionFactory.extractPosition(f);
         	gpsZ = position.getAltitudeMeters();
         	gpsLAtitude =position.getLatitude();
         	gpsLongitude = position.getLongitude();
@@ -137,6 +126,45 @@ public class DataGui {
         String gpsZStr =  String.format("%7.2f", gpsZ);
         String gpsLatStr = String.format("%9.4f", gpsLAtitude);
         String gpsLonStr = String.format("%9.4f", gpsLongitude);
+
+        MetaData metaData = this.metadatas.getMetaData(f.getName());
+        Double pitch ;
+        Double roll;
+        Double yaw ;
+        double x;
+        double y ;
+        double z ;
+        if(metaData==null) {
+        	 pitch =   0.0d;
+             roll =   0.0d;
+             yaw = 0.0d;
+             if (position== null) {
+            	 x=0;
+            	 y=0;
+            	 z=0;
+            	 System.err.println("Big Probleme : no position "+f.getName());
+             }else {
+             x =position.getX();
+             y =position.getY();
+             z =position.getAltitudeMeters();
+             }
+        	
+        }else {
+        	 pitch =   metaData.pitch;
+             roll =   metaData.roll;
+             yaw = metaData.yaw;
+             x =metaData.x;
+             y =metaData.y;
+             z =metaData.z;
+        }
+        
+        String pitchStr = String.format("%7.2f", pitch);
+        String rollStr  = String.format("%7.2f", roll);
+        String yawStr  = String.format("%7.2f", yaw);
+        String xStr =  String.format("%7.2f", x);
+        String yStr =  String.format("%7.2f", y);
+        String zStr =  String.format("%7.2f", z);
+       
 
         infoField.setText(
                 (index + 1) + " / " + listFilesJPEG.size()               

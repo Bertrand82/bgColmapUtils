@@ -1,4 +1,4 @@
-package bg;
+package bg.metadata;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.lang.Rational;

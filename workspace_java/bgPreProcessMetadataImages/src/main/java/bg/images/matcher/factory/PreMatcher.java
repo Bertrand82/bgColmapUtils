@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import bg.MetaData;
-import bg.MetaDatasCsv;
+import bg.metadata.MetaData;
+import bg.metadata.MetaDatasCsv;
 import bg.util.GpsPositionFactory;
 
 public class PreMatcher {

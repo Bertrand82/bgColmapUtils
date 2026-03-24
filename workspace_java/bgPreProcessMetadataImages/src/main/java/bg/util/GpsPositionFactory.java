@@ -9,6 +9,7 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.lang.GeoLocation;
 import com.drew.lang.Rational;
+import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
@@ -25,6 +26,7 @@ public final class GpsPositionFactory {
     public static GpsPosition2 extractPosition(File imageFile) throws IOException {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
+           
             GpsDirectory gps = metadata.getFirstDirectoryOfType(GpsDirectory.class);
             if (gps == null) return null;
 

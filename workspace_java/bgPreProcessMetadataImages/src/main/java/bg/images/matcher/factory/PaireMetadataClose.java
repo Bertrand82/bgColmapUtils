@@ -2,7 +2,7 @@ package bg.images.matcher.factory;
 
 import java.util.Objects;
 
-import bg.MetaData;
+import bg.metadata.MetaData;
 
 public class PaireMetadataClose implements Comparable<PaireMetadataClose>{
 

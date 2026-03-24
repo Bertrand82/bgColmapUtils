@@ -7,6 +7,8 @@ public class MainPreMatcher {
 	public static void main(String[] args) throws Exception{
 		String directoryPath="D:\\aws_drones_images\\generated_pitch\\vol_pitch_60";
 		directoryPath="D:\\aws_drones_images\\location1";
+		directoryPath="D:\\aws_drones_images\\generated\\vol_0";
+		directoryPath="D:\\aws_drones_images\\TEMP\\generated\\vol_0";
 		//directoryPath="D:\\aws_drones_images - Copie\\generated\\vol_7";
 		File dir = new File(directoryPath);
 		File dirImages = new File(dir,"images");
@@ -15,7 +17,7 @@ public class MainPreMatcher {
 		System.out.println("dirImages "+dirImages.getName()+"  exists "+dirImages.exists());
 		System.out.println("fileMetadata "+fileMetadata.getName()+" exists "+fileMetadata.exists());
         PreMatcher preMatcher = new PreMatcher(fileMetadata,dirImages);
-        System.out.println("PreMatcher done");
+        System.out.println("PreMatcher done ");
 	}
 
 }

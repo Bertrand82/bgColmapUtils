@@ -1,4 +1,4 @@
-package bg;
+package bg.metadata;
 
 import java.io.File;
 import java.time.Duration;
@@ -12,60 +12,54 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProcessDirImagesByVols {
+public class ProcessDirImagesByCameraAngle {
 	private DateTimeFormatter TS14_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 	private static final Pattern TS14 = Pattern.compile("(\\d{14})");
 	private static DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mmss");
 
-	File[] files;
+	
 	MetaDatasCsv processCsv;
 	List<Vol> listVols = new ArrayList<Vol>();
 	File dirGenerated;
 	File dirIn;
-	File dirImages ;
-	public ProcessDirImagesByVols(File dir) throws Exception {
+	File dirImages;
+	public ProcessDirImagesByCameraAngle(File dir) throws Exception {
 		dirIn = dir.getCanonicalFile();
-		dirImages= new File(dirIn,"images");
-		init();
+		dirImages = new File(dirIn,"images");
+		init(dirIn, dirImages);
 		processVols(this.listVols);
 	}
 	
-	private void init() throws Exception{
+	private void init(File dirIn, File dirImages) throws Exception{
 		
-		dirGenerated = new File(dirIn.getParentFile(),"generated");
+		dirGenerated = new File(dirIn.getParentFile(),"generated_pitch");
 		dirGenerated.mkdirs();
 		
-		files = dirIn.listFiles();
+		File[]  filesImages = dirIn.listFiles();
 		// Tri par date
-		Arrays.sort(files, Comparator.comparing(f -> f.getName().toLowerCase()));
+		Arrays.sort(filesImages, Comparator.comparing(f -> f.getName().toLowerCase()));
 		System.out.println("Fichiers dans : " + dirIn.getAbsolutePath());
 		int i = 0;
-		LocalDateTime Z_1_date = null;
-		for (File f : files) {
+		
+		File[] files2 = dirImages.listFiles();
+		for (File f : files2) {
 			if (f.getName().endsWith(".csv")) {
 				this.processCsv= new MetaDatasCsv(f,dirImages);
 			}
 		}
 		int numeroVol =0;
-		Vol vol  = new Vol(numeroVol++);
-		this.listVols.add(vol);
-		for (File f : files) {
+		
+		for (File f : filesImages) {
 			
 			if (f.isFile() && (f.getName().startsWith("DJI"))) {
-				MetaData droneView = this.processCsv.getImageDroneView(f.getName());
+				MetaData droneView = this.processCsv.getMetaData(f.getName());
+				Double pitch = droneView.pitch;
 				
-				long delta = diffSeconds(Z_1_date, droneView.date);
-				i++;
-				System.out.println(String.format("%03d", i++) 
-						 + " |  delta:  " + delta+"  "+droneView);
-				Z_1_date = droneView.date;
-				if (delta > 100) {
-
-					System.out.println(i
-							+ "  New Vol                                        --------------------------------");
-					i = 0;
-					vol  = new Vol(numeroVol++);
-					this.listVols.add(vol);
+				Vol vol = getVolFromPitch(pitch);
+				if (vol == null) {
+					vol = new Vol(( pitch.intValue()));
+					vol.pitchInt=pitch.intValue();
+					listVols.add(vol);
 				}
 				vol.list.add(droneView);				
 			}
@@ -75,10 +69,19 @@ public class ProcessDirImagesByVols {
 	}
 
 	
+    
+	private Vol getVolFromPitch(Double pitch) {
+		for (Vol vv : listVols) {
+			if (vv.pitchInt == pitch.intValue()) {
+				return vv;
+			}
+		}
+		return null;
+	}
 
 	private void processVols(List<Vol> listVols2) {
 		for(Vol v : listVols2){
-			if (v.list.size()>3) {
+			if (v.list.size()>4) {
 				processVol(v);
 			}
 		}
@@ -87,10 +90,11 @@ public class ProcessDirImagesByVols {
 
 
 
-	private void processVol(Vol v) {
-		File dirOut = new File(dirGenerated,"vol_"+v.numeroVol);
+	private void processVol(Vol vol) {
+		File dirOut = new File(dirGenerated,("vol_pitch_"+vol.pitchInt).replace("-", ""));
 		dirOut.mkdirs();
-		v.generateExtraction(dirIn,dirOut,30);
+		vol.generateExtraction(dirImages,dirOut,2000);
+		System.out.println("result : pitch : "+vol.pitchInt+"  "+vol.list.size());
 	}
 
 
