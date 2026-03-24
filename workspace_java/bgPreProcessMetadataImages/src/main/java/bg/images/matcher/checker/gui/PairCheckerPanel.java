@@ -19,14 +19,14 @@ import javax.swing.JTextField;
 import bg.database.DatabaseColmap;
 import bg.database.Match;
 import bg.database.UtilDataBase;
-import bg.gui.DisplayImagesGui;
+import bg.display.images.gui.DisplayImagesPanel;
 import bg.images.matcher.checker.PairChecker;
 import bg.images.matcher.checker.PaireSimple;
 
-public class PairCheckerGUI {
+public class PairCheckerPanel extends JPanel{
 
 	PairChecker pairChecker;
-	JFrame frame;
+	private JFrame frame_;
 	private final PanelImage pImage1;
 	private final PanelImage pImage2;
 	private final JTextField infoField;
@@ -36,13 +36,12 @@ public class PairCheckerGUI {
 	JTextField textFieldSearch = new JTextField(30) ;
 	DatabaseColmap databaseColmap;
 
-	public PairCheckerGUI(PairChecker pairChecker, File dirImages, File databaseColmapFile) throws Exception{
+	public PairCheckerPanel(PairChecker pairChecker, File dirImages, File databaseColmapFile) throws Exception{
 		this.pairChecker = pairChecker;
 		this.databaseColmap= new DatabaseColmap(databaseColmapFile);
 		iCurrentPair = 0;
 		this.pairCurrent = this.pairChecker.list.get(iCurrentPair);
-		frame = new JFrame("bg");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
 		infoField = new JTextField();
 		infoField.setEditable(false);
@@ -112,13 +111,11 @@ public class PairCheckerGUI {
 		JPanel panel0 = new JPanel(gridLayOut);
 		panel0.add(pImage1);
 		panel0.add(pImage2);
-		frame.getContentPane().setLayout(new BorderLayout());
-		frame.getContentPane().add(panelNorth, BorderLayout.NORTH);
-		frame.getContentPane().add(panel0, BorderLayout.CENTER);
+		this.setLayout(new BorderLayout());
+		this.add(panelNorth, BorderLayout.NORTH);
+		this.add(panel0, BorderLayout.CENTER);
 
-		frame.setSize(900, 700);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		
 		panel0.updateUI();
 
 	}

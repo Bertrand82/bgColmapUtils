@@ -1,4 +1,4 @@
-package bg.gui;
+package bg.display.images.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -26,7 +26,7 @@ import bg.metadata.MetaDatasCsv;
 import bg.util.GpsPosition2;
 
 
-public class DisplayImagesGui extends JPanel{
+public class DisplayImagesPanel extends JPanel{
 
     private final List<File> listFilesJPEG = new ArrayList<File>();
     final MetaDatasCsv metadatas;
@@ -49,7 +49,7 @@ public class DisplayImagesGui extends JPanel{
     };
 
     /** Construit la GUI + charge les JPG du répertoire + démarre le diaporama. */
-    public DisplayImagesGui(File dir) throws Exception {
+    public DisplayImagesPanel(File dir) throws Exception {
     	File metadataCsvFile= new File(dir,"metadata.csv");
     	File dirImages= new File(dir,"images");
     	System.out.println("metadata.csv exists :"+metadataCsvFile.exists());
@@ -64,7 +64,7 @@ public class DisplayImagesGui extends JPanel{
         canvas = new Canvas() {
             @Override
             public void paint(Graphics g) {
-                DisplayImagesGui.this.paintImage(g);
+                DisplayImagesPanel.this.paintImage(g);
             }
 
             @Override
@@ -168,7 +168,7 @@ public class DisplayImagesGui extends JPanel{
         	gpsZ = position.getAltitudeMeters();
         	gpsLAtitude =position.getLatitude();
         	gpsLongitude = position.getLongitude();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -193,7 +193,7 @@ public class DisplayImagesGui extends JPanel{
             	 z=0;
             	 System.err.println("Big Probleme : no position "+f.getName());
              }else {
-             x =position.getX();
+             x =position.getX_process();
              y =position.getY();
              z =position.getAltitudeMeters();
              }

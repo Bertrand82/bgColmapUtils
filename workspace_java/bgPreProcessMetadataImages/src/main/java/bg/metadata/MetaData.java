@@ -111,7 +111,7 @@ public class MetaData {
 			yy = this.y;
 		} else {
 			zz = gpsPosition.getAltitudeMeters();
-			xx = gpsPosition.getX();
+			xx = gpsPosition.getX_process();
 			yy = gpsPosition.getY();
 		}
 

@@ -3,7 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.imaging.ImageProcessingException;
@@ -23,7 +25,7 @@ public final class GpsPositionFactory {
      * Extrait latitude/longitude et altitude (si présente) depuis l'EXIF GPS.
      * @return null si aucune info GPS exploitable.
      */
-    public static GpsPosition2 extractPosition(File imageFile) throws IOException {
+    public static GpsPosition2 extractPosition(File imageFile)  {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
            
@@ -70,13 +72,27 @@ public final class GpsPositionFactory {
             }
 
 
-            return new GpsPosition2(lat, lon, altitude,takenAt);
-        } catch (ImageProcessingException e) {
+            return new GpsPosition2(lat, lon, altitude,takenAt,imageFile.getName());
+        } catch (Exception e) {
             // format non supporté / EXIF illisible
             return null;
         }
+        
+        
+      
     }
    
- 
+    public static List<GpsPosition2> getListGpsPositionFromDirImages(File dir) {
+    	List<GpsPosition2> listA = new ArrayList<GpsPosition2>();
+    	for(File fImage : dir.listFiles()) {
+    		GpsPosition2 gps = extractPosition(fImage);
+    		if (gps == null) {
+    			System.err.println("gps is null "+fImage.getName());
+    		}else {
+    			listA.add(gps);
+    		}
+    	}
+    	return listA;
+    }
   
 }

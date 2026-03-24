@@ -10,7 +10,7 @@ public class MainPairCheckerGUI {
 	       System.out.println("pairChecker done");
 	       System.out.println("fileDatabase exists : "+MainPairChecker.fileDataBase.exists()+" "+MainPairChecker.fileDataBase.getCanonicalPath());
 	       System.out.println("dirImages exists : "+MainPairChecker.dirImages.exists()+" "+MainPairChecker.dirImages.getCanonicalPath());
-	       new PairCheckerGUI(pairChecker,MainPairChecker.dirImages,MainPairChecker.fileDataBase);
+	       new PairCheckerFrame(pairChecker,MainPairChecker.dirImages,MainPairChecker.fileDataBase);
 	}
 
 }
