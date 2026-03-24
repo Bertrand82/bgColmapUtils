@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import bg.database.DatabaseColmap;
 import bg.database.Match;
 import bg.database.UtilDataBase;
-import bg.gui.DataGui;
+import bg.gui.DisplayImagesGui;
 import bg.images.matcher.checker.PairChecker;
 import bg.images.matcher.checker.PaireSimple;
 

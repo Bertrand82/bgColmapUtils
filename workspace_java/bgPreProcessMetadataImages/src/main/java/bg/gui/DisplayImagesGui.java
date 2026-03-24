@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +14,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -22,7 +26,7 @@ import bg.metadata.MetaDatasCsv;
 import bg.util.GpsPosition2;
 
 
-public class DataGui {
+public class DisplayImagesGui extends JPanel{
 
     private final List<File> listFilesJPEG = new ArrayList<File>();
     final MetaDatasCsv metadatas;
@@ -31,9 +35,11 @@ public class DataGui {
     private Image currentImage;
     private Timer timer;
 
-    private final JFrame frame;
+  
     private final Canvas canvas;
     private final JTextField infoField;
+    private boolean pause=false;
+    private boolean forward=true;
 
     private static final Comparator<File> COMPARATOR_FILE = new Comparator<File>() {
         @Override
@@ -43,7 +49,7 @@ public class DataGui {
     };
 
     /** Construit la GUI + charge les JPG du répertoire + démarre le diaporama. */
-    public DataGui(File dir) throws Exception {
+    public DisplayImagesGui(File dir) throws Exception {
     	File metadataCsvFile= new File(dir,"metadata.csv");
     	File dirImages= new File(dir,"images");
     	System.out.println("metadata.csv exists :"+metadataCsvFile.exists());
@@ -51,16 +57,14 @@ public class DataGui {
 		System.out.println("MetaDatasCsv "+metadataCsvFile);
         initListFile(dirImages);
         System.out.println("listFilesJPEG size :"+this.listFilesJPEG.size());
-        frame = new JFrame("bg");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+ 
         infoField = new JTextField();
         infoField.setEditable(false);
 
         canvas = new Canvas() {
             @Override
             public void paint(Graphics g) {
-                DataGui.this.paintImage(g);
+                DisplayImagesGui.this.paintImage(g);
             }
 
             @Override
@@ -68,15 +72,45 @@ public class DataGui {
                 paint(g);
             }
         };
+        
+        JButton buttonPause = new JButton(" || ");
+        buttonPause.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pause=true;
+			}
+		});
+        JButton buttonGoPrevious = new JButton(" < ");
+        buttonGoPrevious.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pause=false;
+				forward=false;
+			}
+		}) ;
+        JButton buttonGoForward = new JButton(" > ");
+        buttonGoForward.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pause=false;
+				forward=true;
+			}
+		});
+        JPanel panelNorth = new JPanel(new BorderLayout());
+        panelNorth.add(infoField,BorderLayout.NORTH);
+        panelNorth.add(buttonPause, BorderLayout.CENTER);
+        panelNorth.add(buttonGoForward, BorderLayout.EAST);
+        panelNorth.add(buttonGoPrevious, BorderLayout.WEST);
 
-        frame.getContentPane().setLayout(new BorderLayout());
-        frame.getContentPane().add(infoField, BorderLayout.NORTH);
-        frame.getContentPane().add(canvas, BorderLayout.CENTER);
+        this.setLayout(new BorderLayout());
+        this.add(panelNorth, BorderLayout.NORTH);
+        this.add(canvas, BorderLayout.CENTER);
 
-        frame.setSize(900, 700);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
+        this.canvas.setSize(900, 700);
+        
         startSlideshow();
     }
 
@@ -101,12 +135,27 @@ public class DataGui {
 
         showNext(); // première image tout de suite
 
-        timer = new Timer(250, e -> showNext());
+        timer = new Timer(50, e -> showNext());
         timer.start();
     }
 
     private void showNext() {
-        index = (index + 1) % listFilesJPEG.size();
+    	  if (pause) {
+          	return;
+          }
+    	int ii;
+    	if (forward==true) {
+    		ii=1;
+    	}else {
+    		ii=-1;
+    	}
+
+    	
+        index = (index + ii) % listFilesJPEG.size();
+    	if (index <0) {
+    		index =0;
+    	}
+      
         File f = listFilesJPEG.get(index);
 
         currentImage = new ImageIcon(f.getAbsolutePath()).getImage();
@@ -202,4 +251,6 @@ public class DataGui {
 
         g.drawImage(currentImage, x, y, dw, dh, null);
     }
+
+	
 }
