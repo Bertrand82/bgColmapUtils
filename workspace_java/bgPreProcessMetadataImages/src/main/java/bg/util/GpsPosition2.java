@@ -34,6 +34,7 @@ public class GpsPosition2 {
     public Double getAltitudeMeters() { return altitudeMeters; }
     public double getX() {return this.x;}
     public double getY() {return this.y;}
+    public String getImageName() { return this.imageName;}
     
     @Override
     public String toString() {
