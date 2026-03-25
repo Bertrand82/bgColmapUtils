@@ -2,8 +2,6 @@ package bg.display.together.gui;
 
 import java.io.File;
 
-import bg.display.images.gui.DisplayImagesFrame;
-
 public class MainDisplayToGether {
 
 	public static void main(String[] args) throws Exception{
