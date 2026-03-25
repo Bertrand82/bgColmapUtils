@@ -24,8 +24,8 @@ public class DisplayTogetherPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	Canvas canvas;
-	Canvas canvasMiniature;
-	 private Image currentImage;
+	PreviewImage previewImage = new PreviewImage();
+	
 	List<GpsPosition2> listPositions;
 	final List<Bean> listBeans = new ArrayList<DisplayTogetherPanel.Bean>();
 	int w =500;
@@ -36,7 +36,10 @@ public class DisplayTogetherPanel extends JPanel {
 	double yMax = 0;
 	File dirImages;
 	double scale=0.1d;
-
+	int selectX1=0;
+	int selectY1=0;
+	int selectX2 =0;
+	int selectY2=0;
 	public DisplayTogetherPanel(File dir) throws Exception {
 		dirImages = new File(dir, "images");
 
@@ -54,20 +57,10 @@ public class DisplayTogetherPanel extends JPanel {
 				paint(g);
 			}
 		};
-		canvasMiniature = new Canvas() {
-			@Override
-			public void paint(Graphics g) {
-				DisplayTogetherPanel.this.paintImageMiniature(g);
-			}
-
-			@Override
-			public void update(Graphics g) {
-				paint(g);
-			}
-		};
+		
 		this.setLayout(new BorderLayout());
 		this.add(canvas,BorderLayout.CENTER);
-		this.add(canvasMiniature,BorderLayout.WEST);
+		this.add(previewImage,BorderLayout.WEST);
 		Dimension dim = new Dimension(w,h);
 		canvas.setPreferredSize(dim);
 		this.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -102,36 +95,20 @@ public class DisplayTogetherPanel extends JPanel {
 
 			@Override
 		    public void mousePressed(java.awt.event.MouseEvent e) {
-		        // Souvent mieux que mouseClicked si tu veux réagir immédiatement
+				 selectX1 = e.getX();
+			     selectY1 = e.getY();
 		    }
 
 		    @Override
 		    public void mouseReleased(java.awt.event.MouseEvent e) {
-		        // utile pour drag/drop
-		    }
+		    	 selectX2 = e.getX();
+			     selectY2 = e.getY();	
+			     canvas.repaint();}
 		});
 
 	}
 
-	protected void paintImageMiniature(Graphics g) {
-		if (currentImage == null) return;
-
-        int w = canvasMiniature.getWidth();
-        int h = canvasMiniature.getHeight();
-
-        int imgW = currentImage.getWidth(null);
-        int imgH = currentImage.getHeight(null);
-        if (imgW <= 0 || imgH <= 0) return;
-
-        double s = Math.min((double) w / imgW, (double) h / imgH);
-        int dw = (int) (imgW * s);
-        int dh = (int) (imgH * s);
-        int x = (w - dw) / 2;
-        int y = (h - dh) / 2;
-
-		g.drawImage(currentImage, x, y, dw, dh, null);
-		
-	}
+	
 
 	private void initListPositions() {
 		long timeStart = System.currentTimeMillis();
@@ -209,6 +186,8 @@ public class DisplayTogetherPanel extends JPanel {
 			//g.fillOval(1, 1, bean.px, bean.py);
 			g.fillRect( bean.px,bean.py,3,3);
 		}
+		g.setColor(Color.GREEN);
+		g.drawRect(selectX1, selectY1, selectX2-selectX1, selectY2-selectY1);
 	}
 
     private void displayImage(int x, int y) {
@@ -225,15 +204,7 @@ public class DisplayTogetherPanel extends JPanel {
     	}
     	System.out.println("Bean selected   "+beanSelected+"  x: "+x+"   y: "+y);
     	File fileImage = new File(dirImages,beanSelected.gps.getImageName());
-    	try {
-			this.currentImage = ImageIO.read(fileImage);
-			this.canvasMiniature.setPreferredSize(new Dimension(200,200));
-			this.canvasMiniature.repaint();
-			this.repaint();
-			this.updateUI();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	this.previewImage.displayImage(fileImage,beanSelected.gps);
+    	
 	}
 }
