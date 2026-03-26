@@ -17,7 +17,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
 
-public final class GpsPositionFactory {
+public final class PositionGps2Factory {
 
     
 
@@ -25,7 +25,7 @@ public final class GpsPositionFactory {
      * Extrait latitude/longitude et altitude (si présente) depuis l'EXIF GPS.
      * @return null si aucune info GPS exploitable.
      */
-    public static GpsPosition2 extractPosition(File imageFile)  {
+    public static PositionGps2 extractPosition(File imageFile)  {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
            
@@ -72,7 +72,7 @@ public final class GpsPositionFactory {
             }
 
 
-            return new GpsPosition2(lat, lon, altitude,takenAt,imageFile.getName());
+            return new PositionGps2(lat, lon, altitude,takenAt,imageFile.getName());
         } catch (Exception e) {
             // format non supporté / EXIF illisible
             return null;
@@ -82,10 +82,10 @@ public final class GpsPositionFactory {
       
     }
    
-    public static List<GpsPosition2> getListGpsPositionFromDirImages(File dir) {
-    	List<GpsPosition2> listA = new ArrayList<GpsPosition2>();
+    public static List<PositionGps2> getListGpsPositionFromDirImages(File dir) {
+    	List<PositionGps2> listA = new ArrayList<PositionGps2>();
     	for(File fImage : dir.listFiles()) {
-    		GpsPosition2 gps = extractPosition(fImage);
+    		PositionGps2 gps = extractPosition(fImage);
     		if (gps == null) {
     			System.err.println("gps is null "+fImage.getName());
     		}else {

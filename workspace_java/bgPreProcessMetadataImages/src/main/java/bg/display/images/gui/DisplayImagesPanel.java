@@ -20,10 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import bg.util.GpsPositionFactory;
+import bg.util.PositionGps2Factory;
 import bg.metadata.MetaData;
 import bg.metadata.MetaDatasCsv;
-import bg.util.GpsPosition2;
+import bg.util.PositionGps2;
 
 
 public class DisplayImagesPanel extends JPanel{
@@ -162,9 +162,9 @@ public class DisplayImagesPanel extends JPanel{
         Double gpsZ =0d;
         double gpsLAtitude=0d;
         double gpsLongitude=0d;
-        GpsPosition2 position =null;
+        PositionGps2 position =null;
         try {
-        	position =GpsPositionFactory.extractPosition(f);
+        	position =PositionGps2Factory.extractPosition(f);
         	gpsZ = position.getAltitudeMeters();
         	gpsLAtitude =position.getLatitude();
         	gpsLongitude = position.getLongitude();

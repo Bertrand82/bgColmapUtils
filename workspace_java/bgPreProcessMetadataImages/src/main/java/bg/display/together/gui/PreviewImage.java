@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import bg.util.GpsPosition2;
+import bg.util.PositionGps2;
 
 public class PreviewImage extends JPanel{
 
@@ -36,7 +36,7 @@ public class PreviewImage extends JPanel{
 	
 	
 
-	public void displayImage(File fileImage, GpsPosition2 gps) {
+	public void displayImage(File fileImage, PositionGps2 gps) {
 		try {
 			this.label.setText(gps.getImageName());
 			this.canvasMiniaturePrevious2.currentImage=this.canvasMiniaturePrevious1.currentImage;

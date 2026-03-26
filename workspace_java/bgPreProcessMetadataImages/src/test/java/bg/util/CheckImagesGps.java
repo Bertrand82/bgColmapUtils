@@ -11,7 +11,7 @@ public class CheckImagesGps {
 		File dir = new File("D:\\aws_drones_images\\TEMP\\generated\\vol_2\\images");
 		File[] imagesFile = dir.listFiles();
 		for (File ff : imagesFile) {
-			GpsPosition2 gps  = GpsPositionFactory.extractPosition(ff);
+			PositionGps2 gps  = PositionGps2Factory.extractPosition(ff);
 			System.out.println(" ff "+ff.getName()+"  "+gps);
 		}
 	}

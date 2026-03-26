@@ -3,7 +3,7 @@ package bg.util;
 import java.time.LocalDateTime;
 
 /** Résultat (compatible Java 8, pas de record). */
-public class GpsPosition2 {
+public class PositionGps2 {
     private final double latitude;
     private final double longitude;
     private final Double altitudeMeters; // null si absente
@@ -12,14 +12,15 @@ public class GpsPosition2 {
     private static final double EARTH_RADIUS_METERS = 6371008.8;
     private final double x;
     private final double y;
+    private final LocalDateTime date; // null si absente
    
     public LocalDateTime getDate() {
 		return date;
 	}
 
-	private final LocalDateTime date; // null si absente
+	
 
-    public GpsPosition2(double latitude, double longitude, Double altitudeMeters,LocalDateTime takenAt, String imageName) {
+    public PositionGps2(double latitude, double longitude, Double altitudeMeters,LocalDateTime takenAt, String imageName) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitudeMeters = altitudeMeters;

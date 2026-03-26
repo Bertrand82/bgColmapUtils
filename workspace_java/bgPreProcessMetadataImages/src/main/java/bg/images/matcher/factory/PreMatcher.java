@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 import bg.metadata.MetaData;
 import bg.metadata.MetaDatasCsv;
-import bg.util.GpsPositionFactory;
+import bg.util.PositionGps2Factory;
 
 public class PreMatcher {
 
@@ -60,7 +60,7 @@ public class PreMatcher {
 
 		for (MetaData metaData : metaDatasCsv.getList()) {
 			File fileImage = new File(dirImages, metaData.fileName);
-			metaData.correctGpsPosition();
+			metaData.correctGpsPosition2();
 		}
 		System.out.println("Gps position corrected updated  " + metaDatasCsv.getList().size());
 

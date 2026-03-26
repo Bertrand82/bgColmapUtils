@@ -17,7 +17,7 @@ public class GpsPositionTest {
 		File fileImage = new File(dir,"DJI_20260206153808_0798_D.JPG");
 		System.out.println("testGpsFactory  dir exists :"+dir.exists());
 		
-		GpsPosition2 gps  = GpsPositionFactory.extractPosition(fileImage);
+		PositionGps2 gps  = PositionGps2Factory.extractPosition(fileImage);
 		System.out.println("Gps : "+gps);
 		Metadata metadata = ImageMetadataReader.readMetadata(fileImage);
 		 for(Directory dd : metadata.getDirectories()) {

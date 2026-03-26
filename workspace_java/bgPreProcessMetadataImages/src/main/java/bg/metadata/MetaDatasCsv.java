@@ -10,7 +10,8 @@ import java.util.regex.Pattern;
 
 public class MetaDatasCsv {
 	
-	List<MetaData> list =  new ArrayList<MetaData>();
+	List<MetaData> listMetaData =  new ArrayList<MetaData>();
+	List<MetaData> listMetaDataAll =  new ArrayList<MetaData>();
 
 	public MetaDatasCsv(File fMetadataCsv, File dirImages) throws Exception {
 		FileReader fr = new FileReader(fMetadataCsv);
@@ -20,13 +21,14 @@ public class MetaDatasCsv {
 			MetaData iv = new MetaData(line);
 			File fileImage = new File( dirImages,iv.fileName);
 			if (fileImage.exists()) {
-				list.add(iv);
+				listMetaData.add(iv);
 			}
+			listMetaDataAll.add(iv);
 		}
 	}
 
 	public MetaData getMetaData(String name) {
-		for(MetaData idv :list) {
+		for(MetaData idv :listMetaData) {
 			if(idv.fileName.equals(name)) {
 				return idv;
 			}
@@ -36,16 +38,24 @@ public class MetaDatasCsv {
 	
 	
 	public List<MetaData> getList() {
-		return list;
+		return listMetaData;
 	}
 
 	public MetaData getImageDronViewByImageName(String imageName) {
-		for (MetaData idv :list) {
+		for (MetaData idv :listMetaData) {
 			if (idv.fileName.equals(imageName)) {
 				return idv;
 			}
 		}
 		return null;
+	}
+
+	public List<MetaData> getListMetaData() {
+		return listMetaData;
+	}
+
+	public List<MetaData> getListMetaDataAll() {
+		return listMetaDataAll;
 	}
 
 	

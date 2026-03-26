@@ -7,17 +7,17 @@ import java.util.HashMap;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 
-import bg.util.GpsPositionFactory;
+import bg.util.PositionGps2Factory;
 import bg.metadata.MetaData;
 import bg.metadata.MetaDatasCsv;
-import bg.util.GpsPosition2;
+import bg.util.PositionGps2;
 
 
 public class ProcessGPSFromJPG {
 	
 	File metadataCsvFile;
 	MetaDatasCsv processCsv;
-	HashMap<String, GpsPosition2> hGpsLocation = new HashMap<String, GpsPosition2>();
+	HashMap<String, PositionGps2> hGpsLocation = new HashMap<String, PositionGps2>();
 	
 	public ProcessGPSFromJPG(File dir) throws Exception {
 		metadataCsvFile= new File(dir,"metadata.csv");
@@ -40,7 +40,7 @@ public class ProcessGPSFromJPG {
 
 	private void checkCoherence() {
 		for( String imageName:this.hGpsLocation.keySet()) {
-			GpsPosition2 gpsPosition = hGpsLocation.get(imageName);
+			PositionGps2 gpsPosition = hGpsLocation.get(imageName);
 			MetaData metaData =  this.processCsv.getImageDronViewByImageName(imageName);
 			String logDz =" dz = "+String.format("%7.3f",  gpsPosition.getAltitudeMeters()- metaData.z);
 			System.out.println(logDz+" "+gpsPosition+" || metaData: "+metaData);
@@ -53,7 +53,7 @@ public class ProcessGPSFromJPG {
 	private void processImageFile(File f) {
 		try {
 			
-			GpsPosition2 gpsPosition = GpsPositionFactory.extractPosition(f);
+			PositionGps2 gpsPosition = PositionGps2Factory.extractPosition(f);
 			 //System.out.println(f.getName()+"    "+gpsPosition);
 			 hGpsLocation.put(f.getName(), gpsPosition);
 		} catch (Exception e) {

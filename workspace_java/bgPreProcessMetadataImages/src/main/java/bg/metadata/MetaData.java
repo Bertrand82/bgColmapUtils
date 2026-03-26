@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 
 import com.drew.metadata.Metadata;
 
-import bg.util.GpsPositionFactory;
-import bg.util.GpsPosition2;
+import bg.util.PositionGps2Factory;
+import bg.util.PositionGps2;
 
 public class MetaData {
 	private static final Pattern SEQ = Pattern.compile("^DJI_\\d{14}_(\\d+)_.*$", Pattern.CASE_INSENSITIVE);
@@ -30,7 +30,10 @@ public class MetaData {
 
 	public int numeroSequence;
 	public LocalDateTime date;
-	public GpsPosition2 gpsPosition;
+	public PositionGps2 gpsPosition;
+	public double xCorrected;
+	public double yCorrected;
+	public double rView;
 
 	// DJI_20260207175436_0671_D.JPG,-207.0166253643368,-404.054606722876,-1.690999999999999,-71.8,-60.0,0.0
 	public MetaData(String line) {
@@ -83,7 +86,7 @@ public class MetaData {
 	}
 
 	public int updateGpsPosition(File fileImage) throws Exception {
-		this.gpsPosition = GpsPositionFactory.extractPosition(fileImage);
+		this.gpsPosition = PositionGps2Factory.extractPosition(fileImage);
 		
 		if (this.gpsPosition == null) {
 			System.out.println("updateGpsPosition "+fileImage.getName()+ "  gps From Image ::  "+this.gpsPosition);
@@ -94,25 +97,29 @@ public class MetaData {
 		}
 
 	}
+	
+	
 
-	double xCorrected;
-	double yCorrected;
-	double rView;
+	public void correctGpsPosition2() {
+		updatePositionCorrectedn(this.gpsPosition);
+		
+	}
 
-	public void correctGpsPosition() {
+
+	public void updatePositionCorrectedn(PositionGps2 positionGps) {
 		double altitudeSol = 0; // Prendre l'altitude du lieu voir: class ElevationClient
 		double angleOuvertureCamera = 60;
 		double zz;
 		double xx;
 		double yy;
-		if (this.gpsPosition == null) {
+		if (positionGps == null) {
 			zz = this.z+50;
 			xx = this.x;
 			yy = this.y;
 		} else {
-			zz = gpsPosition.getAltitudeMeters();
-			xx = gpsPosition.getX_process();
-			yy = gpsPosition.getY();
+			zz = positionGps.getAltitudeMeters();
+			xx = positionGps.getX_process();
+			yy = positionGps.getY();
 		}
 
 		double hauteur = zz - altitudeSol;
@@ -193,5 +200,7 @@ public class MetaData {
 		double dy = Math.abs(m2.yCorrected - yCorrected);
 		return (dx < rView2) && (dy < rView2);
 	}
+
+
 
 }
