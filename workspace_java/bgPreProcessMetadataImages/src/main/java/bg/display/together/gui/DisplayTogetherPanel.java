@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,8 +28,10 @@ import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 import bg.util.PositionMetaData2;
 import bg.util.PositionMetaData2Factory;
+import bg.util.map.MapProvider;
+import bg.util.map.MapProviderListener;
 
-public class DisplayTogetherPanel extends JPanel implements Runnable {
+public class DisplayTogetherPanel extends JPanel implements Runnable,MapProviderListener {
 
 	/**
 	 * 
@@ -45,6 +48,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 			paint(g);
 		}
 	};
+	BufferedImage imageMap;
 	private PreviewImage previewImage = new PreviewImage();
 
 	private List<PositionGps2> listPositions;
@@ -56,6 +60,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 	double xMax = 0;
 	double yMin = 0;
 	double yMax = 0;
+	int xxMaxPixel;
+	int yyMaxPixel;
+	double longMax,longMin,latMax,latMin;
 	File dirImages;
 	double scale = 0.1d;
 	private static int Point_R=8;
@@ -161,10 +168,14 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 		PositionGps2 first = listPositions.get(0);
 		xMin = xMax = first.getX();
 		yMin = yMax = first.getY();
+		longMax = longMin=first.getLongitude();
+		latMax=latMin = first.getLatitude();
+		first.getLongitude();
 		for (PositionGps2 gps : listPositions) {
 			double x = gps.getX();
 			double y = gps.getY();
-
+			double longitude = gps.getLongitude();
+			double latitude = gps.getLatitude();
 			if (x < xMin) {
 				xMin = x;
 			}
@@ -177,8 +188,26 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 			if (y > yMax) {
 				yMax = y;
 			}
+			if(longitude>longMax) {
+				longMax = longitude;
+			}
+			if(longitude<longMin) {
+				longMin = longitude;
+			}
+			if (latitude>latMax) {
+				latMax=latitude;
+			}
+			if (latitude<latMin) {
+				latMin=latitude;
+			}
 		}
+		System.out.println("longMax "+longMax);
+		System.out.println("longMin "+longMin);
+		System.out.println("latMax"+latMax);
+		System.out.println("latMin"+latMin);
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
+		xxMaxPixel=(int) (scale *(xMax-xMin));
+		yyMaxPixel=(int) (scale* (yMax-yMin));
 		for (PositionGps2 gps : listPositions) {
 			
 			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps, metaDataCsv.getListMetaDataAll());
@@ -187,6 +216,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 			
 			this.listBeans.add(bean);
 		}
+		MapProvider mapProvider = new MapProvider(longMax, longMin, latMax, latMin, this);
 		this.labelNbDePoints.setText(""+this.listBeans.size());
 		this.canvas.repaint();
 	}
@@ -196,6 +226,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 		this.w = dim.width;
 		this.h = dim.height;
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
+		xxMaxPixel=(int) (scale *(xMax-xMin));
+		yyMaxPixel=(int) (scale* (yMax-yMin));
 		for (Bean bean : listBeans) {
 			bean.updatePosition();
 		}
@@ -262,6 +294,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, w, h);
 		g.setColor(Color.RED);
+		if (this.imageMap!=null) {
+			g.drawImage(imageMap, 0, 0,xxMaxPixel,yyMaxPixel, null);
+		}
 		for (Bean bean : this.listBeans) {
 			// g.fillOval(1, 1, bean.px, bean.py);
 			g.fillRect(bean.px, bean.py, 3, 3);
@@ -324,5 +359,13 @@ public class DisplayTogetherPanel extends JPanel implements Runnable {
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size())));
 		canvas.repaint();
+	}
+
+	@Override
+	public void updateMapImage(BufferedImage imageMap_) {
+		this.imageMap=imageMap_;
+		this.canvas.repaint();
+		System.out.println("updateMapImage "+imageMap_);
+		
 	}
 }
