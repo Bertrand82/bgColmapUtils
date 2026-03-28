@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,16 +31,17 @@ import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 import bg.util.PositionMetaData2;
 import bg.util.PositionMetaData2Factory;
+import bg.util.UtilCreateDirPopups;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
-public class DisplayTogetherPanel extends JPanel implements Runnable,MapProviderListener {
+public class DisplayTogetherPanel extends JPanel implements Runnable, MapProviderListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Canvas canvas= new Canvas() {
+	private Canvas canvas = new Canvas() {
 		@Override
 		public void paint(Graphics g) {
 			DisplayTogetherPanel.this.paintImage(g);
@@ -53,42 +57,42 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 
 	private List<PositionGps2> listPositions;
 	final List<Bean> listBeans = new ArrayList<DisplayTogetherPanel.Bean>();
-	 List<Bean> listBeansSelected = new ArrayList<DisplayTogetherPanel.Bean>();
+	List<Bean> listBeansSelected = new ArrayList<DisplayTogetherPanel.Bean>();
 	int w = 500;
 	int h = 500;
 	double xMin = 0;
 	double xMax = 0;
 	double yMin = 0;
 	double yMax = 0;
-	int xxMaxPixel_=0;
-	int yyMaxPixel_=0;
-	double longMax,longMin,latMax,latMin;
+	int xxMaxPixel_ = 0;
+	int yyMaxPixel_ = 0;
+	double longMax, longMin, latMax, latMin;
 	File dirImages;
 	double scale = 0.1d;
-	private static int Point_R=8;
+	private static int Point_R = 8;
 	List<Point> listPointsInterret = new ArrayList<Point>();
 	Bean beanSelected = null;
-	JLabel labelNbDePoints= new JLabel("Nb of points:0");
+	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
 	JTextField textFieldNbImages = new JTextField(" 1000 ");
 	JButton buttonVisualiserImages = new JButton("Images Selected");
 	JButton buttonExtractData = new JButton("extract Data");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
+
 	public DisplayTogetherPanel(File dir) throws Exception {
 		dirImages = new File(dir, "images");
 
 		File fileMetadata = new File(dir, "metadata.csv");
 		metaDataCsv = new MetaDatasCsv(fileMetadata, dirImages);
-		Thread threadInit = new Thread(this);		
+		Thread threadInit = new Thread(this);
 		threadInit.start();
 
-		
 		this.setLayout(new BorderLayout());
-		
-		buttonVisualiserImages.addActionListener(e->visualiserImages());
-		buttonExtractData.addActionListener(e->extractData());
-		checkBoxImagesCorrected.addActionListener(e->canvas.repaint());
+
+		buttonVisualiserImages.addActionListener(e -> visualiserImages());
+		buttonExtractData.addActionListener(e -> extractData());
+		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JPanel panelControl = new JPanel();
 		panelControl.add(buttonExtractData);
 		panelControl.add(buttonVisualiserImages);
@@ -97,15 +101,15 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		panelControl.add(checkBoxImagesCorrected);
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(previewImage, BorderLayout.WEST);
-		this.add(panelControl,BorderLayout.NORTH);
-		this.add(labelLog,BorderLayout.SOUTH);
+		this.add(panelControl, BorderLayout.NORTH);
+		this.add(labelLog, BorderLayout.SOUTH);
 		Dimension dim = new Dimension(w, h);
 		canvas.setPreferredSize(dim);
 		this.addComponentListener(new java.awt.event.ComponentAdapter() {
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
-				
-				resizeInit();				
+
+				resizeInit();
 			}
 		});
 
@@ -117,23 +121,21 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 				int y = e.getY();
 
 				// Bouton cliqué
-				if (javax.swing.SwingUtilities.isLeftMouseButton(e)) {					
-						
-						Point ppp = getPointByProximity(x,y);
-						if (ppp == null) {
-							Point point = new Point(x, y);
-							listPointsInterret.add(point);
-							displayImage(x, y);
-							
-						} else {	
-							listPointsInterret.remove(ppp);
-							
-							
-						}
-						beanSelected=null;
-						canvas.repaint();
-					
-					
+				if (javax.swing.SwingUtilities.isLeftMouseButton(e)) {
+
+					Point ppp = getPointByProximity(x, y);
+					if (ppp == null) {
+						Point point = new Point(x, y);
+						listPointsInterret.add(point);
+						displayImage(x, y);
+
+					} else {
+						listPointsInterret.remove(ppp);
+
+					}
+					beanSelected = null;
+					canvas.repaint();
+
 				} else if (javax.swing.SwingUtilities.isRightMouseButton(e)) {
 					displayImage(x, y);
 				}
@@ -141,23 +143,19 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 			}
 
 			private Point getPointByProximity(int x, int y) {
-				for(Point pp:listPointsInterret) {
-					int dx = Math.abs(x-pp.x);
-					int dy = Math.abs(y-pp.y);
-					if ((dx < Point_R) && (dy <Point_R)) {
+				for (Point pp : listPointsInterret) {
+					int dx = Math.abs(x - pp.x);
+					int dy = Math.abs(y - pp.y);
+					if ((dx < Point_R) && (dy < Point_R)) {
 						return pp;
 					}
 				}
 				return null;
 			}
 
-			
-
 		});
 
 	}
-	
-	
 
 	public void run() {
 		this.initListPositionsThread();
@@ -172,8 +170,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		PositionGps2 first = listPositions.get(0);
 		xMin = xMax = first.getX();
 		yMin = yMax = first.getY();
-		longMax = longMin=first.getLongitude();
-		latMax=latMin = first.getLatitude();
+		longMax = longMin = first.getLongitude();
+		latMax = latMin = first.getLatitude();
 		first.getLongitude();
 		for (PositionGps2 gps : listPositions) {
 			double x = gps.getX();
@@ -192,75 +190,73 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 			if (y > yMax) {
 				yMax = y;
 			}
-			if(longitude>longMax) {
+			if (longitude > longMax) {
 				longMax = longitude;
 			}
-			if(longitude<longMin) {
+			if (longitude < longMin) {
 				longMin = longitude;
 			}
-			if (latitude>latMax) {
-				latMax=latitude;
+			if (latitude > latMax) {
+				latMax = latitude;
 			}
-			if (latitude<latMin) {
-				latMin=latitude;
+			if (latitude < latMin) {
+				latMin = latitude;
 			}
 		}
-		System.out.println("longMax "+longMax);
-		System.out.println("longMin "+longMin);
-		System.out.println("latMax"+latMax);
-		System.out.println("latMin"+latMin);
+		System.out.println("longMax " + longMax);
+		System.out.println("longMin " + longMin);
+		System.out.println("latMax" + latMax);
+		System.out.println("latMin" + latMin);
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
-		xxMaxPixel_=(int) (scale *(xMax-xMin));
-		yyMaxPixel_=(int) (scale* (yMax-yMin));
+		xxMaxPixel_ = (int) (scale * (xMax - xMin));
+		yyMaxPixel_ = (int) (scale * (yMax - yMin));
 		for (PositionGps2 gps : listPositions) {
-			
-			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps, metaDataCsv.getListMetaDataAll());
-			
-			Bean bean = new Bean(gps,pMetaData);
-			
+
+			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps,
+					metaDataCsv.getListMetaDataAll());
+
+			Bean bean = new Bean(gps, pMetaData);
+
 			this.listBeans.add(bean);
 		}
 		MapProvider mapProvider = new MapProvider(longMax, longMin, latMax, latMin, this);
-		this.labelNbDePoints.setText(""+this.listBeans.size());
+		this.labelNbDePoints.setText("" + this.listBeans.size());
 		this.canvas.repaint();
 	}
 
 	private void resizeInit() {
 		java.awt.Dimension dim = getSize();
-		
-		
+
 		double scaleOld = scale;
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
-		int xxMaxPixel2=(int) (scale *(xMax-xMin));
-		int yyMaxPixel2=(int) (scale* (yMax-yMin));
-		xxMaxPixel_=(int) (scale *(xMax-xMin));
-		yyMaxPixel_=(int) (scale* (yMax-yMin));
+		int xxMaxPixel2 = (int) (scale * (xMax - xMin));
+		int yyMaxPixel2 = (int) (scale * (yMax - yMin));
+		xxMaxPixel_ = (int) (scale * (xMax - xMin));
+		yyMaxPixel_ = (int) (scale * (yMax - yMin));
 
-		
 		this.w = dim.width;
 		this.h = dim.height;
 		for (Bean bean : listBeans) {
 			bean.updatePosition();
 		}
 		for (Point point : listPointsInterret) {
-			point.x= (int)( (scale/scaleOld) *(point.x));
-			point.y= (int)( (scale/scaleOld)*(point.y));
+			point.x = (int) ((scale / scaleOld) * (point.x));
+			point.y = (int) ((scale / scaleOld) * (point.y));
 		}
 		repaint();
 	}
 
 	class Bean {
 		PositionGps2 gps;
-		PositionMetaData2 positionMetaData ;
+		PositionMetaData2 positionMetaData;
 		int px;
 		int py;
 		int pxCorrected;
 		int pyCorrected;
 
-
-		public Bean(PositionGps2 gps2,PositionMetaData2 positionMetaData) {
+		public Bean(PositionGps2 gps2, PositionMetaData2 positionMetaData) {
 			this.gps = gps2;
-			this.positionMetaData=positionMetaData;
+			this.positionMetaData = positionMetaData;
 			updatePosition();
 		}
 
@@ -268,14 +264,14 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 
 			this.px = (int) (scale * (gps.getX() - xMin));
 			this.py = (int) (scale * (gps.getY() - yMin));
-			if (this.positionMetaData==null) {
+			if (this.positionMetaData == null) {
 				this.pxCorrected = this.px;
-				this.pyCorrected=this.py;
-			}else {
+				this.pyCorrected = this.py;
+			} else {
 				this.pxCorrected = (int) (scale * (positionMetaData.getxCorrected() - xMin));
-				this.pyCorrected=(int) (scale * (positionMetaData.getyCorrected() - yMin));
+				this.pyCorrected = (int) (scale * (positionMetaData.getyCorrected() - yMin));
 			}
-			
+
 		}
 
 		@Override
@@ -284,23 +280,23 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		}
 
 		public int distance(List<Point> listPointsInterret) {
-			if (listPointsInterret.size()==0) {
+			if (listPointsInterret.size() == 0) {
 				return 0;
 			}
 			int distance = distance(listPointsInterret.getFirst());
 			for (Point ppp : listPointsInterret) {
-				int d1=  distance(ppp);
-				if ( d1 < distance) {
-					distance=d1;
+				int d1 = distance(ppp);
+				if (d1 < distance) {
+					distance = d1;
 				}
 			}
 			return distance;
-			
+
 		}
 
 		private int distance(Point pp) {
-			return Math.abs(px-pp.x)+Math.abs(py-pp.y);
-			
+			return Math.abs(px - pp.x) + Math.abs(py - pp.y);
+
 		}
 
 	}
@@ -309,8 +305,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		g.setColor(Color.white);
 		g.fillRect(0, 0, w, h);
 		g.setColor(Color.RED);
-		if (this.imageMap!=null) {
-			g.drawImage(imageMap, 0, 0,xxMaxPixel_,yyMaxPixel_, null);
+		if (this.imageMap != null) {
+			g.drawImage(imageMap, 0, 0, xxMaxPixel_, yyMaxPixel_, null);
 		}
 		for (Bean bean : this.listBeans) {
 			// g.fillOval(1, 1, bean.px, bean.py);
@@ -318,38 +314,38 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		}
 		if (checkBoxImagesCorrected.isSelected()) {
 			g.setColor(Color.BLUE);
-			for (Bean bean : this.listBeans) {	
-				if (bean.positionMetaData==null) {
+			for (Bean bean : this.listBeans) {
+				if (bean.positionMetaData == null) {
 					g.fillRect(bean.pxCorrected, bean.pyCorrected, 1, 1);
-				}else {
-				g.fillRect(bean.pxCorrected, bean.pyCorrected, 3, 3);
+				} else {
+					g.fillRect(bean.pxCorrected, bean.pyCorrected, 3, 3);
 				}
 			}
 			g.setColor(Color.YELLOW);
-			for (Bean bean : this.listBeans) {	
-				
+			for (Bean bean : this.listBeans) {
+
 				g.drawLine(bean.px, bean.py, bean.pxCorrected, bean.pyCorrected);
-				
+
 			}
 		}
 		g.setColor(Color.MAGENTA);
 		for (Bean bean : this.listBeansSelected) {
-			 
+
 			g.fillRect(bean.px, bean.py, 3, 3);
 		}
 		g.setColor(Color.GREEN);
 		for (Point pp : listPointsInterret) {
-			g.fillOval(pp.x-Point_R, pp.y-Point_R,2* Point_R, 2*Point_R);
+			g.fillOval(pp.x - Point_R, pp.y - Point_R, 2 * Point_R, 2 * Point_R);
 		}
-		
+
 		g.setColor(Color.ORANGE);
-		if (beanSelected!=null) {
-			g.fillOval(beanSelected.px, beanSelected.py,2*Point_R,2*Point_R);
+		if (beanSelected != null) {
+			g.fillOval(beanSelected.px, beanSelected.py, 2 * Point_R, 2 * Point_R);
 		}
 	}
 
 	private void displayImage(int x, int y) {
-		
+
 		int distanceMin = 1000020;
 
 		for (Bean b : listBeans) {
@@ -361,16 +357,16 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 			}
 		}
 		System.out.println("Bean selected   " + beanSelected + "  x: " + x + "   y: " + y);
-		
+
 		File fileImage = new File(dirImages, beanSelected.gps.getImageName());
 		this.previewImage.displayImage(fileImage, beanSelected.gps);
 		this.canvas.repaint();
 
 	}
-	
-	private void visualiserImages(){
-		int nbImages =Integer.parseInt(textFieldNbImages.getText().trim());
-		labelLog.setText("Visualiser Images "+nbImages);
+
+	private void visualiserImages() {
+		int nbImages = Integer.parseInt(textFieldNbImages.getText().trim());
+		labelLog.setText("Visualiser Images " + nbImages);
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size())));
 		canvas.repaint();
@@ -378,22 +374,39 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 
 	@Override
 	public void updateMapImage(BufferedImage imageMap_) {
-		this.imageMap=imageMap_;
+		this.imageMap = imageMap_;
 		this.canvas.repaint();
-		System.out.println("updateMapImage "+imageMap_);
-		
+		System.out.println("updateMapImage " + imageMap_);
+
 	}
-	
-	private void extractData() {;
-		this.log("Selected Points :"+this.listBeansSelected.size());
+
+	private void extractData() {
+		;
+		System.out.println("extract data");
+		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
+		File dirTarget = UtilCreateDirPopups.createDirectoryPopup(this);
+		dirTarget.mkdirs();
+		File dirTargetImages = new File(dirTarget, "images");
+		dirTargetImages.mkdirs();
 		// Copier les images
+		for (Bean bean : this.listBeansSelected) {
+			String imageName = bean.gps.getImageName();
+			File imageFile = new File(this.dirImages, imageName);
+			Path src = imageFile.toPath();
+			Path dst = new File(dirTargetImages, imageName).toPath();
+
+			try {
+				Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+				System.out.println("Copié: " + src + " -> " + dst);
+			} catch (IOException e) {
+				System.err.println("Erreur copie " + src + " -> " + dst + " : " + e.getMessage());
+			}
+		}
 		// Copier les metaDatas
 		// Créer le fichier de mappage
-		
+
 	}
-
-
 
 	private void log(String s) {
 		this.labelLog.setText(s);
