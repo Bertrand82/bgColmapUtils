@@ -60,8 +60,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 	double xMax = 0;
 	double yMin = 0;
 	double yMax = 0;
-	int xxMaxPixel;
-	int yyMaxPixel;
+	int xxMaxPixel_=0;
+	int yyMaxPixel_=0;
 	double longMax,longMin,latMax,latMin;
 	File dirImages;
 	double scale = 0.1d;
@@ -72,6 +72,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 	JLabel labelLog = new JLabel("");
 	JTextField textFieldNbImages = new JTextField(" 1000 ");
 	JButton buttonVisualiserImages = new JButton("Images Selected");
+	JButton buttonExtractData = new JButton("extract Data");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	public DisplayTogetherPanel(File dir) throws Exception {
@@ -86,8 +87,10 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		this.setLayout(new BorderLayout());
 		
 		buttonVisualiserImages.addActionListener(e->visualiserImages());
+		buttonExtractData.addActionListener(e->extractData());
 		checkBoxImagesCorrected.addActionListener(e->canvas.repaint());
 		JPanel panelControl = new JPanel();
+		panelControl.add(buttonExtractData);
 		panelControl.add(buttonVisualiserImages);
 		panelControl.add(textFieldNbImages);
 		panelControl.add(labelNbDePoints);
@@ -102,8 +105,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 			@Override
 			public void componentResized(java.awt.event.ComponentEvent e) {
 				
-				resizeInit();
-				
+				resizeInit();				
 			}
 		});
 
@@ -155,6 +157,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 
 	}
 	
+	
+
 	public void run() {
 		this.initListPositionsThread();
 	}
@@ -206,8 +210,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		System.out.println("latMax"+latMax);
 		System.out.println("latMin"+latMin);
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
-		xxMaxPixel=(int) (scale *(xMax-xMin));
-		yyMaxPixel=(int) (scale* (yMax-yMin));
+		xxMaxPixel_=(int) (scale *(xMax-xMin));
+		yyMaxPixel_=(int) (scale* (yMax-yMin));
 		for (PositionGps2 gps : listPositions) {
 			
 			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps, metaDataCsv.getListMetaDataAll());
@@ -223,13 +227,24 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 
 	private void resizeInit() {
 		java.awt.Dimension dim = getSize();
+		
+		
+		double scaleOld = scale;
+		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
+		int xxMaxPixel2=(int) (scale *(xMax-xMin));
+		int yyMaxPixel2=(int) (scale* (yMax-yMin));
+		xxMaxPixel_=(int) (scale *(xMax-xMin));
+		yyMaxPixel_=(int) (scale* (yMax-yMin));
+
+		
 		this.w = dim.width;
 		this.h = dim.height;
-		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
-		xxMaxPixel=(int) (scale *(xMax-xMin));
-		yyMaxPixel=(int) (scale* (yMax-yMin));
 		for (Bean bean : listBeans) {
 			bean.updatePosition();
+		}
+		for (Point point : listPointsInterret) {
+			point.x= (int)( (scale/scaleOld) *(point.x));
+			point.y= (int)( (scale/scaleOld)*(point.y));
 		}
 		repaint();
 	}
@@ -295,7 +310,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		g.fillRect(0, 0, w, h);
 		g.setColor(Color.RED);
 		if (this.imageMap!=null) {
-			g.drawImage(imageMap, 0, 0,xxMaxPixel,yyMaxPixel, null);
+			g.drawImage(imageMap, 0, 0,xxMaxPixel_,yyMaxPixel_, null);
 		}
 		for (Bean bean : this.listBeans) {
 			// g.fillOval(1, 1, bean.px, bean.py);
@@ -367,5 +382,20 @@ public class DisplayTogetherPanel extends JPanel implements Runnable,MapProvider
 		this.canvas.repaint();
 		System.out.println("updateMapImage "+imageMap_);
 		
+	}
+	
+	private void extractData() {;
+		this.log("Selected Points :"+this.listBeansSelected.size());
+		// Créer un directory
+		// Copier les images
+		// Copier les metaDatas
+		// Créer le fichier de mappage
+		
+	}
+
+
+
+	private void log(String s) {
+		this.labelLog.setText(s);
 	}
 }
