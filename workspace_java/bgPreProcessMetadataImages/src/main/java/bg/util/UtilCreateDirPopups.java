@@ -24,17 +24,17 @@ public class UtilCreateDirPopups {
 			return null;
 
 		File dir = fc.getSelectedFile();
-		setDirParent(dir.getParentFile());
+		setDirParent(dir);
 		System.err.println("ParentDir " + dir.getAbsolutePath());
 		dir.mkdirs();
 		return dir;
 
 	}
 
-	private static void setDirParent(File parentFile) {
+	private static void setDirParent(File dir) {
 		try {
 			Properties properties = PropertiesGlobal.getProperties();
-			properties.setProperty(PropertiesGlobal.KEY_DIRECTORY_GENERATED_IMAGES, parentFile.getAbsolutePath());
+			properties.setProperty(PropertiesGlobal.KEY_DIRECTORY_GENERATED_IMAGES, dir.getAbsolutePath());
 			PropertiesGlobal.saveProperties("bg13");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -105,6 +105,48 @@ public class PositionMetaData2 {
 	public void setRoll(double roll) {
 		this.roll = roll;
 	}
-	
+	@Override
+	public String toString() {
+		return toString2()+"  "+toString3();
+	}
+	public String toString2() {
+	    return String.format(
+	            java.util.Locale.US,
+	            "imageName=%s, x=%.2f, y=%.2f, z=%.2f, yaw=%.2f, pitch=%.2f, roll=%.2f",
+	            imageName,
+	            (xx != null ? xx : Double.NaN),
+	            (yy != null ? yy : Double.NaN),
+	            (zz != null ? zz : Double.NaN),
+	            yaw,
+	            pitch,
+	            roll
+	    );
+	}
+	public String toString2_csv() {
+	    return String.format(
+	            java.util.Locale.US,
+	            "%s,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f",
+	            imageName,
+	            (xx != null ? xx : Double.NaN),
+	            (yy != null ? yy : Double.NaN),
+	            (zz != null ? zz : Double.NaN),
+	            yaw,
+	            pitch,
+	            roll
+	    );
+	}
+	public String toString3() {
+	    return String.format(
+	            java.util.Locale.US,
+	            "altitudeMeters=%s, altitudeSol=%.2f, angleOuvertureCamera=%.2f, xCorrected=%s, yCorrected=%s, rView=%.2f, date=%s",
+	            (altitudeMeters != null ? String.format(java.util.Locale.US, "%.2f", altitudeMeters) : "null"),
+	            (altitudeSol != null ? altitudeSol : Double.NaN),
+	            (angleOuvertureCamera != null ? angleOuvertureCamera : Double.NaN),
+	            (xCorrected != null ? String.format(java.util.Locale.US, "%.2f", xCorrected) : "null"),
+	            (yCorrected != null ? String.format(java.util.Locale.US, "%.2f", yCorrected) : "null"),
+	            rView,
+	            (date != null ? date.toString() : "null")
+	    );
+	}
 
 }

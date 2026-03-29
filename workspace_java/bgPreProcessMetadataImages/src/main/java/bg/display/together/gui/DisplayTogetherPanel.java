@@ -12,9 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -390,21 +392,53 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		File dirTargetImages = new File(dirTarget, "images");
 		dirTargetImages.mkdirs();
 		// Copier les images
+		int i = 0;
 		for (Bean bean : this.listBeansSelected) {
 			String imageName = bean.gps.getImageName();
 			File imageFile = new File(this.dirImages, imageName);
 			Path src = imageFile.toPath();
-			Path dst = new File(dirTargetImages, imageName).toPath();
-
+			File destFile = new File(dirTargetImages, imageName);
+			Path destPath = destFile.toPath();
+			
 			try {
-				Files.copy(src, dst, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-				System.out.println("Copié: " + src + " -> " + dst);
+				long timeStart = System.currentTimeMillis();
+				i++;
+				System.out.print(i+"/"+listBeansSelected.size()+" --> ");
+				if (destFile.exists()) {
+					System.out.println("file already exists " + imageName);
+				} else {
+					Files.copy(src, destPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+
+					System.out.println("Copié: " + src + " -> " + i + "/" + listBeansSelected.size() + "   durée : "
+							+ (System.currentTimeMillis() - timeStart));
+				}
+				log("copied " + i + " / " + this.listBeansSelected.size());
 			} catch (IOException e) {
-				System.err.println("Erreur copie " + src + " -> " + dst + " : " + e.getMessage());
+				System.err.println("Erreur copie " + src + " -> " + destPath + " : " + e.getMessage());
+
+				log("copy pb : " + imageName + " Exception !!! " + e.getMessage());
 			}
 		}
-		// Copier les metaDatas
-		// Créer le fichier de mappage
+		// Copier / générer les metaDatas
+		String metadataCsv="";
+		for (Bean bean : this.listBeansSelected) {
+			System.out.println("g metaData :" + bean.positionMetaData);
+			metadataCsv+= bean.positionMetaData.toString2_csv()+"\n";
+		}
+		File metadataCsvFile = new File(dirTarget,"metadataCSV.txt");
+		System.out.println("file "+metadataCsvFile.getName()+"  exists "+metadataCsvFile.exists());
+		if (metadataCsvFile.exists()) {
+			boolean deleted  = metadataCsvFile.delete();
+			System.out.println("file "+metadataCsvFile.getName()+"  deleted "+deleted);
+		}
+		try {
+			Files.writeString(metadataCsvFile.toPath(), metadataCsv, StandardCharsets.UTF_8,
+			        StandardOpenOption.CREATE_NEW);
+			System.out.println("file "+metadataCsvFile.getName()+" generated ");
+		} catch (Exception e) {
+			log("Exception "+e.getMessage());
+			e.printStackTrace();
+		}
 
 	}
 
