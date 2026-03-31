@@ -5,13 +5,13 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,9 +19,13 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -29,10 +33,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import bg.metadata.MetaDatasCsv;
+import bg.util.PaireMetadata2;
+import bg.util.PositionBean2;
 import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 import bg.util.PositionMetaData2;
 import bg.util.PositionMetaData2Factory;
+import bg.util.PositionMetaData2UtilCloser;
 import bg.util.UtilCreateDirPopups;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
@@ -58,8 +65,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	private PreviewImage previewImage = new PreviewImage();
 
 	private List<PositionGps2> listPositions;
-	final List<Bean> listBeans = new ArrayList<DisplayTogetherPanel.Bean>();
-	List<Bean> listBeansSelected = new ArrayList<DisplayTogetherPanel.Bean>();
+	final List<PositionBean2> listBeans = new ArrayList<PositionBean2>();
+	List<PositionBean2> listBeansSelected = new ArrayList<PositionBean2>();
 	int w = 500;
 	int h = 500;
 	double xMin = 0;
@@ -73,7 +80,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	double scale = 0.1d;
 	private static int Point_R = 8;
 	List<Point> listPointsInterret = new ArrayList<Point>();
-	Bean beanSelected = null;
+	PositionBean2 beanSelected = null;
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
 	JTextField textFieldNbImages = new JTextField(" 1000 ");
@@ -217,8 +224,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps,
 					metaDataCsv.getListMetaDataAll());
 
-			Bean bean = new Bean(gps, pMetaData);
-
+			PositionBean2 bean = new PositionBean2(gps, pMetaData);
+			bean.updatePosition(duree_ms, xMin, yMin);
 			this.listBeans.add(bean);
 		}
 		MapProvider mapProvider = new MapProvider(longMax, longMin, latMax, latMin, this);
@@ -238,8 +245,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 
 		this.w = dim.width;
 		this.h = dim.height;
-		for (Bean bean : listBeans) {
-			bean.updatePosition();
+		for (PositionBean2 bean : listBeans) {
+			bean.updatePosition(scale,xMin,yMin);
 		}
 		for (Point point : listPointsInterret) {
 			point.x = (int) ((scale / scaleOld) * (point.x));
@@ -248,60 +255,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		repaint();
 	}
 
-	class Bean {
-		PositionGps2 gps;
-		PositionMetaData2 positionMetaData;
-		int px;
-		int py;
-		int pxCorrected;
-		int pyCorrected;
-
-		public Bean(PositionGps2 gps2, PositionMetaData2 positionMetaData) {
-			this.gps = gps2;
-			this.positionMetaData = positionMetaData;
-			updatePosition();
-		}
-
-		public void updatePosition() {
-
-			this.px = (int) (scale * (gps.getX() - xMin));
-			this.py = (int) (scale * (gps.getY() - yMin));
-			if (this.positionMetaData == null) {
-				this.pxCorrected = this.px;
-				this.pyCorrected = this.py;
-			} else {
-				this.pxCorrected = (int) (scale * (positionMetaData.getxCorrected() - xMin));
-				this.pyCorrected = (int) (scale * (positionMetaData.getyCorrected() - yMin));
-			}
-
-		}
-
-		@Override
-		public String toString() {
-			return "Bean [gps=" + gps + ", px=" + px + ", py=" + py + "]";
-		}
-
-		public int distance(List<Point> listPointsInterret) {
-			if (listPointsInterret.size() == 0) {
-				return 0;
-			}
-			int distance = distance(listPointsInterret.getFirst());
-			for (Point ppp : listPointsInterret) {
-				int d1 = distance(ppp);
-				if (d1 < distance) {
-					distance = d1;
-				}
-			}
-			return distance;
-
-		}
-
-		private int distance(Point pp) {
-			return Math.abs(px - pp.x) + Math.abs(py - pp.y);
-
-		}
-
-	}
+	
 
 	private void paintImage(Graphics g) {
 		g.setColor(Color.white);
@@ -310,13 +264,13 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		if (this.imageMap != null) {
 			g.drawImage(imageMap, 0, 0, xxMaxPixel_, yyMaxPixel_, null);
 		}
-		for (Bean bean : this.listBeans) {
+		for (PositionBean2 bean : this.listBeans) {
 			// g.fillOval(1, 1, bean.px, bean.py);
 			g.fillRect(bean.px, bean.py, 3, 3);
 		}
 		if (checkBoxImagesCorrected.isSelected()) {
 			g.setColor(Color.BLUE);
-			for (Bean bean : this.listBeans) {
+			for (PositionBean2 bean : this.listBeans) {
 				if (bean.positionMetaData == null) {
 					g.fillRect(bean.pxCorrected, bean.pyCorrected, 1, 1);
 				} else {
@@ -324,14 +278,14 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 				}
 			}
 			g.setColor(Color.YELLOW);
-			for (Bean bean : this.listBeans) {
+			for (PositionBean2 bean : this.listBeans) {
 
 				g.drawLine(bean.px, bean.py, bean.pxCorrected, bean.pyCorrected);
 
 			}
 		}
 		g.setColor(Color.MAGENTA);
-		for (Bean bean : this.listBeansSelected) {
+		for (PositionBean2 bean : this.listBeansSelected) {
 
 			g.fillRect(bean.px, bean.py, 3, 3);
 		}
@@ -350,7 +304,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 
 		int distanceMin = 1000020;
 
-		for (Bean b : listBeans) {
+		for (PositionBean2 b : listBeans) {
 			int distance = Math.abs(b.px - x) + Math.abs(b.py - y);
 
 			if (distance < distanceMin) {
@@ -359,6 +313,11 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 			}
 		}
 		System.out.println("Bean selected   " + beanSelected + "  x: " + x + "   y: " + y);
+		if (beanSelected == null) {
+			System.err.println("Perplexité!!! beanSelected is null!! Should never happen");
+			System.err.println("Perplexité!!! beanSelected is null!! Should never happen listBeans size "+listBeans.size());
+			return;
+		}
 
 		File fileImage = new File(dirImages, beanSelected.gps.getImageName());
 		this.previewImage.displayImage(fileImage, beanSelected.gps);
@@ -393,7 +352,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		dirTargetImages.mkdirs();
 		// Copier les images
 		int i = 0;
-		for (Bean bean : this.listBeansSelected) {
+		for (PositionBean2 bean : this.listBeansSelected) {
 			String imageName = bean.gps.getImageName();
 			File imageFile = new File(this.dirImages, imageName);
 			Path src = imageFile.toPath();
@@ -421,7 +380,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		}
 		// Copier / générer les metaDatas
 		String metadataCsv="";
-		for (Bean bean : this.listBeansSelected) {
+		for (PositionBean2 bean : this.listBeansSelected) {
 			System.out.println("g metaData :" + bean.positionMetaData);
 			metadataCsv+= bean.positionMetaData.toString2_csv()+"\n";
 		}
@@ -439,10 +398,71 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 			log("Exception "+e.getMessage());
 			e.printStackTrace();
 		}
+		// Générer les Matching
+		List<PositionMetaData2> listPositionMetaDAta= getListPositionMetaData2();
+		System.out.println("listPositionMetaDAta size "+listPositionMetaDAta.size());
+		Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest = new Hashtable<PositionMetaData2, Set<PositionMetaData2>>();
+		 for(PositionBean2 beanPosition : this.listBeansSelected) {
+			 PositionMetaData2 position0 = beanPosition.positionMetaData;
+			 Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0, listPositionMetaDAta, 4, 4);
+			 hashTableClosest.put(position0, setPosition);
+		 }
+		 System.out.println("HashTable closest "+hashTableClosest.size());
+		 HashSet<PaireMetadata2> paires = consolidationPaire(hashTableClosest);
+		 System.out.println("Nb de paires :"+paires.size());
+		 try {
+			exportListPaires(dirTarget, paires);
+		} catch (Exception e) {
+			log("Exception "+e.getMessage());
+			e.printStackTrace();
+		}
 
+	}
+	
+	private void exportListPaires(File fileDirOut, HashSet<PaireMetadata2> setPairesUniques) throws Exception {
+		
+		File fileOut = new File(fileDirOut, "match.txt");
+		TreeSet<PaireMetadata2> treeset = new TreeSet<PaireMetadata2>(setPairesUniques);
+		BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileOut)));
+
+		for (PaireMetadata2 p : treeset) {
+			String line = p.getFileName1() + " " + p.getFileName2() + "\n";
+			w.write(line);
+		}
+		w.close();
+		System.out.println("nb paires "+setPairesUniques.size());
+		System.out.println("Fichier ecrit dans "+fileOut.getPath());
+	}
+
+	private List<PositionMetaData2> getListPositionMetaData2() {
+		 List<PositionMetaData2> list = new ArrayList<PositionMetaData2>();
+		 for(PositionBean2 beanPosition : this.listBeansSelected) {
+			 if (beanPosition.positionMetaData==null) {
+					System.err.println("Warning positionMetaData is null "+beanPosition);
+				}
+			list.add(beanPosition.positionMetaData) ;
+			
+		 }
+		return list;
 	}
 
 	private void log(String s) {
 		this.labelLog.setText(s);
 	}
+	
+	private HashSet<PaireMetadata2>  consolidationPaire(Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest ) {
+		HashSet<PaireMetadata2> setPAires = new HashSet<PaireMetadata2>();
+		for (Map.Entry<PositionMetaData2, Set<PositionMetaData2>> entry : hashTableClosest.entrySet()) {
+			PositionMetaData2 metaData = entry.getKey();
+			Set<PositionMetaData2> list =entry.getValue();
+			for(PositionMetaData2 pm2 : list) {
+				PaireMetadata2 paire = new PaireMetadata2(metaData, pm2);
+				setPAires.add(paire);
+			}
+		}
+		System.out.println("List Paires size " + setPAires.size() + "  ");
+		return setPAires;
+	}
+	
+
 }

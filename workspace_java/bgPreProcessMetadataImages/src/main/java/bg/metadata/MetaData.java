@@ -140,7 +140,7 @@ public class MetaData {
 	 * @param i
 	 * @param list2
 	 */
-	public void searchCloseView(int i, List<MetaData> list2) {
+	public  void searchCloseView(int i, List<MetaData> list2) {
 		MetaData metaData0 =  list2.get(i);
 		HashSet<MetaData> listClose1 = searchCloseView2(i, list2, this.rView);// Pour traces uniquement
 		HashSet<MetaData> listCloseByGps = new HashSet<MetaData>();
@@ -174,7 +174,7 @@ public class MetaData {
 		System.out.println("listClose :  " + String.format("%2d",listClose.size()) + " | listCloseByGps:" +String.format("%2d", listCloseByGps.size() )+ "| rView2 :" +String.format("%05.1f", rView2)+"   n: "+n+"   listCloseByTime :"+listCloseByTime.size()+"  | listCloser:  "+listCloser.size());
 	}
 
-	public HashSet<MetaData> searchCloseView2(int i, List<MetaData> list2, double rView2) {
+	public  HashSet<MetaData> searchCloseView2(int i, List<MetaData> list2, double rView2) {
 		HashSet<MetaData> listClose2 = new HashSet<MetaData>();
 		int j = 0;
 		while (j < list2.size()) {

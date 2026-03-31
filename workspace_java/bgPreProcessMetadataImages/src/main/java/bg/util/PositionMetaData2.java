@@ -148,5 +148,11 @@ public class PositionMetaData2 {
 	            (date != null ? date.toString() : "null")
 	    );
 	}
+	public double distanceTo(PositionMetaData2 metaData0) {
+		return Math.abs(xCorrected-metaData0.xCorrected)+Math.abs(yCorrected-metaData0.yCorrected);
+	}
+	public int dateTo(PositionMetaData2 metaData0) {		
+		return Math.abs(date.compareTo(date));
+	}
 
 }
