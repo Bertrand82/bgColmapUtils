@@ -18,6 +18,7 @@ public class PositionMetaData2Factory {
 		pos.setDate(metaData.date);
 		pos.setXx(metaData.x);
 		pos.setYy(metaData.y);
+		pos.setZz(metaData.z);
 		pos.setImageName(metaData.fileName);
 		pos.setAltitudeMeters(metaData.z);
 		pos.setPitch(metaData.pitch);

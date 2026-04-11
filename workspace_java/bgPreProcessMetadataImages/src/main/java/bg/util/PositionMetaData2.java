@@ -116,7 +116,7 @@ public class PositionMetaData2 {
 	            imageName,
 	            (xx != null ? xx : Double.NaN),
 	            (yy != null ? yy : Double.NaN),
-	            (zz != null ? zz : Double.NaN),
+	            (zz != null ? zz : 0.0),
 	            yaw,
 	            pitch,
 	            roll
