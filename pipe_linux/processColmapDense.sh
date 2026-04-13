@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+HOME_COLMAP="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
+echo "HOME_COLMAP : $HOME_COLMAP" 
+BG_WORK="${BG_WORK:-/data/BG}"
+echo "BG_WORK : $BG_WORK"    
+
+echo "----------- bg --- image_undistorter ----------------------------------------------"    
+$HOME_COLMAP/colmap image_undistorter \
+  --image_path $BG_WORK/images \
+  --input_path $BG_WORK/sparse/0 \
+  --output_path $BG_WORK/dense \
+  --output_type COLMAP
+  
+echo "----------- bg --- patch_match_stereo ----------------------------------------------"  
+$HOME_COLMAP/colmap patch_match_stereo \
+  --workspace_path $BG_WORK/dense \
+  --workspace_format COLMAP
+  
+ echo "----------- bg --- stereo_fusion ----------------------------------------------"  
+
+ $HOME_COLMAP/colmap stereo_fusion \
+  --workspace_path $BG_WORK/dense \
+  --workspace_format COLMAP \
+  --input_type geometric \
+  --output_path $BG_WORK/dense/fused.ply
+  
+ echo "----------- bg --- poisson_mesher ----------------------------------------------"  
+ 
+$HOME_COLMAP/colmap poisson_mesher \
+  --input_path $BG_WORK/dense \
+  --output_path $BG_WORK/dense/mesh_poisson.ply
+echo "----------- bg --- patch_match_stereo ----------------------------------------------"  
+  
+$HOME_COLMAP/colmap patch_match_stereo \
+  --workspace_path $BG_WORK/dense \
+  --workspace_format COLMAP
+  
+ echo "----------- bg --- patch_match_stereo ----------------------------------------------"  
+
+$HOME_COLMAP/colmap stereo_fusion \
+  --workspace_path $BG_WORK/dense \
+  --workspace_format COLMAP \
+  --input_type geometric \
+  --output_path $BG_WORK/dense/fused.ply
+ 
+ echo "----------- bg --- delaunay_mesher ----------------------------------------------"  
+
+ # $HOME_COLMAP/colmap delaunay_mesher --input_path $BG_WORK/dense --output_path $BG_WORK/dense/mesh_delaunay.plycolmap 
+ 
+ echo "----------- bg --- poisson_mesher ----------------------------------------------"  
+
+ $HOME_COLMAP/colmap poisson_mesher \
+  --input_path $BG_WORK/dense \
+  --output_path $BG_WORK/dense/mesh_poisson.ply
+  

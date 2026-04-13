@@ -28,9 +28,11 @@ import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import bg.metadata.MetaDatasCsv;
 import bg.util.PaireMetadata2;
@@ -86,25 +88,37 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	JTextField textFieldNbImages = new JTextField(" 1000 ");
 	JButton buttonVisualiserImages = new JButton("Images Selected");
 	JButton buttonExtractData = new JButton("extract Data");
+	JButton buttonDossierSources = new JButton("sources");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
+	File dirSources ;
 
 	public DisplayTogetherPanel(File dir) throws Exception {
+		initData(dir);
+		initSwing();
+	}
+	
+	private void initData(File dir) throws Exception{
+		dirSources = dir;
 		dirImages = new File(dir, "images");
 
 		File fileMetadata = new File(dir, "metadata.csv");
 		metaDataCsv = new MetaDatasCsv(fileMetadata, dirImages);
 		Thread threadInit = new Thread(this);
 		threadInit.start();
+	}
 
+	private void initSwing() {
 		this.setLayout(new BorderLayout());
-
+		buttonDossierSources.addActionListener(e_-> chooseDossierSource());
 		buttonVisualiserImages.addActionListener(e -> visualiserImages());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JPanel panelControl = new JPanel();
-		panelControl.add(buttonExtractData);
+		panelControl.add(buttonDossierSources);
 		panelControl.add(buttonVisualiserImages);
+		panelControl.add(buttonExtractData);
+		
 		panelControl.add(textFieldNbImages);
 		panelControl.add(labelNbDePoints);
 		panelControl.add(checkBoxImagesCorrected);
@@ -323,6 +337,36 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		this.previewImage.displayImage(fileImage, beanSelected.gps);
 		this.canvas.repaint();
 
+	}
+	private void chooseDossierSource() {
+		System.out.println("choose Dossier sources");
+		JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle("Choisir le dossier source");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setMultiSelectionEnabled(false);
+
+        // Optionnel : partir du dernier dossier choisi
+        if (dirSources != null) {
+            chooser.setCurrentDirectory(dirSources);
+        } else {
+            chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        }
+
+        int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
+        if (result == JFileChooser.APPROVE_OPTION) {
+        	dirSources = chooser.getSelectedFile();
+            // Exemple : feedback utilisateur
+            this.labelLog.setText(dirSources.getAbsolutePath());
+            try {
+				this.initData(dirSources);
+				this.repaint();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				this.repaint();
+			}
+        }
 	}
 
 	private void visualiserImages() {

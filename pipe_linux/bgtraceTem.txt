@@ -1,0 +1,4 @@
+HOME_COLMAP : /home/bertrand/workspaceCpp/colmap/build/src/colmap/exe
+BG_WORK : /data/BG
+----------- bg --- image_undistorter ----------------------------------------------
+----------- bg --- patch_match_stereo ----------------------------------------------
