@@ -2,6 +2,7 @@
 
 #include "Database.h"
 #include "PoseRow.h"
+#include "colmap/pose_prior.h"
 
 #include <array>
 #include <cstddef>
@@ -32,9 +33,10 @@ class PosePriorsWriter {
 
  private:
   void ValidateForeignKeysOrThrow();
-  std::vector<double> BuildPositionBlob(const PoseRow& row) const;
-  std::vector<double> BuildPositionCovarianceBlob() const;
-  std::vector<double> BuildGravityBlob() const;
+  colmap::PosePrior BuildPosePrior(const PoseRow& row, std::int64_t image_id) const;
+  std::vector<double> BuildPositionBlob(const colmap::PosePrior& prior) const;
+  std::vector<double> BuildPositionCovarianceBlob(const colmap::PosePrior& prior) const;
+  std::vector<double> BuildGravityBlob(const colmap::PosePrior& prior) const;
 
   Database& database_;
   PosePriorsWriterOptions options_;

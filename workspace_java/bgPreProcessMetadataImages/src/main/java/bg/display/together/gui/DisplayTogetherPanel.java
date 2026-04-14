@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -89,6 +90,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	JButton buttonVisualiserImages = new JButton("Images Selected");
 	JButton buttonExtractData = new JButton("extract Data");
 	JButton buttonDossierSources = new JButton("sources");
+	JButton buttonDebug = new JButton("debug");
+	JButton buttonLoadSelected = new JButton("loadSelected");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources ;
@@ -110,11 +113,15 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 
 	private void initSwing() {
 		this.setLayout(new BorderLayout());
+		buttonDebug.addActionListener(e->debug());
+		buttonLoadSelected.addActionListener(e->actionLoadSelected());
 		buttonDossierSources.addActionListener(e_-> chooseDossierSource());
 		buttonVisualiserImages.addActionListener(e -> visualiserImages());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JPanel panelControl = new JPanel();
+		panelControl.add(buttonDebug);
+		panelControl.add(buttonLoadSelected);
 		panelControl.add(buttonDossierSources);
 		panelControl.add(buttonVisualiserImages);
 		panelControl.add(buttonExtractData);
@@ -386,8 +393,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	}
 
 	private void extractData() {
-		;
-		System.out.println("extract data");
+		System.out.println("extract data listBeansSelected.size :"+ this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
 		File dirTarget = UtilCreateDirPopups.createDirectoryPopup(this);
@@ -506,6 +512,62 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		}
 		System.out.println("List Paires size " + setPAires.size() + "  ");
 		return setPAires;
+	}
+	
+	private void debug() {
+		this.labelLog.setText("debug listBeansSelected.size :"+this.listBeansSelected.size());
+		int i=0;
+		for(PositionBean2 pb2: this.listBeansSelected) {
+			String s =  String.format("%2d  - ", i++);
+			System.out.println(s+pb2.positionMetaData.toString());
+		}
+	}
+	private void actionLoadSelected() {
+		this.labelLog.setText("actionLoadSelected");
+		// 1) Ouvrir un sélecteur de dossier
+	    JFileChooser chooser = new JFileChooser();
+	    chooser.setDialogTitle("Choisir un dossier");
+	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    chooser.setAcceptAllFileFilterUsed(false);
+
+	    // Optionnel: dossier par défaut (à adapter)
+	    // chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
+
+	    
+	    int result = chooser.showOpenDialog(this);
+
+	    if (result != JFileChooser.APPROVE_OPTION) {
+	        return; // annulé
+	    }
+
+	    Path dir = chooser.getSelectedFile().toPath();
+
+	    // 2) Construire le chemin vers metadataCSV.txt
+	    Path metadataFile = dir.resolve("metadataCSV.txt");
+
+	    if (!Files.isRegularFile(metadataFile)) {
+	        JOptionPane.showMessageDialog(this,
+	                "Fichier introuvable : " + metadataFile,
+	                "Erreur",
+	                JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+
+	    // 3) Charger le fichier
+	    try {
+	        String content = Files.readString(metadataFile, StandardCharsets.UTF_8);
+
+	        // TODO: parse ton metadataCSV.txt ici
+	        // Exemple: si c'est du CSV ligne par ligne:
+	        // for (String line : content.split("\\R")) { ... }
+
+	        
+	    } catch (IOException ex) {
+	        JOptionPane.showMessageDialog(this,
+	                "Impossible de lire : " + metadataFile + "\n" + ex.getMessage(),
+	                "Erreur",
+	                JOptionPane.ERROR_MESSAGE);
+	    }
 	}
 	
 

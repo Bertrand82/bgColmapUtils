@@ -7,11 +7,11 @@ import bg.metadata.MetaData;
 
 public class PositionMetaData2Factory {
 
-	public static PositionMetaData2 extractPosition(MetaData metaData) {
+	public static PositionMetaData2 extractPosition(MetaData metaData,PositionGps2 pGps2) {
 		if (metaData == null) {
 			return null;
 		}
-		PositionMetaData2 pos = new PositionMetaData2();
+		PositionMetaData2 pos = new PositionMetaData2(metaData.fileName,pGps2);
 		pos.setxCorrected(metaData.xCorrected);
 		pos.setyCorrected(metaData.yCorrected);
 		pos.setrView(metaData.rView);
@@ -36,7 +36,7 @@ public class PositionMetaData2Factory {
 			metaData.updatePositionCorrectedn(pGps2);
 		}
 		
-		return extractPosition(metaData);
+		return extractPosition(metaData,pGps2);
 	}
 
 	private static MetaData getMetaData(List<MetaData> listMetaData, String fileName) {

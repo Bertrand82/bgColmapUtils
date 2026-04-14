@@ -2,9 +2,8 @@
 
 #include "Statement.h"
 
-#include <Eigen/Dense>
-
 #include <cmath>
+#include <iostream>
 #include <optional>
 #include <stdexcept>
 #include <string>
@@ -73,9 +72,6 @@ PosePriorsWriteStats PosePriorsWriter::Write(const std::vector<PoseRow>& rows) {
                         "position, position_covariance, gravity, coordinate_system"
                         ") VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)");
 
-  const std::vector<double> covariance_blob = BuildPositionCovarianceBlob();
-  const std::vector<double> gravity_blob = BuildGravityBlob();
-
   TransactionGuard tx(database_);
 
   for (const PoseRow& row : rows) {
@@ -102,16 +98,37 @@ PosePriorsWriteStats PosePriorsWriter::Write(const std::vector<PoseRow>& rows) {
       ++stats.rowsReplaced;
     }
 
+    const colmap::PosePrior prior = BuildPosePrior(row, *image_id);
+    const std::vector<double> position_blob = BuildPositionBlob(prior);
+    const std::vector<double> covariance_blob = BuildPositionCovarianceBlob(prior);
+    const std::vector<double> gravity_blob = BuildGravityBlob(prior);
+
     insert_stmt.Reset();
     insert_stmt.ClearBindings();
-    insert_stmt.BindInt64(1, *image_id);
+    insert_stmt.BindInt64(1, prior.corr_data_id);
     insert_stmt.BindInt64(2, options_.corrSensorId);
     insert_stmt.BindInt64(3, options_.corrSensorType);
-    insert_stmt.BindBlob(4, BuildPositionBlob(row));
+    insert_stmt.BindBlob(4, position_blob);
     insert_stmt.BindBlob(5, covariance_blob);
     insert_stmt.BindBlob(6, gravity_blob);
-    insert_stmt.BindInt64(7, options_.coordinateSystem);
+    insert_stmt.BindInt64(7, static_cast<std::int64_t>(prior.coordinate_system));
     insert_stmt.Step();
+
+    std::cout << "[write] pose_prior inserted: image='" << row.imageName
+              << "', corr_data_id=" << prior.corr_data_id
+              << ", corr_sensor_id=" << options_.corrSensorId
+              << ", corr_sensor_type=" << options_.corrSensorType
+              << ", coordinate_system=" << static_cast<std::int64_t>(prior.coordinate_system)
+              << ", position=[" << position_blob[0] << "," << position_blob[1] << ","
+              << position_blob[2] << "]"
+              << ", gravity=[" << gravity_blob[0] << "," << gravity_blob[1] << ","
+              << gravity_blob[2] << "]"
+              << ", position_covariance=["
+              << covariance_blob[0] << "," << covariance_blob[1] << "," << covariance_blob[2]
+              << "," << covariance_blob[3] << "," << covariance_blob[4] << ","
+              << covariance_blob[5] << "," << covariance_blob[6] << ","
+              << covariance_blob[7] << "," << covariance_blob[8] << "]"
+              << ", replaced=" << (existing_count > 0 ? "yes" : "no") << "\n";
 
     ++stats.rowsInserted;
   }
@@ -136,13 +153,28 @@ void PosePriorsWriter::ValidateForeignKeysOrThrow() {
   }
 }
 
-std::vector<double> PosePriorsWriter::BuildPositionBlob(const PoseRow& row) const {
-  return {row.xx, row.yy, row.zz};
+colmap::PosePrior PosePriorsWriter::BuildPosePrior(const PoseRow& row,
+                                                   std::int64_t image_id) const {
+  colmap::PosePrior prior;
+  prior.corr_data_id = image_id;
+  prior.position = Eigen::Vector3d(row.xx, row.yy, row.zz);
+  prior.position_covariance =
+      (options_.sigma * options_.sigma) * Eigen::Matrix3d::Identity();
+  prior.gravity =
+      Eigen::Vector3d(options_.gravity[0], options_.gravity[1], options_.gravity[2]);
+  prior.coordinate_system =
+      static_cast<colmap::PosePrior::CoordinateSystem>(options_.coordinateSystem);
+
+  return prior;
 }
 
-std::vector<double> PosePriorsWriter::BuildPositionCovarianceBlob() const {
-  const double sigma2 = options_.sigma * options_.sigma;
-  const Eigen::Matrix3d covariance = sigma2 * Eigen::Matrix3d::Identity();
+std::vector<double> PosePriorsWriter::BuildPositionBlob(const colmap::PosePrior& prior) const {
+  return {prior.position.x(), prior.position.y(), prior.position.z()};
+}
+
+std::vector<double> PosePriorsWriter::BuildPositionCovarianceBlob(
+    const colmap::PosePrior& prior) const {
+  const Eigen::Matrix3d& covariance = prior.position_covariance;
 
   std::vector<double> blob(9, 0.0);
   if (options_.covarianceRowMajor) {
@@ -164,6 +196,6 @@ std::vector<double> PosePriorsWriter::BuildPositionCovarianceBlob() const {
   return blob;
 }
 
-std::vector<double> PosePriorsWriter::BuildGravityBlob() const {
-  return {options_.gravity[0], options_.gravity[1], options_.gravity[2]};
+std::vector<double> PosePriorsWriter::BuildGravityBlob(const colmap::PosePrior& prior) const {
+  return {prior.gravity.x(), prior.gravity.y(), prior.gravity.z()};
 }

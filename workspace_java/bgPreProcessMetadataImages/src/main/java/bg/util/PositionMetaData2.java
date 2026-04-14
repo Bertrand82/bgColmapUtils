@@ -17,8 +17,13 @@ public class PositionMetaData2 {
 	private double pitch;
 	private double yaw;
 	private double roll;
+	private PositionGps2 positionGps;;
 	
 	
+	public PositionMetaData2(String fileName, PositionGps2 gpsPosition) {
+		this.imageName=fileName;
+		this.positionGps=gpsPosition;
+	}
 	public double getrView() {
 		return rView;
 	}
@@ -107,12 +112,12 @@ public class PositionMetaData2 {
 	}
 	@Override
 	public String toString() {
-		return toString2()+"  "+toString3();
+		return toString2()+"  "+toString3()+ "    " +toString4();
 	}
 	public String toString2() {
 	    return String.format(
 	            java.util.Locale.US,
-	            "imageName=%s, x=%.2f, y=%.2f, z=%.2f, yaw=%.2f, pitch=%.2f, roll=%.2f",
+	            "imageName=%s, x=%7.2f, y=%7.2f, z=%7.2f, yaw=%8.2f, pitch=%7.2f, roll=%5.2f",
 	            imageName,
 	            (xx != null ? xx : Double.NaN),
 	            (yy != null ? yy : Double.NaN),
@@ -148,11 +153,31 @@ public class PositionMetaData2 {
 	            (date != null ? date.toString() : "null")
 	    );
 	}
+	
+	public String toString4() {
+		if (this.positionGps==null) {
+			return "gpsPosition is null";
+		}
+		return String.format(
+			    java.util.Locale.US,
+			    "latitude=%.6f, longitude=%.6f, altitude=%.1f, x=%.1f, y=%.1f",
+			    positionGps.getLatitude(),
+			    positionGps.getLongitude(),
+			    positionGps.getAltitudeMeters(),
+			    positionGps.getX(),
+			    positionGps.getY()
+			);
+	}
+	public void setPositionGps(PositionGps2 positionGps) {
+		this.positionGps = positionGps;
+	}
 	public double distanceTo(PositionMetaData2 metaData0) {
 		return Math.abs(xCorrected-metaData0.xCorrected)+Math.abs(yCorrected-metaData0.yCorrected);
 	}
 	public int dateTo(PositionMetaData2 metaData0) {		
 		return Math.abs(date.compareTo(date));
 	}
+	
+	
 
 }
