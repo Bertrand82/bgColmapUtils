@@ -7,9 +7,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
@@ -116,7 +118,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		buttonDebug.addActionListener(e->debug());
 		buttonLoadSelected.addActionListener(e->actionLoadSelected());
 		buttonDossierSources.addActionListener(e_-> chooseDossierSource());
-		buttonVisualiserImages.addActionListener(e -> visualiserImages());
+		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JPanel panelControl = new JPanel();
@@ -376,11 +378,26 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
         }
 	}
 
-	private void visualiserImages() {
+	private void selectionnerImagesFirsts() {
 		int nbImages = Integer.parseInt(textFieldNbImages.getText().trim());
 		labelLog.setText("Visualiser Images " + nbImages);
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size())));
+		canvas.repaint();
+	}
+	private void selectionnerImages(List<String> listImagesSelected) {
+		textFieldNbImages.setText(""+listImagesSelected.size());
+		labelLog.setText("Visualiser Images from  list " +listImagesSelected.size());
+		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
+		this.listBeansSelected = new ArrayList<>();
+		for(PositionBean2 pb : listBeans) {
+			boolean isSelected = FALSE.
+			IF (listImagesSelected.contains(pb.positionMetaData.getImageName());
+			if (isSelected) {
+				this.listBeansSelected.add(pb);
+			}
+		}
+		System.out.println("images selected  :"+this.listBeansSelected+" / "+listImagesSelected.size());
 		canvas.repaint();
 	}
 
@@ -526,8 +543,8 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		this.labelLog.setText("actionLoadSelected");
 		// 1) Ouvrir un sélecteur de dossier
 	    JFileChooser chooser = new JFileChooser();
-	    chooser.setDialogTitle("Choisir un dossier");
-	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+	    chooser.setDialogTitle("Choisir un fichier metadata.csv");
+	    chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 	    chooser.setAcceptAllFileFilterUsed(false);
 
 	    // Optionnel: dossier par défaut (à adapter)
@@ -540,28 +557,24 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	        return; // annulé
 	    }
 
-	    Path dir = chooser.getSelectedFile().toPath();
+	    File metadataFile = chooser.getSelectedFile();
 
-	    // 2) Construire le chemin vers metadataCSV.txt
-	    Path metadataFile = dir.resolve("metadataCSV.txt");
-
-	    if (!Files.isRegularFile(metadataFile)) {
-	        JOptionPane.showMessageDialog(this,
-	                "Fichier introuvable : " + metadataFile,
-	                "Erreur",
-	                JOptionPane.ERROR_MESSAGE);
-	        return;
-	    }
+	   
+	   
 
 	    // 3) Charger le fichier
 	    try {
-	        String content = Files.readString(metadataFile, StandardCharsets.UTF_8);
-
-	        // TODO: parse ton metadataCSV.txt ici
-	        // Exemple: si c'est du CSV ligne par ligne:
-	        // for (String line : content.split("\\R")) { ... }
-
-	        
+	       BufferedReader br = new BufferedReader(new FileReader(metadataFile));
+	       String line = null;
+	       List<String> listImagesSelected = new ArrayList();
+	       while((line=br.readLine())!= null) {
+	    	   String[] ws = line.split(",");
+	    	  
+	    	   listImagesSelected.add(ws[0].trim());
+	       }
+	       br.close();
+	       System.out.println("line image : "+listImagesSelected.size());
+	       selectionnerImages(listImagesSelected);
 	    } catch (IOException ex) {
 	        JOptionPane.showMessageDialog(this,
 	                "Impossible de lire : " + metadataFile + "\n" + ex.getMessage(),
