@@ -391,8 +391,11 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>();
 		for(PositionBean2 pb : listBeans) {
-			boolean isSelected = FALSE.
-			IF (listImagesSelected.contains(pb.positionMetaData.getImageName());
+			boolean isSelected = false;
+			if(pb.positionMetaData == null) {
+			}else {
+				isSelected = listImagesSelected.contains(pb.positionMetaData.getImageName());
+			}
 			if (isSelected) {
 				this.listBeansSelected.add(pb);
 			}
