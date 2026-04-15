@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 COLMAP_CMD="/home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap"
-
+COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
 echo "COLMAP binaire utilisé: $COLMAP_CMD"
 "$COLMAP_CMD" --version
 BG_WORK="${BG_WORK:-/data/BG}"

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 HOME_COLMAP="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
+COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
+# You must set $COLMAP_EXE_PATH to 
+# the directory containing the COLMAP executables.
 echo "HOME_COLMAP : $HOME_COLMAP" 
 BG_WORK="${BG_WORK:-/data/BG}"
 echo "BG_WORK : $BG_WORK"    
