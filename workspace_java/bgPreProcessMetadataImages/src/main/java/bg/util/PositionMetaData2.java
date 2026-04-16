@@ -128,13 +128,17 @@ public class PositionMetaData2 {
 	    );
 	}
 	public String toString2_csv() {
+		double x_ = (positionGps==null)?0.0:positionGps.getX();
+		double y_ = (positionGps==null)?0.0:positionGps.getY();
+		double z_ = (positionGps==null)?0.0:positionGps.getAltitudeMeters();
 	    return String.format(
+	    		
 	            java.util.Locale.US,
 	            "%s,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f",
 	            imageName,
-	            (xx != null ? xx : Double.NaN),
-	            (yy != null ? yy : Double.NaN),
-	            (zz != null ? zz : Double.NaN),
+	            x_,
+	            y_,
+	            z_,
 	            yaw,
 	            pitch,
 	            roll

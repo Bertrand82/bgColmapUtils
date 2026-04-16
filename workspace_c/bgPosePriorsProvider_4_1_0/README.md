@@ -4,6 +4,8 @@ Outil C++17 pour lire un CSV metadataCSV.txt et alimenter la table pose_priors d
 
 Version cible COLMAP: 4.1.0.dev0 (commit 3587d22d, 2026-04-02).
 
+Remarque : le fichier metadataCSV.txt est généré par l'application java :bg.display.together.gui.MainDisplayToGether
+
 ## Entrées / sortie
 
 - Entrées:
