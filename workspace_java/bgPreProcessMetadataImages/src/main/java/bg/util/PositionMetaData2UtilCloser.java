@@ -38,7 +38,7 @@ public class PositionMetaData2UtilCloser {
 			int nMax) {
 
 		Set<PositionMetaData2> setPosition = new HashSet<PositionMetaData2>();
-		list2.sort(Comparator.comparingDouble(p -> p.dateTo(metaData0)));
+		list2.sort(Comparator.comparingDouble(p -> {if (p ==null) return 10000;return p.dateTo(metaData0);}));
 		for(PositionMetaData2 p : list2) {
 			if (p.equals(metaData0)) {
 				

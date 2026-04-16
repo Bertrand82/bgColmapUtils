@@ -176,6 +176,9 @@ public class PositionMetaData2 {
 		this.positionGps = positionGps;
 	}
 	public double distanceTo(PositionMetaData2 metaData0) {
+		if (metaData0==null) {
+			return 0;
+		}
 		return Math.abs(xCorrected-metaData0.xCorrected)+Math.abs(yCorrected-metaData0.yCorrected);
 	}
 	public int dateTo(PositionMetaData2 metaData0) {		

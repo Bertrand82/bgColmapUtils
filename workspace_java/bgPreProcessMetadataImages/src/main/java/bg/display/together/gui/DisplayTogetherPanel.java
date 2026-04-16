@@ -382,7 +382,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		int nbImages = Integer.parseInt(textFieldNbImages.getText().trim());
 		labelLog.setText("Visualiser Images " + nbImages);
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
-		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size())));
+		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size()-1)));
 		canvas.repaint();
 	}
 	private void selectionnerImages(List<String> listImagesSelected) {
@@ -452,7 +452,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		String metadataCsv="";
 		for (PositionBean2 bean : this.listBeansSelected) {
 			System.out.println("g metaData :" + bean.positionMetaData);
-			metadataCsv+= bean.positionMetaData.toString2_csv()+"\n";
+			if (bean.positionMetaData!=null) {
+				metadataCsv+= bean.positionMetaData.toString2_csv()+"\n";
+			}
 		}
 		File metadataCsvFile = new File(dirTarget,"metadataCSV.txt");
 		System.out.println("file "+metadataCsvFile.getName()+"  exists "+metadataCsvFile.exists());
@@ -474,8 +476,12 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest = new Hashtable<PositionMetaData2, Set<PositionMetaData2>>();
 		 for(PositionBean2 beanPosition : this.listBeansSelected) {
 			 PositionMetaData2 position0 = beanPosition.positionMetaData;
+			 if (position0==null) {
+				 
+			 }else {
 			 Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0, listPositionMetaDAta, 4, 4);
 			 hashTableClosest.put(position0, setPosition);
+			 }
 		 }
 		 System.out.println("HashTable closest "+hashTableClosest.size());
 		 HashSet<PaireMetadata2> paires = consolidationPaire(hashTableClosest);
@@ -509,8 +515,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		 for(PositionBean2 beanPosition : this.listBeansSelected) {
 			 if (beanPosition.positionMetaData==null) {
 					System.err.println("Warning positionMetaData is null "+beanPosition);
-				}
-			list.add(beanPosition.positionMetaData) ;
+			}else {
+				list.add(beanPosition.positionMetaData) ;
+			}
 			
 		 }
 		return list;
