@@ -32,6 +32,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -55,6 +57,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	 JMenuBar menuBar = new JMenuBar();
+
+     JMenu fileMenu = new JMenu("File");
 	private Canvas canvas = new Canvas() {
 		@Override
 		public void paint(Graphics g) {
