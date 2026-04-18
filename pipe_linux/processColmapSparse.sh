@@ -52,10 +52,23 @@ mkdir -p "$BG_WORK/sparse"
 
 # Reconstruction sparse
 echo "xxxxxx mapper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+echo "xxxxxx mapper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 "$COLMAP_CMD" mapper \
   --database_path "$BG_WORK/database.db" \
   --image_path "$BG_WORK/images" \
-  --output_path "$BG_WORK/sparse"
+  --output_path "$BG_WORK/sparse" \
+  --Mapper.num_threads 6 \
+  --Mapper.multiple_models 1 \
+  --Mapper.ba_use_gpu 0 \
+  --Mapper.ba_global_frames_freq 1200 \
+  --Mapper.ba_global_points_freq 800000 \
+  --Mapper.ba_global_max_num_iterations 15 \
+  --Mapper.ba_global_max_refinements 1 \
+  --Mapper.ba_local_max_num_iterations 20 \
+  --Mapper.tri_ignore_two_view_tracks 1 \
+  --Mapper.filter_max_reproj_error 4 \
+  --Mapper.abs_pose_min_num_inliers 30
 
 echo "xxxxxx CONVERTER xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
