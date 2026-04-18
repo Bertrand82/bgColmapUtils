@@ -59,7 +59,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	
     public static class ParamsConfiguration {
         public int nbPointsExtraitsMax = 1000;
-        public int nbSeq    = 4;
+        public int nbSeq    = 6;
         public int nbProx   = 6;
     }
 
@@ -447,7 +447,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	}
 
 	private void extractData() {
-		System.out.println("extract data listBeansSelected.size :"+ this.listBeansSelected.size());
+		System.out.println("extract data start | listBeansSelected.size :"+ this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
 		File dirTarget = UtilCreateDirPopups.createDirectoryPopup(this);
@@ -513,7 +513,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 			 if (position0==null) {
 				 
 			 }else {
-			 Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0, listPositionMetaDAta, 4, 4);
+				 int nDate =this.paramsConfiguration.nbSeq;
+				 int nDistance = this.paramsConfiguration.nbProx;
+			 Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0, listPositionMetaDAta, nDate, nDistance);
 			 hashTableClosest.put(position0, setPosition);
 			 }
 		 }
