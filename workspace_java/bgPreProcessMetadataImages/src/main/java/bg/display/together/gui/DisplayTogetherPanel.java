@@ -34,6 +34,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -55,10 +56,19 @@ import bg.util.map.MapProviderListener;
 
 public class DisplayTogetherPanel extends JPanel implements Runnable, MapProviderListener {
 
+	
+    public static class ParamsConfiguration {
+        public int nbPointsExtraitsMax = 1000;
+        public int nbSeq    = 4;
+        public int nbProx   = 6;
+    }
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	ParamsConfiguration paramsConfiguration = new ParamsConfiguration();
 	 
 	private Canvas canvas = new Canvas() {
 		@Override
@@ -93,12 +103,12 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	PositionBean2 beanSelected = null;
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
-	JTextField textFieldNbImages = new JTextField(" 1000 ");
+	JTextField textFieldNbImages_ = new JTextField(" 1000 ");
 	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
-	JButton buttonDossierSources = new JButton("Open Repository");
-	JButton buttonDebug = new JButton("debug");
-	JButton buttonLoadSelected = new JButton("Open metadataCsv.txt");
+	JMenuItem buttonDossierSources = new JMenuItem("Open Repository");
+	JMenuItem buttonDebug = new JMenuItem("debug");
+	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources ;
@@ -128,20 +138,24 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
-		JPanel panelControl__= new JPanel();
+		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
+		menuItemConfigExtraction.addActionListener(e->DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
 		JMenuBar menuBar = new JMenuBar();
-	     JMenu fileMenu = new JMenu("File");
+		JMenu menuFile = new JMenu("File");
+		JMenu menuEdit = new JMenu("Edit");
+		menuEdit.add(menuItemConfigExtraction);
+		menuFile.add(buttonDebug);
+		menuFile.add(buttonLoadSelected);
+		menuFile.add(buttonDossierSources);
 		
-		fileMenu.add(buttonDebug);
-		fileMenu.add(buttonLoadSelected);
-		fileMenu.add(buttonDossierSources);
-		menuBar.add(fileMenu);
+		menuBar.add(menuFile);
+		menuBar.add(menuEdit);
 		menuBar.add(buttonVisualiserImages);
 		menuBar.add(buttonExtractData);
 		
-		menuBar.add(textFieldNbImages);
-		menuBar.add(labelNbDePoints);
+
 		menuBar.add(checkBoxImagesCorrected);
+	
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(previewImage, BorderLayout.WEST);
 		this.add(menuBar, BorderLayout.NORTH);
@@ -400,14 +414,13 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	}
 
 	private void selectionnerImagesFirsts() {
-		int nbImages = Integer.parseInt(textFieldNbImages.getText().trim());
+		int nbImages = this.paramsConfiguration.nbPointsExtraitsMax;
 		labelLog.setText("Visualiser Images " + nbImages);
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size()-1)));
 		canvas.repaint();
 	}
 	private void selectionnerImages(List<String> listImagesSelected) {
-		textFieldNbImages.setText(""+listImagesSelected.size());
 		labelLog.setText("Visualiser Images from  list " +listImagesSelected.size());
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>();
