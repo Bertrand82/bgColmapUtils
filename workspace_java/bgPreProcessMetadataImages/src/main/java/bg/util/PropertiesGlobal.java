@@ -3,6 +3,7 @@ package bg.util;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesGlobal {
@@ -14,20 +15,37 @@ public class PropertiesGlobal {
 	private static Properties PROPERTIES;
 	
 	
-	public static Properties getProperties() throws Exception{
+	public static Properties getProperties(){
 		if (PROPERTIES == null) {
-			PROPERTIES = new Properties();
-			if (CACHE_FILE.exists()) {				
-				PROPERTIES.load(new FileReader(CACHE_FILE));				
-			}
+			try {
+				PROPERTIES = new Properties();
+				if (CACHE_FILE.exists()) {				
+					PROPERTIES.load(new FileReader(CACHE_FILE));				
+				}
+			} catch (Exception e) {
+				// Pas de trace
+			} 
 		}
 		return PROPERTIES;
 	}
 
 
-	public static void saveProperties(String comment) throws Exception{
-		CACHE_DIR.mkdirs();
-		FileWriter fw = new FileWriter(CACHE_FILE);
-		PROPERTIES.store(fw, comment);		
+	public static void saveProperties(String comment) {
+		try {
+			CACHE_DIR.mkdirs();
+			FileWriter fw = new FileWriter(CACHE_FILE);
+			PROPERTIES.store(fw, comment);
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}		
+	}
+
+
+	public static void saveProperty(String key, String value) {
+		Properties prop = getProperties();
+		prop.setProperty(key, value);
+		saveProperties("maj "+key+" : "+value);
+		
 	}
 }

@@ -9,6 +9,11 @@ echo "COLMAP binaire utilisé: $COLMAP_CMD"
 "$COLMAP_CMD" --version
 BG_WORK="${BG_WORK:-/data/BG}"
 
+mkdir -p "$LOG_DIR"
+LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
+# redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
+exec > >(tee -a "$LOG_FILE") 2>&1
+
 echo "COLMAP EXTRACTOR"
 # "$COLMAP_CMD" feature_extractor --help
 echo "xxxxxxxxxxxxxxx ls $BG_WORK"

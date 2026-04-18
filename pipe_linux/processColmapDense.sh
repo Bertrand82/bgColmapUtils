@@ -9,7 +9,7 @@ BG_WORK="${BG_WORK:-/data/BG}"
 echo "BG_WORK : $BG_WORK"  
 LOG_DIR="$BG_WORK/logs"
 mkdir -p "$LOG_DIR"
-LOG_FILE="$LOG_DIR/colmap_$(date +%Y%m%d_%H%M%S).log"
+LOG_FILE="$LOG_DIR/colmap_dense$(date +%Y%m%d_%H%M%S).log"
 # redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
 exec > >(tee -a "$LOG_FILE") 2>&1
 

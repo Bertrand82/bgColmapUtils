@@ -84,6 +84,12 @@ public final class PositionGps2Factory {
    
     public static List<PositionGps2> getListGpsPositionFromDirImages(File dir) {
     	List<PositionGps2> listA = new ArrayList<PositionGps2>();
+    	if (dir == null) {
+    		return listA;
+    	}
+    	if (!dir.exists()) {
+    		return listA;
+    	}
     	for(File fImage : dir.listFiles()) {
     		PositionGps2 gps = extractPosition(fImage);
     		if (gps == null) {

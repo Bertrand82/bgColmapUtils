@@ -47,7 +47,9 @@ import bg.util.PositionGps2Factory;
 import bg.util.PositionMetaData2;
 import bg.util.PositionMetaData2Factory;
 import bg.util.PositionMetaData2UtilCloser;
+import bg.util.PropertiesGlobal;
 import bg.util.UtilCreateDirPopups;
+import bg.util.UtilFile;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
@@ -57,9 +59,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	 JMenuBar menuBar = new JMenuBar();
-
-     JMenu fileMenu = new JMenu("File");
+	 
 	private Canvas canvas = new Canvas() {
 		@Override
 		public void paint(Graphics g) {
@@ -94,11 +94,11 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
 	JTextField textFieldNbImages = new JTextField(" 1000 ");
-	JButton buttonVisualiserImages = new JButton("Images Selected");
+	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
-	JButton buttonDossierSources = new JButton("sources");
+	JButton buttonDossierSources = new JButton("Open Repository");
 	JButton buttonDebug = new JButton("debug");
-	JButton buttonLoadSelected = new JButton("loadSelected");
+	JButton buttonLoadSelected = new JButton("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources ;
@@ -111,7 +111,9 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	private void initData(File dir) throws Exception{
 		dirSources = dir;
 		dirImages = new File(dir, "images");
-
+		String trace = "dirImages exists : "+dirImages.exists() +"  "+dirImages.getAbsolutePath();
+		System.out.println(trace);
+		this.labelLog.setText(trace);
 		File fileMetadata = new File(dir, "metadata.csv");
 		metaDataCsv = new MetaDatasCsv(fileMetadata, dirImages);
 		Thread threadInit = new Thread(this);
@@ -126,19 +128,23 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
-		JPanel panelControl = new JPanel();
-		panelControl.add(buttonDebug);
-		panelControl.add(buttonLoadSelected);
-		panelControl.add(buttonDossierSources);
-		panelControl.add(buttonVisualiserImages);
-		panelControl.add(buttonExtractData);
+		JPanel panelControl__= new JPanel();
+		JMenuBar menuBar = new JMenuBar();
+	     JMenu fileMenu = new JMenu("File");
 		
-		panelControl.add(textFieldNbImages);
-		panelControl.add(labelNbDePoints);
-		panelControl.add(checkBoxImagesCorrected);
+		fileMenu.add(buttonDebug);
+		fileMenu.add(buttonLoadSelected);
+		fileMenu.add(buttonDossierSources);
+		menuBar.add(fileMenu);
+		menuBar.add(buttonVisualiserImages);
+		menuBar.add(buttonExtractData);
+		
+		menuBar.add(textFieldNbImages);
+		menuBar.add(labelNbDePoints);
+		menuBar.add(checkBoxImagesCorrected);
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(previewImage, BorderLayout.WEST);
-		this.add(panelControl, BorderLayout.NORTH);
+		this.add(menuBar, BorderLayout.NORTH);
 		this.add(labelLog, BorderLayout.SOUTH);
 		Dimension dim = new Dimension(w, h);
 		canvas.setPreferredSize(dim);
@@ -200,10 +206,16 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 
 	private void initListPositionsThread() {
 		long timeStart = System.currentTimeMillis();
+		if(!dirImages.exists()) {
+			System.err.println("dir : "+dirImages.getAbsolutePath()+"  doen't exists ");
+		}
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
 
 		long duree_ms = System.currentTimeMillis() - timeStart;
 		System.out.println("List gps size  " + listPositions.size() + "    duree (secondes) : " + (duree_ms / 1000));
+		if (listPositions.size()==0) {
+			return;
+		}
 		PositionGps2 first = listPositions.get(0);
 		xMin = xMax = first.getX();
 		yMin = yMax = first.getY();
@@ -361,15 +373,19 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
         chooser.setMultiSelectionEnabled(false);
 
         // Optionnel : partir du dernier dossier choisi
-        if (dirSources != null) {
+        if (UtilFile. existsDir(dirSources)) {
             chooser.setCurrentDirectory(dirSources);
         } else {
-            chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        	String dirPath  = ""+PropertiesGlobal.getProperties().getProperty("DirSource",System.getProperty("user.home"));
+        	File file = new File(dirPath);
+        	
+            chooser.setCurrentDirectory(file);
         }
 
         int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
         if (result == JFileChooser.APPROVE_OPTION) {
         	dirSources = chooser.getSelectedFile();
+        	PropertiesGlobal.saveProperty("DirSource",dirSources.getAbsolutePath());
             // Exemple : feedback utilisateur
             this.labelLog.setText(dirSources.getAbsolutePath());
             try {
@@ -557,13 +573,15 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	private void actionLoadSelected() {
 		this.labelLog.setText("actionLoadSelected");
 		// 1) Ouvrir un sélecteur de dossier
+		String dirRootChooserPath = PropertiesGlobal.getProperties().getProperty("openMetaDataCsvDir", System.getProperty("user.home"));
 	    JFileChooser chooser = new JFileChooser();
-	    chooser.setDialogTitle("Choisir un fichier metadata.csv");
+	    chooser.setDialogTitle("Choisir un fichier metadata.csv ou metadataCsv.txt");
 	    chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 	    chooser.setAcceptAllFileFilterUsed(false);
 
 	    // Optionnel: dossier par défaut (à adapter)
-	    // chooser.setCurrentDirectory(new java.io.File(System.getProperty("user.home")));
+	    File dirRootChooser = new File(dirRootChooserPath);
+	    chooser.setCurrentDirectory(dirRootChooser);
 
 	    
 	    int result = chooser.showOpenDialog(this);
@@ -573,7 +591,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	    }
 
 	    File metadataFile = chooser.getSelectedFile();
-
+	    PropertiesGlobal.saveProperty("openMetaDataCsvDir", metadataFile.getParentFile().getAbsolutePath());
 	   
 	   
 
