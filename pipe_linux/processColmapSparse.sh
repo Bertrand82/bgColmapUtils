@@ -8,7 +8,7 @@ COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
 echo "COLMAP binaire utilisé: $COLMAP_CMD"
 "$COLMAP_CMD" --version
 BG_WORK="${BG_WORK:-/data/BG}"
-
+LOG_DIR="$BG_WORK/logs"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
 # redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
@@ -27,8 +27,8 @@ echo "xxxxxx Extraction features xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   --image_path "$BG_WORK/images" \
   --ImageReader.single_camera 1 \
   --ImageReader.camera_model SIMPLE_RADIAL \
-  --FeatureExtraction.use_gpu 0 \
-  --FeatureExtraction.num_threads 1 \
+  --FeatureExtraction.use_gpu 1 \
+  --FeatureExtraction.num_threads 7 \
   --log_level 2
 
 echo "xxxxxx MATCH  xxxxxxxxxxxxxxxxxx"
