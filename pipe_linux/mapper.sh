@@ -13,7 +13,7 @@ set -euo pipefail
 COLMAP="${COLMAP:-$HOME/workspaceCpp/colmap/build/src/colmap/exe/colmap}"
 BG_WORK="${BG_WORK:-/data/BG}"
 
-DENSE_DIR="$BG_WORK/dense2"
+DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$BG_WORK/logs"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"
 
@@ -32,27 +32,28 @@ test -d "$BG_WORK/sparse/0"
 
 
 
-echo "=== 2) PatchMatch stereo (depth maps) ==="
+echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
-  --workspace_format COLMAP
+  --workspace_format COLMAP \
+  --PatchMatchStereo.num_threads 1
   # Optionnel (si supporté):
   # --PatchMatchStereo.gpu_index 0
   # --PatchMatchStereo.num_iterations 5
   # --PatchMatchStereo.geom_consistency 1
 
-echo "=== 3) Stereo fusion -> dense point cloud ==="
+echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --input_type geometric \
   --output_path "$DENSE_DIR/fused.ply"
 
-echo "=== 4) Poisson meshing ==="
+echo "bg dense === 4) Poisson meshing ==="
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
   --output_path "$DENSE_DIR/mesh_poisson.ply"
 
-echo "Done."
+echo "bg dense === Done."
 echo "Point cloud: $DENSE_DIR/fused.ply"
 echo "Poisson mesh: $DENSE_DIR/mesh_poisson.ply"
