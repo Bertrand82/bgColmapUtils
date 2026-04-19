@@ -31,6 +31,7 @@ import java.util.TreeSet;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -39,6 +40,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 import bg.metadata.MetaDatasCsv;
 import bg.util.PaireMetadata2;
@@ -49,12 +51,14 @@ import bg.util.PositionMetaData2;
 import bg.util.PositionMetaData2Factory;
 import bg.util.PositionMetaData2UtilCloser;
 import bg.util.PropertiesGlobal;
+import bg.util.SablierSwing;
 import bg.util.UtilCreateDirPopups;
 import bg.util.UtilFile;
+
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
-public class DisplayTogetherPanel extends JPanel implements Runnable, MapProviderListener {
+public class DisplayTogetherPanel extends JPanel implements  MapProviderListener {
 
 	
     public static class ParamsConfiguration {
@@ -112,11 +116,14 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources ;
-
-	public DisplayTogetherPanel(File dir) throws Exception {
+	SablierSwing sablierSwing;
+	JFrame frame;
+	public DisplayTogetherPanel(File dir, JFrame frame) throws Exception {
+		this.frame = frame;
 		initData(dir);
 		initSwing();
 	}
+	
 	
 	private void initData(File dir) throws Exception{
 		dirSources = dir;
@@ -126,11 +133,34 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 		this.labelLog.setText(trace);
 		File fileMetadata = new File(dir, "metadata.csv");
 		metaDataCsv = new MetaDatasCsv(fileMetadata, dirImages);
-		Thread threadInit = new Thread(this);
-		threadInit.start();
+		startInitPositionsImages();
+		
 	}
+	
+	  void startInitPositionsImages() {
+	        SablierSwing sablierSwing = new SablierSwing(frame);
+
+	       
+	        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+	            @Override protected Void doInBackground() throws Exception {
+	            	sablierSwing.start();
+	            	initListPositionsThread();
+	                return null;
+	            }
+
+	            // LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+	            @Override protected void done() {
+	            	System.err.println("sssssssssstop dialog");
+	                sablierSwing.stop();
+	            }
+	        };
+	        sw.execute();
+	    }
+	
+	
 
 	private void initSwing() {
+		this.sablierSwing = new SablierSwing(frame);
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e->debug());
 		buttonLoadSelected.addActionListener(e->actionLoadSelected());
@@ -214,14 +244,13 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 
 	}
 
-	public void run() {
-		this.initListPositionsThread();
-	}
+	
 
 	private void initListPositionsThread() {
 		long timeStart = System.currentTimeMillis();
 		if(!dirImages.exists()) {
 			System.err.println("dir : "+dirImages.getAbsolutePath()+"  doen't exists ");
+			return;
 		}
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
 
@@ -307,6 +336,7 @@ public class DisplayTogetherPanel extends JPanel implements Runnable, MapProvide
 			point.y = (int) ((scale / scaleOld) * (point.y));
 		}
 		repaint();
+		
 	}
 
 	
