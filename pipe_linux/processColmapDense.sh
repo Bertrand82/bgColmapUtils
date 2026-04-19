@@ -42,7 +42,8 @@ echo "bg dense === 1) Undistort images (dense workspace) ==="
 echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
-  --workspace_format COLMAP
+  --workspace_format COLMAP \
+  --PatchMatchStereo.num_threads 1
   # Optionnel (si supporté):
   # --PatchMatchStereo.gpu_index 0
   # --PatchMatchStereo.num_iterations 5
