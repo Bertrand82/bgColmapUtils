@@ -10,7 +10,7 @@ public class DisplayTogetherFrame {
 	final JFrame frame = new JFrame("DisplayImages");
 
 	public DisplayTogetherFrame(File dir) throws Exception{
-		DisplayTogetherPanel displayImagesGUI = new DisplayTogetherPanel(dir);
+		DisplayTogetherPanel displayImagesGUI = new DisplayTogetherPanel(dir,frame);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(displayImagesGUI,BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
