@@ -30,7 +30,7 @@ echo "Log: $LOG_FILE"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
-echo "=== 1) Undistort images (dense workspace) ==="
+echo "bg dense === 1) Undistort images (dense workspace) ==="
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
   --input_path "$BG_WORK/sparse/0" \
@@ -39,7 +39,7 @@ echo "=== 1) Undistort images (dense workspace) ==="
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
 
-echo "=== 2) PatchMatch stereo (depth maps) ==="
+echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP
@@ -48,18 +48,18 @@ echo "=== 2) PatchMatch stereo (depth maps) ==="
   # --PatchMatchStereo.num_iterations 5
   # --PatchMatchStereo.geom_consistency 1
 
-echo "=== 3) Stereo fusion -> dense point cloud ==="
+echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --input_type geometric \
   --output_path "$DENSE_DIR/fused.ply"
 
-echo "=== 4) Poisson meshing ==="
+echo "bg dense === 4) Poisson meshing ==="
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
   --output_path "$DENSE_DIR/mesh_poisson.ply"
 
-echo "Done."
+echo "bg dense === Done."
 echo "Point cloud: $DENSE_DIR/fused.ply"
 echo "Poisson mesh: $DENSE_DIR/mesh_poisson.ply"
