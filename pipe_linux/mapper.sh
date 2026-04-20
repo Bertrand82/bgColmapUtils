@@ -36,11 +36,8 @@ echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
-  --PatchMatchStereo.num_threads 1
-  # Optionnel (si supporté):
-  # --PatchMatchStereo.gpu_index 0
-  # --PatchMatchStereo.num_iterations 5
-  # --PatchMatchStereo.geom_consistency 1
+  --PatchMatchStereo.max_image_size 1600 \
+  --PatchMatchStereo.cache_size 8 \
 
 echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \

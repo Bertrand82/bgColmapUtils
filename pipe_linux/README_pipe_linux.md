@@ -6,6 +6,7 @@
 
 #### 200 images
 - En cours
+~/workspaceCpp/colmap/build/src/colmap/exe/colmap patch_match_stereo --help
 
 #### Plantage par manque de mémoire
 
