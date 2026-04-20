@@ -138,7 +138,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	}
 	
 	  void startInitPositionsImages() {
-	        SablierSwing sablierSwing = new SablierSwing(frame);
+	        SablierSwing sablierSwing = new SablierSwing(frame,"Lecture images en cours");
 
 	       
 	        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
@@ -160,7 +160,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	
 
 	private void initSwing() {
-		this.sablierSwing = new SablierSwing(frame);
+		this.sablierSwing = new SablierSwing(frame,"Patience ..");
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e->debug());
 		buttonLoadSelected.addActionListener(e->actionLoadSelected());
@@ -475,8 +475,33 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		System.out.println("updateMapImage " + imageMap_);
 
 	}
+	
+	
 
 	private void extractData() {
+
+        SablierSwing sablierSwing = new SablierSwing(frame,"Ecriture des images en cours");
+
+       
+        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+            @Override protected Void doInBackground() throws Exception {
+            	sablierSwing.start();
+            	extractDataProcess();
+                return null;
+            }
+
+            // LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+            @Override protected void done() {
+            	System.err.println("sssssssssstop dialog");
+                sablierSwing.stop();
+            }
+        };
+        sw.execute();
+    }
+
+	
+	
+	private void extractDataProcess() {
 		System.out.println("extract data start | listBeansSelected.size :"+ this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory

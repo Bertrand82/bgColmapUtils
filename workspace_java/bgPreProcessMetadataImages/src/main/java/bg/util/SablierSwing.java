@@ -7,7 +7,7 @@ public class SablierSwing {
     private final JFrame frame;
     private final JDialog dlg;
 
-    public SablierSwing(JFrame frame) {
+    public SablierSwing(JFrame frame, String labelTxt) {
         this.frame = frame;
 
         dlg = new JDialog(frame, "Chargement", Dialog.ModalityType.MODELESS);
@@ -15,7 +15,7 @@ public class SablierSwing {
         bar.setIndeterminate(true);
 
         dlg.setLayout(new BorderLayout(10, 10));
-        dlg.add(new JLabel("Initialisation en cours, merci de patienter..."), BorderLayout.NORTH);
+        dlg.add(new JLabel(labelTxt), BorderLayout.NORTH);
         dlg.add(bar, BorderLayout.CENTER);
         dlg.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         dlg.pack();
