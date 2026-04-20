@@ -138,12 +138,11 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	}
 	
 	  void startInitPositionsImages() {
-	        SablierSwing sablierSwing = new SablierSwing(frame,"Lecture images en cours");
-
+	       
 	       
 	        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
 	            @Override protected Void doInBackground() throws Exception {
-	            	sablierSwing.start();
+	            	sablierSwing.start("initialisation images","Init");
 	            	initListPositionsThread();
 	                return null;
 	            }
@@ -160,7 +159,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	
 
 	private void initSwing() {
-		this.sablierSwing = new SablierSwing(frame,"Patience ..");
+		this.sablierSwing = new SablierSwing(frame,"Patience ..","Sablier");
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e->debug());
 		buttonLoadSelected.addActionListener(e->actionLoadSelected());
@@ -480,12 +479,10 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 
 	private void extractData() {
 
-        SablierSwing sablierSwing = new SablierSwing(frame,"Ecriture des images en cours");
-
        
         SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
             @Override protected Void doInBackground() throws Exception {
-            	sablierSwing.start();
+            	sablierSwing.start("Ecriture Data","Ecriture");
             	extractDataProcess();
                 return null;
             }

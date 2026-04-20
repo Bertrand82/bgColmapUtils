@@ -25,12 +25,12 @@ public class SablierSwingTest {
     }
 
     void startJobLong() {
-        SablierSwing ss = new SablierSwing(f);
+        SablierSwing ss = new SablierSwing(f,"title1","title2");
 
         // LIGNE 1 (remplace le sleep): lancer le "temps long" hors EDT
         SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
             @Override protected Void doInBackground() throws Exception {
-            	ss.start();
+            	ss.start("Chargement ....","init");
                 Thread.sleep(12000);
                 return null;
             }
