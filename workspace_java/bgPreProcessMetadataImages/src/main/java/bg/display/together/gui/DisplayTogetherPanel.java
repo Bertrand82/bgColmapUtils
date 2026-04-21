@@ -72,7 +72,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	ParamsConfiguration paramsConfiguration = new ParamsConfiguration();
+	private ParamsConfiguration paramsConfiguration = new ParamsConfiguration();
 	 
 	private Canvas canvas = new Canvas() {
 		@Override
@@ -86,7 +86,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		}
 	};
 	BufferedImage imageMap;
-	private PreviewImage previewImage = new PreviewImage();
+	private DisplayTogetherPanelPreviewImage previewImage = new DisplayTogetherPanelPreviewImage(this);
 
 	private List<PositionGps2> listPositions;
 	final List<PositionBean2> listBeans = new ArrayList<PositionBean2>();
@@ -312,7 +312,9 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		}
 		MapProvider mapProvider = new MapProvider(longMax, longMin, latMax, latMin, this);
 		this.labelNbDePoints.setText("" + this.listBeans.size());
-		this.canvas.repaint();
+		this.resizeInit();
+		SwingUtilities.invokeLater(() -> canvas.repaint());
+		
 	}
 
 	private void resizeInit() {
@@ -681,6 +683,30 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	                "Erreur",
 	                JOptionPane.ERROR_MESSAGE);
 	    }
+	}
+
+
+	public void displayNextPreview(int i, PositionGps2 gpsCurrent) {	
+		PositionBean2 pb = getBeanNext(i, gpsCurrent);
+		File fileImage = new File(dirImages, pb.gps.getImageName());
+		this.previewImage.displayImage(fileImage, pb.gps);
+	}
+	private PositionBean2 getBeanNext(int i,PositionGps2 gpsCurrent ) {
+		PositionBean2 beanZ_1 =null;
+		boolean bingo=false;
+		for (PositionBean2 bean : this.listBeans) {
+			if ((bingo) &&(i == 1) ){
+				return bean;
+			}
+			if (bean.gps.getImageName().equals(gpsCurrent.getImageName())){
+				bingo=true;
+			}
+			if ((bingo) &&(i == -1) ){
+				return beanZ_1;
+			}
+			beanZ_1 = bean;
+		}
+		return null;
 	}
 	
 
