@@ -14,10 +14,10 @@ COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK=/data/BG
 
 DENSE_DIR="$BG_WORK/dense"
-LOG_DIR="$BG_WORK/logs"
+LOG_DIR="$DENSE_DIR/logs"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"
 
-LOG_FILE="$LOG_DIR/dense_poisson_$(date +%Y%m%d_%H%M%S).log"
+LOG_FILE="$LOG_DIR/dense_$(date +%Y%m%d_%H%M%S).log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP: $COLMAP"
