@@ -31,6 +31,16 @@ Sortie :
 bertrand@bertrand-System-Product-Name:~/bgColmapUtils/pipe_linux$ 
 ```
 
+
+#### Plantage par manque d'espace disque
+```bash
+df -h /data
+du -h --max-depth=2 /data | sort -h | tail -n 20
+```
+
 #### Parametres 
 --StereoFusion.max_image_size 1600 : 1600 taille max de la plus grande longueur en pixel
 1600 : 200 images ; 27 mn
+
+#### Console
+tmux
