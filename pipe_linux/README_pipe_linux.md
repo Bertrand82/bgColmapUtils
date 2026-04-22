@@ -6,14 +6,16 @@
 
 #### 200 images
 - En cours
+```bash
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap patch_match_stereo --help
-
+~/workspaceCpp/colmap/build/src/colmap/exe/colmap stereo_fusion --help
+```
 #### Plantage par manque de mémoire
 
 Commande :
 
 ```bash
-/pipe_linux$> sudo dmesg -T | tail -n 200 | egrep -i 'out of memory|oom|killed process|colmap'
+sudo dmesg -T | tail -n 200 | egrep -i 'out of memory|oom|killed process|colmap'
 ```
 
 Sortie :
@@ -28,3 +30,7 @@ Sortie :
 [dim. 19 avril 18:03:32 2026] oom_reaper: reaped process 43056 (colmap), now anon-rss:0kB, file-rss:192kB, shmem-rss:176kB
 bertrand@bertrand-System-Product-Name:~/bgColmapUtils/pipe_linux$ 
 ```
+
+#### Parametres 
+--StereoFusion.max_image_size 1600 : 1600 taille max de la plus grande longueur en pixel
+1600 : 200 images ; 27 mn

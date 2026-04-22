@@ -10,7 +10,7 @@ set -euo pipefail
 #   $BG_WORK/dense/fused.ply
 #   $BG_WORK/dense/mesh_poisson.ply
 
-COLMAP="${COLMAP:-$HOME/workspaceCpp/colmap/build/src/colmap/exe/colmap}"
+COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK="${BG_WORK:-/data/BG}"
 
 DENSE_DIR="$BG_WORK/dense"
@@ -26,11 +26,6 @@ echo "BG_WORK: $BG_WORK"
 echo "Dense dir: $DENSE_DIR"
 echo "Log: $LOG_FILE"
 
-# Basic sanity checks
-test -d "$BG_WORK/images"
-test -d "$BG_WORK/sparse/0"
-
-
 
 echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
@@ -38,19 +33,23 @@ echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
   --workspace_format COLMAP \
   --PatchMatchStereo.max_image_size 1600 \
   --PatchMatchStereo.cache_size 8 \
+  --PatchMatchStereo.num_threads 4
+  
+
+
 
 echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --input_type geometric \
-  --output_path "$DENSE_DIR/fused.ply"
+  --output_path "$DENSE_DIR/fused.ply" \
+  --StereoFusion.use_cache 1 \
+  --StereoFusion.cache_size 8 \
+  --StereoFusion.num_threads 4 \
+  --StereoFusion.check_num_images 10 \
+  --StereoFusion.max_image_size 1600
 
-echo "bg dense === 4) Poisson meshing ==="
-"$COLMAP" poisson_mesher \
-  --input_path "$DENSE_DIR/fused.ply" \
-  --output_path "$DENSE_DIR/mesh_poisson.ply"
 
-echo "bg dense === Done."
-echo "Point cloud: $DENSE_DIR/fused.ply"
-echo "Poisson mesh: $DENSE_DIR/mesh_poisson.ply"
+
+

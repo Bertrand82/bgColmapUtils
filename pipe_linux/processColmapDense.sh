@@ -10,8 +10,8 @@ set -euo pipefail
 #   $BG_WORK/dense/fused.ply
 #   $BG_WORK/dense/mesh_poisson.ply
 
-COLMAP="${COLMAP:-$HOME/workspaceCpp/colmap/build/src/colmap/exe/colmap}"
-BG_WORK="${BG_WORK:-/data/BG}"
+COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
+BG_WORK=/data/BG
 
 DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$BG_WORK/logs"
@@ -35,7 +35,9 @@ echo "bg dense === 1) Undistort images (dense workspace) ==="
   --image_path "$BG_WORK/images" \
   --input_path "$BG_WORK/sparse/0" \
   --output_path "$DENSE_DIR" \
-  --output_type COLMAP
+  --output_type COLMAP \
+  --max_image_size 1400 \
+  --num_threads 4
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
 
@@ -43,23 +45,34 @@ echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
+  --PatchMatchStereo.max_image_size 1400 \
+  --PatchMatchStereo.cache_size 8 \
   --PatchMatchStereo.num_threads 1
-  # Optionnel (si supporté):
-  # --PatchMatchStereo.gpu_index 0
-  # --PatchMatchStereo.num_iterations 5
-  # --PatchMatchStereo.geom_consistency 1
+  
+
+
 
 echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --input_type geometric \
-  --output_path "$DENSE_DIR/fused.ply"
+  --output_path "$DENSE_DIR/fused.ply" \
+  --StereoFusion.use_cache 1 \
+  --StereoFusion.cache_size 8 \
+  --StereoFusion.num_threads 4 \
+  --StereoFusion.check_num_images 10 \
+  --StereoFusion.max_image_size 1400
 
 echo "bg dense === 4) Poisson meshing ==="
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
-  --output_path "$DENSE_DIR/mesh_poisson.ply"
+  --output_path "$DENSE_DIR/mesh_poisson.ply" \
+  --PoissonMeshing.depth 11 \
+  --PoissonMeshing.trim 10 \
+  --PoissonMeshing.point_weight 1 \
+  --PoissonMeshing.color 1 \
+  --PoissonMeshing.num_threads 4
 
 echo "bg dense === Done."
 echo "Point cloud: $DENSE_DIR/fused.ply"
