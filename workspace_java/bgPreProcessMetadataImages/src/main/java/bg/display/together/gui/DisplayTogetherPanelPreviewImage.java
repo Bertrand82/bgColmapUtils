@@ -10,35 +10,57 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import bg.util.PositionGps2;
 
-public class PreviewImage extends JPanel{
+public class DisplayTogetherPanelPreviewImage extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private CanvasMiniature canvasMiniature = new CanvasMiniature();
 	private CanvasMiniature canvasMiniaturePrevious1= new CanvasMiniature();
 	private CanvasMiniature canvasMiniaturePrevious2= new CanvasMiniature();
+	private DisplayTogetherPanel  displayTogetherPanel	;
 	
 	private JLabel label = new JLabel("");
-	public PreviewImage() {
-		
+	public DisplayTogetherPanelPreviewImage(DisplayTogetherPanel dtp) {
+		this.displayTogetherPanel=dtp;
 		JPanel panelCAnvas= new JPanel(new GridLayout(0,1));
 		panelCAnvas.add(canvasMiniature);
 		panelCAnvas.add(canvasMiniaturePrevious1);
 		panelCAnvas.add(canvasMiniaturePrevious2);
 		this.setLayout(new BorderLayout());
-		this.add(label,BorderLayout.NORTH);
+		JPanel panelNorth = new JPanel(new BorderLayout());
+		JButton buttonNext = new JButton(">");
+		JButton buttonPrevious = new JButton("<");
+		panelNorth.add(this.label,BorderLayout.CENTER);
+		panelNorth.add(buttonNext,BorderLayout.EAST);
+		panelNorth.add(buttonPrevious,BorderLayout.WEST);
+		this.add(panelNorth,BorderLayout.NORTH);
 		this.add(panelCAnvas,BorderLayout.CENTER);
+		buttonPrevious.addActionListener(e->displayNextPreview(-1));
+		buttonNext.addActionListener(e->displayNextPreview(1));
 	}
 	
 	
 
+	private void displayNextPreview(int i) {
+		System.out.println("DisplayNext "+i);
+		this.displayTogetherPanel.displayNextPreview(i, gpsCurrent);
+		
+	}
+
+	File fileImageCurrent;
+	PositionGps2 gpsCurrent;
+
 	public void displayImage(File fileImage, PositionGps2 gps) {
+		
+		this.fileImageCurrent=fileImage;
+		this.gpsCurrent=gps;
 		try {
-			this.label.setText(gps.getImageName());
+			this.label.setToolTipText(gps.getImageName());
 			this.canvasMiniaturePrevious2.currentImage=this.canvasMiniaturePrevious1.currentImage;
 			this.canvasMiniaturePrevious1.currentImage=this.canvasMiniature.currentImage;
 			this.canvasMiniature.currentImage = ImageIO.read(fileImage);
