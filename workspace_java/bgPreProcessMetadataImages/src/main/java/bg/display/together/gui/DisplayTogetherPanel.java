@@ -116,10 +116,11 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources ;
-	SablierSwing sablierSwing;
-	JFrame frame;
+	final SablierSwing sablierSwing;
+	final JFrame frame;
 	public DisplayTogetherPanel(File dir, JFrame frame) throws Exception {
 		this.frame = frame;
+		this.sablierSwing = new SablierSwing(frame,"Patience ..","Sablier");
 		initData(dir);
 		initSwing();
 	}
@@ -159,7 +160,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	
 
 	private void initSwing() {
-		this.sablierSwing = new SablierSwing(frame,"Patience ..","Sablier");
+		
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e->debug());
 		buttonLoadSelected.addActionListener(e->actionLoadSelected());
