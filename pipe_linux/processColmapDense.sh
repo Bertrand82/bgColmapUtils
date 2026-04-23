@@ -12,7 +12,7 @@ set -euo pipefail
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK=/data/BG
-max_image_size=1000
+max_image_size=2000
 
 DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$DENSE_DIR/logs"
@@ -24,7 +24,7 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "COLMAP: $COLMAP"
 "$COLMAP" --version || true
 echo "BG_WORK: $BG_WORK"
-echo "Dense dir: $DENSE_DIR"
+echo "bg dense dir: $DENSE_DIR"
 echo "Log: $LOG_FILE"
 echo "max_image_size : $max_image_size"
 
@@ -32,7 +32,7 @@ echo "max_image_size : $max_image_size"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
-echo "bg dense === 1) Undistort images (dense workspace) ==="
+echo "bg dense === etape 1) Undistort images (dense workspace) ==="
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
   --input_path "$BG_WORK/sparse/0" \
@@ -43,7 +43,7 @@ echo "bg dense === 1) Undistort images (dense workspace) ==="
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
 
-echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
+echo "bg dense === etape 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -54,7 +54,7 @@ echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 
 
 
-echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
+echo "bg dense === etape 3) Stereo fusion -> dense point cloud ==="
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
