@@ -58,22 +58,21 @@ import bg.util.UtilFile;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
-public class DisplayTogetherPanel extends JPanel implements  MapProviderListener {
+public class DisplayTogetherPanel extends JPanel implements MapProviderListener {
 
-	
-    public static class ParamsConfiguration {
-        public int nbPointsExtraitsMax = 1000;
-        public int nbSeq    = 6;
-        public int nbProx   = 6;
-    }
+	public static class ParamsConfiguration {
+		public int nbPointsExtraitsMax = 1000;
+		public int nbSeq = 6;
+		public int nbProx = 6;
+	}
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private ParamsConfiguration paramsConfiguration = new ParamsConfiguration();
-	 
+
 	private Canvas canvas = new Canvas() {
 		@Override
 		public void paint(Graphics g) {
@@ -114,63 +113,62 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
-	File dirSources ;
+	File dirSources;
 	final SablierSwing sablierSwing;
 	final JFrame frame;
+
 	public DisplayTogetherPanel(File dir, JFrame frame) throws Exception {
 		this.frame = frame;
-		this.sablierSwing = new SablierSwing(frame,"Patience ..","Sablier");
+		this.sablierSwing = new SablierSwing(frame, "Patience ..", "Sablier");
 		initData(dir);
 		initSwing();
 	}
-	
-	
-	private void initData(File dir) throws Exception{
+
+	private void initData(File dir) throws Exception {
 		dirSources = dir;
 		dirImages = new File(dir, "images");
-		String trace = "dirImages exists : "+dirImages.exists() +"  "+dirImages.getAbsolutePath();
+		String trace = "dirImages exists : " + dirImages.exists() + "  " + dirImages.getAbsolutePath();
 		System.out.println(trace);
 		this.labelLog.setText(trace);
 		File fileMetadata = new File(dir, "metadata.csv");
 		metaDataCsv = new MetaDatasCsv(fileMetadata, dirImages);
 		startInitPositionsImages();
-		
-	}
-	
-	  void startInitPositionsImages() {
-	       
-	       
-	        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
-	            @Override protected Void doInBackground() throws Exception {
-	            	sablierSwing.start("initialisation images","Init");
-	            	initListPositionsThread();
-	                return null;
-	            }
 
-	            // LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
-	            @Override protected void done() {
-	            	System.err.println("sssssssssstop dialog");
-	                sablierSwing.stop();
-	            }
-	        };
-	        sw.execute();
-	    }
-	
-	
+	}
+
+	void startInitPositionsImages() {
+
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				sablierSwing.start("initialisation images", "Init");
+				initListPositionsThread();
+				return null;
+			}
+
+			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+			@Override
+			protected void done() {
+				System.err.println("sssssssssstop dialog");
+				sablierSwing.stop();
+			}
+		};
+		sw.execute();
+	}
 
 	private void initSwing() {
-		
+
 		this.setLayout(new BorderLayout());
-		buttonDebug.addActionListener(e->debug());
-		buttonLoadSelected.addActionListener(e->actionLoadSelected());
-		buttonDossierSources.addActionListener(e_-> chooseDossierSource());
+		buttonDebug.addActionListener(e -> debug());
+		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
+		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
 		JMenuItem menuItemProcessRapportFromLog = new JMenuItem("process Log");
-		menuItemConfigExtraction.addActionListener(e->DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
-		menuItemProcessRapportFromLog.addActionListener(e->JOptionPane.showMessageDialog(frame, "Message"));
+		menuItemConfigExtraction.addActionListener(e -> DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
+		menuItemProcessRapportFromLog.addActionListener(e -> processLog());
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
 		JMenu menuEdit = new JMenu("Edit");
@@ -179,15 +177,14 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
 		menuFile.add(buttonDossierSources);
-		
+
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
 		menuBar.add(buttonVisualiserImages);
 		menuBar.add(buttonExtractData);
-		
 
 		menuBar.add(checkBoxImagesCorrected);
-	
+
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(previewImage, BorderLayout.WEST);
 		this.add(menuBar, BorderLayout.NORTH);
@@ -246,19 +243,17 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 
 	}
 
-	
-
 	private void initListPositionsThread() {
 		long timeStart = System.currentTimeMillis();
-		if(!dirImages.exists()) {
-			System.err.println("dir : "+dirImages.getAbsolutePath()+"  doen't exists ");
+		if (!dirImages.exists()) {
+			System.err.println("dir : " + dirImages.getAbsolutePath() + "  doen't exists ");
 			return;
 		}
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
 
 		long duree_ms = System.currentTimeMillis() - timeStart;
 		System.out.println("List gps size  " + listPositions.size() + "    duree (secondes) : " + (duree_ms / 1000));
-		if (listPositions.size()==0) {
+		if (listPositions.size() == 0) {
 			return;
 		}
 		PositionGps2 first = listPositions.get(0);
@@ -317,7 +312,7 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		this.labelNbDePoints.setText("" + this.listBeans.size());
 		this.resizeInit();
 		SwingUtilities.invokeLater(() -> canvas.repaint());
-		
+
 	}
 
 	private void resizeInit() {
@@ -333,17 +328,15 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		this.w = dim.width;
 		this.h = dim.height;
 		for (PositionBean2 bean : listBeans) {
-			bean.updatePosition(scale,xMin,yMin);
+			bean.updatePosition(scale, xMin, yMin);
 		}
 		for (Point point : listPointsInterret) {
 			point.x = (int) ((scale / scaleOld) * (point.x));
 			point.y = (int) ((scale / scaleOld) * (point.y));
 		}
 		repaint();
-		
-	}
 
-	
+	}
 
 	private void paintImage(Graphics g) {
 		g.setColor(Color.white);
@@ -403,7 +396,8 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		System.out.println("Bean selected   " + beanSelected + "  x: " + x + "   y: " + y);
 		if (beanSelected == null) {
 			System.err.println("Perplexité!!! beanSelected is null!! Should never happen");
-			System.err.println("Perplexité!!! beanSelected is null!! Should never happen listBeans size "+listBeans.size());
+			System.err.println(
+					"Perplexité!!! beanSelected is null!! Should never happen listBeans size " + listBeans.size());
 			return;
 		}
 
@@ -412,31 +406,33 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		this.canvas.repaint();
 
 	}
+
 	private void chooseDossierSource() {
 		System.out.println("choose Dossier sources");
 		JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Choisir le dossier source");
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setMultiSelectionEnabled(false);
+		chooser.setDialogTitle("Choisir le dossier source");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setMultiSelectionEnabled(false);
 
-        // Optionnel : partir du dernier dossier choisi
-        if (UtilFile. existsDir(dirSources)) {
-            chooser.setCurrentDirectory(dirSources);
-        } else {
-        	String dirPath  = ""+PropertiesGlobal.getProperties().getProperty("DirSource",System.getProperty("user.home"));
-        	File file = new File(dirPath);
-        	
-            chooser.setCurrentDirectory(file);
-        }
+		// Optionnel : partir du dernier dossier choisi
+		if (UtilFile.existsDir(dirSources)) {
+			chooser.setCurrentDirectory(dirSources);
+		} else {
+			String dirPath = ""
+					+ PropertiesGlobal.getProperties().getProperty("DirSource", System.getProperty("user.home"));
+			File file = new File(dirPath);
 
-        int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
-        if (result == JFileChooser.APPROVE_OPTION) {
-        	dirSources = chooser.getSelectedFile();
-        	PropertiesGlobal.saveProperty("DirSource",dirSources.getAbsolutePath());
-            // Exemple : feedback utilisateur
-            this.labelLog.setText(dirSources.getAbsolutePath());
-            try {
+			chooser.setCurrentDirectory(file);
+		}
+
+		int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
+		if (result == JFileChooser.APPROVE_OPTION) {
+			dirSources = chooser.getSelectedFile();
+			PropertiesGlobal.saveProperty("DirSource", dirSources.getAbsolutePath());
+			// Exemple : feedback utilisateur
+			this.labelLog.setText(dirSources.getAbsolutePath());
+			try {
 				this.initData(dirSources);
 				this.repaint();
 			} catch (Exception e) {
@@ -444,31 +440,32 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 				e.printStackTrace();
 				this.repaint();
 			}
-        }
+		}
 	}
 
 	private void selectionnerImagesFirsts() {
 		int nbImages = this.paramsConfiguration.nbPointsExtraitsMax;
 		labelLog.setText("Visualiser Images " + nbImages);
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
-		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size()-1)));
+		this.listBeansSelected = new ArrayList<>(listBeans.subList(0, Math.min(nbImages, listBeans.size() - 1)));
 		canvas.repaint();
 	}
+
 	private void selectionnerImages(List<String> listImagesSelected) {
-		labelLog.setText("Visualiser Images from  list " +listImagesSelected.size());
+		labelLog.setText("Visualiser Images from  list " + listImagesSelected.size());
 		this.listBeans.sort(Comparator.comparingInt(p -> p.distance(this.listPointsInterret)));
 		this.listBeansSelected = new ArrayList<>();
-		for(PositionBean2 pb : listBeans) {
+		for (PositionBean2 pb : listBeans) {
 			boolean isSelected = false;
-			if(pb.positionMetaData == null) {
-			}else {
+			if (pb.positionMetaData == null) {
+			} else {
 				isSelected = listImagesSelected.contains(pb.positionMetaData.getImageName());
 			}
 			if (isSelected) {
 				this.listBeansSelected.add(pb);
 			}
 		}
-		System.out.println("images selected  :"+this.listBeansSelected+" / "+listImagesSelected.size());
+		System.out.println("images selected  :" + this.listBeansSelected + " / " + listImagesSelected.size());
 		canvas.repaint();
 	}
 
@@ -479,32 +476,29 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		System.out.println("updateMapImage " + imageMap_);
 
 	}
-	
-	
 
 	private void extractData() {
 
-       
-        SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
-            @Override protected Void doInBackground() throws Exception {
-            	sablierSwing.start("Ecriture Data","Ecriture");
-            	extractDataProcess();
-                return null;
-            }
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				sablierSwing.start("Ecriture Data", "Ecriture");
+				extractDataProcess();
+				return null;
+			}
 
-            // LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
-            @Override protected void done() {
-            	System.err.println("sssssssssstop dialog");
-                sablierSwing.stop();
-            }
-        };
-        sw.execute();
-    }
+			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+			@Override
+			protected void done() {
+				System.err.println("sssssssssstop dialog");
+				sablierSwing.stop();
+			}
+		};
+		sw.execute();
+	}
 
-	
-	
 	private void extractDataProcess() {
-		System.out.println("extract data start | listBeansSelected.size :"+ this.listBeansSelected.size());
+		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
 		File dirTarget = UtilCreateDirPopups.createDirectoryPopup(this);
@@ -519,11 +513,11 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 			Path src = imageFile.toPath();
 			File destFile = new File(dirTargetImages, imageName);
 			Path destPath = destFile.toPath();
-			
+
 			try {
 				long timeStart = System.currentTimeMillis();
 				i++;
-				System.out.print(i+"/"+listBeansSelected.size()+" --> ");
+				System.out.print(i + "/" + listBeansSelected.size() + " --> ");
 				if (destFile.exists()) {
 					System.out.println("file already exists " + imageName);
 				} else {
@@ -540,56 +534,57 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 			}
 		}
 		// Copier / générer les metaDatas
-		String metadataCsv="";
+		String metadataCsv = "";
 		for (PositionBean2 bean : this.listBeansSelected) {
 			System.out.println("g metaData :" + bean.positionMetaData);
-			if (bean.positionMetaData!=null) {
-				metadataCsv+= bean.positionMetaData.toString2_csv()+"\n";
+			if (bean.positionMetaData != null) {
+				metadataCsv += bean.positionMetaData.toString2_csv() + "\n";
 			}
 		}
-		File metadataCsvFile = new File(dirTarget,"metadataCSV.txt");
-		System.out.println("file "+metadataCsvFile.getName()+"  exists "+metadataCsvFile.exists());
+		File metadataCsvFile = new File(dirTarget, "metadataCSV.txt");
+		System.out.println("file " + metadataCsvFile.getName() + "  exists " + metadataCsvFile.exists());
 		if (metadataCsvFile.exists()) {
-			boolean deleted  = metadataCsvFile.delete();
-			System.out.println("file "+metadataCsvFile.getName()+"  deleted "+deleted);
+			boolean deleted = metadataCsvFile.delete();
+			System.out.println("file " + metadataCsvFile.getName() + "  deleted " + deleted);
 		}
 		try {
 			Files.writeString(metadataCsvFile.toPath(), metadataCsv, StandardCharsets.UTF_8,
-			        StandardOpenOption.CREATE_NEW);
-			System.out.println("file "+metadataCsvFile.getName()+" generated ");
+					StandardOpenOption.CREATE_NEW);
+			System.out.println("file " + metadataCsvFile.getName() + " generated ");
 		} catch (Exception e) {
-			log("Exception "+e.getMessage());
+			log("Exception " + e.getMessage());
 			e.printStackTrace();
 		}
 		// Générer les Matching
-		List<PositionMetaData2> listPositionMetaDAta= getListPositionMetaData2();
-		System.out.println("listPositionMetaDAta size "+listPositionMetaDAta.size());
+		List<PositionMetaData2> listPositionMetaDAta = getListPositionMetaData2();
+		System.out.println("listPositionMetaDAta size " + listPositionMetaDAta.size());
 		Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest = new Hashtable<PositionMetaData2, Set<PositionMetaData2>>();
-		 for(PositionBean2 beanPosition : this.listBeansSelected) {
-			 PositionMetaData2 position0 = beanPosition.positionMetaData;
-			 if (position0==null) {
-				 
-			 }else {
-				 int nDate =this.paramsConfiguration.nbSeq;
-				 int nDistance = this.paramsConfiguration.nbProx;
-			 Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0, listPositionMetaDAta, nDate, nDistance);
-			 hashTableClosest.put(position0, setPosition);
-			 }
-		 }
-		 System.out.println("HashTable closest "+hashTableClosest.size());
-		 HashSet<PaireMetadata2> paires = consolidationPaire(hashTableClosest);
-		 System.out.println("Nb de paires :"+paires.size());
-		 try {
+		for (PositionBean2 beanPosition : this.listBeansSelected) {
+			PositionMetaData2 position0 = beanPosition.positionMetaData;
+			if (position0 == null) {
+
+			} else {
+				int nDate = this.paramsConfiguration.nbSeq;
+				int nDistance = this.paramsConfiguration.nbProx;
+				Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0,
+						listPositionMetaDAta, nDate, nDistance);
+				hashTableClosest.put(position0, setPosition);
+			}
+		}
+		System.out.println("HashTable closest " + hashTableClosest.size());
+		HashSet<PaireMetadata2> paires = consolidationPaire(hashTableClosest);
+		System.out.println("Nb de paires :" + paires.size());
+		try {
 			exportListPaires(dirTarget, paires);
 		} catch (Exception e) {
-			log("Exception "+e.getMessage());
+			log("Exception " + e.getMessage());
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	private void exportListPaires(File fileDirOut, HashSet<PaireMetadata2> setPairesUniques) throws Exception {
-		
+
 		File fileOut = new File(fileDirOut, "match.txt");
 		TreeSet<PaireMetadata2> treeset = new TreeSet<PaireMetadata2>(setPairesUniques);
 		BufferedWriter w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileOut)));
@@ -599,33 +594,34 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 			w.write(line);
 		}
 		w.close();
-		System.out.println("nb paires "+setPairesUniques.size());
-		System.out.println("Fichier ecrit dans "+fileOut.getPath());
+		System.out.println("nb paires " + setPairesUniques.size());
+		System.out.println("Fichier ecrit dans " + fileOut.getPath());
 	}
 
 	private List<PositionMetaData2> getListPositionMetaData2() {
-		 List<PositionMetaData2> list = new ArrayList<PositionMetaData2>();
-		 for(PositionBean2 beanPosition : this.listBeansSelected) {
-			 if (beanPosition.positionMetaData==null) {
-					System.err.println("Warning positionMetaData is null "+beanPosition);
-			}else {
-				list.add(beanPosition.positionMetaData) ;
+		List<PositionMetaData2> list = new ArrayList<PositionMetaData2>();
+		for (PositionBean2 beanPosition : this.listBeansSelected) {
+			if (beanPosition.positionMetaData == null) {
+				System.err.println("Warning positionMetaData is null " + beanPosition);
+			} else {
+				list.add(beanPosition.positionMetaData);
 			}
-			
-		 }
+
+		}
 		return list;
 	}
 
 	private void log(String s) {
 		this.labelLog.setText(s);
 	}
-	
-	private HashSet<PaireMetadata2>  consolidationPaire(Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest ) {
+
+	private HashSet<PaireMetadata2> consolidationPaire(
+			Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest) {
 		HashSet<PaireMetadata2> setPAires = new HashSet<PaireMetadata2>();
 		for (Map.Entry<PositionMetaData2, Set<PositionMetaData2>> entry : hashTableClosest.entrySet()) {
 			PositionMetaData2 metaData = entry.getKey();
-			Set<PositionMetaData2> list =entry.getValue();
-			for(PositionMetaData2 pm2 : list) {
+			Set<PositionMetaData2> list = entry.getValue();
+			for (PositionMetaData2 pm2 : list) {
 				PaireMetadata2 paire = new PaireMetadata2(metaData, pm2);
 				setPAires.add(paire);
 			}
@@ -633,84 +629,119 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		System.out.println("List Paires size " + setPAires.size() + "  ");
 		return setPAires;
 	}
-	
+
 	private void debug() {
-		this.labelLog.setText("debug listBeansSelected.size :"+this.listBeansSelected.size());
-		int i=0;
-		for(PositionBean2 pb2: this.listBeansSelected) {
-			String s =  String.format("%2d  - ", i++);
-			System.out.println(s+pb2.positionMetaData.toString());
+		this.labelLog.setText("debug listBeansSelected.size :" + this.listBeansSelected.size());
+		int i = 0;
+		for (PositionBean2 pb2 : this.listBeansSelected) {
+			String s = String.format("%2d  - ", i++);
+			System.out.println(s + pb2.positionMetaData.toString());
 		}
 	}
+
 	private void actionLoadSelected() {
 		this.labelLog.setText("actionLoadSelected");
 		// 1) Ouvrir un sélecteur de dossier
-		String dirRootChooserPath = PropertiesGlobal.getProperties().getProperty("openMetaDataCsvDir", System.getProperty("user.home"));
-	    JFileChooser chooser = new JFileChooser();
-	    chooser.setDialogTitle("Choisir un fichier metadata.csv ou metadataCsv.txt");
-	    chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-	    chooser.setAcceptAllFileFilterUsed(false);
+		String dirRootChooserPath = PropertiesGlobal.getProperties().getProperty("openMetaDataCsvDir",
+				System.getProperty("user.home"));
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Choisir un fichier metadata.csv ou metadataCsv.txt");
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		chooser.setAcceptAllFileFilterUsed(false);
 
-	    // Optionnel: dossier par défaut (à adapter)
-	    File dirRootChooser = new File(dirRootChooserPath);
-	    chooser.setCurrentDirectory(dirRootChooser);
+		// Optionnel: dossier par défaut (à adapter)
+		File dirRootChooser = new File(dirRootChooserPath);
+		chooser.setCurrentDirectory(dirRootChooser);
 
-	    
-	    int result = chooser.showOpenDialog(this);
+		int result = chooser.showOpenDialog(this);
 
-	    if (result != JFileChooser.APPROVE_OPTION) {
-	        return; // annulé
-	    }
+		if (result != JFileChooser.APPROVE_OPTION) {
+			return; // annulé
+		}
 
-	    File metadataFile = chooser.getSelectedFile();
-	    PropertiesGlobal.saveProperty("openMetaDataCsvDir", metadataFile.getParentFile().getAbsolutePath());
-	   
-	   
+		File metadataFile = chooser.getSelectedFile();
+		PropertiesGlobal.saveProperty("openMetaDataCsvDir", metadataFile.getParentFile().getAbsolutePath());
 
-	    // 3) Charger le fichier
-	    try {
-	       BufferedReader br = new BufferedReader(new FileReader(metadataFile));
-	       String line = null;
-	       List<String> listImagesSelected = new ArrayList();
-	       while((line=br.readLine())!= null) {
-	    	   String[] ws = line.split(",");
-	    	  
-	    	   listImagesSelected.add(ws[0].trim());
-	       }
-	       br.close();
-	       System.out.println("line image : "+listImagesSelected.size());
-	       selectionnerImages(listImagesSelected);
-	    } catch (IOException ex) {
-	        JOptionPane.showMessageDialog(this,
-	                "Impossible de lire : " + metadataFile + "\n" + ex.getMessage(),
-	                "Erreur",
-	                JOptionPane.ERROR_MESSAGE);
-	    }
+		// 3) Charger le fichier
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(metadataFile));
+			String line = null;
+			List<String> listImagesSelected = new ArrayList();
+			while ((line = br.readLine()) != null) {
+				String[] ws = line.split(",");
+
+				listImagesSelected.add(ws[0].trim());
+			}
+			br.close();
+			System.out.println("line image : " + listImagesSelected.size());
+			selectionnerImages(listImagesSelected);
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(this, "Impossible de lire : " + metadataFile + "\n" + ex.getMessage(),
+					"Erreur", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
-
-	public void displayNextPreview(int i, PositionGps2 gpsCurrent) {	
+	public void displayNextPreview(int i, PositionGps2 gpsCurrent) {
 		PositionBean2 pb = getBeanNext(i, gpsCurrent);
 		File fileImage = new File(dirImages, pb.gps.getImageName());
 		this.previewImage.displayImage(fileImage, pb.gps);
 	}
-	private PositionBean2 getBeanNext(int i,PositionGps2 gpsCurrent ) {
-		PositionBean2 beanZ_1 =null;
-		boolean bingo=false;
+
+	private PositionBean2 getBeanNext(int i, PositionGps2 gpsCurrent) {
+		PositionBean2 beanZ_1 = null;
+		boolean bingo = false;
 		for (PositionBean2 bean : this.listBeans) {
-			if ((bingo) &&(i == 1) ){
+			if ((bingo) && (i == 1)) {
 				return bean;
 			}
-			if (bean.gps.getImageName().equals(gpsCurrent.getImageName())){
-				bingo=true;
+			if (bean.gps.getImageName().equals(gpsCurrent.getImageName())) {
+				bingo = true;
 			}
-			if ((bingo) &&(i == -1) ){
+			if ((bingo) && (i == -1)) {
 				return beanZ_1;
 			}
 			beanZ_1 = bean;
 		}
 		return null;
 	}
-	
 
+	private  void processLog() {
+		System.out.println("ProcessLog");
+		this.labelLog.setText("actionLoadSelected");
+		String dirRootChooserPath = PropertiesGlobal.getProperties().getProperty("DirSourceLog",
+				System.getProperty("user.home"));
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Choisir le dossier source");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setMultiSelectionEnabled(false);
+		File dirSources_ = new File(dirRootChooserPath);
+		// Optionnel : partir du dernier dossier choisi
+		if (UtilFile.existsDir(dirSources_)) {
+			chooser.setCurrentDirectory(dirSources_);
+		} else {
+			String dirPath = ""
+					+ PropertiesGlobal.getProperties().getProperty("DirSourceLog", System.getProperty("user.home"));
+			File file = new File(dirPath);
+
+			chooser.setCurrentDirectory(file);
+		}
+
+		int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
+		if (result == JFileChooser.APPROVE_OPTION) {
+			dirSources_ = chooser.getSelectedFile();
+			PropertiesGlobal.saveProperty("DirSourceLog", dirSources_.getAbsolutePath());
+			
+			this.labelLog.setText(dirSources_.getAbsolutePath());
+			try {
+				System.out.println("ProcessLog No implemented yet"+dirSources_.getAbsolutePath());
+				LogProcess logProcess = new LogProcess(dirSources_);
+				System.out.println(""+logProcess);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				
+			}
+		}
+	}
 }
