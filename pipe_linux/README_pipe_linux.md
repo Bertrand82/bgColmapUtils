@@ -60,6 +60,10 @@ Après reboot (pour retrouver un état propre), donner :
 nvidia-smi
 modinfo nvidia | grep -E "version:|filename:"
 ```
+filename:       /lib/modules/6.17.0-22-generic/kernel/nvidia-580-open/nvidia.ko
+version:        580.126.09
+srcversion:     43ECDFFFD2238CDC4017DFE
+Le "GSP" (GPU system Processor) est un microcontroleur embarqué dans les GPU NVidia récents (surtout à partir des des générations RTX "moderne") Il execute un firmware NVIDDIA et prend en charge une partie des fonctions qui étaient historiquement géré par le driver coté CPU.
 
 Le “GSP” est surtout présent/actif sur les drivers récents, et certains combos driver/kernel peuvent être instables selon GPU.
 
