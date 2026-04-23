@@ -93,10 +93,10 @@ Puis relancer :
 
 > Si tu utilises Secure Boot / modules signés, ça peut compliquer la manipulation, mais en général ça passe.
 
-#### 3) Si ça ne suffit pas : changer de branche de driver
-Deux approches :
-- installer le driver recommandé par Ubuntu (`ubuntu-drivers`)
-- ou tester une version plus ancienne / plus stable pour ton GPU
+Pour verifier l'etat de EnableGpuFirmware:
+```bash
+cat /proc/driver/nvidia/params | grep -i EnableGpuFirmware
+```
 
 Commande :
 ```bash
