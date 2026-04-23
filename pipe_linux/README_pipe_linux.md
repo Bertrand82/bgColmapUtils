@@ -44,3 +44,9 @@ du -h --max-depth=2 /data | sort -h | tail -n 20
 
 #### Console
 tmux
+
+#### todo
+  - outil de spécification de trajectoires
+  - test images satellites ou google 
+  - reconcilliation modeles 3D 
+  - outil d'exploitation des logs colmap

@@ -107,7 +107,6 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 	PositionBean2 beanSelected = null;
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
-	JTextField textFieldNbImages_ = new JTextField(" 1000 ");
 	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
 	JMenuItem buttonDossierSources = new JMenuItem("Open Repository");
@@ -169,11 +168,14 @@ public class DisplayTogetherPanel extends JPanel implements  MapProviderListener
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
+		JMenuItem menuItemProcessRapportFromLog = new JMenuItem("process Log");
 		menuItemConfigExtraction.addActionListener(e->DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
+		menuItemProcessRapportFromLog.addActionListener(e->JOptionPane.showMessageDialog(frame, "Message"));
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
 		JMenu menuEdit = new JMenu("Edit");
 		menuEdit.add(menuItemConfigExtraction);
+		menuEdit.add(menuItemProcessRapportFromLog);
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
 		menuFile.add(buttonDossierSources);
