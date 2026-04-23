@@ -12,6 +12,7 @@ set -euo pipefail
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK=/data/BG
+max_image_size=1000
 
 DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$DENSE_DIR/logs"
@@ -25,6 +26,7 @@ echo "COLMAP: $COLMAP"
 echo "BG_WORK: $BG_WORK"
 echo "Dense dir: $DENSE_DIR"
 echo "Log: $LOG_FILE"
+echo "max_image_size : $max_image_size"
 
 # Basic sanity checks
 test -d "$BG_WORK/images"
@@ -36,7 +38,7 @@ echo "bg dense === 1) Undistort images (dense workspace) ==="
   --input_path "$BG_WORK/sparse/0" \
   --output_path "$DENSE_DIR" \
   --output_type COLMAP \
-  --max_image_size 1400 \
+  --max_image_size $max_image_size \
   --num_threads 4
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
@@ -45,7 +47,7 @@ echo "bg dense === 2) PatchMatch stereo (depth maps) ==="
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
-  --PatchMatchStereo.max_image_size 1400 \
+  --PatchMatchStereo.max_image_size $max_image_size \
   --PatchMatchStereo.cache_size 8 \
   --PatchMatchStereo.num_threads 1
   
@@ -62,7 +64,7 @@ echo "bg dense === 3) Stereo fusion -> dense point cloud ==="
   --StereoFusion.cache_size 8 \
   --StereoFusion.num_threads 4 \
   --StereoFusion.check_num_images 10 \
-  --StereoFusion.max_image_size 1400
+  --StereoFusion.max_image_size $max_image_size
 
 echo "bg dense === 4) Poisson meshing ==="
 "$COLMAP" poisson_mesher \

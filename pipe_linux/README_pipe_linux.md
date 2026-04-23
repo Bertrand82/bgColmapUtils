@@ -42,5 +42,5 @@ du -h --max-depth=2 /data | sort -h | tail -n 20
 --StereoFusion.max_image_size 1600 : 1600 taille max de la plus grande longueur en pixel
 1600 : 200 images ; 27 mn
 
-#### Console
+#### Terminal
 tmux

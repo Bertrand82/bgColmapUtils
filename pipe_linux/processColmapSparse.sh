@@ -7,8 +7,11 @@ COLMAP_CMD="/home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap"
 COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
 echo "COLMAP binaire utilisé: $COLMAP_CMD"
 "$COLMAP_CMD" --version
-BG_WORK="${BG_WORK:-/data/BG}"
-LOG_DIR="$BG_WORK/logs"
+BG_WORK="/data/BG"
+
+SPARSE_DIR="$BG_WORK/sparse"
+LOG_DIR="$SPARSE_DIR/logs"
+mkdir -p "$SPARSE_DIR"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
 # redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
@@ -48,7 +51,7 @@ echo "----- Importation des données  gps done "
 
 # Créer le dossier sparse 
 echo "xxxxxx mkdir $BG_WORK/sparse"
-mkdir -p "$BG_WORK/sparse"
+
 
 # Reconstruction sparse
 echo "xxxxxx mapper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -84,4 +87,5 @@ echo "xxxxxx CONVERTER xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   --output_path "$BG_WORK/sparse/0" \
   --output_type TXT
   
-echo "xxxxx Fin processColmap.sh xxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "xxxxx Fin processColmap sparse.sh xxxxxxxxxxxxxxxxxxxxxxxxx"
+./processColmapDense.sh
