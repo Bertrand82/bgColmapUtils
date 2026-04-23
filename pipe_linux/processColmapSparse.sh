@@ -19,10 +19,10 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP EXTRACTOR"
 # "$COLMAP_CMD" feature_extractor --help
-echo "bg xxxxxxxxxxxxxxx ls $BG_WORK"
+echo "bg=colmap process=sparse  etape=start ls $BG_WORK"
 
 ls -la "$BG_WORK"
-echo "bg sparse xxxxxx Extraction features xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "b=colmap process=sparse etape=feature_extractor "
 
 # Extraction des features
 "$COLMAP_CMD" feature_extractor \
@@ -34,7 +34,7 @@ echo "bg sparse xxxxxx Extraction features xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   --FeatureExtraction.num_threads 7 \
   --log_level 2
 
-echo "bg sparse xxxxxx MATCH  xxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=MATCH "
 # "$COLMAP_CMD" matches_importer --help
 
 # Import des matches (fichier match.txt)
@@ -43,18 +43,18 @@ echo "bg sparse xxxxxx MATCH  xxxxxxxxxxxxxxxxxx"
   --FeatureMatching.use_gpu 0 \
   --match_list_path "$BG_WORK/match.txt"
 
-echo "bg sparse xxxxxxxxxx Rajout des position gps estimés write  xxxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=add_pose_gps"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --write "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
-echo "bg sparse ----- controle Rajout des position gps estimés"
+echo "bg=colmap process=sparse etape=controle_gps
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --check "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
-echo "bg sparse ----- Importation des données  gps done "
+echo "bg=colmap process=sparse etape="mkd_sparse"
 
 # Créer le dossier sparse 
 echo "xxxxxx mkdir $BG_WORK/sparse"
 
 
 # Reconstruction sparse
-echo "bg sparse xxxxxx mapper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=mapper "
 
 
 "$COLMAP_CMD" mapper \
@@ -73,7 +73,7 @@ echo "bg sparse xxxxxx mapper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   --Mapper.filter_max_reproj_error 4 \
   --Mapper.abs_pose_min_num_inliers 30
 
-echo "bg sparse xxxxxx CONVERTER PLY xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=model_converter_PLY"
 
 # Export PLY
 "$COLMAP_CMD" model_converter \
@@ -82,11 +82,14 @@ echo "bg sparse xxxxxx CONVERTER PLY xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   --output_type PLY
 
 # Export TXT (cameras.txt / images.txt / points3D.txt)
-echo "bg sparse xxxxxx CONVERTER TXT xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=model_converter_TXT"
+
 "$COLMAP_CMD" model_converter \
   --input_path "$BG_WORK/sparse/0" \
   --output_path "$BG_WORK/sparse/0" \
   --output_type TXT
   
-echo "xxxxx Fin processColmap sparse.sh xxxxxxxxxxxxxxxxxxxxxxxxx"
+echo "bg=colmap process=sparse etape=appel_process_dense"
+
+
 ./processColmapDense.sh
