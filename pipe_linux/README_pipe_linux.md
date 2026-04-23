@@ -1,25 +1,25 @@
-### Pipe_linux
+# Pipe_linux
 
-#### 1000 images
+## 1000 images
 - Ça plante de manière inexpliquée.
 - Peut-être changer pour un bash/terminal plus robuste : **tmux** (terminal qui détache le job de la session).
 
-#### 200 images
+## 200 images
 - En cours
+
 ```bash
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap patch_match_stereo --help
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap stereo_fusion --help
 ```
-#### Plantage par manque de mémoire
 
-Commande :
+## Plantage par manque de mémoire
 
+### Commande
 ```bash
 sudo dmesg -T | tail -n 200 | egrep -i 'out of memory|oom|killed process|colmap'
 ```
 
-Sortie :
-
+### Sortie
 ```text
 [sudo] Mot de passe de bertrand : 
 [dim. 19 avril 18:03:30 2026] [  pid  ]   uid  tgid total_vm      rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name
@@ -31,22 +31,99 @@ Sortie :
 bertrand@bertrand-System-Product-Name:~/bgColmapUtils/pipe_linux$ 
 ```
 
-
-#### Plantage par manque d'espace disque
+## Plantage par manque d'espace disque
 ```bash
 df -h /data
 du -h --max-depth=2 /data | sort -h | tail -n 20
 ```
 
-#### Parametres 
---StereoFusion.max_image_size 1600 : 1600 taille max de la plus grande longueur en pixel
-1600 : 200 images ; 27 mn
+## Paramètres
+- `--StereoFusion.max_image_size 1600` : 1600 = taille max de la plus grande longueur en pixel
+- `1600` : 200 images ; 27 mn
 
-#### Console
-tmux
+## Console
+- **tmux**
 
-#### todo
-  - outil de spécification de trajectoires
-  - test images satellites ou google 
-  - reconcilliation modeles 3D 
-  - outil d'exploitation des logs colmap
+## Conseils Copilot pour instabilité Nvidia
+
+### Constat
+- Tes logs kernel montrent clairement un plantage du driver NVIDIA côté GSP (firmware “GPU System Processor”) suivi de blocages du modeset :
+  - `rpcRmApiFree_GSP … status=0x0000000f`
+  - assertions dans `vaspace_api.c`
+
+### Actions recommandées (ordre)
+#### 1) Vérifier la version de driver
+Après reboot (pour retrouver un état propre), donner :
+
+```bash
+nvidia-smi
+modinfo nvidia | grep -E "version:|filename:"
+```
+
+Le “GSP” est surtout présent/actif sur les drivers récents, et certains combos driver/kernel peuvent être instables selon GPU.
+
+#### 2) Désactiver le firmware GSP (souvent efficace)
+Sur beaucoup de configs, forcer `NVreg_EnableGpuFirmware=0` stabilise CUDA.
+
+Créer un fichier :
+```bash
+sudo tee /etc/modprobe.d/nvidia-gsp.conf >/dev/null <<'EOF'
+options nvidia NVreg_EnableGpuFirmware=0
+EOF
+```
+
+Regénérer l’initramfs et reboot :
+```bash
+sudo update-initramfs -u
+sudo reboot
+```
+
+Retester :
+```bash
+nvidia-smi
+```
+
+Puis relancer :
+- `colmap patch_match_stereo ...`
+
+> Si tu utilises Secure Boot / modules signés, ça peut compliquer la manipulation, mais en général ça passe.
+
+#### 3) Si ça ne suffit pas : changer de branche de driver
+Deux approches :
+- installer le driver recommandé par Ubuntu (`ubuntu-drivers`)
+- ou tester une version plus ancienne / plus stable pour ton GPU
+
+Commande :
+```bash
+sudo ubuntu-drivers devices
+```
+
+Puis par exemple :
+```bash
+sudo apt install nvidia-driver-XXX
+sudo reboot
+```
+
+*(À préciser selon la sortie de `nvidia-smi` / version.)*
+
+#### 4) Vérifs matériel (si ça persiste malgré driver)
+Un hang GPU répété sous charge peut aussi être :
+- surchauffe
+- alim limite / câble PCIe
+- undervolt/overclock
+
+Mais vu les messages `GSP rpc` + `modeset wait for progress`, traiter d’abord driver/GSP.
+
+### Pour confirmer et choisir la meilleure option driver
+Après reboot, fournir :
+- sortie complète `nvidia-smi`
+- `modinfo nvidia | grep version`
+- version Ubuntu : `lsb_release -a | head -n 3`
+
+Ensuite décider : **désactiver GSP** vs **changer driver** (et commande exacte).
+
+## TODO
+- outil de spécification de trajectoires
+- test images satellites ou Google
+- réconciliation modèles 3D
+- outil d'exploitation des logs COLMAP
