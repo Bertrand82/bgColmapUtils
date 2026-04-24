@@ -48,12 +48,12 @@ tmux
 ## Conseils Copilot pour instabilité Nvidia
 
 ### Constat
-- Tes logs kernel montrent clairement un plantage du driver NVIDIA côté GSP (firmware “GPU System Processor”) suivi de blocages du modeset :
+- Les logs kernel montrent clairement un plantage du driver NVIDIA côté GSP (firmware “GPU System Processor”) suivi de blocages du modeset :
   - `rpcRmApiFree_GSP … status=0x0000000f`
   - assertions dans `vaspace_api.c`
 
-### Actions recommandées (ordre)
-#### 1) Vérifier la version de driver
+
+#### 1) Version de driver
 Après reboot (pour retrouver un état propre), donner :
 
 ```bash
@@ -63,6 +63,7 @@ modinfo nvidia | grep -E "version:|filename:"
 filename:       /lib/modules/6.17.0-22-generic/kernel/nvidia-580-open/nvidia.ko
 version:        580.126.09
 srcversion:     43ECDFFFD2238CDC4017DFE
+
 Le "GSP" (GPU system Processor) est un microcontroleur embarqué dans les GPU NVidia récents (surtout à partir des des générations RTX "moderne") Il execute un firmware NVIDDIA et prend en charge une partie des fonctions qui étaient historiquement géré par le driver coté CPU.
 
 Le “GSP” est surtout présent/actif sur les drivers récents, et certains combos driver/kernel peuvent être instables selon GPU.
@@ -88,11 +89,6 @@ Retester :
 nvidia-smi
 ```
 
-Puis relancer :
-- `colmap patch_match_stereo ...`
-
-> Si tu utilises Secure Boot / modules signés, ça peut compliquer la manipulation, mais en général ça passe.
-
 Pour verifier l'etat de EnableGpuFirmware:
 ```bash
 cat /proc/driver/nvidia/params | grep -i EnableGpuFirmware
@@ -117,15 +113,14 @@ Un hang GPU répété sous charge peut aussi être :
 - alim limite / câble PCIe
 - undervolt/overclock
 
-Mais vu les messages `GSP rpc` + `modeset wait for progress`, traiter d’abord driver/GSP.
 
-### Pour confirmer et choisir la meilleure option driver
+### VERIFICATION
 Après reboot, fournir :
-- sortie complète `nvidia-smi`
-- `modinfo nvidia | grep version`
-- version Ubuntu : `lsb_release -a | head -n 3`
+  - sortie complète `nvidia-smi`
+  - `modinfo nvidia | grep version`
+  - version Ubuntu : `lsb_release -a | head -n 3`
 
-Ensuite décider : **désactiver GSP** vs **changer driver** (et commande exacte).
+
 
 ## TODO
 - outil de spécification de trajectoires

@@ -43,6 +43,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import bg.metadata.MetaDatasCsv;
+import bg.process.log.LogProcess;
 import bg.util.PaireMetadata2;
 import bg.util.PositionBean2;
 import bg.util.PositionGps2;

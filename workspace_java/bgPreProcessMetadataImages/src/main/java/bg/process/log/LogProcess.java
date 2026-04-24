@@ -1,4 +1,4 @@
-package bg.display.together.gui;
+package bg.process.log;
 
 import java.io.BufferedReader;
 import java.io.File;
