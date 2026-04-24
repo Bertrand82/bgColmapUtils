@@ -32,7 +32,8 @@ echo "max_image_size : $max_image_size"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
-echo "bg dense === etape 1) Undistort images (dense workspace) ==="
+
+echo "bg=colmap process=dense  etape=image_undistorter   date=$(date -Is)"
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
   --input_path "$BG_WORK/sparse/0" \
@@ -43,7 +44,7 @@ echo "bg dense === etape 1) Undistort images (dense workspace) ==="
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
 
-echo "bg dense === etape 2) PatchMatch stereo (depth maps) ==="
+echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -52,9 +53,7 @@ echo "bg dense === etape 2) PatchMatch stereo (depth maps) ==="
   --PatchMatchStereo.num_threads 1
   
 
-
-
-echo "bg dense === etape 3) Stereo fusion -> dense point cloud ==="
+echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -66,7 +65,7 @@ echo "bg dense === etape 3) Stereo fusion -> dense point cloud ==="
   --StereoFusion.check_num_images 10 \
   --StereoFusion.max_image_size $max_image_size
 
-echo "bg dense === 4) Poisson meshing ==="
+echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
   --output_path "$DENSE_DIR/mesh_poisson.ply" \
@@ -76,6 +75,6 @@ echo "bg dense === 4) Poisson meshing ==="
   --PoissonMeshing.color 1 \
   --PoissonMeshing.num_threads 4
 
-echo "bg dense === Done."
+echo "bg=colmap process=dense  etape=FIN   date=$(date -Is)"
 echo "Point cloud: $DENSE_DIR/fused.ply"
 echo "Poisson mesh: $DENSE_DIR/mesh_poisson.ply"

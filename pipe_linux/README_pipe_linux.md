@@ -114,14 +114,6 @@ Un hang GPU répété sous charge peut aussi être :
 - undervolt/overclock
 
 
-### VERIFICATION
-Après reboot, fournir :
-  - sortie complète `nvidia-smi`
-  - `modinfo nvidia | grep version`
-  - version Ubuntu : `lsb_release -a | head -n 3`
-
-
-
 ## TODO
 - outil de spécification de trajectoires
 - test images satellites ou Google

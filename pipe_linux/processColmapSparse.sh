@@ -19,7 +19,7 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP EXTRACTOR"
 # "$COLMAP_CMD" feature_extractor --help
-echo "bg=colmap process=sparse  etape=start ls $BG_WORK"
+echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
 
 ls -la "$BG_WORK"
 echo "b=colmap process=sparse etape=feature_extractor "
@@ -47,14 +47,14 @@ echo "bg=colmap process=sparse etape=add_pose_gps"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --write "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
 echo "bg=colmap process=sparse etape=controle_gps
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --check "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
-echo "bg=colmap process=sparse etape="mkd_sparse"
+echo "bg=colmap process=sparse etape=mkd_sparse  date=$(date -Is)"
 
 # Créer le dossier sparse 
 echo "xxxxxx mkdir $BG_WORK/sparse"
 
 
 # Reconstruction sparse
-echo "bg=colmap process=sparse etape=mapper "
+echo "bg=colmap process=sparse etape=mapper  date=$(date -Is)"
 
 
 "$COLMAP_CMD" mapper \
@@ -73,7 +73,7 @@ echo "bg=colmap process=sparse etape=mapper "
   --Mapper.filter_max_reproj_error 4 \
   --Mapper.abs_pose_min_num_inliers 30
 
-echo "bg=colmap process=sparse etape=model_converter_PLY"
+echo "bg=colmap process=sparse etape=model_converter_PLY  date=$(date -Is)"
 
 # Export PLY
 "$COLMAP_CMD" model_converter \
@@ -82,14 +82,14 @@ echo "bg=colmap process=sparse etape=model_converter_PLY"
   --output_type PLY
 
 # Export TXT (cameras.txt / images.txt / points3D.txt)
-echo "bg=colmap process=sparse etape=model_converter_TXT"
+echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
 
 "$COLMAP_CMD" model_converter \
   --input_path "$BG_WORK/sparse/0" \
   --output_path "$BG_WORK/sparse/0" \
   --output_type TXT
   
-echo "bg=colmap process=sparse etape=appel_process_dense"
+echo "bg=colmap process=sparse etape=appel_process_dense  date=$(date -Is)"
 
 
 ./processColmapDense.sh
