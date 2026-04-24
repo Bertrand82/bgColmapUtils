@@ -22,7 +22,7 @@ echo "COLMAP EXTRACTOR"
 echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
 
 ls -la "$BG_WORK"
-echo "b=colmap process=sparse etape=feature_extractor "
+echo "b=colmap process=sparse etape=feature_extractor date=$(date -Is)"
 
 # Extraction des features
 "$COLMAP_CMD" feature_extractor \
@@ -34,7 +34,7 @@ echo "b=colmap process=sparse etape=feature_extractor "
   --FeatureExtraction.num_threads 7 \
   --log_level 2
 
-echo "bg=colmap process=sparse etape=MATCH "
+echo "bg=colmap process=sparse etape=MATCH date=$(date -Is)"
 # "$COLMAP_CMD" matches_importer --help
 
 # Import des matches (fichier match.txt)
@@ -43,9 +43,9 @@ echo "bg=colmap process=sparse etape=MATCH "
   --FeatureMatching.use_gpu 0 \
   --match_list_path "$BG_WORK/match.txt"
 
-echo "bg=colmap process=sparse etape=add_pose_gps"
+echo "bg=colmap process=sparse etape=add_pose_gps date=$(date -Is)"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --write "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
-echo "bg=colmap process=sparse etape=controle_gps
+echo "bg=colmap process=sparse etape=controle_gps date=$(date -Is)"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --check "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
 echo "bg=colmap process=sparse etape=mkd_sparse  date=$(date -Is)"
 

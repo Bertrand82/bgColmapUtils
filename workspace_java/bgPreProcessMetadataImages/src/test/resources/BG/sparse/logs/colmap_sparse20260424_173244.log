@@ -1,0 +1,1806 @@
+COLMAP EXTRACTOR
+bg=colmap process=sparse  etape=start   date=2026-04-24T17:32:44+02:00
+total 32
+drwxrwxr-x  4 bertrand bertrand 4096 avril 24 17:32 .
+drwxrwxrwx 11 root     root     4096 avril 24 08:50 ..
+drwxrwxr-x  2 bertrand bertrand 4096 avril 24 17:14 images
+-rw-rw-r--  1 bertrand bertrand 8640 avril 24 17:14 match.txt
+-rw-rw-r--  1 bertrand bertrand 1549 avril 24 17:14 metadataCSV.txt
+drwxrwxr-x  3 bertrand bertrand 4096 avril 24 17:32 sparse
+b=colmap process=sparse etape=feature_extractor date=2026-04-24T17:32:44+02:00
+I20260424 17:32:45.204233  2899 feature_extraction.cc:504] === Feature extraction ===
+I20260424 17:32:45.207065  2907 sift.cc:757] Creating SIFT GPU feature extractor
+I20260424 17:32:52.628268  2908 feature_extraction.cc:282] Processed file [1/20]
+I20260424 17:32:52.628322  2908 feature_extraction.cc:285]   Name:            DJI_20260206154750_0031_D.JPG
+I20260424 17:32:52.628335  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:52.628347  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:52.628360  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:52.628377  2908 feature_extraction.cc:304]   Features:        9727 (SIFT)
+I20260424 17:32:52.628458  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=8.546
+I20260424 17:32:52.628477  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:53.204584  2908 feature_extraction.cc:282] Processed file [2/20]
+I20260424 17:32:53.204639  2908 feature_extraction.cc:285]   Name:            DJI_20260206154745_0029_D.JPG
+I20260424 17:32:53.204654  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:53.204666  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:53.204679  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:53.204694  2908 feature_extraction.cc:304]   Features:        9152 (SIFT)
+I20260424 17:32:53.542419  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=8.546
+I20260424 17:32:53.542474  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:54.303218  2908 feature_extraction.cc:282] Processed file [3/20]
+I20260424 17:32:54.303278  2908 feature_extraction.cc:285]   Name:            DJI_20260206154747_0030_D.JPG
+I20260424 17:32:54.303293  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:54.303306  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:54.303318  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:54.303335  2908 feature_extraction.cc:304]   Features:        9733 (SIFT)
+I20260424 17:32:54.648708  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=8.546
+I20260424 17:32:54.648762  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:54.880368  2908 feature_extraction.cc:282] Processed file [4/20]
+I20260424 17:32:54.880493  2908 feature_extraction.cc:285]   Name:            DJI_20260206154753_0032_D.JPG
+I20260424 17:32:54.880544  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:54.880592  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:54.880640  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:54.880690  2908 feature_extraction.cc:304]   Features:        9889 (SIFT)
+I20260424 17:32:55.192045  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=8.546
+I20260424 17:32:55.192150  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:56.420224  2908 feature_extraction.cc:282] Processed file [5/20]
+I20260424 17:32:56.426476  2908 feature_extraction.cc:285]   Name:            DJI_20260206162524_0685_D.JPG
+I20260424 17:32:56.431699  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:56.431728  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:56.431746  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:56.431762  2908 feature_extraction.cc:304]   Features:        13080 (SIFT)
+I20260424 17:32:56.653962  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=5.501
+I20260424 17:32:56.654085  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:56.671383  2908 feature_extraction.cc:282] Processed file [6/20]
+I20260424 17:32:56.672078  2908 feature_extraction.cc:285]   Name:            DJI_20260206162526_0686_D.JPG
+I20260424 17:32:56.672207  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:56.672264  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:56.672313  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:56.672365  2908 feature_extraction.cc:304]   Features:        9609 (SIFT)
+I20260424 17:32:57.487097  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=5.601
+I20260424 17:32:57.487151  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:32:57.499159  2908 feature_extraction.cc:282] Processed file [7/20]
+I20260424 17:32:57.499253  2908 feature_extraction.cc:285]   Name:            DJI_20260206162622_0709_D.JPG
+I20260424 17:32:57.499308  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:32:57.499352  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:32:57.499396  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:32:57.499444  2908 feature_extraction.cc:304]   Features:        9088 (SIFT)
+I20260424 17:32:57.499536  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=5.601
+I20260424 17:32:57.499586  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:00.825218  2908 feature_extraction.cc:282] Processed file [8/20]
+I20260424 17:33:00.825320  2908 feature_extraction.cc:285]   Name:            DJI_20260206164332_0017_D.JPG
+I20260424 17:33:00.825356  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:00.825389  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:00.825423  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:00.825460  2908 feature_extraction.cc:304]   Features:        9992 (SIFT)
+I20260424 17:33:01.151772  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=7.016
+I20260424 17:33:01.151824  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:01.435443  2908 feature_extraction.cc:282] Processed file [9/20]
+I20260424 17:33:01.435500  2908 feature_extraction.cc:285]   Name:            DJI_20260206162624_0710_D.JPG
+I20260424 17:33:01.435514  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:01.435527  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:01.435541  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:01.435559  2908 feature_extraction.cc:304]   Features:        11932 (SIFT)
+I20260424 17:33:01.733038  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=5.601
+I20260424 17:33:01.733093  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:02.702361  2908 feature_extraction.cc:282] Processed file [10/20]
+I20260424 17:33:02.702458  2908 feature_extraction.cc:285]   Name:            DJI_20260206162625_0711_D.JPG
+I20260424 17:33:02.702507  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:02.702550  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:02.702593  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:02.702641  2908 feature_extraction.cc:304]   Features:        10494 (SIFT)
+I20260424 17:33:02.996717  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=5.601
+I20260424 17:33:02.996816  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:03.453226  2908 feature_extraction.cc:282] Processed file [11/20]
+I20260424 17:33:03.453280  2908 feature_extraction.cc:285]   Name:            DJI_20260206164334_0018_D.JPG
+I20260424 17:33:03.453294  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:03.453306  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:03.453365  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:03.453385  2908 feature_extraction.cc:304]   Features:        10032 (SIFT)
+I20260424 17:33:03.631843  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=7.016
+I20260424 17:33:03.631896  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:05.622916  2908 feature_extraction.cc:282] Processed file [12/20]
+I20260424 17:33:05.623025  2908 feature_extraction.cc:285]   Name:            DJI_20260207173828_0414_D.JPG
+I20260424 17:33:05.623075  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:05.623119  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:05.623162  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:05.623219  2908 feature_extraction.cc:304]   Features:        10707 (SIFT)
+I20260424 17:33:05.623327  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=21.984
+I20260424 17:33:05.623379  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:05.780954  2908 feature_extraction.cc:282] Processed file [13/20]
+I20260424 17:33:05.781069  2908 feature_extraction.cc:285]   Name:            DJI_20260206164337_0019_D.JPG
+I20260424 17:33:05.781111  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:05.781148  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:05.781186  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:05.781237  2908 feature_extraction.cc:304]   Features:        9813 (SIFT)
+I20260424 17:33:05.781332  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=7.016
+I20260424 17:33:05.781374  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:05.936794  2908 feature_extraction.cc:282] Processed file [14/20]
+I20260424 17:33:05.936847  2908 feature_extraction.cc:285]   Name:            DJI_20260207173826_0413_D.JPG
+I20260424 17:33:05.936861  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:05.936872  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:05.936884  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:05.936901  2908 feature_extraction.cc:304]   Features:        10269 (SIFT)
+I20260424 17:33:05.936976  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=22.084
+I20260424 17:33:05.936993  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:07.998492  2908 feature_extraction.cc:282] Processed file [15/20]
+I20260424 17:33:07.998605  2908 feature_extraction.cc:285]   Name:            DJI_20260207173830_0415_D.JPG
+I20260424 17:33:07.998624  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:07.998637  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:07.998649  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:07.998667  2908 feature_extraction.cc:304]   Features:        10868 (SIFT)
+I20260424 17:33:07.998742  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=21.984
+I20260424 17:33:07.998759  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:09.832196  2908 feature_extraction.cc:282] Processed file [16/20]
+I20260424 17:33:09.832267  2908 feature_extraction.cc:285]   Name:            DJI_20260207173831_0416_D.JPG
+I20260424 17:33:09.832278  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:09.832286  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:09.832294  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:09.832306  2908 feature_extraction.cc:304]   Features:        11172 (SIFT)
+I20260424 17:33:09.832423  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=22.084
+I20260424 17:33:09.832440  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:09.951454  2908 feature_extraction.cc:282] Processed file [17/20]
+I20260424 17:33:09.951505  2908 feature_extraction.cc:285]   Name:            DJI_20260207174119_0500_D.JPG
+I20260424 17:33:09.951516  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:09.951524  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:09.951531  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:09.951545  2908 feature_extraction.cc:304]   Features:        11646 (SIFT)
+I20260424 17:33:09.951630  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=22.084
+I20260424 17:33:09.951653  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:10.082221  2908 feature_extraction.cc:282] Processed file [18/20]
+I20260424 17:33:10.082273  2908 feature_extraction.cc:285]   Name:            DJI_20260207181440_0050_D.JPG
+I20260424 17:33:10.082281  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:10.082289  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:10.082297  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:10.082309  2908 feature_extraction.cc:304]   Features:        8678 (SIFT)
+I20260424 17:33:10.082384  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=23.305
+I20260424 17:33:10.082406  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:11.560253  2908 feature_extraction.cc:282] Processed file [19/20]
+I20260424 17:33:11.560298  2908 feature_extraction.cc:285]   Name:            DJI_20260207181444_0052_D.JPG
+I20260424 17:33:11.560307  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:11.560315  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:11.560323  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:11.560333  2908 feature_extraction.cc:304]   Features:        8635 (SIFT)
+I20260424 17:33:11.560400  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=23.305
+I20260424 17:33:11.560413  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:12.287886  2908 feature_extraction.cc:282] Processed file [20/20]
+I20260424 17:33:12.287930  2908 feature_extraction.cc:285]   Name:            DJI_20260207181442_0051_D.JPG
+I20260424 17:33:12.287950  2908 feature_extraction.cc:294]   Dimensions:      4032 x 3024
+I20260424 17:33:12.287958  2908 feature_extraction.cc:297]   Camera:          #1 - SIMPLE_RADIAL
+I20260424 17:33:12.287966  2908 feature_extraction.cc:300]   Focal Length:    2329.56px (Prior)
+I20260424 17:33:12.287978  2908 feature_extraction.cc:304]   Features:        8950 (SIFT)
+I20260424 17:33:12.288045  2908 feature_extraction.cc:318]   GPS:             LAT=25.778, LON=-80.131, ALT=23.305
+I20260424 17:33:12.288058  2908 feature_extraction.cc:325]   Gravity:         X=0.000, Y=1.000, Z=0.000
+I20260424 17:33:12.366860  2899 timer.cc:90] Elapsed time: 0.453 [minutes]
+bg=colmap process=sparse etape=MATCH date=2026-04-24T17:33:12+02:00
+I20260424 17:33:12.775058  2927 feature_matching.cc:195] === Feature matching & geometric verification ===
+I20260424 17:33:12.775590  2928 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.775615  2929 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.775677  2930 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.775768  2931 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.775854  2932 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.775942  2933 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.776029  2934 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.776130  2935 sift.cc:1565] Creating SIFT CPU feature matcher
+I20260424 17:33:12.776870  2927 pairing.cc:810] Importing image pairs...
+I20260424 17:33:12.791739  2927 pairing.cc:843] Processing block [1/1]
+I20260424 17:33:26.324609  2927 feature_matching.cc:217] in 13.533s
+I20260424 17:33:26.324703  2927 timer.cc:90] Elapsed time: 0.226 [minutes]
+bg=colmap process=sparse etape=add_pose_gps date=2026-04-24T17:33:26+02:00
+[write] config
+  sigma: 5
+  gravity: 0,0,-1
+  corr_sensor_id: 1
+  corr_sensor_type: 0
+  coordinate_system: 0
+  covariance order: row
+[write] summary
+  rows read: 20
+  rows inserted: 20
+  rows replaced: 20
+  rows missing image: 0
+bg=colmap process=sparse etape=controle_gps date=2026-04-24T17:33:26+02:00
+[check] summary
+  rows read: 20
+  rows missing image: 0
+  treated images (found in images): 20
+  treated images with >=1 pose_prior: 20
+  treated images with 0 pose_prior: 0
+  pose_priors rows for treated images (SELECT COUNT(*)): 20
+bg=colmap process=sparse etape=mkd_sparse  date=2026-04-24T17:33:26+02:00
+xxxxxx mkdir /data/BG/sparse
+bg=colmap process=sparse etape=mapper  date=2026-04-24T17:33:26+02:00
+I20260424 17:33:26.663506  2953 incremental_pipeline.cc:265] Loading database
+I20260424 17:33:26.663811  2953 database_cache.cc:72] Loading rigs...
+I20260424 17:33:26.663877  2953 database_cache.cc:82]  1 in 0.000s
+I20260424 17:33:26.663893  2953 database_cache.cc:90] Loading cameras...
+I20260424 17:33:26.663923  2953 database_cache.cc:108]  1 in 0.000s
+I20260424 17:33:26.663936  2953 database_cache.cc:116] Loading frames...
+I20260424 17:33:26.664000  2953 database_cache.cc:126]  20 in 0.000s
+I20260424 17:33:26.664013  2953 database_cache.cc:134] Loading matches...
+I20260424 17:33:26.664764  2953 database_cache.cc:139]  125 in 0.001s
+I20260424 17:33:26.664781  2953 database_cache.cc:147] Loading images...
+I20260424 17:33:26.674566  2953 database_cache.cc:241]  20 in 0.010s (connected 20, loaded 20)
+I20260424 17:33:26.674615  2953 database_cache.cc:255] Loading pose priors...
+I20260424 17:33:26.674649  2953 database_cache.cc:263]  20 in 0.000s
+I20260424 17:33:26.674661  2953 database_cache.cc:271] Building correspondence graph...
+I20260424 17:33:26.685443  2953 database_cache.cc:300]  in 0.011s (ignored 0)
+I20260424 17:33:26.685485  2953 timer.cc:90] Elapsed time: 0.000 [minutes]
+I20260424 17:33:26.689602  2953 incremental_pipeline.cc:377] Finding good initial image pair
+I20260424 17:33:26.810361  2953 incremental_pipeline.cc:401] Registering initial image pair #9 and #5
+I20260424 17:33:26.823912  2953 incremental_pipeline.cc:419] Global bundle adjustment
+I20260424 17:33:27.276163  2953 incremental_pipeline.cc:524] Registering image #10 (num_reg_frames=2)
+I20260424 17:33:27.276221  2953 incremental_pipeline.cc:527] => Image sees 711 / 3572 points
+I20260424 17:33:27.546152  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:27.892995  2953 incremental_pipeline.cc:524] Registering image #7 (num_reg_frames=3)
+I20260424 17:33:27.893038  2953 incremental_pipeline.cc:527] => Image sees 1145 / 2184 points
+I20260424 17:33:28.267485  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:28.683472  2953 incremental_pipeline.cc:524] Registering image #6 (num_reg_frames=4)
+I20260424 17:33:28.683518  2953 incremental_pipeline.cc:527] => Image sees 710 / 2185 points
+I20260424 17:33:29.082247  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:29.551353  2953 incremental_pipeline.cc:524] Registering image #8 (num_reg_frames=5)
+I20260424 17:33:29.551398  2953 incremental_pipeline.cc:527] => Image sees 431 / 2033 points
+I20260424 17:33:29.919924  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:30.248049  2953 incremental_pipeline.cc:524] Registering image #3 (num_reg_frames=6)
+I20260424 17:33:30.248092  2953 incremental_pipeline.cc:527] => Image sees 321 / 2698 points
+I20260424 17:33:30.486737  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:30.987152  2953 incremental_pipeline.cc:524] Registering image #2 (num_reg_frames=7)
+I20260424 17:33:30.987196  2953 incremental_pipeline.cc:527] => Image sees 318 / 1787 points
+I20260424 17:33:31.218679  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:31.523236  2953 incremental_pipeline.cc:524] Registering image #1 (num_reg_frames=8)
+I20260424 17:33:31.523281  2953 incremental_pipeline.cc:527] => Image sees 741 / 2604 points
+I20260424 17:33:31.741281  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:32.066541  2953 incremental_pipeline.cc:524] Registering image #4 (num_reg_frames=9)
+I20260424 17:33:32.066587  2953 incremental_pipeline.cc:527] => Image sees 731 / 1887 points
+I20260424 17:33:32.251413  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:32.560830  2953 incremental_pipeline.cc:524] Registering image #11 (num_reg_frames=10)
+I20260424 17:33:32.560874  2953 incremental_pipeline.cc:527] => Image sees 468 / 2164 points
+I20260424 17:33:32.769083  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:33.085088  2953 incremental_pipeline.cc:524] Registering image #13 (num_reg_frames=11)
+I20260424 17:33:33.085175  2953 incremental_pipeline.cc:527] => Image sees 470 / 1215 points
+I20260424 17:33:33.404508  2953 incremental_pipeline.cc:524] Registering image #15 (num_reg_frames=12)
+I20260424 17:33:33.404553  2953 incremental_pipeline.cc:527] => Image sees 250 / 3051 points
+I20260424 17:33:33.635087  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:33.956831  2953 incremental_pipeline.cc:524] Registering image #16 (num_reg_frames=13)
+I20260424 17:33:33.956876  2953 incremental_pipeline.cc:527] => Image sees 295 / 1970 points
+I20260424 17:33:34.162146  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:34.525353  2953 incremental_pipeline.cc:524] Registering image #12 (num_reg_frames=14)
+I20260424 17:33:34.525398  2953 incremental_pipeline.cc:527] => Image sees 792 / 2700 points
+I20260424 17:33:34.950310  2953 incremental_pipeline.cc:524] Registering image #14 (num_reg_frames=15)
+I20260424 17:33:34.950356  2953 incremental_pipeline.cc:527] => Image sees 854 / 1929 points
+I20260424 17:33:35.134615  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:35.513345  2953 incremental_pipeline.cc:524] Registering image #17 (num_reg_frames=16)
+I20260424 17:33:35.513391  2953 incremental_pipeline.cc:527] => Image sees 481 / 1064 points
+I20260424 17:33:35.857661  2953 incremental_pipeline.cc:524] Registering image #20 (num_reg_frames=17)
+I20260424 17:33:35.857707  2953 incremental_pipeline.cc:527] => Image sees 356 / 2835 points
+I20260424 17:33:35.998373  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:36.382953  2953 incremental_pipeline.cc:524] Registering image #18 (num_reg_frames=18)
+I20260424 17:33:36.382997  2953 incremental_pipeline.cc:527] => Image sees 391 / 2157 points
+I20260424 17:33:36.575721  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:36.983088  2953 incremental_pipeline.cc:524] Registering image #19 (num_reg_frames=19)
+I20260424 17:33:36.983131  2953 incremental_pipeline.cc:527] => Image sees 992 / 1849 points
+I20260424 17:33:37.339231  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:37.594595  2953 incremental_pipeline.cc:78] Retriangulation and Global bundle adjustment
+I20260424 17:33:37.853099  2953 incremental_pipeline.cc:710] Keeping successful reconstruction
+I20260424 17:33:37.873450  2953 timer.cc:90] Elapsed time: 0.186 [minutes]
+bg=colmap process=sparse etape=model_converter_PLY  date=2026-04-24T17:33:37+02:00
+bg=colmap process=sparse etape=model_converter_TXT  date=2026-04-24T17:33:38+02:00
+bg=colmap process=sparse etape=appel_process_dense  date=2026-04-24T17:33:38+02:00
+COLMAP: /home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap
+COLMAP 4.1.0.dev0 (Commit 3587d22d on 2026-04-02 with CUDA)
+BG_WORK: /data/BG
+bg dense dir: /data/BG/dense
+Log: /data/BG/dense/logs/dense_20260424_173338.log
+max_image_size : 2000
+bg=colmap process=dense  etape=image_undistorter   date=2026-04-24T17:33:38+02:00
+I20260424 17:33:38.999475  3015 image.cc:382] === Reading reconstruction ===
+I20260424 17:33:39.021701  3015 image.cc:385] => Reconstruction with 20 images and 6668 points
+I20260424 17:33:39.021741  3015 undistorters.cc:166] === Image undistortion ===
+I20260424 17:33:39.022475  3015 undistorters.cc:205] Undistorting image [1/20]
+I20260424 17:33:45.893258  3015 undistorters.cc:205] Undistorting image [2/20]
+I20260424 17:33:45.902483  3015 undistorters.cc:205] Undistorting image [3/20]
+I20260424 17:33:45.902532  3015 undistorters.cc:205] Undistorting image [4/20]
+I20260424 17:33:45.902549  3015 undistorters.cc:205] Undistorting image [5/20]
+I20260424 17:33:52.706276  3015 undistorters.cc:205] Undistorting image [6/20]
+I20260424 17:33:52.706322  3015 undistorters.cc:205] Undistorting image [7/20]
+I20260424 17:33:52.745172  3015 undistorters.cc:205] Undistorting image [8/20]
+I20260424 17:33:52.775228  3015 undistorters.cc:205] Undistorting image [9/20]
+I20260424 17:33:59.544530  3015 undistorters.cc:205] Undistorting image [10/20]
+I20260424 17:33:59.550101  3015 undistorters.cc:205] Undistorting image [11/20]
+I20260424 17:33:59.606236  3015 undistorters.cc:205] Undistorting image [12/20]
+I20260424 17:33:59.655398  3015 undistorters.cc:205] Undistorting image [13/20]
+I20260424 17:34:06.382846  3015 undistorters.cc:205] Undistorting image [14/20]
+I20260424 17:34:06.382897  3015 undistorters.cc:205] Undistorting image [15/20]
+I20260424 17:34:06.450075  3015 undistorters.cc:205] Undistorting image [16/20]
+I20260424 17:34:06.517824  3015 undistorters.cc:205] Undistorting image [17/20]
+I20260424 17:34:13.211354  3015 undistorters.cc:205] Undistorting image [18/20]
+I20260424 17:34:13.211416  3015 undistorters.cc:205] Undistorting image [19/20]
+I20260424 17:34:13.292070  3015 undistorters.cc:205] Undistorting image [20/20]
+I20260424 17:34:13.378795  3015 undistorters.cc:213] Writing reconstruction...
+I20260424 17:34:13.445039  3015 undistorters.cc:218] Writing configuration...
+I20260424 17:34:13.445159  3015 undistorters.cc:222] Writing scripts...
+I20260424 17:34:13.445290  3015 timer.cc:90] Elapsed time: 0.574 [minutes]
+bg=colmap process=dense  etape=patch_match_stereo   date=2026-04-24T17:34:13+02:00
+I20260424 17:34:13.626010  3032 patch_match.cc:210] Reading workspace...
+I20260424 17:34:13.653931  3032 patch_match.cc:240] Reading configuration...
+I20260424 17:34:13.658167  3032 patch_match.cc:371] Configuration has 20 problems...
+I20260424 17:34:13.801275  3048 patch_match.cc:416] === Processing view 1 / 20 for DJI_20260206154750_0031_D.JPG ===
+I20260424 17:34:13.801326  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:34:34.588052  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:34:34.588162  3048 patch_match.cc:57] ref_image_idx: 0
+I20260424 17:34:34.588224  3048 patch_match.cc:64] src_image_idxs: 11 16 17 18 15 2 3 1 14 4 8 5 10 7 9 6 19 12
+I20260424 17:34:34.588254  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:34:34.588276  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:34:34.588296  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:34:34.588316  3048 patch_match_options.cc:49] depth_min: 8.4274
+I20260424 17:34:34.588369  3048 patch_match_options.cc:50] depth_max: 16.943
+I20260424 17:34:34.588397  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:34:34.588418  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:34:34.588436  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:34:34.588459  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:34:34.588482  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:34:34.588510  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:34:34.588532  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:34:34.588583  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:34:34.588599  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:34:34.588613  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:34:34.588624  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:34:34.588636  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:34:34.588645  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:34:34.588660  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:34:34.588675  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:34:34.588688  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:34:34.588701  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:34:34.588713  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:34:34.588724  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:34:34.588734  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:34:34.588747  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:34:35.269549  3048 cudacc.cc:51] Initialization: 0.0865s
+I20260424 17:34:35.728612  3048 cudacc.cc:51]  Sweep 1: 0.4590s
+I20260424 17:34:36.357028  3048 cudacc.cc:51]  Sweep 2: 0.6283s
+I20260424 17:34:36.800020  3048 cudacc.cc:51]  Sweep 3: 0.4429s
+I20260424 17:34:37.410458  3048 cudacc.cc:51]  Sweep 4: 0.6104s
+I20260424 17:34:37.410509  3048 cudacc.cc:51] Iteration 1: 2.1409s
+I20260424 17:34:37.864727  3048 cudacc.cc:51]  Sweep 1: 0.4541s
+I20260424 17:34:38.463546  3048 cudacc.cc:51]  Sweep 2: 0.5987s
+I20260424 17:34:38.900565  3048 cudacc.cc:51]  Sweep 3: 0.4369s
+I20260424 17:34:39.515323  3048 cudacc.cc:51]  Sweep 4: 0.6147s
+I20260424 17:34:39.515364  3048 cudacc.cc:51] Iteration 2: 2.1047s
+I20260424 17:34:39.953511  3048 cudacc.cc:51]  Sweep 1: 0.4381s
+I20260424 17:34:40.547010  3048 cudacc.cc:51]  Sweep 2: 0.5934s
+I20260424 17:34:40.994716  3048 cudacc.cc:51]  Sweep 3: 0.4476s
+I20260424 17:34:41.594220  3048 cudacc.cc:51]  Sweep 4: 0.5994s
+I20260424 17:34:41.594271  3048 cudacc.cc:51] Iteration 3: 2.0788s
+I20260424 17:34:42.022707  3048 cudacc.cc:51]  Sweep 1: 0.4284s
+I20260424 17:34:42.622581  3048 cudacc.cc:51]  Sweep 2: 0.5938s
+I20260424 17:34:43.054217  3048 cudacc.cc:51]  Sweep 3: 0.4316s
+I20260424 17:34:43.636011  3048 cudacc.cc:51]  Sweep 4: 0.5817s
+I20260424 17:34:43.636090  3048 cudacc.cc:51] Iteration 4: 2.0417s
+I20260424 17:34:44.073701  3048 cudacc.cc:51]  Sweep 1: 0.4371s
+I20260424 17:34:44.645720  3048 cudacc.cc:51]  Sweep 2: 0.5695s
+I20260424 17:34:45.078820  3048 cudacc.cc:51]  Sweep 3: 0.4312s
+I20260424 17:34:45.660938  3048 cudacc.cc:51]  Sweep 4: 0.5797s
+I20260424 17:34:45.660991  3048 cudacc.cc:51] Iteration 5: 2.0176s
+I20260424 17:34:45.661051  3048 cudacc.cc:51] Total: 10.4705s
+I20260424 17:34:45.661072  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206154750_0031_D.JPG
+I20260424 17:34:45.962566  3048 patch_match.cc:416] === Processing view 2 / 20 for DJI_20260206154745_0029_D.JPG ===
+I20260424 17:34:45.962622  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:34:47.074615  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:34:47.074702  3048 patch_match.cc:57] ref_image_idx: 1
+I20260424 17:34:47.074734  3048 patch_match.cc:64] src_image_idxs: 16 13 17 18 15 2 0 3 8 9 4 6 19 7 5 10 14 11
+I20260424 17:34:47.074756  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:34:47.074781  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:34:47.074788  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:34:47.074795  3048 patch_match_options.cc:49] depth_min: 8.01467
+I20260424 17:34:47.074807  3048 patch_match_options.cc:50] depth_max: 16.9572
+I20260424 17:34:47.074815  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:34:47.074823  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:34:47.074846  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:34:47.074869  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:34:47.074905  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:34:47.074921  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:34:47.074939  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:34:47.074972  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:34:47.075001  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:34:47.075021  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:34:47.075038  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:34:47.075059  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:34:47.075088  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:34:47.075102  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:34:47.075119  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:34:47.075132  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:34:47.075140  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:34:47.075148  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:34:47.075156  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:34:47.075163  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:34:47.075172  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:34:47.242991  3048 cudacc.cc:51] Initialization: 0.0834s
+I20260424 17:34:47.708246  3048 cudacc.cc:51]  Sweep 1: 0.4635s
+I20260424 17:34:48.337963  3048 cudacc.cc:51]  Sweep 2: 0.6274s
+I20260424 17:34:48.797595  3048 cudacc.cc:51]  Sweep 3: 0.4580s
+I20260424 17:34:49.397152  3048 cudacc.cc:51]  Sweep 4: 0.5975s
+I20260424 17:34:49.397231  3048 cudacc.cc:51] Iteration 1: 2.1466s
+I20260424 17:34:49.849927  3048 cudacc.cc:51]  Sweep 1: 0.4511s
+I20260424 17:34:50.474797  3048 cudacc.cc:51]  Sweep 2: 0.6228s
+I20260424 17:34:50.916591  3048 cudacc.cc:51]  Sweep 3: 0.4400s
+I20260424 17:34:51.524634  3048 cudacc.cc:51]  Sweep 4: 0.6062s
+I20260424 17:34:51.524690  3048 cudacc.cc:51] Iteration 2: 2.1207s
+I20260424 17:34:51.970165  3048 cudacc.cc:51]  Sweep 1: 0.4441s
+I20260424 17:34:52.562134  3048 cudacc.cc:51]  Sweep 2: 0.5902s
+I20260424 17:34:53.020114  3048 cudacc.cc:51]  Sweep 3: 0.4566s
+I20260424 17:34:53.608796  3048 cudacc.cc:51]  Sweep 4: 0.5871s
+I20260424 17:34:53.608843  3048 cudacc.cc:51] Iteration 3: 2.0782s
+I20260424 17:34:54.049474  3048 cudacc.cc:51]  Sweep 1: 0.4394s
+I20260424 17:34:54.636915  3048 cudacc.cc:51]  Sweep 2: 0.5859s
+I20260424 17:34:55.068239  3048 cudacc.cc:51]  Sweep 3: 0.4302s
+I20260424 17:34:55.668744  3048 cudacc.cc:51]  Sweep 4: 0.5990s
+I20260424 17:34:55.668790  3048 cudacc.cc:51] Iteration 4: 2.0547s
+I20260424 17:34:56.116891  3048 cudacc.cc:51]  Sweep 1: 0.4470s
+I20260424 17:34:56.687940  3048 cudacc.cc:51]  Sweep 2: 0.5697s
+I20260424 17:34:57.111507  3048 cudacc.cc:51]  Sweep 3: 0.4226s
+I20260424 17:34:57.700641  3048 cudacc.cc:51]  Sweep 4: 0.5878s
+I20260424 17:34:57.700687  3048 cudacc.cc:51] Iteration 5: 2.0272s
+I20260424 17:34:57.700723  3048 cudacc.cc:51] Total: 10.5112s
+I20260424 17:34:57.700738  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206154745_0029_D.JPG
+I20260424 17:34:58.010751  3048 patch_match.cc:416] === Processing view 3 / 20 for DJI_20260206154747_0030_D.JPG ===
+I20260424 17:34:58.010804  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:34:58.020723  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:34:58.020812  3048 patch_match.cc:57] ref_image_idx: 2
+I20260424 17:34:58.020844  3048 patch_match.cc:64] src_image_idxs: 13 16 12 17 11 18 0 1 14 3 8 9 4 6 19 7 5 10 15
+I20260424 17:34:58.020866  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:34:58.020893  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:34:58.020900  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:34:58.020906  3048 patch_match_options.cc:49] depth_min: 8.10242
+I20260424 17:34:58.020920  3048 patch_match_options.cc:50] depth_max: 16.9584
+I20260424 17:34:58.020928  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:34:58.020936  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:34:58.020952  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:34:58.020961  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:34:58.020969  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:34:58.020977  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:34:58.020985  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:34:58.020992  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:34:58.021000  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:34:58.021008  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:34:58.021014  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:34:58.021023  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:34:58.021029  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:34:58.021037  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:34:58.021044  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:34:58.021052  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:34:58.021059  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:34:58.021066  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:34:58.021073  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:34:58.021080  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:34:58.021086  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:34:58.238307  3048 cudacc.cc:51] Initialization: 0.0878s
+I20260424 17:34:58.729727  3048 cudacc.cc:51]  Sweep 1: 0.4903s
+I20260424 17:34:59.380100  3048 cudacc.cc:51]  Sweep 2: 0.6490s
+I20260424 17:34:59.854554  3048 cudacc.cc:51]  Sweep 3: 0.4734s
+I20260424 17:35:00.502454  3048 cudacc.cc:51]  Sweep 4: 0.6466s
+I20260424 17:35:00.502521  3048 cudacc.cc:51] Iteration 1: 2.2596s
+I20260424 17:35:00.978274  3048 cudacc.cc:51]  Sweep 1: 0.4748s
+I20260424 17:35:01.594719  3048 cudacc.cc:51]  Sweep 2: 0.6153s
+I20260424 17:35:02.057067  3048 cudacc.cc:51]  Sweep 3: 0.4614s
+I20260424 17:35:02.701967  3048 cudacc.cc:51]  Sweep 4: 0.6437s
+I20260424 17:35:02.702183  3048 cudacc.cc:51] Iteration 2: 2.1956s
+I20260424 17:35:03.168267  3048 cudacc.cc:51]  Sweep 1: 0.4652s
+I20260424 17:35:03.799569  3048 cudacc.cc:51]  Sweep 2: 0.6302s
+I20260424 17:35:04.266752  3048 cudacc.cc:51]  Sweep 3: 0.4664s
+I20260424 17:35:04.885123  3048 cudacc.cc:51]  Sweep 4: 0.6173s
+I20260424 17:35:04.885177  3048 cudacc.cc:51] Iteration 3: 2.1793s
+I20260424 17:35:05.349613  3048 cudacc.cc:51]  Sweep 1: 0.4637s
+I20260424 17:35:05.962865  3048 cudacc.cc:51]  Sweep 2: 0.6123s
+I20260424 17:35:06.427347  3048 cudacc.cc:51]  Sweep 3: 0.4638s
+I20260424 17:35:07.025256  3048 cudacc.cc:51]  Sweep 4: 0.5970s
+I20260424 17:35:07.025305  3048 cudacc.cc:51] Iteration 4: 2.1369s
+I20260424 17:35:07.486189  3048 cudacc.cc:51]  Sweep 1: 0.4602s
+I20260424 17:35:08.092528  3048 cudacc.cc:51]  Sweep 2: 0.6054s
+I20260424 17:35:08.524537  3048 cudacc.cc:51]  Sweep 3: 0.4314s
+I20260424 17:35:09.131690  3048 cudacc.cc:51]  Sweep 4: 0.6063s
+I20260424 17:35:09.131738  3048 cudacc.cc:51] Iteration 5: 2.1035s
+I20260424 17:35:09.131780  3048 cudacc.cc:51] Total: 10.9631s
+I20260424 17:35:09.131795  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206154747_0030_D.JPG
+I20260424 17:35:09.440398  3048 patch_match.cc:416] === Processing view 4 / 20 for DJI_20260206154753_0032_D.JPG ===
+I20260424 17:35:09.440446  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:35:09.451179  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:35:09.451254  3048 patch_match.cc:57] ref_image_idx: 3
+I20260424 17:35:09.451283  3048 patch_match.cc:64] src_image_idxs: 11 16 18 19 17 0 2 15 1 14 4 10 5 12 7 8 9 6
+I20260424 17:35:09.451295  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:35:09.451305  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:35:09.451316  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:35:09.451327  3048 patch_match_options.cc:49] depth_min: 8.36258
+I20260424 17:35:09.451357  3048 patch_match_options.cc:50] depth_max: 16.9149
+I20260424 17:35:09.451372  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:35:09.451385  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:35:09.451395  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:35:09.451409  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:35:09.451423  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:35:09.451436  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:35:09.451450  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:35:09.451464  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:35:09.451478  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:35:09.451489  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:35:09.451501  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:35:09.451516  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:35:09.451530  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:35:09.451543  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:35:09.451556  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:35:09.451571  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:35:09.451584  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:35:09.451598  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:35:09.451612  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:35:09.451624  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:35:09.451638  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:35:09.609256  3048 cudacc.cc:51] Initialization: 0.0845s
+I20260424 17:35:10.074888  3048 cudacc.cc:51]  Sweep 1: 0.4650s
+I20260424 17:35:10.706822  3048 cudacc.cc:51]  Sweep 2: 0.6311s
+I20260424 17:35:11.167608  3048 cudacc.cc:51]  Sweep 3: 0.4601s
+I20260424 17:35:11.775184  3048 cudacc.cc:51]  Sweep 4: 0.6068s
+I20260424 17:35:11.775244  3048 cudacc.cc:51] Iteration 1: 2.1632s
+I20260424 17:35:12.215734  3048 cudacc.cc:51]  Sweep 1: 0.4399s
+I20260424 17:35:12.825856  3048 cudacc.cc:51]  Sweep 2: 0.6094s
+I20260424 17:35:13.263150  3048 cudacc.cc:51]  Sweep 3: 0.4367s
+I20260424 17:35:13.868582  3048 cudacc.cc:51]  Sweep 4: 0.6047s
+I20260424 17:35:13.868673  3048 cudacc.cc:51] Iteration 2: 2.0909s
+I20260424 17:35:14.321635  3048 cudacc.cc:51]  Sweep 1: 0.4524s
+I20260424 17:35:14.934846  3048 cudacc.cc:51]  Sweep 2: 0.6125s
+I20260424 17:35:15.380290  3048 cudacc.cc:51]  Sweep 3: 0.4449s
+I20260424 17:35:15.989111  3048 cudacc.cc:51]  Sweep 4: 0.6081s
+I20260424 17:35:15.989188  3048 cudacc.cc:51] Iteration 3: 2.1182s
+I20260424 17:35:16.415776  3048 cudacc.cc:51]  Sweep 1: 0.4261s
+I20260424 17:35:17.004547  3048 cudacc.cc:51]  Sweep 2: 0.5881s
+I20260424 17:35:17.452590  3048 cudacc.cc:51]  Sweep 3: 0.4475s
+I20260424 17:35:18.023303  3048 cudacc.cc:51]  Sweep 4: 0.5701s
+I20260424 17:35:18.023350  3048 cudacc.cc:51] Iteration 4: 2.0321s
+I20260424 17:35:18.457859  3048 cudacc.cc:51]  Sweep 1: 0.4340s
+I20260424 17:35:19.032150  3048 cudacc.cc:51]  Sweep 2: 0.5737s
+I20260424 17:35:19.457803  3048 cudacc.cc:51]  Sweep 3: 0.4252s
+I20260424 17:35:20.043681  3048 cudacc.cc:51]  Sweep 4: 0.5853s
+I20260424 17:35:20.043730  3048 cudacc.cc:51] Iteration 5: 2.0184s
+I20260424 17:35:20.043768  3048 cudacc.cc:51] Total: 10.5077s
+I20260424 17:35:20.043783  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206154753_0032_D.JPG
+I20260424 17:35:20.359190  3048 patch_match.cc:416] === Processing view 5 / 20 for DJI_20260206162524_0685_D.JPG ===
+I20260424 17:35:20.359261  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:35:20.367470  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:35:20.367545  3048 patch_match.cc:57] ref_image_idx: 4
+I20260424 17:35:20.367576  3048 patch_match.cc:64] src_image_idxs: 13 11 8 9 5 6 10 2 15 7 0 12 1 14 3
+I20260424 17:35:20.367597  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:35:20.367619  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:35:20.367636  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:35:20.367655  3048 patch_match_options.cc:49] depth_min: 8.95538
+I20260424 17:35:20.367688  3048 patch_match_options.cc:50] depth_max: 26.461
+I20260424 17:35:20.367712  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:35:20.367733  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:35:20.367751  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:35:20.367772  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:35:20.367810  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:35:20.367843  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:35:20.367875  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:35:20.367890  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:35:20.367901  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:35:20.367908  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:35:20.367914  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:35:20.367923  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:35:20.367929  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:35:20.367959  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:35:20.368009  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:35:20.368024  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:35:20.368038  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:35:20.368055  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:35:20.368069  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:35:20.368085  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:35:20.368099  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:35:20.524039  3048 cudacc.cc:51] Initialization: 0.0660s
+I20260424 17:35:20.945842  3048 cudacc.cc:51]  Sweep 1: 0.4213s
+I20260424 17:35:21.532629  3048 cudacc.cc:51]  Sweep 2: 0.5862s
+I20260424 17:35:21.946940  3048 cudacc.cc:51]  Sweep 3: 0.4139s
+I20260424 17:35:22.526233  3048 cudacc.cc:51]  Sweep 4: 0.5787s
+I20260424 17:35:22.526280  3048 cudacc.cc:51] Iteration 1: 2.0004s
+I20260424 17:35:22.944476  3048 cudacc.cc:51]  Sweep 1: 0.4177s
+I20260424 17:35:23.532394  3048 cudacc.cc:51]  Sweep 2: 0.5874s
+I20260424 17:35:23.948416  3048 cudacc.cc:51]  Sweep 3: 0.4156s
+I20260424 17:35:24.525408  3048 cudacc.cc:51]  Sweep 4: 0.5725s
+I20260424 17:35:24.525456  3048 cudacc.cc:51] Iteration 2: 1.9974s
+I20260424 17:35:24.929410  3048 cudacc.cc:51]  Sweep 1: 0.4036s
+I20260424 17:35:25.497671  3048 cudacc.cc:51]  Sweep 2: 0.5678s
+I20260424 17:35:25.921836  3048 cudacc.cc:51]  Sweep 3: 0.4238s
+I20260424 17:35:26.485024  3048 cudacc.cc:51]  Sweep 4: 0.5627s
+I20260424 17:35:26.485072  3048 cudacc.cc:51] Iteration 3: 1.9580s
+I20260424 17:35:26.900614  3048 cudacc.cc:51]  Sweep 1: 0.4152s
+I20260424 17:35:27.466428  3048 cudacc.cc:51]  Sweep 2: 0.5653s
+I20260424 17:35:27.864374  3048 cudacc.cc:51]  Sweep 3: 0.3976s
+I20260424 17:35:28.409741  3048 cudacc.cc:51]  Sweep 4: 0.5449s
+I20260424 17:35:28.409788  3048 cudacc.cc:51] Iteration 4: 1.9232s
+I20260424 17:35:28.795595  3048 cudacc.cc:51]  Sweep 1: 0.3855s
+I20260424 17:35:29.353627  3048 cudacc.cc:51]  Sweep 2: 0.5576s
+I20260424 17:35:29.729748  3048 cudacc.cc:51]  Sweep 3: 0.3758s
+I20260424 17:35:30.270550  3048 cudacc.cc:51]  Sweep 4: 0.5404s
+I20260424 17:35:30.270605  3048 cudacc.cc:51] Iteration 5: 1.8594s
+I20260424 17:35:30.270653  3048 cudacc.cc:51] Total: 9.8048s
+I20260424 17:35:30.270668  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206162524_0685_D.JPG
+I20260424 17:35:30.578581  3048 patch_match.cc:416] === Processing view 6 / 20 for DJI_20260206162526_0686_D.JPG ===
+I20260424 17:35:30.578630  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:35:30.590014  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:35:30.590067  3048 patch_match.cc:57] ref_image_idx: 5
+I20260424 17:35:30.590080  3048 patch_match.cc:64] src_image_idxs: 16 13 11 4 8 6 9 10 7 0 12 2 15 3 1 14
+I20260424 17:35:30.590087  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:35:30.590094  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:35:30.590113  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:35:30.590121  3048 patch_match_options.cc:49] depth_min: 9.54422
+I20260424 17:35:30.590132  3048 patch_match_options.cc:50] depth_max: 28.2734
+I20260424 17:35:30.590142  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:35:30.590149  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:35:30.590155  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:35:30.590162  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:35:30.590179  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:35:30.590193  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:35:30.590215  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:35:30.590229  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:35:30.590243  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:35:30.590253  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:35:30.590265  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:35:30.590281  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:35:30.590322  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:35:30.590363  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:35:30.590377  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:35:30.590391  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:35:30.590404  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:35:30.590417  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:35:30.590430  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:35:30.590464  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:35:30.590504  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:35:30.730396  3048 cudacc.cc:51] Initialization: 0.0772s
+I20260424 17:35:31.189720  3048 cudacc.cc:51]  Sweep 1: 0.4589s
+I20260424 17:35:31.786980  3048 cudacc.cc:51]  Sweep 2: 0.5968s
+I20260424 17:35:32.241216  3048 cudacc.cc:51]  Sweep 3: 0.4538s
+I20260424 17:35:32.824348  3048 cudacc.cc:51]  Sweep 4: 0.5827s
+I20260424 17:35:32.824397  3048 cudacc.cc:51] Iteration 1: 2.0924s
+I20260424 17:35:33.250808  3048 cudacc.cc:51]  Sweep 1: 0.4261s
+I20260424 17:35:33.836519  3048 cudacc.cc:51]  Sweep 2: 0.5853s
+I20260424 17:35:34.286080  3048 cudacc.cc:51]  Sweep 3: 0.4492s
+I20260424 17:35:34.872304  3048 cudacc.cc:51]  Sweep 4: 0.5858s
+I20260424 17:35:34.872352  3048 cudacc.cc:51] Iteration 2: 2.0465s
+I20260424 17:35:35.283337  3048 cudacc.cc:51]  Sweep 1: 0.4107s
+I20260424 17:35:35.843024  3048 cudacc.cc:51]  Sweep 2: 0.5593s
+I20260424 17:35:36.249740  3048 cudacc.cc:51]  Sweep 3: 0.4064s
+I20260424 17:35:36.820271  3048 cudacc.cc:51]  Sweep 4: 0.5701s
+I20260424 17:35:36.820318  3048 cudacc.cc:51] Iteration 3: 1.9466s
+I20260424 17:35:37.241727  3048 cudacc.cc:51]  Sweep 1: 0.4211s
+I20260424 17:35:37.806272  3048 cudacc.cc:51]  Sweep 2: 0.5641s
+I20260424 17:35:38.227746  3048 cudacc.cc:51]  Sweep 3: 0.4211s
+I20260424 17:35:38.802991  3048 cudacc.cc:51]  Sweep 4: 0.5748s
+I20260424 17:35:38.803041  3048 cudacc.cc:51] Iteration 4: 1.9814s
+I20260424 17:35:39.196547  3048 cudacc.cc:51]  Sweep 1: 0.3932s
+I20260424 17:35:39.756896  3048 cudacc.cc:51]  Sweep 2: 0.5599s
+I20260424 17:35:40.155107  3048 cudacc.cc:51]  Sweep 3: 0.3979s
+I20260424 17:35:40.701455  3048 cudacc.cc:51]  Sweep 4: 0.5459s
+I20260424 17:35:40.701510  3048 cudacc.cc:51] Iteration 5: 1.8972s
+I20260424 17:35:40.701555  3048 cudacc.cc:51] Total: 10.0417s
+I20260424 17:35:40.701575  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206162526_0686_D.JPG
+I20260424 17:35:40.992647  3048 patch_match.cc:416] === Processing view 7 / 20 for DJI_20260206162622_0709_D.JPG ===
+I20260424 17:35:40.992694  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:35:41.006121  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:35:41.006192  3048 patch_match.cc:57] ref_image_idx: 6
+I20260424 17:35:41.006245  3048 patch_match.cc:64] src_image_idxs: 19 16 12 3 8 9 4 5 7 2 15 1 14 10 0 13 11
+I20260424 17:35:41.006268  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:35:41.006292  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:35:41.006299  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:35:41.006306  3048 patch_match_options.cc:49] depth_min: 9.84147
+I20260424 17:35:41.006320  3048 patch_match_options.cc:50] depth_max: 28.379
+I20260424 17:35:41.006330  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:35:41.006336  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:35:41.006343  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:35:41.006350  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:35:41.006361  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:35:41.006372  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:35:41.006386  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:35:41.006398  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:35:41.006412  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:35:41.006423  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:35:41.006446  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:35:41.006458  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:35:41.006471  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:35:41.006484  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:35:41.006507  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:35:41.006515  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:35:41.006522  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:35:41.006537  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:35:41.006596  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:35:41.006608  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:35:41.006615  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:35:41.176790  3048 cudacc.cc:51] Initialization: 0.0799s
+I20260424 17:35:41.642416  3048 cudacc.cc:51]  Sweep 1: 0.4653s
+I20260424 17:35:42.260145  3048 cudacc.cc:51]  Sweep 2: 0.6153s
+I20260424 17:35:42.705988  3048 cudacc.cc:51]  Sweep 3: 0.4455s
+I20260424 17:35:43.321134  3048 cudacc.cc:51]  Sweep 4: 0.6147s
+I20260424 17:35:43.321179  3048 cudacc.cc:51] Iteration 1: 2.1430s
+I20260424 17:35:43.774570  3048 cudacc.cc:51]  Sweep 1: 0.4530s
+I20260424 17:35:44.387842  3048 cudacc.cc:51]  Sweep 2: 0.6128s
+I20260424 17:35:44.841284  3048 cudacc.cc:51]  Sweep 3: 0.4531s
+I20260424 17:35:45.445844  3048 cudacc.cc:51]  Sweep 4: 0.6002s
+I20260424 17:35:45.445891  3048 cudacc.cc:51] Iteration 2: 2.1234s
+I20260424 17:35:45.897558  3048 cudacc.cc:51]  Sweep 1: 0.4513s
+I20260424 17:35:46.506899  3048 cudacc.cc:51]  Sweep 2: 0.6089s
+I20260424 17:35:46.953987  3048 cudacc.cc:51]  Sweep 3: 0.4468s
+I20260424 17:35:47.556470  3048 cudacc.cc:51]  Sweep 4: 0.6021s
+I20260424 17:35:47.556516  3048 cudacc.cc:51] Iteration 3: 2.1093s
+I20260424 17:35:47.983139  3048 cudacc.cc:51]  Sweep 1: 0.4263s
+I20260424 17:35:48.582437  3048 cudacc.cc:51]  Sweep 2: 0.5990s
+I20260424 17:35:49.009941  3048 cudacc.cc:51]  Sweep 3: 0.4273s
+I20260424 17:35:49.602903  3048 cudacc.cc:51]  Sweep 4: 0.5933s
+I20260424 17:35:49.602947  3048 cudacc.cc:51] Iteration 4: 2.0460s
+I20260424 17:35:50.038666  3048 cudacc.cc:51]  Sweep 1: 0.4359s
+I20260424 17:35:50.608071  3048 cudacc.cc:51]  Sweep 2: 0.5697s
+I20260424 17:35:51.027602  3048 cudacc.cc:51]  Sweep 3: 0.4197s
+I20260424 17:35:51.604508  3048 cudacc.cc:51]  Sweep 4: 0.5772s
+I20260424 17:35:51.604553  3048 cudacc.cc:51] Iteration 5: 2.0027s
+I20260424 17:35:51.604596  3048 cudacc.cc:51] Total: 10.5046s
+I20260424 17:35:51.604611  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206162622_0709_D.JPG
+I20260424 17:35:51.908205  3048 patch_match.cc:416] === Processing view 8 / 20 for DJI_20260206164332_0017_D.JPG ===
+I20260424 17:35:51.908267  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:35:51.922283  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:35:51.922363  3048 patch_match.cc:57] ref_image_idx: 7
+I20260424 17:35:51.922394  3048 patch_match.cc:64] src_image_idxs: 16 11 14 15 17 10 8 12 9 6 19 4 5 18 2 0 1 3
+I20260424 17:35:51.922415  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:35:51.922446  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:35:51.922451  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:35:51.922458  3048 patch_match_options.cc:49] depth_min: 8.2616
+I20260424 17:35:51.922470  3048 patch_match_options.cc:50] depth_max: 29.3625
+I20260424 17:35:51.922479  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:35:51.922487  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:35:51.922506  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:35:51.922515  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:35:51.922523  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:35:51.922531  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:35:51.922538  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:35:51.922546  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:35:51.922554  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:35:51.922561  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:35:51.922569  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:35:51.922576  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:35:51.922585  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:35:51.922591  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:35:51.922598  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:35:51.922606  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:35:51.922612  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:35:51.922622  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:35:51.922631  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:35:51.922637  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:35:51.922645  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:35:52.091303  3048 cudacc.cc:51] Initialization: 0.0848s
+I20260424 17:35:52.560751  3048 cudacc.cc:51]  Sweep 1: 0.4696s
+I20260424 17:35:53.176065  3048 cudacc.cc:51]  Sweep 2: 0.6156s
+I20260424 17:35:53.635867  3048 cudacc.cc:51]  Sweep 3: 0.4600s
+I20260424 17:35:54.262696  3048 cudacc.cc:51]  Sweep 4: 0.6270s
+I20260424 17:35:54.262744  3048 cudacc.cc:51] Iteration 1: 2.1724s
+I20260424 17:35:54.698082  3048 cudacc.cc:51]  Sweep 1: 0.4355s
+I20260424 17:35:55.300436  3048 cudacc.cc:51]  Sweep 2: 0.6026s
+I20260424 17:35:55.754667  3048 cudacc.cc:51]  Sweep 3: 0.4544s
+I20260424 17:35:56.372159  3048 cudacc.cc:51]  Sweep 4: 0.6177s
+I20260424 17:35:56.372215  3048 cudacc.cc:51] Iteration 2: 2.1103s
+I20260424 17:35:56.817193  3048 cudacc.cc:51]  Sweep 1: 0.4411s
+I20260424 17:35:57.420297  3048 cudacc.cc:51]  Sweep 2: 0.6033s
+I20260424 17:35:57.862162  3048 cudacc.cc:51]  Sweep 3: 0.4420s
+I20260424 17:35:58.473196  3048 cudacc.cc:51]  Sweep 4: 0.6112s
+I20260424 17:35:58.473256  3048 cudacc.cc:51] Iteration 3: 2.0978s
+I20260424 17:35:58.916366  3048 cudacc.cc:51]  Sweep 1: 0.4432s
+I20260424 17:35:59.500838  3048 cudacc.cc:51]  Sweep 2: 0.5846s
+I20260424 17:35:59.952380  3048 cudacc.cc:51]  Sweep 3: 0.4516s
+I20260424 17:36:00.555876  3048 cudacc.cc:51]  Sweep 4: 0.6036s
+I20260424 17:36:00.555925  3048 cudacc.cc:51] Iteration 4: 2.0833s
+I20260424 17:36:00.968441  3048 cudacc.cc:51]  Sweep 1: 0.4126s
+I20260424 17:36:01.559862  3048 cudacc.cc:51]  Sweep 2: 0.5915s
+I20260424 17:36:01.993120  3048 cudacc.cc:51]  Sweep 3: 0.4333s
+I20260424 17:36:02.587626  3048 cudacc.cc:51]  Sweep 4: 0.5946s
+I20260424 17:36:02.587670  3048 cudacc.cc:51] Iteration 5: 2.0323s
+I20260424 17:36:02.587714  3048 cudacc.cc:51] Total: 10.5852s
+I20260424 17:36:02.587729  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206164332_0017_D.JPG
+I20260424 17:36:02.899718  3048 patch_match.cc:416] === Processing view 9 / 20 for DJI_20260206162624_0710_D.JPG ===
+I20260424 17:36:02.899770  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:02.915129  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:02.919193  3048 patch_match.cc:57] ref_image_idx: 8
+I20260424 17:36:02.919222  3048 patch_match.cc:64] src_image_idxs: 16 12 3 9 6 4 5 7 2 15 1 14 10 0 13 11
+I20260424 17:36:02.919237  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:02.919250  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:02.919263  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:02.919276  3048 patch_match_options.cc:49] depth_min: 9.00729
+I20260424 17:36:02.919297  3048 patch_match_options.cc:50] depth_max: 26.5719
+I20260424 17:36:02.919312  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:02.919319  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:02.919330  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:02.919344  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:02.919354  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:02.919363  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:02.919370  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:02.919377  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:02.919385  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:02.919392  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:02.919399  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:02.919413  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:02.919425  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:02.919436  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:02.919448  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:02.919459  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:02.919471  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:02.919483  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:02.919495  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:02.919504  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:02.919541  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:03.075227  3048 cudacc.cc:51] Initialization: 0.0716s
+I20260424 17:36:03.505901  3048 cudacc.cc:51]  Sweep 1: 0.4307s
+I20260424 17:36:04.097513  3048 cudacc.cc:51]  Sweep 2: 0.5917s
+I20260424 17:36:04.529507  3048 cudacc.cc:51]  Sweep 3: 0.4320s
+I20260424 17:36:05.123255  3048 cudacc.cc:51]  Sweep 4: 0.5938s
+I20260424 17:36:05.123286  3048 cudacc.cc:51] Iteration 1: 2.0485s
+I20260424 17:36:05.523556  3048 cudacc.cc:51]  Sweep 1: 0.4003s
+I20260424 17:36:06.095237  3048 cudacc.cc:51]  Sweep 2: 0.5717s
+I20260424 17:36:06.510448  3048 cudacc.cc:51]  Sweep 3: 0.4152s
+I20260424 17:36:07.077679  3048 cudacc.cc:51]  Sweep 4: 0.5673s
+I20260424 17:36:07.077726  3048 cudacc.cc:51] Iteration 2: 1.9548s
+I20260424 17:36:07.489241  3048 cudacc.cc:51]  Sweep 1: 0.4115s
+I20260424 17:36:08.070101  3048 cudacc.cc:51]  Sweep 2: 0.5809s
+I20260424 17:36:08.469338  3048 cudacc.cc:51]  Sweep 3: 0.3992s
+I20260424 17:36:09.029910  3048 cudacc.cc:51]  Sweep 4: 0.5606s
+I20260424 17:36:09.029960  3048 cudacc.cc:51] Iteration 3: 1.9525s
+I20260424 17:36:09.419215  3048 cudacc.cc:51]  Sweep 1: 0.3892s
+I20260424 17:36:09.998608  3048 cudacc.cc:51]  Sweep 2: 0.5794s
+I20260424 17:36:10.388808  3048 cudacc.cc:51]  Sweep 3: 0.3902s
+I20260424 17:36:10.945518  3048 cudacc.cc:51]  Sweep 4: 0.5567s
+I20260424 17:36:10.945564  3048 cudacc.cc:51] Iteration 4: 1.9158s
+I20260424 17:36:11.329589  3048 cudacc.cc:51]  Sweep 1: 0.3840s
+I20260424 17:36:11.887456  3048 cudacc.cc:51]  Sweep 2: 0.5579s
+I20260424 17:36:12.270892  3048 cudacc.cc:51]  Sweep 3: 0.3834s
+I20260424 17:36:12.826124  3048 cudacc.cc:51]  Sweep 4: 0.5552s
+I20260424 17:36:12.826170  3048 cudacc.cc:51] Iteration 5: 1.8807s
+I20260424 17:36:12.826215  3048 cudacc.cc:51] Total: 9.8241s
+I20260424 17:36:12.826231  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206162624_0710_D.JPG
+I20260424 17:36:13.133662  3048 patch_match.cc:416] === Processing view 10 / 20 for DJI_20260206162625_0711_D.JPG ===
+I20260424 17:36:13.133723  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:13.142881  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:13.142969  3048 patch_match.cc:57] ref_image_idx: 9
+I20260424 17:36:13.143002  3048 patch_match.cc:64] src_image_idxs: 16 12 3 8 6 4 5 7 1 14 2 15 11 10 0 13
+I20260424 17:36:13.143023  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:13.143049  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:13.143055  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:13.143061  3048 patch_match_options.cc:49] depth_min: 8.57656
+I20260424 17:36:13.143075  3048 patch_match_options.cc:50] depth_max: 24.9079
+I20260424 17:36:13.143085  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:13.143091  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:13.143098  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:13.143105  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:13.143113  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:13.143123  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:13.143137  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:13.143151  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:13.143164  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:13.143175  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:13.143188  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:13.143210  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:13.143225  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:13.143237  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:13.143250  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:13.143265  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:13.143277  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:13.143325  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:13.143339  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:13.143347  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:13.143354  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:13.274117  3048 cudacc.cc:51] Initialization: 0.0701s
+I20260424 17:36:13.708215  3048 cudacc.cc:51]  Sweep 1: 0.4321s
+I20260424 17:36:14.335927  3048 cudacc.cc:51]  Sweep 2: 0.6277s
+I20260424 17:36:14.752254  3048 cudacc.cc:51]  Sweep 3: 0.4163s
+I20260424 17:36:15.346856  3048 cudacc.cc:51]  Sweep 4: 0.5945s
+I20260424 17:36:15.348875  3048 cudacc.cc:51] Iteration 1: 2.0728s
+I20260424 17:36:15.754096  3048 cudacc.cc:51]  Sweep 1: 0.4006s
+I20260424 17:36:16.312939  3048 cudacc.cc:51]  Sweep 2: 0.5588s
+I20260424 17:36:16.713104  3048 cudacc.cc:51]  Sweep 3: 0.4001s
+I20260424 17:36:17.289673  3048 cudacc.cc:51]  Sweep 4: 0.5765s
+I20260424 17:36:17.289726  3048 cudacc.cc:51] Iteration 2: 1.9362s
+I20260424 17:36:17.705847  3048 cudacc.cc:51]  Sweep 1: 0.4161s
+I20260424 17:36:18.274493  3048 cudacc.cc:51]  Sweep 2: 0.5686s
+I20260424 17:36:18.673475  3048 cudacc.cc:51]  Sweep 3: 0.3989s
+I20260424 17:36:19.246645  3048 cudacc.cc:51]  Sweep 4: 0.5731s
+I20260424 17:36:19.246690  3048 cudacc.cc:51] Iteration 3: 1.9569s
+I20260424 17:36:19.632194  3048 cudacc.cc:51]  Sweep 1: 0.3854s
+I20260424 17:36:20.197028  3048 cudacc.cc:51]  Sweep 2: 0.5648s
+I20260424 17:36:20.590555  3048 cudacc.cc:51]  Sweep 3: 0.3935s
+I20260424 17:36:21.163761  3048 cudacc.cc:51]  Sweep 4: 0.5731s
+I20260424 17:36:21.163807  3048 cudacc.cc:51] Iteration 4: 1.9170s
+I20260424 17:36:21.546367  3048 cudacc.cc:51]  Sweep 1: 0.3825s
+I20260424 17:36:22.098294  3048 cudacc.cc:51]  Sweep 2: 0.5519s
+I20260424 17:36:22.482712  3048 cudacc.cc:51]  Sweep 3: 0.3843s
+I20260424 17:36:23.038466  3048 cudacc.cc:51]  Sweep 4: 0.5557s
+I20260424 17:36:23.038512  3048 cudacc.cc:51] Iteration 5: 1.8746s
+I20260424 17:36:23.038555  3048 cudacc.cc:51] Total: 9.8346s
+I20260424 17:36:23.038570  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206162625_0711_D.JPG
+I20260424 17:36:23.338304  3048 patch_match.cc:416] === Processing view 11 / 20 for DJI_20260206164334_0018_D.JPG ===
+I20260424 17:36:23.338357  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:23.352789  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:23.352883  3048 patch_match.cc:57] ref_image_idx: 10
+I20260424 17:36:23.352916  3048 patch_match.cc:64] src_image_idxs: 16 11 14 15 1 7 12 4 17 8 5 18 9 6 19 0 3 2
+I20260424 17:36:23.352943  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:23.352969  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:23.352980  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:23.352994  3048 patch_match_options.cc:49] depth_min: 8.48361
+I20260424 17:36:23.353015  3048 patch_match_options.cc:50] depth_max: 28.6986
+I20260424 17:36:23.353029  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:23.353041  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:23.353052  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:23.353067  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:23.353081  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:23.353094  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:23.353106  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:23.353121  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:23.353130  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:23.353137  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:23.353144  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:23.353152  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:23.353159  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:23.353168  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:23.353175  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:23.353183  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:23.353190  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:23.353204  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:23.353214  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:23.353220  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:23.353227  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:23.501061  3048 cudacc.cc:51] Initialization: 0.0799s
+I20260424 17:36:23.971648  3048 cudacc.cc:51]  Sweep 1: 0.4705s
+I20260424 17:36:24.599830  3048 cudacc.cc:51]  Sweep 2: 0.6281s
+I20260424 17:36:25.051183  3048 cudacc.cc:51]  Sweep 3: 0.4513s
+I20260424 17:36:25.654083  3048 cudacc.cc:51]  Sweep 4: 0.6028s
+I20260424 17:36:25.654155  3048 cudacc.cc:51] Iteration 1: 2.1528s
+I20260424 17:36:26.089807  3048 cudacc.cc:51]  Sweep 1: 0.4356s
+I20260424 17:36:26.705617  3048 cudacc.cc:51]  Sweep 2: 0.6157s
+I20260424 17:36:27.155773  3048 cudacc.cc:51]  Sweep 3: 0.4501s
+I20260424 17:36:27.780053  3048 cudacc.cc:51]  Sweep 4: 0.6242s
+I20260424 17:36:27.780102  3048 cudacc.cc:51] Iteration 2: 2.1257s
+I20260424 17:36:28.212319  3048 cudacc.cc:51]  Sweep 1: 0.4321s
+I20260424 17:36:28.800758  3048 cudacc.cc:51]  Sweep 2: 0.5883s
+I20260424 17:36:29.237610  3048 cudacc.cc:51]  Sweep 3: 0.4368s
+I20260424 17:36:29.853694  3048 cudacc.cc:51]  Sweep 4: 0.6160s
+I20260424 17:36:29.853740  3048 cudacc.cc:51] Iteration 3: 2.0734s
+I20260424 17:36:30.280017  3048 cudacc.cc:51]  Sweep 1: 0.4262s
+I20260424 17:36:30.880321  3048 cudacc.cc:51]  Sweep 2: 0.6002s
+I20260424 17:36:31.306584  3048 cudacc.cc:51]  Sweep 3: 0.4262s
+I20260424 17:36:31.885351  3048 cudacc.cc:51]  Sweep 4: 0.5786s
+I20260424 17:36:31.885406  3048 cudacc.cc:51] Iteration 4: 2.0313s
+I20260424 17:36:32.315456  3048 cudacc.cc:51]  Sweep 1: 0.4299s
+I20260424 17:36:32.899385  3048 cudacc.cc:51]  Sweep 2: 0.5838s
+I20260424 17:36:33.315539  3048 cudacc.cc:51]  Sweep 3: 0.4160s
+I20260424 17:36:33.905604  3048 cudacc.cc:51]  Sweep 4: 0.5899s
+I20260424 17:36:33.905649  3048 cudacc.cc:51] Iteration 5: 2.0199s
+I20260424 17:36:33.905689  3048 cudacc.cc:51] Total: 10.4833s
+I20260424 17:36:33.905702  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206164334_0018_D.JPG
+I20260424 17:36:34.226272  3048 patch_match.cc:416] === Processing view 12 / 20 for DJI_20260207173828_0414_D.JPG ===
+I20260424 17:36:34.226325  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:34.234462  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:34.234557  3048 patch_match.cc:57] ref_image_idx: 11
+I20260424 17:36:34.234589  3048 patch_match.cc:64] src_image_idxs: 3 0 5 7 2 14 1 13 15 16 19 6 8 9 18 17 4 10
+I20260424 17:36:34.234611  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:34.234633  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:34.234642  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:34.234651  3048 patch_match_options.cc:49] depth_min: 8.36727
+I20260424 17:36:34.234668  3048 patch_match_options.cc:50] depth_max: 29.6144
+I20260424 17:36:34.234683  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:34.234692  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:34.234702  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:34.234714  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:34.234724  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:34.234735  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:34.234746  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:34.234757  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:34.234768  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:34.234778  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:34.234788  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:34.234810  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:34.234818  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:34.234825  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:34.234833  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:34.234840  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:34.234848  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:34.234896  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:34.234906  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:34.234915  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:34.234921  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:34.398062  3048 cudacc.cc:51] Initialization: 0.0829s
+I20260424 17:36:34.852299  3048 cudacc.cc:51]  Sweep 1: 0.4541s
+I20260424 17:36:35.466789  3048 cudacc.cc:51]  Sweep 2: 0.6083s
+I20260424 17:36:35.910449  3048 cudacc.cc:51]  Sweep 3: 0.4435s
+I20260424 17:36:36.505419  3048 cudacc.cc:51]  Sweep 4: 0.5948s
+I20260424 17:36:36.505456  3048 cudacc.cc:51] Iteration 1: 2.1070s
+I20260424 17:36:36.962859  3048 cudacc.cc:51]  Sweep 1: 0.4533s
+I20260424 17:36:37.545984  3048 cudacc.cc:51]  Sweep 2: 0.5830s
+I20260424 17:36:37.991142  3048 cudacc.cc:51]  Sweep 3: 0.4450s
+I20260424 17:36:38.595134  3048 cudacc.cc:51]  Sweep 4: 0.6038s
+I20260424 17:36:38.595180  3048 cudacc.cc:51] Iteration 2: 2.0853s
+I20260424 17:36:39.025040  3048 cudacc.cc:51]  Sweep 1: 0.4297s
+I20260424 17:36:39.605901  3048 cudacc.cc:51]  Sweep 2: 0.5807s
+I20260424 17:36:40.025143  3048 cudacc.cc:51]  Sweep 3: 0.4191s
+I20260424 17:36:40.617524  3048 cudacc.cc:51]  Sweep 4: 0.5922s
+I20260424 17:36:40.621603  3048 cudacc.cc:51] Iteration 3: 2.0259s
+I20260424 17:36:41.058022  3048 cudacc.cc:51]  Sweep 1: 0.4358s
+I20260424 17:36:41.629460  3048 cudacc.cc:51]  Sweep 2: 0.5713s
+I20260424 17:36:42.044710  3048 cudacc.cc:51]  Sweep 3: 0.4151s
+I20260424 17:36:42.617664  3048 cudacc.cc:51]  Sweep 4: 0.5728s
+I20260424 17:36:42.617710  3048 cudacc.cc:51] Iteration 4: 1.9952s
+I20260424 17:36:43.039685  3048 cudacc.cc:51]  Sweep 1: 0.4218s
+I20260424 17:36:43.602046  3048 cudacc.cc:51]  Sweep 2: 0.5622s
+I20260424 17:36:44.011891  3048 cudacc.cc:51]  Sweep 3: 0.4097s
+I20260424 17:36:44.564514  3048 cudacc.cc:51]  Sweep 4: 0.5524s
+I20260424 17:36:44.564560  3048 cudacc.cc:51] Iteration 5: 1.9464s
+I20260424 17:36:44.564603  3048 cudacc.cc:51] Total: 10.2474s
+I20260424 17:36:44.564618  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207173828_0414_D.JPG
+I20260424 17:36:44.878934  3048 patch_match.cc:416] === Processing view 13 / 20 for DJI_20260206164337_0019_D.JPG ===
+I20260424 17:36:44.879019  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:44.890818  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:44.890930  3048 patch_match.cc:57] ref_image_idx: 12
+I20260424 17:36:44.890970  3048 patch_match.cc:64] src_image_idxs: 15 10 7 4 17 5 18 3 0 8 6 19 9 2
+I20260424 17:36:44.890980  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:44.890988  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:44.891000  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:44.891014  3048 patch_match_options.cc:49] depth_min: 8.41947
+I20260424 17:36:44.891045  3048 patch_match_options.cc:50] depth_max: 26.0303
+I20260424 17:36:44.891062  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:44.891076  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:44.891103  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:44.891116  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:44.891134  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:44.891157  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:44.891170  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:44.891184  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:44.891235  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:44.891249  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:44.891273  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:44.891291  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:44.891309  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:44.891335  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:44.891351  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:44.891367  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:44.891381  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:44.891397  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:44.891412  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:44.891427  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:44.891443  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:45.006176  3048 cudacc.cc:51] Initialization: 0.0593s
+I20260424 17:36:45.413635  3048 cudacc.cc:51]  Sweep 1: 0.4073s
+I20260424 17:36:46.006206  3048 cudacc.cc:51]  Sweep 2: 0.5924s
+I20260424 17:36:46.403294  3048 cudacc.cc:51]  Sweep 3: 0.3969s
+I20260424 17:36:46.958271  3048 cudacc.cc:51]  Sweep 4: 0.5548s
+I20260424 17:36:46.958323  3048 cudacc.cc:51] Iteration 1: 1.9516s
+I20260424 17:36:47.336090  3048 cudacc.cc:51]  Sweep 1: 0.3776s
+I20260424 17:36:47.893265  3048 cudacc.cc:51]  Sweep 2: 0.5570s
+I20260424 17:36:48.288519  3048 cudacc.cc:51]  Sweep 3: 0.3951s
+I20260424 17:36:48.815554  3048 cudacc.cc:51]  Sweep 4: 0.5268s
+I20260424 17:36:48.815600  3048 cudacc.cc:51] Iteration 2: 1.8568s
+I20260424 17:36:49.205186  3048 cudacc.cc:51]  Sweep 1: 0.3894s
+I20260424 17:36:49.768558  3048 cudacc.cc:51]  Sweep 2: 0.5632s
+I20260424 17:36:50.146765  3048 cudacc.cc:51]  Sweep 3: 0.3781s
+I20260424 17:36:50.670455  3048 cudacc.cc:51]  Sweep 4: 0.5235s
+I20260424 17:36:50.670500  3048 cudacc.cc:51] Iteration 3: 1.8544s
+I20260424 17:36:51.034842  3048 cudacc.cc:51]  Sweep 1: 0.3642s
+I20260424 17:36:51.569161  3048 cudacc.cc:51]  Sweep 2: 0.5341s
+I20260424 17:36:51.940361  3048 cudacc.cc:51]  Sweep 3: 0.3711s
+I20260424 17:36:52.469825  3048 cudacc.cc:51]  Sweep 4: 0.5293s
+I20260424 17:36:52.469871  3048 cudacc.cc:51] Iteration 4: 1.7988s
+I20260424 17:36:52.839066  3048 cudacc.cc:51]  Sweep 1: 0.3690s
+I20260424 17:36:53.375352  3048 cudacc.cc:51]  Sweep 2: 0.5361s
+I20260424 17:36:53.735806  3048 cudacc.cc:51]  Sweep 3: 0.3603s
+I20260424 17:36:54.240957  3048 cudacc.cc:51]  Sweep 4: 0.5050s
+I20260424 17:36:54.241001  3048 cudacc.cc:51] Iteration 5: 1.7706s
+I20260424 17:36:54.241083  3048 cudacc.cc:51] Total: 9.2919s
+I20260424 17:36:54.241108  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260206164337_0019_D.JPG
+I20260424 17:36:54.533860  3048 patch_match.cc:416] === Processing view 14 / 20 for DJI_20260207173826_0413_D.JPG ===
+I20260424 17:36:54.533910  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:36:54.541178  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:36:54.541280  3048 patch_match.cc:57] ref_image_idx: 13
+I20260424 17:36:54.541308  3048 patch_match.cc:64] src_image_idxs: 5 11 14 1 15 2 16 8 9 6 19 18 17 4
+I20260424 17:36:54.541328  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:36:54.541347  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:36:54.541364  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:36:54.541391  3048 patch_match_options.cc:49] depth_min: 8.63132
+I20260424 17:36:54.541414  3048 patch_match_options.cc:50] depth_max: 28.2029
+I20260424 17:36:54.541455  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:36:54.541467  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:36:54.541476  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:36:54.541486  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:36:54.541497  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:36:54.541507  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:36:54.541517  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:36:54.541529  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:36:54.541539  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:36:54.541549  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:36:54.541558  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:36:54.541568  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:36:54.541579  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:36:54.541587  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:36:54.541599  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:36:54.541610  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:36:54.541618  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:36:54.541630  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:36:54.541638  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:36:54.541647  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:36:54.541657  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:36:54.679572  3048 cudacc.cc:51] Initialization: 0.0661s
+I20260424 17:36:55.091470  3048 cudacc.cc:51]  Sweep 1: 0.4077s
+I20260424 17:36:55.709029  3048 cudacc.cc:51]  Sweep 2: 0.6173s
+I20260424 17:36:56.104332  3048 cudacc.cc:51]  Sweep 3: 0.3911s
+I20260424 17:36:56.643939  3048 cudacc.cc:51]  Sweep 4: 0.5394s
+I20260424 17:36:56.643994  3048 cudacc.cc:51] Iteration 1: 1.9598s
+I20260424 17:36:57.039846  3048 cudacc.cc:51]  Sweep 1: 0.3957s
+I20260424 17:36:57.587906  3048 cudacc.cc:51]  Sweep 2: 0.5478s
+I20260424 17:36:57.974589  3048 cudacc.cc:51]  Sweep 3: 0.3865s
+I20260424 17:36:58.503301  3048 cudacc.cc:51]  Sweep 4: 0.5285s
+I20260424 17:36:58.503347  3048 cudacc.cc:51] Iteration 2: 1.8588s
+I20260424 17:36:58.887246  3048 cudacc.cc:51]  Sweep 1: 0.3837s
+I20260424 17:36:59.443354  3048 cudacc.cc:51]  Sweep 2: 0.5559s
+I20260424 17:36:59.828656  3048 cudacc.cc:51]  Sweep 3: 0.3851s
+I20260424 17:37:00.361755  3048 cudacc.cc:51]  Sweep 4: 0.5329s
+I20260424 17:37:00.361804  3048 cudacc.cc:51] Iteration 3: 1.8579s
+I20260424 17:37:00.744442  3048 cudacc.cc:51]  Sweep 1: 0.3805s
+I20260424 17:37:01.284340  3048 cudacc.cc:51]  Sweep 2: 0.5397s
+I20260424 17:37:01.662112  3048 cudacc.cc:51]  Sweep 3: 0.3776s
+I20260424 17:37:02.160261  3048 cudacc.cc:51]  Sweep 4: 0.4979s
+I20260424 17:37:02.160306  3048 cudacc.cc:51] Iteration 4: 1.7959s
+I20260424 17:37:02.542027  3048 cudacc.cc:51]  Sweep 1: 0.3816s
+I20260424 17:37:03.082589  3048 cudacc.cc:51]  Sweep 2: 0.5403s
+I20260424 17:37:03.442446  3048 cudacc.cc:51]  Sweep 3: 0.3597s
+I20260424 17:37:03.949934  3048 cudacc.cc:51]  Sweep 4: 0.5073s
+I20260424 17:37:03.949982  3048 cudacc.cc:51] Iteration 5: 1.7891s
+I20260424 17:37:03.950026  3048 cudacc.cc:51] Total: 9.3338s
+I20260424 17:37:03.950040  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207173826_0413_D.JPG
+I20260424 17:37:04.232824  3048 patch_match.cc:416] === Processing view 15 / 20 for DJI_20260207173830_0415_D.JPG ===
+I20260424 17:37:04.232877  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:04.242365  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:04.242446  3048 patch_match.cc:57] ref_image_idx: 14
+I20260424 17:37:04.242475  3048 patch_match.cc:64] src_image_idxs: 3 0 1 2 7 11 15 13 16 19 6 18 5 17 4 8 9 10
+I20260424 17:37:04.242496  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:04.242520  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:04.242528  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:04.242537  3048 patch_match_options.cc:49] depth_min: 8.77732
+I20260424 17:37:04.242550  3048 patch_match_options.cc:50] depth_max: 30.6974
+I20260424 17:37:04.242563  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:04.242573  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:04.242580  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:04.242589  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:04.242600  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:04.242615  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:04.242631  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:04.242646  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:04.242661  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:04.242674  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:04.242688  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:04.242703  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:04.242719  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:04.242738  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:04.242758  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:04.242786  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:04.242807  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:04.242847  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:04.242863  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:04.242879  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:04.242890  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:04.413687  3048 cudacc.cc:51] Initialization: 0.0801s
+I20260424 17:37:04.874059  3048 cudacc.cc:51]  Sweep 1: 0.4602s
+I20260424 17:37:05.489123  3048 cudacc.cc:51]  Sweep 2: 0.6148s
+I20260424 17:37:05.928426  3048 cudacc.cc:51]  Sweep 3: 0.4391s
+I20260424 17:37:06.533898  3048 cudacc.cc:51]  Sweep 4: 0.6052s
+I20260424 17:37:06.533944  3048 cudacc.cc:51] Iteration 1: 2.1195s
+I20260424 17:37:06.966794  3048 cudacc.cc:51]  Sweep 1: 0.4327s
+I20260424 17:37:07.591310  3048 cudacc.cc:51]  Sweep 2: 0.6243s
+I20260424 17:37:08.026824  3048 cudacc.cc:51]  Sweep 3: 0.4353s
+I20260424 17:37:08.626513  3048 cudacc.cc:51]  Sweep 4: 0.5994s
+I20260424 17:37:08.626561  3048 cudacc.cc:51] Iteration 2: 2.0919s
+I20260424 17:37:09.057690  3048 cudacc.cc:51]  Sweep 1: 0.4309s
+I20260424 17:37:09.671247  3048 cudacc.cc:51]  Sweep 2: 0.6133s
+I20260424 17:37:10.114419  3048 cudacc.cc:51]  Sweep 3: 0.4430s
+I20260424 17:37:10.695746  3048 cudacc.cc:51]  Sweep 4: 0.5811s
+I20260424 17:37:10.695817  3048 cudacc.cc:51] Iteration 3: 2.0685s
+I20260424 17:37:11.147022  3048 cudacc.cc:51]  Sweep 1: 0.4510s
+I20260424 17:37:11.740545  3048 cudacc.cc:51]  Sweep 2: 0.5932s
+I20260424 17:37:12.168850  3048 cudacc.cc:51]  Sweep 3: 0.4281s
+I20260424 17:37:12.734649  3048 cudacc.cc:51]  Sweep 4: 0.5656s
+I20260424 17:37:12.734680  3048 cudacc.cc:51] Iteration 4: 2.0381s
+I20260424 17:37:13.159421  3048 cudacc.cc:51]  Sweep 1: 0.4246s
+I20260424 17:37:13.756294  3048 cudacc.cc:51]  Sweep 2: 0.5926s
+I20260424 17:37:14.182308  3048 cudacc.cc:51]  Sweep 3: 0.4258s
+I20260424 17:37:14.744756  3048 cudacc.cc:51]  Sweep 4: 0.5622s
+I20260424 17:37:14.744801  3048 cudacc.cc:51] Iteration 5: 2.0094s
+I20260424 17:37:14.744843  3048 cudacc.cc:51] Total: 10.4079s
+I20260424 17:37:14.744858  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207173830_0415_D.JPG
+I20260424 17:37:15.044072  3048 patch_match.cc:416] === Processing view 16 / 20 for DJI_20260207173831_0416_D.JPG ===
+I20260424 17:37:15.044147  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:15.055236  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:15.055318  3048 patch_match.cc:57] ref_image_idx: 15
+I20260424 17:37:15.055351  3048 patch_match.cc:64] src_image_idxs: 12 3 1 2 0 7 14 11 13 16 19 6 17 4 18 5 8 9 10
+I20260424 17:37:15.055372  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:15.055392  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:15.055411  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:15.055429  3048 patch_match_options.cc:49] depth_min: 8.69602
+I20260424 17:37:15.055459  3048 patch_match_options.cc:50] depth_max: 30.6905
+I20260424 17:37:15.055485  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:15.055507  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:15.055513  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:15.055521  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:15.055528  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:15.055536  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:15.055542  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:15.055550  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:15.055569  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:15.055579  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:15.055590  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:15.055605  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:15.055629  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:15.055650  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:15.055672  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:15.055701  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:15.055713  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:15.055727  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:15.055738  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:15.055757  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:15.055770  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:15.236357  3048 cudacc.cc:51] Initialization: 0.0895s
+I20260424 17:37:15.717986  3048 cudacc.cc:51]  Sweep 1: 0.4814s
+I20260424 17:37:16.381012  3048 cudacc.cc:51]  Sweep 2: 0.6627s
+I20260424 17:37:16.844689  3048 cudacc.cc:51]  Sweep 3: 0.4635s
+I20260424 17:37:17.488217  3048 cudacc.cc:51]  Sweep 4: 0.6432s
+I20260424 17:37:17.488276  3048 cudacc.cc:51] Iteration 1: 2.2511s
+I20260424 17:37:17.951434  3048 cudacc.cc:51]  Sweep 1: 0.4627s
+I20260424 17:37:18.578523  3048 cudacc.cc:51]  Sweep 2: 0.6268s
+I20260424 17:37:19.033129  3048 cudacc.cc:51]  Sweep 3: 0.4524s
+I20260424 17:37:19.656661  3048 cudacc.cc:51]  Sweep 4: 0.6233s
+I20260424 17:37:19.656706  3048 cudacc.cc:51] Iteration 2: 2.1674s
+I20260424 17:37:20.122490  3048 cudacc.cc:51]  Sweep 1: 0.4656s
+I20260424 17:37:20.756524  3048 cudacc.cc:51]  Sweep 2: 0.6338s
+I20260424 17:37:21.205962  3048 cudacc.cc:51]  Sweep 3: 0.4492s
+I20260424 17:37:21.827821  3048 cudacc.cc:51]  Sweep 4: 0.6216s
+I20260424 17:37:21.827875  3048 cudacc.cc:51] Iteration 3: 2.1704s
+I20260424 17:37:22.290084  3048 cudacc.cc:51]  Sweep 1: 0.4620s
+I20260424 17:37:22.928848  3048 cudacc.cc:51]  Sweep 2: 0.6385s
+I20260424 17:37:23.390264  3048 cudacc.cc:51]  Sweep 3: 0.4612s
+I20260424 17:37:24.033121  3048 cudacc.cc:51]  Sweep 4: 0.6426s
+I20260424 17:37:24.033181  3048 cudacc.cc:51] Iteration 4: 2.2045s
+I20260424 17:37:24.493355  3048 cudacc.cc:51]  Sweep 1: 0.4599s
+I20260424 17:37:25.099319  3048 cudacc.cc:51]  Sweep 2: 0.6057s
+I20260424 17:37:25.558535  3048 cudacc.cc:51]  Sweep 3: 0.4590s
+I20260424 17:37:26.189146  3048 cudacc.cc:51]  Sweep 4: 0.6303s
+I20260424 17:37:26.189193  3048 cudacc.cc:51] Iteration 5: 2.1552s
+I20260424 17:37:26.189288  3048 cudacc.cc:51] Total: 11.0386s
+I20260424 17:37:26.189309  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207173831_0416_D.JPG
+I20260424 17:37:26.515523  3048 patch_match.cc:416] === Processing view 17 / 20 for DJI_20260207174119_0500_D.JPG ===
+I20260424 17:37:26.515574  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:26.523910  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:26.523967  3048 patch_match.cc:57] ref_image_idx: 16
+I20260424 17:37:26.523979  3048 patch_match.cc:64] src_image_idxs: 5 7 2 1 14 11 15 13 0 17 19 6 18 8 10 3 9
+I20260424 17:37:26.523988  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:26.523994  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:26.524019  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:26.524035  3048 patch_match_options.cc:49] depth_min: 8.53774
+I20260424 17:37:26.524061  3048 patch_match_options.cc:50] depth_max: 31.167
+I20260424 17:37:26.524081  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:26.524106  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:26.524133  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:26.524168  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:26.524222  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:26.524258  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:26.524313  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:26.524341  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:26.524372  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:26.524401  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:26.524435  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:26.524473  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:26.524514  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:26.524549  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:26.524590  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:26.524628  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:26.524664  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:26.524703  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:26.524737  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:26.524770  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:26.524807  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:26.674232  3048 cudacc.cc:51] Initialization: 0.0811s
+I20260424 17:37:27.141696  3048 cudacc.cc:51]  Sweep 1: 0.4672s
+I20260424 17:37:27.763487  3048 cudacc.cc:51]  Sweep 2: 0.6215s
+I20260424 17:37:28.209443  3048 cudacc.cc:51]  Sweep 3: 0.4457s
+I20260424 17:37:28.828155  3048 cudacc.cc:51]  Sweep 4: 0.6184s
+I20260424 17:37:28.828205  3048 cudacc.cc:51] Iteration 1: 2.1531s
+I20260424 17:37:29.283674  3048 cudacc.cc:51]  Sweep 1: 0.4553s
+I20260424 17:37:29.890448  3048 cudacc.cc:51]  Sweep 2: 0.6045s
+I20260424 17:37:30.332681  3048 cudacc.cc:51]  Sweep 3: 0.4420s
+I20260424 17:37:30.933349  3048 cudacc.cc:51]  Sweep 4: 0.6004s
+I20260424 17:37:30.933394  3048 cudacc.cc:51] Iteration 2: 2.1044s
+I20260424 17:37:31.392969  3048 cudacc.cc:51]  Sweep 1: 0.4594s
+I20260424 17:37:31.990134  3048 cudacc.cc:51]  Sweep 2: 0.5969s
+I20260424 17:37:32.428311  3048 cudacc.cc:51]  Sweep 3: 0.4380s
+I20260424 17:37:33.027328  3048 cudacc.cc:51]  Sweep 4: 0.5987s
+I20260424 17:37:33.027374  3048 cudacc.cc:51] Iteration 3: 2.0932s
+I20260424 17:37:33.469447  3048 cudacc.cc:51]  Sweep 1: 0.4419s
+I20260424 17:37:34.068810  3048 cudacc.cc:51]  Sweep 2: 0.5991s
+I20260424 17:37:34.495476  3048 cudacc.cc:51]  Sweep 3: 0.4265s
+I20260424 17:37:35.099596  3048 cudacc.cc:51]  Sweep 4: 0.6039s
+I20260424 17:37:35.099640  3048 cudacc.cc:51] Iteration 4: 2.0715s
+I20260424 17:37:35.534770  3048 cudacc.cc:51]  Sweep 1: 0.4349s
+I20260424 17:37:36.126451  3048 cudacc.cc:51]  Sweep 2: 0.5914s
+I20260424 17:37:36.547456  3048 cudacc.cc:51]  Sweep 3: 0.4208s
+I20260424 17:37:37.155630  3048 cudacc.cc:51]  Sweep 4: 0.6079s
+I20260424 17:37:37.155678  3048 cudacc.cc:51] Iteration 5: 2.0552s
+I20260424 17:37:37.155718  3048 cudacc.cc:51] Total: 10.5588s
+I20260424 17:37:37.155732  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207174119_0500_D.JPG
+I20260424 17:37:37.449398  3048 patch_match.cc:416] === Processing view 18 / 20 for DJI_20260207181440_0050_D.JPG ===
+I20260424 17:37:37.449451  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:37.457831  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:37.457911  3048 patch_match.cc:57] ref_image_idx: 17
+I20260424 17:37:37.457942  3048 patch_match.cc:64] src_image_idxs: 3 19 18 14 1 16 15 2 11 10 7 12 13 0
+I20260424 17:37:37.457964  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:37.457983  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:37.458002  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:37.458027  3048 patch_match_options.cc:49] depth_min: 8.44897
+I20260424 17:37:37.458074  3048 patch_match_options.cc:50] depth_max: 24.7516
+I20260424 17:37:37.458091  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:37.458103  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:37.458117  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:37.458133  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:37.458149  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:37.458163  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:37.458180  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:37.458195  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:37.458220  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:37.458236  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:37.458249  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:37.458261  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:37.458267  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:37.458290  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:37.458323  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:37.458354  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:37.458362  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:37.458374  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:37.458386  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:37.458418  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:37.458442  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:37.593171  3048 cudacc.cc:51] Initialization: 0.0616s
+I20260424 17:37:38.013409  3048 cudacc.cc:51]  Sweep 1: 0.4200s
+I20260424 17:37:38.595221  3048 cudacc.cc:51]  Sweep 2: 0.5815s
+I20260424 17:37:38.995716  3048 cudacc.cc:51]  Sweep 3: 0.4003s
+I20260424 17:37:39.562938  3048 cudacc.cc:51]  Sweep 4: 0.5670s
+I20260424 17:37:39.562985  3048 cudacc.cc:51] Iteration 1: 1.9690s
+I20260424 17:37:39.972592  3048 cudacc.cc:51]  Sweep 1: 0.4094s
+I20260424 17:37:40.532505  3048 cudacc.cc:51]  Sweep 2: 0.5597s
+I20260424 17:37:40.928889  3048 cudacc.cc:51]  Sweep 3: 0.3962s
+I20260424 17:37:41.483857  3048 cudacc.cc:51]  Sweep 4: 0.5547s
+I20260424 17:37:41.483903  3048 cudacc.cc:51] Iteration 2: 1.9202s
+I20260424 17:37:41.885380  3048 cudacc.cc:51]  Sweep 1: 0.4013s
+I20260424 17:37:42.454278  3048 cudacc.cc:51]  Sweep 2: 0.5686s
+I20260424 17:37:42.850054  3048 cudacc.cc:51]  Sweep 3: 0.3956s
+I20260424 17:37:43.413516  3048 cudacc.cc:51]  Sweep 4: 0.5632s
+I20260424 17:37:43.413564  3048 cudacc.cc:51] Iteration 3: 1.9289s
+I20260424 17:37:43.797374  3048 cudacc.cc:51]  Sweep 1: 0.3836s
+I20260424 17:37:44.359025  3048 cudacc.cc:51]  Sweep 2: 0.5614s
+I20260424 17:37:44.739771  3048 cudacc.cc:51]  Sweep 3: 0.3806s
+I20260424 17:37:45.297324  3048 cudacc.cc:51]  Sweep 4: 0.5573s
+I20260424 17:37:45.297391  3048 cudacc.cc:51] Iteration 4: 1.8831s
+I20260424 17:37:45.679154  3048 cudacc.cc:51]  Sweep 1: 0.3816s
+I20260424 17:37:46.226915  3048 cudacc.cc:51]  Sweep 2: 0.5475s
+I20260424 17:37:46.602015  3048 cudacc.cc:51]  Sweep 3: 0.3749s
+I20260424 17:37:47.152873  3048 cudacc.cc:51]  Sweep 4: 0.5506s
+I20260424 17:37:47.152918  3048 cudacc.cc:51] Iteration 5: 1.8548s
+I20260424 17:37:47.152963  3048 cudacc.cc:51] Total: 9.6178s
+I20260424 17:37:47.152977  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207181440_0050_D.JPG
+I20260424 17:37:47.477653  3048 patch_match.cc:416] === Processing view 19 / 20 for DJI_20260207181444_0052_D.JPG ===
+I20260424 17:37:47.477707  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:47.487766  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:47.487807  3048 patch_match.cc:57] ref_image_idx: 18
+I20260424 17:37:47.487825  3048 patch_match.cc:64] src_image_idxs: 3 19 17 14 1 15 2 11 7 10 16 13 0 12
+I20260424 17:37:47.487838  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:47.487848  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:47.487861  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:47.487876  3048 patch_match_options.cc:49] depth_min: 10.4726
+I20260424 17:37:47.487898  3048 patch_match_options.cc:50] depth_max: 27.8879
+I20260424 17:37:47.487914  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:47.487949  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:47.487972  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:47.487996  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:47.488034  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:47.488047  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:47.488063  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:47.488078  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:47.488111  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:47.488135  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:47.488163  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:47.488178  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:47.488193  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:47.488216  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:47.488233  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:47.488248  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:47.488262  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:47.488277  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:47.488291  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:47.488304  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:47.488319  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:47.627928  3048 cudacc.cc:51] Initialization: 0.0641s
+I20260424 17:37:48.067401  3048 cudacc.cc:51]  Sweep 1: 0.4392s
+I20260424 17:37:48.652014  3048 cudacc.cc:51]  Sweep 2: 0.5843s
+I20260424 17:37:49.076658  3048 cudacc.cc:51]  Sweep 3: 0.4244s
+I20260424 17:37:49.654405  3048 cudacc.cc:51]  Sweep 4: 0.5755s
+I20260424 17:37:49.654451  3048 cudacc.cc:51] Iteration 1: 2.0257s
+I20260424 17:37:50.078215  3048 cudacc.cc:51]  Sweep 1: 0.4235s
+I20260424 17:37:50.653424  3048 cudacc.cc:51]  Sweep 2: 0.5710s
+I20260424 17:37:51.060482  3048 cudacc.cc:51]  Sweep 3: 0.4068s
+I20260424 17:37:51.609521  3048 cudacc.cc:51]  Sweep 4: 0.5488s
+I20260424 17:37:51.609567  3048 cudacc.cc:51] Iteration 2: 1.9543s
+I20260424 17:37:52.042352  3048 cudacc.cc:51]  Sweep 1: 0.4326s
+I20260424 17:37:52.596603  3048 cudacc.cc:51]  Sweep 2: 0.5540s
+I20260424 17:37:53.006765  3048 cudacc.cc:51]  Sweep 3: 0.4100s
+I20260424 17:37:53.557461  3048 cudacc.cc:51]  Sweep 4: 0.5504s
+I20260424 17:37:53.557507  3048 cudacc.cc:51] Iteration 3: 1.9472s
+I20260424 17:37:53.984599  3048 cudacc.cc:51]  Sweep 1: 0.4268s
+I20260424 17:37:54.530754  3048 cudacc.cc:51]  Sweep 2: 0.5459s
+I20260424 17:37:54.933154  3048 cudacc.cc:51]  Sweep 3: 0.4022s
+I20260424 17:37:55.509711  3048 cudacc.cc:51]  Sweep 4: 0.5763s
+I20260424 17:37:55.509754  3048 cudacc.cc:51] Iteration 4: 1.9514s
+I20260424 17:37:55.936779  3048 cudacc.cc:51]  Sweep 1: 0.4268s
+I20260424 17:37:56.488941  3048 cudacc.cc:51]  Sweep 2: 0.5519s
+I20260424 17:37:56.875296  3048 cudacc.cc:51]  Sweep 3: 0.3862s
+I20260424 17:37:57.419930  3048 cudacc.cc:51]  Sweep 4: 0.5452s
+I20260424 17:37:57.419976  3048 cudacc.cc:51] Iteration 5: 1.9103s
+I20260424 17:37:57.420012  3048 cudacc.cc:51] Total: 9.8533s
+I20260424 17:37:57.420027  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207181444_0052_D.JPG
+I20260424 17:37:57.717828  3048 patch_match.cc:416] === Processing view 20 / 20 for DJI_20260207181442_0051_D.JPG ===
+I20260424 17:37:57.717891  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:37:57.726421  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:37:57.726519  3048 patch_match.cc:57] ref_image_idx: 19
+I20260424 17:37:57.726570  3048 patch_match.cc:64] src_image_idxs: 6 3 17 18 14 1 15 2 16 11 10 7 13 0 12
+I20260424 17:37:57.726583  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:37:57.726598  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:37:57.726611  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:37:57.726635  3048 patch_match_options.cc:49] depth_min: 9.48486
+I20260424 17:37:57.726658  3048 patch_match_options.cc:50] depth_max: 26.1415
+I20260424 17:37:57.726689  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:37:57.726706  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:37:57.726718  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:37:57.726733  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:37:57.726756  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:37:57.726763  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:37:57.726771  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:37:57.726781  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:37:57.726788  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:37:57.726795  3048 patch_match_options.cc:60] geom_consistency: 0
+I20260424 17:37:57.726802  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:37:57.726812  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:37:57.726820  3048 patch_match_options.cc:63] filter: 0
+I20260424 17:37:57.726830  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:37:57.726843  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:37:57.726851  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:37:57.726858  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:37:57.726866  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:37:57.726873  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:37:57.726892  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:37:57.726907  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:37:57.871850  3048 cudacc.cc:51] Initialization: 0.0634s
+I20260424 17:37:58.302582  3048 cudacc.cc:51]  Sweep 1: 0.4313s
+I20260424 17:37:58.881390  3048 cudacc.cc:51]  Sweep 2: 0.5795s
+I20260424 17:37:59.289153  3048 cudacc.cc:51]  Sweep 3: 0.4083s
+I20260424 17:37:59.881181  3048 cudacc.cc:51]  Sweep 4: 0.5908s
+I20260424 17:37:59.881234  3048 cudacc.cc:51] Iteration 1: 2.0120s
+I20260424 17:38:00.291996  3048 cudacc.cc:51]  Sweep 1: 0.4112s
+I20260424 17:38:00.890832  3048 cudacc.cc:51]  Sweep 2: 0.5996s
+I20260424 17:38:01.310268  3048 cudacc.cc:51]  Sweep 3: 0.4199s
+I20260424 17:38:01.870724  3048 cudacc.cc:51]  Sweep 4: 0.5611s
+I20260424 17:38:01.870774  3048 cudacc.cc:51] Iteration 2: 1.9920s
+I20260424 17:38:02.277486  3048 cudacc.cc:51]  Sweep 1: 0.4071s
+I20260424 17:38:02.860997  3048 cudacc.cc:51]  Sweep 2: 0.5802s
+I20260424 17:38:03.268306  3048 cudacc.cc:51]  Sweep 3: 0.4077s
+I20260424 17:38:03.825618  3048 cudacc.cc:51]  Sweep 4: 0.5579s
+I20260424 17:38:03.825668  3048 cudacc.cc:51] Iteration 3: 1.9571s
+I20260424 17:38:04.227210  3048 cudacc.cc:51]  Sweep 1: 0.4019s
+I20260424 17:38:04.787968  3048 cudacc.cc:51]  Sweep 2: 0.5613s
+I20260424 17:38:05.185128  3048 cudacc.cc:51]  Sweep 3: 0.3975s
+I20260424 17:38:05.724568  3048 cudacc.cc:51]  Sweep 4: 0.5400s
+I20260424 17:38:05.724614  3048 cudacc.cc:51] Iteration 4: 1.9010s
+I20260424 17:38:06.121824  3048 cudacc.cc:51]  Sweep 1: 0.3976s
+I20260424 17:38:06.672109  3048 cudacc.cc:51]  Sweep 2: 0.5508s
+I20260424 17:38:07.042750  3048 cudacc.cc:51]  Sweep 3: 0.3710s
+I20260424 17:38:07.593822  3048 cudacc.cc:51]  Sweep 4: 0.5516s
+I20260424 17:38:07.593952  3048 cudacc.cc:51] Iteration 5: 1.8712s
+I20260424 17:38:07.594053  3048 cudacc.cc:51] Total: 9.7971s
+I20260424 17:38:07.594066  3048 patch_match.cc:525] 
+Writing photometric output for DJI_20260207181442_0051_D.JPG
+I20260424 17:38:07.892045  3048 patch_match.cc:416] === Processing view 1 / 20 for DJI_20260206154750_0031_D.JPG ===
+I20260424 17:38:07.892098  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:38:12.653539  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:38:12.653637  3048 patch_match.cc:57] ref_image_idx: 0
+I20260424 17:38:12.653672  3048 patch_match.cc:64] src_image_idxs: 12 19 6 9 7 11 16 3 17 4 18 5 15 2 1 14 8 10
+I20260424 17:38:12.653709  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:38:12.653729  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:38:12.653748  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:38:12.653784  3048 patch_match_options.cc:49] depth_min: 8.4274
+I20260424 17:38:12.653815  3048 patch_match_options.cc:50] depth_max: 16.943
+I20260424 17:38:12.653843  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:38:12.653864  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:38:12.653885  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:38:12.653908  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:38:12.653934  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:38:12.653959  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:38:12.653982  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:38:12.654006  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:38:12.654029  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:38:12.654036  3048 patch_match_options.cc:60] geom_consistency: 1
+I20260424 17:38:12.654043  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:38:12.654050  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:38:12.654058  3048 patch_match_options.cc:63] filter: 1
+I20260424 17:38:12.654065  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:38:12.654072  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:38:12.654080  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:38:12.654088  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:38:12.654094  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:38:12.654101  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:38:12.654109  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:38:12.654115  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:38:13.051383  3048 cudacc.cc:51] Initialization: 0.0795s
+I20260424 17:38:13.633765  3048 cudacc.cc:51]  Sweep 1: 0.5828s
+I20260424 17:38:14.418568  3048 cudacc.cc:51]  Sweep 2: 0.7853s
+I20260424 17:38:14.997498  3048 cudacc.cc:51]  Sweep 3: 0.5793s
+I20260424 17:38:15.785882  3048 cudacc.cc:51]  Sweep 4: 0.7889s
+I20260424 17:38:15.785969  3048 cudacc.cc:51] Iteration 1: 2.7366s
+I20260424 17:38:16.343493  3048 cudacc.cc:51]  Sweep 1: 0.5579s
+I20260424 17:38:17.118237  3048 cudacc.cc:51]  Sweep 2: 0.7752s
+I20260424 17:38:17.678781  3048 cudacc.cc:51]  Sweep 3: 0.5609s
+I20260424 17:38:18.453891  3048 cudacc.cc:51]  Sweep 4: 0.7756s
+I20260424 17:38:18.453946  3048 cudacc.cc:51] Iteration 2: 2.6697s
+I20260424 17:38:19.014595  3048 cudacc.cc:51]  Sweep 1: 0.5609s
+I20260424 17:38:19.777092  3048 cudacc.cc:51]  Sweep 2: 0.7629s
+I20260424 17:38:20.337131  3048 cudacc.cc:51]  Sweep 3: 0.5603s
+I20260424 17:38:21.092880  3048 cudacc.cc:51]  Sweep 4: 0.7561s
+I20260424 17:38:21.092941  3048 cudacc.cc:51] Iteration 3: 2.6405s
+I20260424 17:38:21.652181  3048 cudacc.cc:51]  Sweep 1: 0.5595s
+I20260424 17:38:22.407855  3048 cudacc.cc:51]  Sweep 2: 0.7560s
+I20260424 17:38:22.958504  3048 cudacc.cc:51]  Sweep 3: 0.5509s
+I20260424 17:38:23.695485  3048 cudacc.cc:51]  Sweep 4: 0.7373s
+I20260424 17:38:23.695534  3048 cudacc.cc:51] Iteration 4: 2.6039s
+I20260424 17:38:24.227705  3048 cudacc.cc:51]  Sweep 1: 0.5324s
+I20260424 17:38:24.958076  3048 cudacc.cc:51]  Sweep 2: 0.7307s
+I20260424 17:38:25.503326  3048 cudacc.cc:51]  Sweep 3: 0.5455s
+I20260424 17:38:26.292591  3048 cudacc.cc:51]  Sweep 4: 0.7896s
+I20260424 17:38:26.292676  3048 cudacc.cc:51] Iteration 5: 2.5983s
+I20260424 17:38:26.292757  3048 cudacc.cc:51] Total: 13.3289s
+I20260424 17:38:26.292805  3048 patch_match.cc:525] 
+Writing geometric output for DJI_20260206154750_0031_D.JPG
+I20260424 17:38:26.608520  3048 patch_match.cc:416] === Processing view 2 / 20 for DJI_20260206154745_0029_D.JPG ===
+I20260424 17:38:26.608572  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:38:26.982115  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:38:26.982159  3048 patch_match.cc:57] ref_image_idx: 1
+I20260424 17:38:26.982172  3048 patch_match.cc:64] src_image_idxs: 11 14 10 5 7 16 3 13 0 17 4 18 15 2 8 9 6 19
+I20260424 17:38:26.982180  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:38:26.982188  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:38:26.982194  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:38:26.982209  3048 patch_match_options.cc:49] depth_min: 8.01467
+I20260424 17:38:26.982223  3048 patch_match_options.cc:50] depth_max: 16.9572
+I20260424 17:38:26.982234  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:38:26.982246  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:38:26.982259  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:38:26.982268  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:38:26.982285  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:38:26.982297  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:38:26.982311  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:38:26.982321  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:38:26.982335  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:38:26.982344  3048 patch_match_options.cc:60] geom_consistency: 1
+I20260424 17:38:26.982352  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:38:26.982365  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:38:26.982378  3048 patch_match_options.cc:63] filter: 1
+I20260424 17:38:26.982388  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:38:26.982400  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:38:26.982409  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:38:26.982419  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:38:26.982432  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:38:26.982443  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:38:26.982455  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:38:26.982466  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:38:27.376865  3048 cudacc.cc:51] Initialization: 0.0767s
+I20260424 17:38:27.946285  3048 cudacc.cc:51]  Sweep 1: 0.5695s
+I20260424 17:38:28.724014  3048 cudacc.cc:51]  Sweep 2: 0.7780s
+I20260424 17:38:29.285766  3048 cudacc.cc:51]  Sweep 3: 0.5619s
+I20260424 17:38:30.075945  3048 cudacc.cc:51]  Sweep 4: 0.7904s
+I20260424 17:38:30.075995  3048 cudacc.cc:51] Iteration 1: 2.7001s
+I20260424 17:38:30.652196  3048 cudacc.cc:51]  Sweep 1: 0.5764s
+I20260424 17:38:31.439056  3048 cudacc.cc:51]  Sweep 2: 0.7871s
+I20260424 17:38:31.994567  3048 cudacc.cc:51]  Sweep 3: 0.5557s
+I20260424 17:38:32.765341  3048 cudacc.cc:51]  Sweep 4: 0.7710s
+I20260424 17:38:32.765388  3048 cudacc.cc:51] Iteration 2: 2.6903s
+I20260424 17:38:33.337831  3048 cudacc.cc:51]  Sweep 1: 0.5726s
+I20260424 17:38:34.113068  3048 cudacc.cc:51]  Sweep 2: 0.7754s
+I20260424 17:38:34.665163  3048 cudacc.cc:51]  Sweep 3: 0.5522s
+I20260424 17:38:35.451923  3048 cudacc.cc:51]  Sweep 4: 0.7869s
+I20260424 17:38:35.451973  3048 cudacc.cc:51] Iteration 3: 2.6874s
+I20260424 17:38:36.017161  3048 cudacc.cc:51]  Sweep 1: 0.5653s
+I20260424 17:38:36.765341  3048 cudacc.cc:51]  Sweep 2: 0.7483s
+I20260424 17:38:37.316131  3048 cudacc.cc:51]  Sweep 3: 0.5509s
+I20260424 17:38:38.090690  3048 cudacc.cc:51]  Sweep 4: 0.7747s
+I20260424 17:38:38.090750  3048 cudacc.cc:51] Iteration 4: 2.6394s
+I20260424 17:38:38.654572  3048 cudacc.cc:51]  Sweep 1: 0.5639s
+I20260424 17:38:39.399938  3048 cudacc.cc:51]  Sweep 2: 0.7455s
+I20260424 17:38:39.943946  3048 cudacc.cc:51]  Sweep 3: 0.5441s
+I20260424 17:38:40.765020  3048 cudacc.cc:51]  Sweep 4: 0.8212s
+I20260424 17:38:40.765079  3048 cudacc.cc:51] Iteration 5: 2.6749s
+I20260424 17:38:40.765113  3048 cudacc.cc:51] Total: 13.4691s
+I20260424 17:38:40.765128  3048 patch_match.cc:525] 
+Writing geometric output for DJI_20260206154745_0029_D.JPG
+I20260424 17:38:41.071825  3048 patch_match.cc:416] === Processing view 3 / 20 for DJI_20260206154747_0030_D.JPG ===
+I20260424 17:38:41.071875  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:38:41.237969  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:38:41.238051  3048 patch_match.cc:57] ref_image_idx: 2
+I20260424 17:38:41.238085  3048 patch_match.cc:64] src_image_idxs: 15 10 5 7 19 6 13 0 16 3 12 17 4 11 18 1 14 8 9
+I20260424 17:38:41.238108  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:38:41.238129  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:38:41.238149  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:38:41.238169  3048 patch_match_options.cc:49] depth_min: 8.10242
+I20260424 17:38:41.238246  3048 patch_match_options.cc:50] depth_max: 16.9584
+I20260424 17:38:41.238293  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:38:41.238305  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:38:41.238313  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:38:41.238322  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:38:41.238330  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:38:41.238358  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:38:41.238382  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:38:41.238421  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:38:41.238442  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:38:41.238463  3048 patch_match_options.cc:60] geom_consistency: 1
+I20260424 17:38:41.238482  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:38:41.238504  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:38:41.238513  3048 patch_match_options.cc:63] filter: 1
+I20260424 17:38:41.238520  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:38:41.238529  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:38:41.238538  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:38:41.238545  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:38:41.238581  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:38:41.238680  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:38:41.238718  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:38:41.238731  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:38:41.623865  3048 cudacc.cc:51] Initialization: 0.0771s
+I20260424 17:38:42.219247  3048 cudacc.cc:51]  Sweep 1: 0.5954s
+I20260424 17:38:43.024412  3048 cudacc.cc:51]  Sweep 2: 0.8053s
+I20260424 17:38:43.614459  3048 cudacc.cc:51]  Sweep 3: 0.5901s
+I20260424 17:38:44.408349  3048 cudacc.cc:51]  Sweep 4: 0.7940s
+I20260424 17:38:44.408398  3048 cudacc.cc:51] Iteration 1: 2.7850s
+I20260424 17:38:44.985484  3048 cudacc.cc:51]  Sweep 1: 0.5771s
+I20260424 17:38:45.774823  3048 cudacc.cc:51]  Sweep 2: 0.7894s
+I20260424 17:38:46.364513  3048 cudacc.cc:51]  Sweep 3: 0.5897s
+I20260424 17:38:47.142282  3048 cudacc.cc:51]  Sweep 4: 0.7778s
+I20260424 17:38:47.142333  3048 cudacc.cc:51] Iteration 2: 2.7343s
+I20260424 17:38:47.734743  3048 cudacc.cc:51]  Sweep 1: 0.5924s
+I20260424 17:38:48.535459  3048 cudacc.cc:51]  Sweep 2: 0.7968s
+I20260424 17:38:49.116614  3048 cudacc.cc:51]  Sweep 3: 0.5812s
+I20260424 17:38:49.892391  3048 cudacc.cc:51]  Sweep 4: 0.7758s
+I20260424 17:38:49.892457  3048 cudacc.cc:51] Iteration 3: 2.7504s
+I20260424 17:38:50.470276  3048 cudacc.cc:51]  Sweep 1: 0.5778s
+I20260424 17:38:51.255378  3048 cudacc.cc:51]  Sweep 2: 0.7851s
+I20260424 17:38:51.822041  3048 cudacc.cc:51]  Sweep 3: 0.5627s
+I20260424 17:38:52.580698  3048 cudacc.cc:51]  Sweep 4: 0.7547s
+I20260424 17:38:52.580745  3048 cudacc.cc:51] Iteration 4: 2.6885s
+I20260424 17:38:53.161242  3048 cudacc.cc:51]  Sweep 1: 0.5805s
+I20260424 17:38:53.929813  3048 cudacc.cc:51]  Sweep 2: 0.7686s
+I20260424 17:38:54.507144  3048 cudacc.cc:51]  Sweep 3: 0.5773s
+I20260424 17:38:55.295877  3048 cudacc.cc:51]  Sweep 4: 0.7887s
+I20260424 17:38:55.295928  3048 cudacc.cc:51] Iteration 5: 2.7153s
+I20260424 17:38:55.295972  3048 cudacc.cc:51] Total: 13.7509s
+I20260424 17:38:55.295987  3048 patch_match.cc:525] 
+Writing geometric output for DJI_20260206154747_0030_D.JPG
+I20260424 17:38:55.620652  3048 patch_match.cc:416] === Processing view 4 / 20 for DJI_20260206154753_0032_D.JPG ===
+I20260424 17:38:55.620705  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:38:55.768955  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:38:55.769042  3048 patch_match.cc:57] ref_image_idx: 3
+I20260424 17:38:55.769075  3048 patch_match.cc:64] src_image_idxs: 6 9 8 7 12 11 16 18 5 19 17 4 0 2 15 1 14 10
+I20260424 17:38:55.769098  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:38:55.769120  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:38:55.769140  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:38:55.769160  3048 patch_match_options.cc:49] depth_min: 8.36258
+I20260424 17:38:55.769192  3048 patch_match_options.cc:50] depth_max: 16.9149
+I20260424 17:38:55.769251  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:38:55.769282  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:38:55.769304  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:38:55.769331  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:38:55.769369  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:38:55.769389  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:38:55.769428  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:38:55.769451  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:38:55.769484  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:38:55.769493  3048 patch_match_options.cc:60] geom_consistency: 1
+I20260424 17:38:55.769500  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:38:55.769512  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:38:55.769526  3048 patch_match_options.cc:63] filter: 1
+I20260424 17:38:55.769533  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:38:55.769542  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:38:55.769551  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:38:55.769558  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:38:55.769565  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:38:55.769572  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:38:55.769579  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:38:55.769587  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:38:56.122561  3048 cudacc.cc:51] Initialization: 0.0742s
+I20260424 17:38:56.690830  3048 cudacc.cc:51]  Sweep 1: 0.5682s
+I20260424 17:38:57.487778  3048 cudacc.cc:51]  Sweep 2: 0.7969s
+I20260424 17:38:58.065465  3048 cudacc.cc:51]  Sweep 3: 0.5777s
+I20260424 17:38:58.841938  3048 cudacc.cc:51]  Sweep 4: 0.7764s
+I20260424 17:38:58.842025  3048 cudacc.cc:51] Iteration 1: 2.7195s
+I20260424 17:38:59.418792  3048 cudacc.cc:51]  Sweep 1: 0.5767s
+I20260424 17:39:00.195526  3048 cudacc.cc:51]  Sweep 2: 0.7767s
+I20260424 17:39:00.745278  3048 cudacc.cc:51]  Sweep 3: 0.5497s
+I20260424 17:39:01.532959  3048 cudacc.cc:51]  Sweep 4: 0.7876s
+I20260424 17:39:01.533017  3048 cudacc.cc:51] Iteration 2: 2.6910s
+I20260424 17:39:02.096976  3048 cudacc.cc:51]  Sweep 1: 0.5639s
+I20260424 17:39:02.863202  3048 cudacc.cc:51]  Sweep 2: 0.7662s
+I20260424 17:39:03.411341  3048 cudacc.cc:51]  Sweep 3: 0.5481s
+I20260424 17:39:04.192049  3048 cudacc.cc:51]  Sweep 4: 0.7806s
+I20260424 17:39:04.192111  3048 cudacc.cc:51] Iteration 3: 2.6591s
+I20260424 17:39:04.757967  3048 cudacc.cc:51]  Sweep 1: 0.5658s
+I20260424 17:39:05.526307  3048 cudacc.cc:51]  Sweep 2: 0.7683s
+I20260424 17:39:06.083163  3048 cudacc.cc:51]  Sweep 3: 0.5568s
+I20260424 17:39:06.857257  3048 cudacc.cc:51]  Sweep 4: 0.7740s
+I20260424 17:39:06.857307  3048 cudacc.cc:51] Iteration 4: 2.6651s
+I20260424 17:39:07.417804  3048 cudacc.cc:51]  Sweep 1: 0.5604s
+I20260424 17:39:08.175964  3048 cudacc.cc:51]  Sweep 2: 0.7581s
+I20260424 17:39:08.729830  3048 cudacc.cc:51]  Sweep 3: 0.5538s
+I20260424 17:39:09.546242  3048 cudacc.cc:51]  Sweep 4: 0.8163s
+I20260424 17:39:09.546289  3048 cudacc.cc:51] Iteration 5: 2.6889s
+I20260424 17:39:09.546329  3048 cudacc.cc:51] Total: 13.4980s
+I20260424 17:39:09.546343  3048 patch_match.cc:525] 
+Writing geometric output for DJI_20260206154753_0032_D.JPG
+I20260424 17:39:09.847026  3048 patch_match.cc:416] === Processing view 5 / 20 for DJI_20260206162524_0685_D.JPG ===
+I20260424 17:39:09.847077  3048 patch_match.cc:466] Reading inputs...
+I20260424 17:39:09.958673  3048 patch_match.cc:56] --- PatchMatch::Problem ---
+I20260424 17:39:09.958763  3048 patch_match.cc:57] ref_image_idx: 4
+I20260424 17:39:09.958796  3048 patch_match.cc:64] src_image_idxs: 3 14 13 0 11 8 9 5 6 10 2 15 7 12 1
+I20260424 17:39:09.958818  3048 patch_match_options.cc:46] --- PatchMatchOptions ---
+I20260424 17:39:09.958846  3048 patch_match_options.cc:47] max_image_size: 2000
+I20260424 17:39:09.958853  3048 patch_match_options.cc:48] gpu_index: 0
+I20260424 17:39:09.958859  3048 patch_match_options.cc:49] depth_min: 8.95538
+I20260424 17:39:09.958873  3048 patch_match_options.cc:50] depth_max: 26.461
+I20260424 17:39:09.958881  3048 patch_match_options.cc:51] window_radius: 5
+I20260424 17:39:09.958889  3048 patch_match_options.cc:52] window_step: 1
+I20260424 17:39:09.958895  3048 patch_match_options.cc:53] sigma_spatial: 5
+I20260424 17:39:09.958904  3048 patch_match_options.cc:54] sigma_color: 0.2
+I20260424 17:39:09.958911  3048 patch_match_options.cc:55] num_samples: 15
+I20260424 17:39:09.958918  3048 patch_match_options.cc:56] ncc_sigma: 0.6
+I20260424 17:39:09.958925  3048 patch_match_options.cc:57] min_triangulation_angle: 1
+I20260424 17:39:09.958933  3048 patch_match_options.cc:58] incident_angle_sigma: 0.9
+I20260424 17:39:09.958941  3048 patch_match_options.cc:59] num_iterations: 5
+I20260424 17:39:09.958948  3048 patch_match_options.cc:60] geom_consistency: 1
+I20260424 17:39:09.958956  3048 patch_match_options.cc:61] geom_consistency_regularizer: 0.3
+I20260424 17:39:09.958963  3048 patch_match_options.cc:62] geom_consistency_max_cost: 3
+I20260424 17:39:09.958971  3048 patch_match_options.cc:63] filter: 1
+I20260424 17:39:09.958978  3048 patch_match_options.cc:64] filter_min_ncc: 0.1
+I20260424 17:39:09.958986  3048 patch_match_options.cc:65] filter_min_triangulation_angle: 3
+I20260424 17:39:09.958993  3048 patch_match_options.cc:66] filter_min_num_consistent: 2
+I20260424 17:39:09.959000  3048 patch_match_options.cc:67] filter_geom_consistency_max_cost: 1
+I20260424 17:39:09.959008  3048 patch_match_options.cc:68] write_consistency_graph: 0
+I20260424 17:39:09.959014  3048 patch_match_options.cc:69] allow_missing_files: 0
+I20260424 17:39:09.959021  3048 patch_match_options.cc:70] num_threads: 1
+I20260424 17:39:09.959028  3048 patch_match.cc:129] --- PatchMatch::Run ---
+I20260424 17:39:10.273756  3048 cudacc.cc:51] Initialization: 0.0598s
+I20260424 17:39:10.806304  3048 cudacc.cc:51]  Sweep 1: 0.5325s
+I20260424 17:39:11.577843  3048 cudacc.cc:51]  Sweep 2: 0.7715s
+I20260424 17:39:12.110433  3048 cudacc.cc:51]  Sweep 3: 0.5325s
+I20260424 17:39:12.857354  3048 cudacc.cc:51]  Sweep 4: 0.7468s
+I20260424 17:39:12.857403  3048 cudacc.cc:51] Iteration 1: 2.5835s
+I20260424 17:39:13.384059  3048 cudacc.cc:51]  Sweep 1: 0.5266s
+I20260424 17:39:14.130903  3048 cudacc.cc:51]  Sweep 2: 0.7467s
+I20260424 17:39:14.666077  3048 cudacc.cc:51]  Sweep 3: 0.5351s
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
