@@ -5,12 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 COLMAP_CMD="/home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap"
 COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
-echo "bg sparse COLMAP binaire utilisé: $COLMAP_CMD"
+
 "$COLMAP_CMD" --version
 BG_WORK="/data/BG"
-
+echo "bg=data  COLMAP_CMD=$COLMAP_CMD"
+echo "bg=data  BG_WORK=$BG_WORK"
 SPARSE_DIR="$BG_WORK/sparse"
 LOG_DIR="$SPARSE_DIR/logs"
+echo "bg=data  LOG_DIR=$LOG_DIR"
 mkdir -p "$SPARSE_DIR"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
@@ -22,7 +24,7 @@ echo "COLMAP EXTRACTOR"
 echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
 
 ls -la "$BG_WORK"
-echo "b=colmap process=sparse etape=feature_extractor date=$(date -Is)"
+echo "bg=colmap process=sparse etape=feature_extractor date=$(date -Is)"
 
 # Extraction des features
 "$COLMAP_CMD" feature_extractor \

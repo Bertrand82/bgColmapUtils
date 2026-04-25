@@ -48,9 +48,11 @@ public class LogProcess {
 		}
 		
 		public String toString() {
-			String s = UtilString.toString(name,30);
-			s += " |";
-			s += (duration==null)? " - ":duration.toSeconds();
+			String duration_str = (duration==null)? " - ":""+duration.toSeconds();
+			String s = "etape="+UtilString.toString(name,30);
+			s += " | duree =";
+			s +=  UtilString.toString(duration_str,10);
+			s+=" secondes";
 			return s;
 		}
 	}

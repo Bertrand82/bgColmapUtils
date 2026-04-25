@@ -11,7 +11,8 @@
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap patch_match_stereo --help
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap stereo_fusion --help
 ```
-
+  - 60 images en 4032: ca plante pendant dense/patch_match_stereo 
+  
 ## Plantage par manque de mémoire
 
 ### Commande

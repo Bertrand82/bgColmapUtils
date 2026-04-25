@@ -12,7 +12,7 @@ set -euo pipefail
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK=/data/BG
-max_image_size=2000
+max_image_size=4032
 
 DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$DENSE_DIR/logs"
@@ -23,10 +23,10 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP: $COLMAP"
 "$COLMAP" --version || true
-echo "BG_WORK: $BG_WORK"
-echo "bg dense dir: $DENSE_DIR"
-echo "Log: $LOG_FILE"
-echo "max_image_size : $max_image_size"
+echo "bg=data BG_WORK=$BG_WORK"
+echo "bg=data dense dir: $DENSE_DIR"
+echo "bg=data LOG_FILE=$LOG_FILE"
+echo "bg=data max_image_size=$max_image_size"
 
 # Basic sanity checks
 test -d "$BG_WORK/images"
@@ -76,5 +76,5 @@ echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
   --PoissonMeshing.num_threads 4
 
 echo "bg=colmap process=dense  etape=FIN   date=$(date -Is)"
-echo "Point cloud: $DENSE_DIR/fused.ply"
-echo "Poisson mesh: $DENSE_DIR/mesh_poisson.ply"
+echo "bg=data fused.ply=$DENSE_DIR/fused.ply"
+echo "bg=data mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
