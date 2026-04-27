@@ -5,12 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 COLMAP_CMD="/home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap"
 COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
-echo "bg sparse COLMAP binaire utilisé: $COLMAP_CMD"
+
 "$COLMAP_CMD" --version
 BG_WORK="/data/BG"
-
+echo "bg=data  COLMAP_CMD=$COLMAP_CMD"
+echo "bg=data  BG_WORK=$BG_WORK"
 SPARSE_DIR="$BG_WORK/sparse"
 LOG_DIR="$SPARSE_DIR/logs"
+echo "bg=data  LOG_DIR=$LOG_DIR"
 mkdir -p "$SPARSE_DIR"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
@@ -22,7 +24,7 @@ echo "COLMAP EXTRACTOR"
 echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
 
 ls -la "$BG_WORK"
-echo "b=colmap process=sparse etape=feature_extractor "
+echo "bg=colmap process=sparse etape=feature_extractor date=$(date -Is)"
 
 # Extraction des features
 "$COLMAP_CMD" feature_extractor \
@@ -34,7 +36,7 @@ echo "b=colmap process=sparse etape=feature_extractor "
   --FeatureExtraction.num_threads 7 \
   --log_level 2
 
-echo "bg=colmap process=sparse etape=MATCH "
+echo "bg=colmap process=sparse etape=MATCH date=$(date -Is)"
 # "$COLMAP_CMD" matches_importer --help
 
 # Import des matches (fichier match.txt)
@@ -43,9 +45,9 @@ echo "bg=colmap process=sparse etape=MATCH "
   --FeatureMatching.use_gpu 0 \
   --match_list_path "$BG_WORK/match.txt"
 
-echo "bg=colmap process=sparse etape=add_pose_gps"
+echo "bg=colmap process=sparse etape=add_pose_gps date=$(date -Is)"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --write "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
-echo "bg=colmap process=sparse etape=controle_gps
+echo "bg=colmap process=sparse etape=controle_gps date=$(date -Is)"
 ~/bgColmapUtils/bgPosePriorsProvider_4_1_0 --check "$BG_WORK/database.db" "$BG_WORK/metadataCSV.txt" 
 echo "bg=colmap process=sparse etape=mkd_sparse  date=$(date -Is)"
 
