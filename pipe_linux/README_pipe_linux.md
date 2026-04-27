@@ -114,6 +114,15 @@ Un hang GPU répété sous charge peut aussi être :
 - alim limite / câble PCIe
 - undervolt/overclock
 
+#### 5 Changement de driver
+sudo apt update
+sudo apt install nvidia-driver-580
+sudo apt remove nvidia-driver-580-open
+sudo reboot
+
+nvidia-smi
+dpkg -l | grep nvidia-driver
+modinfo nvidia | head
 
 ## TODO
 - outil de spécification de trajectoires
