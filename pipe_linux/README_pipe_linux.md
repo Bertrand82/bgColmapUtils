@@ -120,5 +120,5 @@ Un hang GPU répété sous charge peut aussi être :
 - réconciliation modèles 3D
 - outil d'exploitation des logs COLMAP
 - Recuperer images depuis un drone
-- 
+- batch de surveillance machine: ram + temperature
 
