@@ -124,6 +124,10 @@ nvidia-smi
 dpkg -l | grep nvidia-driver
 modinfo nvidia | head
 
+Writing photometric output for DJI_20260207181546_0080_D.JPG
+[0;31mE20260427 20:57:02.104234 22683 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/gpu_mat.h:24
+89 occurence de  "Writing photometric output for"
+
 ## TODO
 - outil de spécification de trajectoires
 - test images satellites ou Google
