@@ -65,11 +65,12 @@ filename:       /lib/modules/6.17.0-22-generic/kernel/nvidia-580-open/nvidia.ko
 version:        580.126.09
 srcversion:     43ECDFFFD2238CDC4017DFE
 
-  - Le "GSP" (GPU system Processor) est un microcontroleur embarqué dans les GPU NVidia récents (surtout à partir des des générations RTX "moderne") Il execute un firmware NVIDDIA et prend en charge une partie des fonctions qui étaient historiquement géré par le driver coté CPU.
+Le "GSP" (GPU system Processor) est un microcontroleur embarqué dans les GPU NVidia récents (surtout à partir des des générations RTX "moderne") Il execute un firmware NVIDDIA et prend en charge une partie des fonctions qui étaient historiquement géré par le driver coté CPU.
 
-  - Le “GSP” est surtout présent/actif sur les drivers récents, et certains combos driver/kernel peuvent être instables selon GPU.
+Le “GSP” est surtout présent/actif sur les drivers récents, et certains combos driver/kernel peuvent être instables selon GPU.
 
-  - Sur beaucoup de configs, forcer `NVreg_EnableGpuFirmware=0` stabilise CUDA.
+#### 2) Désactiver le firmware GSP (souvent efficace)
+Sur beaucoup de configs, forcer `NVreg_EnableGpuFirmware=0` stabilise CUDA.
 
 Créer un fichier :
 ```bash
@@ -123,12 +124,21 @@ nvidia-smi
 dpkg -l | grep nvidia-driver
 modinfo nvidia | head
 
-  - Erreur Nvidia
 Writing photometric output for DJI_20260207181546_0080_D.JPG
-'''
 [0;31mE20260427 20:57:02.104234 22683 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/gpu_mat.h:24
-'''
-  - 89 occurence de  "Writing photometric output for"
+89 occurence de  "Writing photometric output for"
+## Prompt fusion 
+
+  - 1-Je fais un sparse des 2000 images : feature_extractor, matches_importer, mapper
+  - 2- Je fais image_undistorter les 2000 images
+  - 3- J'extraie 20 fois 100 images de ./dense/images dans ./dense_i/images (i de 1 à 20)
+  - 4-Je lance patch_match_stereo puis stereo_fusion sur dense_i
+  - 5 - J'ai 20 fusion_i.PLY : Comment je les fusionne ?
+
+  - Point crucial avant de fusionner
+Tes fusion_i.ply seront dans le même repère uniquement si chaque dense_i utilise le même sparse/poses que le global (ou un sous-modèle cohérent extrait du global).
+Si dans chaque dense_i tu as bien un sparse/ (copié ou subset) correspondant aux images du batch, alors oui: fusion = concat + dédup.
+  - Fusion en ligne de commande (recommandé) : PDAL
 
 ## TODO
 - outil de spécification de trajectoires

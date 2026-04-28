@@ -109,12 +109,14 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JLabel labelLog = new JLabel("");
 	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
-	JMenuItem buttonDossierSources = new JMenuItem("Open Repository");
+	JMenuItem buttonDossierSparses = new JMenuItem("Open Sparse");
+	JMenuItem buttonDossierSources = new JMenuItem("Open Repository Source Images");
 	JMenuItem buttonDebug = new JMenuItem("debug");
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	MetaDatasCsv metaDataCsv;
 	File dirSources;
+	File dirSparse;
 	final SablierSwing sablierSwing;
 	final JFrame frame;
 
@@ -163,6 +165,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonDebug.addActionListener(e -> debug());
 		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
 		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
+		buttonDossierSparses.addActionListener(e -> processDossierSparse());
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
@@ -178,6 +181,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
 		menuFile.add(buttonDossierSources);
+		menuFile.add(buttonDossierSparses);
 
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
@@ -407,6 +411,54 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		this.canvas.repaint();
 
 	}
+	
+	private void processDossierSparse() {
+		System.out.println("processDossierSparse");
+		chooseDossierSparse();
+	}
+	
+	private void processSparse(File dirSparse) {
+		System.out.println("processSparse "+dirSparse.getAbsolutePath());
+	}
+	
+	private void chooseDossierSparse() {
+		System.out.println("choose Dossier sources");
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Choisir le dossier source");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setMultiSelectionEnabled(false);
+
+		// Optionnel : partir du dernier dossier choisi
+		if (UtilFile.existsDir(dirSparse)) {
+			chooser.setCurrentDirectory(dirSparse);
+		} else {
+			String dirPath = ""
+					+ PropertiesGlobal.getProperties().getProperty("DirSparse", System.getProperty("user.home"));
+			File file = new File(dirPath);
+
+			chooser.setCurrentDirectory(file);
+		}
+
+		int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
+		if (result == JFileChooser.APPROVE_OPTION) {
+			dirSparse = chooser.getSelectedFile();
+			PropertiesGlobal.saveProperty("DirSparse", dirSparse.getAbsolutePath());
+			// Exemple : feedback utilisateur
+			this.labelLog.setText(dirSparse.getAbsolutePath());
+			try {
+				this.processSparse(dirSparse);
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				this.repaint();
+			}
+		}
+	}
+
+
+	
 
 	private void chooseDossierSource() {
 		System.out.println("choose Dossier sources");

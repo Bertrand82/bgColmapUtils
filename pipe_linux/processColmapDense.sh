@@ -49,7 +49,7 @@ echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --PatchMatchStereo.max_image_size $max_image_size \
-  --PatchMatchStereo.cache_size 8 \
+  --PatchMatchStereo.cache_size 4 \
   --PatchMatchStereo.num_threads 1 \
   --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
