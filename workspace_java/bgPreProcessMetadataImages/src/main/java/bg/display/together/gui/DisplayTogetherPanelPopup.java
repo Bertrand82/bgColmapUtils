@@ -9,10 +9,10 @@ public class DisplayTogetherPanelPopup {
 
     // Petit conteneur de paramètres (modifiable)
 
-    public static void showPopup(Component parent, ParamsConfiguration p) {
-        JTextField tfPoints = new JTextField(String.valueOf(p.nbPointsExtraitsMax), 4); // 4 colonnes (≈ 4 chars)
-        JSpinner spSeq  = new JSpinner(new SpinnerNumberModel(p.nbSeq, 0, 9999, 1));
-        JSpinner spProx = new JSpinner(new SpinnerNumberModel(p.nbProx, 0, 9999, 1));
+    public static void showPopup(Component parent, ParamsConfiguration parametres) {
+        JTextField tfPoints = new JTextField(String.valueOf(parametres.nbPointsExtraitsMax), 4); // 4 colonnes (≈ 4 chars)
+        JSpinner spSeq  = new JSpinner(new SpinnerNumberModel(parametres.nbSeq, 0, 9999, 1));
+        JSpinner spProx = new JSpinner(new SpinnerNumberModel(parametres.nbProx, 0, 9999, 1));
 
         JPanel form = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -48,9 +48,9 @@ public class DisplayTogetherPanelPopup {
                 int seq    = (Integer) spSeq.getValue();
                 int prox   = (Integer) spProx.getValue();
 
-                p.nbPointsExtraitsMax = points;
-                p.nbSeq    = seq;
-                p.nbProx   = prox;
+                parametres.nbPointsExtraitsMax = points;
+                parametres.nbSeq    = seq;
+                parametres.nbProx   = prox;
 
                 dlg.dispose();
             } catch (NumberFormatException ex) {

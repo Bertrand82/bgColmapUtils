@@ -62,7 +62,7 @@ import bg.util.map.MapProviderListener;
 public class DisplayTogetherPanel extends JPanel implements MapProviderListener {
 
 	public static class ParamsConfiguration {
-		public int nbPointsExtraitsMax = 1000;
+		public int nbPointsExtraitsMax = 100;
 		public int nbSeq = 6;
 		public int nbProx = 6;
 	}
