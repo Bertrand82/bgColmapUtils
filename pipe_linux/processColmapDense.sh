@@ -13,7 +13,7 @@ set -euo pipefail
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BG_WORK=/data/BG
 # max_image_size=4032
-max_image_size=2016
+max_image_size=1512
 DENSE_DIR="$BG_WORK/dense"
 LOG_DIR="$DENSE_DIR/logs"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"
@@ -52,7 +52,7 @@ echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
   --PatchMatchStereo.cache_size 8 \
   --PatchMatchStereo.num_threads 1 \
   --PatchMatchStereo.allow_missing_files 1 \
-  --PatchMatchStereo.num_samples 10
+ # --PatchMatchStereo.num_samples 10
   
 
 echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"

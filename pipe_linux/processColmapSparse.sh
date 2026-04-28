@@ -8,17 +8,27 @@ COLMAP_EXE_PATH="$HOME/workspaceCpp/colmap/build/src/colmap/exe"
 
 "$COLMAP_CMD" --version
 BG_WORK="/data/BG"
-echo "bg=data  COLMAP_CMD=$COLMAP_CMD"
-echo "bg=data  BG_WORK=$BG_WORK"
+
 SPARSE_DIR="$BG_WORK/sparse"
 LOG_DIR="$SPARSE_DIR/logs"
-echo "bg=data  LOG_DIR=$LOG_DIR"
+IMAGES_DIR="$BG_WORK/images"
+NB_IMAGES=$(find "$IMAGES_DIR" -maxdepth 1 -type f | wc -l)
+
 mkdir -p "$SPARSE_DIR"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
+
 # redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
 exec > >(tee -a "$LOG_FILE") 2>&1
-
+echo "bg=data  COLMAP_CMD=$COLMAP_CMD"
+echo "bg=data  BG_WORK=$BG_WORK"
+echo "bg=data  LOG_DIR=$LOG_DIR"
+echo "bg=data  LOG_FILE=$LOG_FILE"
+NB_FICHIERS=$(find "$BG_WORK" -maxdepth 1 -type f | wc -l)
+LISTE_FICHIERS=$(find "$BG_WORK" -maxdepth 1 -type f -printf '%f ')
+echo "bg=data NB_FICHIERS=$NB_FICHIERS"
+echo "bg=data LISTE_FICHIERS=$LISTE_FICHIERS"
+echo "bg=data  NB_IMAGES=$NB_IMAGES"
 echo "COLMAP EXTRACTOR"
 # "$COLMAP_CMD" feature_extractor --help
 echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
