@@ -12,13 +12,20 @@ echo "bg=data  COLMAP_CMD=$COLMAP_CMD"
 echo "bg=data  BG_WORK=$BG_WORK"
 SPARSE_DIR="$BG_WORK/sparse"
 LOG_DIR="$SPARSE_DIR/logs"
+IMAGES_DIR="$BG_WORK/images"
+NB_IMAGES=$(find "$IMAGES_DIR" -maxdepth 1 -type f | wc -l)
 echo "bg=data  LOG_DIR=$LOG_DIR"
 mkdir -p "$SPARSE_DIR"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/colmap_sparse$(date +%Y%m%d_%H%M%S).log"
+echo "bg=data  LOG_FILE=$LOG_FILE"
 # redirige stdout+stderr vers le log, tout en gardant l'affichage terminal
 exec > >(tee -a "$LOG_FILE") 2>&1
 
+
+NB_FICHIERS=$(find "$BG_WORK" -maxdepth 1 -type f | wc -l)
+echo "bg=data NB_FICHIERS=$NB_FICHIERS"
+echo "bg=data  NB_IMAGES=$NB_IMAGES"
 echo "COLMAP EXTRACTOR"
 # "$COLMAP_CMD" feature_extractor --help
 echo "bg=colmap process=sparse  etape=start   date=$(date -Is)"
