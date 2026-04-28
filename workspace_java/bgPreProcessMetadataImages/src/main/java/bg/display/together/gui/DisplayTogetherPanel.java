@@ -254,6 +254,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			System.err.println("dir : " + dirImages.getAbsolutePath() + "  doen't exists ");
 			return;
 		}
+		
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
 
 		long duree_ms = System.currentTimeMillis() - timeStart;
@@ -419,6 +420,9 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	
 	private void processSparse(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
+		int paquetSize=100;
+		ProcessDivideSparse processDivide = new ProcessDivideSparse(dirSparse,paquetSize);
+		// Lots de 100 images
 	}
 	
 	private void chooseDossierSparse() {
