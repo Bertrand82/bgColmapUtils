@@ -1,0 +1,44 @@
+package bg.process.log;
+
+import java.time.Duration;
+import java.time.OffsetDateTime;
+
+
+import bg.util.UtilString;
+
+public class LogEtape {
+
+	
+	public String name ;
+	OffsetDateTime date = null;
+	Duration duration;
+	
+	
+	public  LogEtape(String name_,OffsetDateTime date_) {
+		this.name = name_;
+		this.date = date_;
+	}
+
+	public void setDuration(LogEtape etape) {
+		if (etape== null) {
+			return;
+		}
+		if (date== null) {
+			return;
+		}
+	    if (etape.date == null) {
+	    	return;
+	    }
+	    duration = Duration.between(date.toInstant(), etape.date.toInstant());
+		
+	}
+	
+	public String toString() {
+		String duration_str = (duration==null)? " - ":""+duration.toSeconds();
+		String s = "etape="+UtilString.toString(name,30);
+		s += " | duree =";
+		s +=  UtilString.toString(duration_str,10);
+		s+=" secondes";
+		return s;
+	}
+}
