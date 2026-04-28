@@ -66,11 +66,13 @@ public class LogProcess {
 		nbImages = (dirImages.listFiles() == null) ? -1 : dirImages.listFiles().length;
 		init();
 	}
-
-	private void init() {
+	String lastLine ;
+	String lastLine_Z_1 ;
+	   private void init() {
 		fileSparseLog = getFileLogSparse();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileSparseLog));
+			
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("bg")) {
@@ -81,7 +83,11 @@ public class LogProcess {
 				} else if (line.indexOf("error") >= 0) {
 					this.grep += line + "\n";
 				}
+				lastLine_Z_1=lastLine;
+				lastLine=line;
 			}
+			
+			
 			initListEtapes();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -138,7 +144,8 @@ public class LogProcess {
 	}
 
 	private String toStringListEtapes() {
-		String s="";
+		String s="Last line Z_1:"+this.lastLine_Z_1+"\n";
+		 s+="Last line    :"+this.lastLine+"\n";
 		for(Etape etape : listEtape) {
 			s += ""+etape+"\n";
 		}
