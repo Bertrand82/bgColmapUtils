@@ -140,6 +140,13 @@ Tes fusion_i.ply seront dans le même repère uniquement si chaque dense_i utili
 Si dans chaque dense_i tu as bien un sparse/ (copié ou subset) correspondant aux images du batch, alors oui: fusion = concat + dédup.
   - Fusion en ligne de commande (recommandé) : PDAL
 
+```bash 
+  colmap model_subset \
+  --input_path "$BG_WORK/sparse/0" \
+  --output_path "$BG_WORK/sparse/subset" \
+  --image_list_path "$BG_WORK/image_list.txt"
+```
+
 ## TODO
 - outil de spécification de trajectoires
 - test images satellites ou Google
