@@ -28,6 +28,7 @@ public class PositionGps2 {
         this.imageName=imageName;
         this.x = getX_process();
         this.y = getY_process();
+        
     }
 
     public double getLatitude() { return latitude; }
