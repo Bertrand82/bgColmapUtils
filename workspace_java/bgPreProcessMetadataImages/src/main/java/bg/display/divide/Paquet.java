@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import bg.util.PositionGps2;
+import bg.util.UtilCopyBg;
 
 public class Paquet {
 
@@ -45,7 +46,8 @@ public class Paquet {
 			File dirSparse0 = new File(dirSparse,"0");
 			Set<String> listImages = getSetImages();
 			ColmapSubsetBuilder.buildSubsetTxt(dirSparse0.toPath(), dirRoot.toPath(), listImages);
-		} catch (IOException e) {
+			UtilCopyBg.copyResourceToDir("sh/processDense.sh", dirRoot.toPath());
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
