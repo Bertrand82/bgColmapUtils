@@ -25,9 +25,9 @@ echo "bg=data max_image_size=$max_image_size"
 echo "bg=data SCRIPT_DIR=$SCRIPT_DIR"
 
 
-
+mkdir -p "$SCRIPT_DIR/sparse/0" "$LOG_DIR"
 
 $COLMAP model_converter \
   --input_path "$SCRIPT_DIR" \
-  --output_path "$SCRIPT_DIR/sparse_subset/0" \
+  --output_path "$SCRIPT_DIR/sparse/0" \
   --output_type BIN

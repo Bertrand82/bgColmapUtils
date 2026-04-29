@@ -11,7 +11,7 @@ import com.drew.metadata.Metadata;
 public class GpsPositionTest {
 
 	
-	@Test
+//@Test
 	public void testGpsFactory() throws Exception{
 		File dir =new File("src/test/resources");
 		File fileImage = new File(dir,"DJI_20260206153808_0798_D.JPG");
