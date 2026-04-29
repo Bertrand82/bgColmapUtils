@@ -1,6 +1,8 @@
 package bg.util;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -32,5 +34,28 @@ public class UtilFile {
 		return s;
 		
 	}
+	public static void deleteDirRecursive(File dir) throws Exception {
+		  if (dir == null) return;
 
+		  java.nio.file.Path p = dir.toPath();
+		  if (!java.nio.file.Files.exists(p)) return;
+
+		  java.nio.file.Files.walkFileTree(p, new java.nio.file.SimpleFileVisitor<java.nio.file.Path>() {
+		    @Override
+		    public java.nio.file.FileVisitResult visitFile(java.nio.file.Path file,
+		                                                  java.nio.file.attribute.BasicFileAttributes attrs)
+		        throws java.io.IOException {
+		      java.nio.file.Files.deleteIfExists(file);
+		      return java.nio.file.FileVisitResult.CONTINUE;
+		    }
+
+		    @Override
+		    public java.nio.file.FileVisitResult postVisitDirectory(java.nio.file.Path d, java.io.IOException exc)
+		        throws java.io.IOException {
+		      if (exc != null) throw exc;
+		      java.nio.file.Files.deleteIfExists(d);
+		      return java.nio.file.FileVisitResult.CONTINUE;
+		    }
+		  });
+		}
 }

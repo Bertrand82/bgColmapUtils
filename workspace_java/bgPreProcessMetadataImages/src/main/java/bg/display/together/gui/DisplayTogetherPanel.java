@@ -56,7 +56,7 @@ import bg.util.PropertiesGlobal;
 import bg.util.SablierSwing;
 import bg.util.UtilCreateDirPopups;
 import bg.util.UtilFile;
-
+import bg.util.UtilSwingChooseDoosier;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
@@ -110,7 +110,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JLabel labelLog = new JLabel("");
 	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
-	JMenuItem buttonDossierSparses = new JMenuItem("Open Sparse");
+	JMenuItem buttonDossierSparsesCreatePaquets = new JMenuItem("Create Sparse paquets");
+	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
 	JMenuItem buttonDossierSources = new JMenuItem("Open Repository Source Images");
 	JMenuItem buttonDebug = new JMenuItem("debug");
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
@@ -166,7 +167,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonDebug.addActionListener(e -> debug());
 		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
 		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
-		buttonDossierSparses.addActionListener(e -> processDossierSparse());
+		buttonDossierSparsesCreatePaquets.addActionListener(e -> processDossierSparse());
+		buttonDossierCleanSparsePaquets.addActionListener(e->processDossierCleanPaquets());
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
@@ -182,7 +184,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
 		menuFile.add(buttonDossierSources);
-		menuFile.add(buttonDossierSparses);
+		menuFile.add(buttonDossierSparsesCreatePaquets);
+		menuFile.add(buttonDossierCleanSparsePaquets);
 
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
@@ -417,6 +420,26 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	private void processDossierSparse() {
 		System.out.println("processDossierSparse");
 		chooseDossierSparse();
+	}
+	
+	private void processDossierCleanPaquets() {
+		System.out.println("Clean paquets ");
+		File dirSparse2 = UtilSwingChooseDoosier.chooseDossierSparse(dirSparse, "DirSparse", this);
+		if (dirSparse2==null) {
+			return;
+		}
+		this.dirSparse =dirSparse2;
+	    for(File f : dirSparse2.listFiles()) {
+	    	System.out.println("-------"+f.getName());
+	    	if (f.isDirectory() && f.getName().startsWith("paquet_")) {
+	    		try {
+					UtilFile.deleteDirRecursive(f);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    	}
+	    }
 	}
 	
 	private void processSparse(File dirSparse) {
