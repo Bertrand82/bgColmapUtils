@@ -42,6 +42,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
+import bg.display.divide.ProcessDivideSparse;
 import bg.metadata.MetaDatasCsv;
 import bg.process.log.LogProcess;
 import bg.util.PaireMetadata2;

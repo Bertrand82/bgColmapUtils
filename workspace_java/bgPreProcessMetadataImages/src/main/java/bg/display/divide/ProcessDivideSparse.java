@@ -1,4 +1,4 @@
-package bg.display.together.gui;
+package bg.display.divide;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,38 +9,12 @@ import bg.util.PositionGps2Factory;
 
 public class ProcessDivideSparse {
 
-	static class Paquet {
-
-		public Paquet(double xxMin, double xxMax, double yyMin, double yyMax) {
-			xMin = xxMin;
-			xMax = xxMax;
-			yMin = yyMin;
-			yMax = yyMax;
-			dx = xMax-xMin;
-			dy = yMax-yMin;
-		}
-
-		List<PositionGps2> listPositions = new ArrayList<PositionGps2>();
-		
-		double xMin, xMax;
-		double yMin, yMax;
-		double dx,dy;
-		public boolean containsPosition(PositionGps2 position) {
-			boolean xOK = (position.getX() >= xMin) && (position.getX() <= xMax);
-			boolean yOK = (position.getY() >= yMin) && (position.getY() <= yMax);
-			System.out.println(" xOk "+xOK+"  yOk "+yOK);
-			return xOK && yOK;
-		}
-		public String toString() {
-			return "dx "+dx+" dy "+dy+"   size "+listPositions.size();
-		}
-	}
-
+	
 	File dirRoot;
 	File dirImages;
 	int nbTotalImages = 0;
 	private List<PositionGps2> listPositions;
-	List<Paquet> listPaquets = new ArrayList<ProcessDivideSparse.Paquet>();
+	List<Paquet> listPaquets = new ArrayList<Paquet>();
 	double xMin, xMax;
 	double yMin, yMax;
 
@@ -64,13 +38,14 @@ public class ProcessDivideSparse {
 		System.out.println("nY " + nY);
 		int nbPaquets = nX * nY;
 		System.out.println("Nb de paquets :" + nbPaquets);
+		int j=0;
 		for (int iX = 0; iX < nX; iX++) {
 			for (int iY = 0; iY < nY; iY++) {
 				double xxMin = xMin + iX * (dX / nX);
 				double xxMax = xMin + (iX + 1) * (dX / nX);
 				double yyMin = yMin + iY * (dY / nY);
 				double yyMax = yMin + (iY + 1) * (dY / nY);
-				Paquet paquet = new Paquet(xxMin, xxMax, yyMin, yyMax);
+				Paquet paquet = new Paquet(xxMin, xxMax, yyMin, yyMax,j++);
 				this.listPaquets.add(paquet);
 			}
 		}
@@ -81,6 +56,14 @@ public class ProcessDivideSparse {
 		for (Paquet paquet : listPaquets) {
 			System.out.println(i+++" paquet size "+paquet);
 		}
+		createDirectories();
+	}
+
+	private void createDirectories() {
+		for(Paquet paquet : listPaquets) {
+			paquet.createDirectorie(this.dirRoot);
+		}
+		
 	}
 
 	private void initListPaquets() {

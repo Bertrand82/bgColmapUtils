@@ -33,40 +33,5 @@ test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
 
-
-echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
-"$COLMAP" patch_match_stereo \
-  --workspace_path "$DENSE_DIR" \
-  --workspace_format COLMAP \
-  --PatchMatchStereo.max_image_size $max_image_size \
-  --PatchMatchStereo.cache_size 8 \
-  --PatchMatchStereo.num_threads 1 \
-  --PatchMatchStereo.allow_missing_files 1 \
- # --PatchMatchStereo.num_samples 10
-  
-
-echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"
-"$COLMAP" stereo_fusion \
-  --workspace_path "$DENSE_DIR" \
-  --workspace_format COLMAP \
-  --input_type geometric \
-  --output_path "$DENSE_DIR/fused.ply" \
-  --StereoFusion.use_cache 1 \
-  --StereoFusion.cache_size 8 \
-  --StereoFusion.num_threads 4 \
-  --StereoFusion.check_num_images 10 \
-  --StereoFusion.max_image_size $max_image_size
-
-echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
-"$COLMAP" poisson_mesher \
-  --input_path "$DENSE_DIR/fused.ply" \
-  --output_path "$DENSE_DIR/mesh_poisson.ply" \
-  --PoissonMeshing.depth 11 \
-  --PoissonMeshing.trim 10 \
-  --PoissonMeshing.point_weight 1 \
-  --PoissonMeshing.color 1 \
-  --PoissonMeshing.num_threads 4
-
-echo "bg=colmap process=dense  etape=FIN   date=$(date -Is)"
-echo "bg=data fused.ply=$DENSE_DIR/fused.ply"
-echo "bg=data mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
+"$COLMAP"  --help
+"$COLMAP" model_subset --help
