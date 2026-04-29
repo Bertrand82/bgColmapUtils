@@ -34,11 +34,11 @@ public class UtilFile {
 		return s;
 		
 	}
-	public static void deleteDirRecursive(File dir) throws Exception {
-		  if (dir == null) return;
+	public static boolean deleteDirRecursive(File dir) throws Exception {
+		  if (dir == null) return false;
 
 		  java.nio.file.Path p = dir.toPath();
-		  if (!java.nio.file.Files.exists(p)) return;
+		  if (!java.nio.file.Files.exists(p)) return false;
 
 		  java.nio.file.Files.walkFileTree(p, new java.nio.file.SimpleFileVisitor<java.nio.file.Path>() {
 		    @Override
@@ -57,5 +57,6 @@ public class UtilFile {
 		      return java.nio.file.FileVisitResult.CONTINUE;
 		    }
 		  });
+		  return true;
 		}
 }

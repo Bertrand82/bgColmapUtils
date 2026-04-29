@@ -52,7 +52,7 @@ echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
   --PatchMatchStereo.max_image_size $max_image_size \
   --PatchMatchStereo.cache_size 6 \
   --PatchMatchStereo.num_threads 1 \
-  -PatchMatchStereo.num_iterations 3 \
+  --PatchMatchStereo.num_iterations 3 \
   --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
   

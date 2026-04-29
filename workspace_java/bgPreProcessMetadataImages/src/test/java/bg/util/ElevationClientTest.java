@@ -11,4 +11,5 @@ public class ElevationClientTest {
 		System.out.println("Elevation :"+ElevationClient.getElevationOpenElevation(latitude, longitude));
 	}
 
+	
 }

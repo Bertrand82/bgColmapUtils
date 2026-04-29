@@ -34,4 +34,4 @@ test -d "$BG_WORK/sparse/0"
 
 
 "$COLMAP"  --help
-"$COLMAP" model_subset --help
+"$COLMAP" patch_match_stereo --help
