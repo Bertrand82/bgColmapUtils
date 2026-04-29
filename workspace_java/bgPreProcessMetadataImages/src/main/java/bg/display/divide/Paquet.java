@@ -33,7 +33,6 @@ public class Paquet {
 	public boolean containsPosition(PositionGps2 position) {
 		boolean xOK = (position.getX() >= xMin) && (position.getX() <= xMax);
 		boolean yOK = (position.getY() >= yMin) && (position.getY() <= yMax);
-		System.out.println(" xOk "+xOK+"  yOk "+yOK);
 		return xOK && yOK;
 	}
 	public String toString() {

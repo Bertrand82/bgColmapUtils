@@ -42,7 +42,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import bg.display.divide.ProcessDivideSparse;
+import bg.display.divide.ProcessSubsets;
 import bg.metadata.MetaDatasCsv;
 import bg.process.log.LogProcess;
 import bg.util.PaireMetadata2;
@@ -422,7 +422,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	private void processSparse(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
 		int paquetSize=100;
-		ProcessDivideSparse processDivide = new ProcessDivideSparse(dirSparse,paquetSize);
+		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize);
 		// Lots de 100 images
 	}
 	

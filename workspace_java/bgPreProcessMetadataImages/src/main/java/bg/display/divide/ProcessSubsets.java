@@ -7,7 +7,7 @@ import java.util.List;
 import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 
-public class ProcessDivideSparse {
+public class ProcessSubsets {
 
 	
 	File dirRoot;
@@ -18,7 +18,7 @@ public class ProcessDivideSparse {
 	double xMin, xMax;
 	double yMin, yMax;
 
-	public ProcessDivideSparse(File dirRoot, int paquetSize) {
+	public ProcessSubsets(File dirRoot, int paquetSize) {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;
