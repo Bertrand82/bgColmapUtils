@@ -146,6 +146,9 @@ Si dans chaque dense_i tu as bien un sparse/ (copié ou subset) correspondant au
   --output_path "$BG_WORK/sparse/subset" \
   --image_list_path "$BG_WORK/image_list.txt"
 ```
+## Indicateur qualité modelisation
+colmap model_analyzer \
+  --path /chemin/vers/sparse/0
 
 ## TODO
 - outil de spécification de trajectoires
