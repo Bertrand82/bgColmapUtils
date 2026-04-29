@@ -32,6 +32,6 @@ echo "bg=data max_image_size=$max_image_size"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
-
-"$COLMAP"  --help
-"$COLMAP" patch_match_stereo --help
+"$COLMAP_CMD" model_analyzer --path "$BG_WORK/sparse/0"
+# "$COLMAP"  --help
+# "$COLMAP" patch_match_stereo --help
