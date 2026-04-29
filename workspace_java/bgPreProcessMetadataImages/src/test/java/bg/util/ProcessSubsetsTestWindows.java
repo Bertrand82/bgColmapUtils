@@ -4,11 +4,11 @@ import java.io.File;
 
 import bg.display.divide.ProcessSubsets;
 
-public class ProcessSubsetsTest {
+public class ProcessSubsetsTestWindows {
 
 	public static void main(String[] args) {
 		System.err.println("ProcessSubsetTest ");
-		File dir = new File ("/data/BG");
+		File dir = new File ("C:\\Users\\bertr\\data\\BG");
 		ProcessSubsets processSubset = new ProcessSubsets(dir, 20);
 	}
 
