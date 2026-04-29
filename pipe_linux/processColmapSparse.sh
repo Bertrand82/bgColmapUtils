@@ -101,7 +101,7 @@ echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
   --output_path "$BG_WORK/sparse/0" \
   --output_type TXT
   
-echo "bg=colmap process=sparse etape=appel_process_dense  date=$(date -Is)"
+echo "bg=colmap process=sparse etape=fin_sparse  date=$(date -Is)"
 
 
-./processColmapDense.sh
+### ./processColmapDense.sh

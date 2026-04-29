@@ -61,6 +61,7 @@ public class ProcessSubsets {
 		createDirectories();
 		try {
 			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
+			UtilCopyBg.copyResourceToDir("sh/processMergePLY.sh", this.dirRoot.toPath(), true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
