@@ -1,11 +1,13 @@
 package bg.display.divide;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
+import bg.util.UtilCopyBg;
 
 public class ProcessSubsets {
 
@@ -57,6 +59,11 @@ public class ProcessSubsets {
 			System.out.println(i+++" paquet size "+paquet);
 		}
 		createDirectories();
+		try {
+			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void createDirectories() {
