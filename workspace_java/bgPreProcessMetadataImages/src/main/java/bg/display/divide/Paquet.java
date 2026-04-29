@@ -46,7 +46,7 @@ public class Paquet {
 			File dirSparse0 = new File(dirSparse,"0");
 			Set<String> listImages = getSetImages();
 			ColmapSubsetBuilder.buildSubsetTxt(dirSparse0.toPath(), dirRoot.toPath(), listImages);
-			UtilCopyBg.copyResourceToDir("sh/processDense.sh", dirRoot.toPath(),true);
+			UtilCopyBg.copyResourceToDir("sh/processDensePaquet.sh", dirRoot.toPath(),true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
