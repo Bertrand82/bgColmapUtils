@@ -11,6 +11,7 @@ set -euo pipefail
 #   $BG_WORK/dense/mesh_poisson.ply
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
+COLMAP_CMD=$COLMAP
 BG_WORK=/data/BG
 # max_image_size=4032
 max_image_size=1512
@@ -32,6 +33,29 @@ echo "bg=data max_image_size=$max_image_size"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
+"$COLMAP" model_analyzer --path /data/BG/sparse/0
+SPARSE_ROOT=$BG_WORK/sparse
+for m in "$SPARSE_ROOT"/*; do
+  [ -d "$m" ] || continue
+  [ -f "$m/cameras.bin" ] || continue
+  [ -f "$m/images.bin" ]  || continue
+  [ -f "$m/points3D.bin" ]|| continue
 
-"$COLMAP"  --help
-"$COLMAP" patch_match_stereo --help
+"$COLMAP_CMD" model_converter \
+  --input_path "$m" \
+  --output_path "$m/points3D.ply" \
+  --output_type PLY
+
+# Export TXT (cameras.txt / images.txt / points3D.txt)
+echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
+
+"$COLMAP_CMD" model_converter \
+  --input_path "$m" \
+  --output_path "$m" \
+  --output_type TXT
+  echo "=== Model: $m ==="
+  "$COLMAP_CMD" model_analyzer --path "$m"
+  echo
+done
+# "$COLMAP"  --help
+# "$COLMAP" patch_match_stereo --help
