@@ -12,17 +12,17 @@ import bg.util.UtilCopyBg;
 
 public class Paquet {
 
-	File dirRoot;
+	
 	File dirImages;
 	String paquetName;
 	int numero;
 
 
 
-	public Paquet(List<PositionGps2> list, File dirRoot, File dirImages, int numero) {
+	public Paquet(List<PositionGps2> list, File dirImages, int numero) {
 		this.listPositions=list;
 		this.numero=numero;
-		this.dirRoot=dirRoot;
+		
 		this.dirImages= dirImages;
 		this.paquetName= "paquet_"+String.format("%03d", numero);
 		
@@ -32,17 +32,26 @@ public class Paquet {
 	
 	
 	public String toString() {
-		return " Paquet name :"+paquetName+" | size :"+listPositions.size();
+		return " Paquet name :"+paquetName+" | size :"+listPositions.size()+" images";
 	}
-	public void createDirectorie(File dir) {
+	public void createDirectorie_(File dir,ColmapSubsetBuilder colmapSubsetBuilder) {
 		try {
-			File dirRoot = new File(dir,paquetName);
-			File dirSparse = new File(dir,"sparse");
-			File dirSparse0 = new File(dirSparse,"0");
-			Set<String> listImages = getSetImages();
-			ColmapSubsetBuilder.buildSubsetTxt(dirSparse0.toPath(), dirRoot.toPath(), listImages);
-			UtilCopyBg.copyResourceToDir("sh/processDensePaquet.sh", dirRoot.toPath(),true);
+			
+			
+			
+				System.out.print("createDirectorie "+paquetName+" start ");
+				File dirRootPaquet = new File(dir,paquetName);
+				//dirSparse0.mkdirs();
+				Set<String> listImages = getSetImages();
+				System.out.print(" listImages "+listImages.size());
+				colmapSubsetBuilder.processPaquet( dirRootPaquet.toPath(), listImages);
+				File fileImages = new File(dirRootPaquet,"images.txt");
+				System.out.print("  fileImages exists :"+fileImages.exists()+" size "+fileImages.length()+" copy sh to dir ");
+				UtilCopyBg.copyResourceToDir("sh/processDensePaquet.sh", dirRootPaquet.toPath(),true);
+				System.out.println("createDirectorie "+paquetName+" done");
+			
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

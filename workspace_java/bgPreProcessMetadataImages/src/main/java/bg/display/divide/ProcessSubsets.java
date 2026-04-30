@@ -47,7 +47,7 @@ public class ProcessSubsets {
 		List<Paquet> listP = new ArrayList<Paquet>();
 		int numero=0;
 		for(List<PositionGps2> list: listList) {
-			Paquet paquet = new Paquet(list,this.dirRoot,this.dirImages,numero++);
+			Paquet paquet = new Paquet(list,this.dirImages,numero++);
 			listP.add(paquet);
 		}
 		return listP;
@@ -55,8 +55,17 @@ public class ProcessSubsets {
 	
 
 	private void createDirectories() {
-		for(Paquet paquet : listPaquets) {
-			paquet.createDirectorie(this.dirRoot);
+		try {
+			System.out.println("create directories");
+			File dirSparse = new File(dirRoot,"sparse");
+			File dirSparse0 = new File(dirSparse,"0");
+			ColmapSubsetBuilder colmapSubsetBuilder= new ColmapSubsetBuilder(dirSparse0.toPath());
+			for(Paquet paquet : listPaquets) {
+				paquet.createDirectorie_(this.dirRoot,colmapSubsetBuilder);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

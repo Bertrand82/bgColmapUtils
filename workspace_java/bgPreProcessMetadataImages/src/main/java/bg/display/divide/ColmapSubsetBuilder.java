@@ -1,33 +1,51 @@
 package bg.display.divide;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ColmapSubsetBuilder {
 
-  // ---- Public API ---------------------------------------------------------
+  private final Path sparseTxtDir;
+  private final ColmapTxtModel model;
+
+  /**
+   * Constructeur "global": charge une fois le modèle COLMAP TXT depuis sparseTxtDir.
+   * Ensuite tu peux appeler processPaquet(...) pour chaque sous-ensemble d'images.
+   */
+  public ColmapSubsetBuilder(Path sparseTxtDir) throws IOException {
+    this.sparseTxtDir = Objects.requireNonNull(sparseTxtDir, "sparseTxtDir");
+    this.model = readModelTxt(this.sparseTxtDir);
+  }
 
   /**
    * Crée un sous-modèle COLMAP au format TXT.
    *
-   * @param sparseTxtDir   dossier contenant cameras.txt, images.txt, points3D.txt
-   * @param outTxtDir      dossier de sortie
-   * @param imageNames     noms EXACTS des images à conserver (comme dans images.txt)
+   * @param outTxtDir   dossier de sortie
+   * @param imageNames  noms EXACTS des images à conserver (comme dans images.txt)
    */
-  public static void buildSubsetTxt(Path sparseTxtDir, Path outTxtDir, Set<String> imageNames) throws IOException {
-    Objects.requireNonNull(sparseTxtDir);
-    Objects.requireNonNull(outTxtDir);
-    Objects.requireNonNull(imageNames);
+  public void processPaquet(Path outTxtDir, Set<String> imageNames) throws IOException {
+    Objects.requireNonNull(outTxtDir, "outTxtDir");
+    Objects.requireNonNull(imageNames, "imageNames");
 
-    ColmapTxtModel model = readModelTxt(sparseTxtDir);
-
-    // 1) garder uniquement les images demandées (par NAME)
+    // 1) garder uniquement les images demandées (par NAME), MAIS travailler sur des copies
+    // pour ne pas muter le modèle global (utilisé pour plusieurs paquets)
     Map<Integer, ImageEntry> keptImages = model.images.values().stream()
         .filter(img -> imageNames.contains(img.name))
-        .collect(Collectors.toMap(img -> img.imageId, img -> img, (a,b) -> a, LinkedHashMap::new));
+        .map(ColmapSubsetBuilder::copyImageEntry)
+        .collect(Collectors.toMap(img -> img.imageId, img -> img, (a, b) -> a, LinkedHashMap::new));
 
     if (keptImages.isEmpty()) {
       throw new IllegalArgumentException("Aucune image demandée n'a été trouvée dans images.txt");
@@ -40,10 +58,9 @@ public class ColmapSubsetBuilder {
 
     Map<Integer, String> keptCamerasTxt = model.camerasTxtLines.entrySet().stream()
         .filter(e -> keptCameraIds.contains(e.getKey()))
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a,b)->a, LinkedHashMap::new));
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, LinkedHashMap::new));
 
     // 3) déterminer quels points 3D restent (points observés par au moins une image gardée)
-    // On part des observations présentes dans les images (point3DId != -1)
     Set<Long> candidatePointIds = new LinkedHashSet<>();
     for (ImageEntry img : keptImages.values()) {
       for (Point2D p2 : img.points2D) {
@@ -51,11 +68,11 @@ public class ColmapSubsetBuilder {
       }
     }
 
-    // 4) filtrer points3D.txt + filtrer les tracks pour ne garder que les observations sur images gardées
+    // 4) filtrer points3D + tracks pour ne garder que les observations sur images gardées
     Map<Long, Point3DEntry> keptPoints = new LinkedHashMap<>();
     for (long pid : candidatePointIds) {
       Point3DEntry p3 = model.points3D.get(pid);
-      if (p3 == null) continue; // peut arriver si incohérence / fichier partiel
+      if (p3 == null) continue; // incohérence possible / fichier partiel
 
       List<TrackObs> newTrack = new ArrayList<>();
       for (TrackObs obs : p3.track) {
@@ -67,6 +84,7 @@ public class ColmapSubsetBuilder {
     }
 
     // 5) filtrer les points2D de chaque image: si point3DId n'existe plus -> le mettre à -1
+    // mutation OK car points2D est une copie (pas celle du modèle global)
     for (ImageEntry img : keptImages.values()) {
       for (int i = 0; i < img.points2D.size(); i++) {
         Point2D p2 = img.points2D.get(i);
@@ -83,10 +101,21 @@ public class ColmapSubsetBuilder {
     writePoints3DTxt(outTxtDir.resolve("points3D.txt"), model.pointsHeaderLines, keptPoints);
   }
 
+  private static ImageEntry copyImageEntry(ImageEntry img) {
+    // Copie shallow: on duplique seulement la liste; Point2D est immutable (record)
+    return new ImageEntry(
+        img.imageId,
+        img.qw, img.qx, img.qy, img.qz,
+        img.tx, img.ty, img.tz,
+        img.cameraId,
+        img.name,
+        new ArrayList<>(img.points2D)
+    );
+  }
+
   // ---- Model structures ---------------------------------------------------
 
   private static final class ColmapTxtModel {
-    // headers (comment lines starting with '#') preserved
     final List<String> camerasHeaderLines = new ArrayList<>();
     final List<String> imagesHeaderLines = new ArrayList<>();
     final List<String> pointsHeaderLines = new ArrayList<>();
@@ -126,7 +155,7 @@ public class ColmapSubsetBuilder {
     final int r, g, b;
     final double error;
     final List<TrackObs> track;
-    final String prefixLine; // everything before TRACK, to preserve formatting if you want
+    final String prefixLine; // everything before TRACK
 
     Point3DEntry(long pointId, double x, double y, double z, int r, int g, int b, double error,
                  List<TrackObs> track, String prefixLine) {
@@ -202,7 +231,6 @@ public class ColmapSubsetBuilder {
     if (trimmed.isEmpty()) return new ArrayList<>();
     String[] tok = splitWs(trimmed);
     if (tok.length % 3 != 0) {
-      // parfois il y a des doubles espaces / etc; splitWs gère, mais si le fichier est corrompu -> on prévient
       throw new IllegalArgumentException("Ligne points2D invalide (attendu multiple de 3): " + line);
     }
     List<Point2D> out = new ArrayList<>(tok.length / 3);
