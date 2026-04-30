@@ -33,7 +33,7 @@ public class ProcessSubsets {
 		System.out.println(" Total position  size "+listPositions.size());
 		int i =1;
 		for (Paquet paquet : listPaquets) {
-			System.out.println(i+++" paquet size "+paquet);
+			System.out.println(i+++" paquet ---> "+paquet);
 		}
 		createDirectories();
 		try {

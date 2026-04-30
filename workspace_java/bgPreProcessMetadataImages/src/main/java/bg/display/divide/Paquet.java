@@ -14,7 +14,7 @@ public class Paquet {
 
 	File dirRoot;
 	File dirImages;
-
+	String paquetName;
 	int numero;
 
 
@@ -24,6 +24,7 @@ public class Paquet {
 		this.numero=numero;
 		this.dirRoot=dirRoot;
 		this.dirImages= dirImages;
+		this.paquetName= "paquet_"+String.format("%03d", numero);
 		
 	}
 
@@ -31,18 +32,17 @@ public class Paquet {
 	
 	
 	public String toString() {
-		return " Paquet  size "+listPositions.size();
+		return " Paquet name :"+paquetName+" | size :"+listPositions.size();
 	}
 	public void createDirectorie(File dir) {
 		try {
-			File dirRoot = new File(dir,"paquet_"+String.format("%03d", numero));
+			File dirRoot = new File(dir,paquetName);
 			File dirSparse = new File(dir,"sparse");
 			File dirSparse0 = new File(dirSparse,"0");
 			Set<String> listImages = getSetImages();
 			ColmapSubsetBuilder.buildSubsetTxt(dirSparse0.toPath(), dirRoot.toPath(), listImages);
 			UtilCopyBg.copyResourceToDir("sh/processDensePaquet.sh", dirRoot.toPath(),true);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

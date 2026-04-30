@@ -34,6 +34,15 @@ $COLMAP model_converter \
   --output_path "$SCRIPT_DIR/sparse/0" \
   --output_type BIN
   
+  	for f in images.bin points3D.bin cameras.bin; do
+  		p="$SCRIPT_DIR/sparse/0/$f"
+  		if [ -f "$p" ]; then
+   				 printf '%s\t%s bytes\n' "$p" "$(stat -c '%s' "$p")"
+  		else
+    			printf '%s\tMISSING\n' "$p"
+  		fi
+	done
+
   echo "bg=colmap process=dense  etape=image_undistorter   date=$(date -Is)"
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
