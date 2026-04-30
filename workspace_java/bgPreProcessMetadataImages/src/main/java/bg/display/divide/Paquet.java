@@ -14,30 +14,24 @@ public class Paquet {
 
 	File dirRoot;
 	File dirImages;
-	double xMin, xMax;
-	double yMin, yMax;
-	double dx,dy;
+
 	int numero;
 
-	public Paquet(double xxMin, double xxMax, double yyMin, double yyMax,int numero) {
-		xMin = xxMin;
-		xMax = xxMax;
-		yMin = yyMin;
-		yMax = yyMax;
-		dx = xMax-xMin;
-		dy = yMax-yMin;
+
+
+	public Paquet(List<PositionGps2> list, File dirRoot, File dirImages, int numero) {
+		this.listPositions=list;
 		this.numero=numero;
+		this.dirRoot=dirRoot;
+		this.dirImages= dirImages;
+		
 	}
 
-	List<PositionGps2> listPositions = new ArrayList<PositionGps2>();
+	private List<PositionGps2> listPositions = new ArrayList<PositionGps2>();
 	
-	public boolean containsPosition(PositionGps2 position) {
-		boolean xOK = (position.getX() >= xMin) && (position.getX() <= xMax);
-		boolean yOK = (position.getY() >= yMin) && (position.getY() <= yMax);
-		return xOK && yOK;
-	}
+	
 	public String toString() {
-		return "dx "+dx+" dy "+dy+"   size "+listPositions.size();
+		return " Paquet  size "+listPositions.size();
 	}
 	public void createDirectorie(File dir) {
 		try {
