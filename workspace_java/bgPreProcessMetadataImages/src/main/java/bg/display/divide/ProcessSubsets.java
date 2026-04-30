@@ -8,6 +8,8 @@ import java.util.List;
 import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 import bg.util.UtilCopyBg;
+import bg.util.UtilPositionGps2;
+import bg.util.UtilPositionGps2.MinMaxBounds;
 
 public class ProcessSubsets {
 
@@ -17,42 +19,17 @@ public class ProcessSubsets {
 	int nbTotalImages = 0;
 	private List<PositionGps2> listPositions;
 	List<Paquet> listPaquets = new ArrayList<Paquet>();
-	double xMin, xMax;
-	double yMin, yMax;
+	
 
 	public ProcessSubsets(File dirRoot, int paquetSize) {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
-		initMinMAx();
-		int nbPaquet_0 = nbTotalImages / paquetSize + 1;
-		double dY = yMax - yMin;
-		double dX = xMax - xMin;
-		int nX;
-		int nY;
-		nX = (int) (1 + Math.sqrt((dX / dY) * nbPaquet_0));
-		nY = (int) (1 + Math.sqrt((dY / dX) / nbPaquet_0));
-		System.out.println("dx " + dX);
-		System.out.println("dY " + dY);
-		System.out.println("Nb de paquets initial:" + nbPaquet_0);
-		System.out.println("nx " + nX);
-		System.out.println("nY " + nY);
-		int nbPaquets = nX * nY;
-		System.out.println("Nb de paquets :" + nbPaquets);
-		int j=0;
-		for (int iX = 0; iX < nX; iX++) {
-			for (int iY = 0; iY < nY; iY++) {
-				double xxMin = xMin + iX * (dX / nX);
-				double xxMax = xMin + (iX + 1) * (dX / nX);
-				double yyMin = yMin + iY * (dY / nY);
-				double yyMax = yMin + (iY + 1) * (dY / nY);
-				Paquet paquet = new Paquet(xxMin, xxMax, yyMin, yyMax,j++);
-				this.listPaquets.add(paquet);
-			}
-		}
-		System.out.println("List Paquets size :"+listPaquets.size());
-		initListPaquets();
+		
+		List<List<PositionGps2>> listList =UtilPositionGps2.extractPaquets(listPositions,paquetSize);
+		this.listPaquets=toListPaquet(listList);
+	
 		System.out.println(" Total position  size "+listPositions.size());
 		int i =1;
 		for (Paquet paquet : listPaquets) {
@@ -66,6 +43,16 @@ public class ProcessSubsets {
 			e.printStackTrace();
 		}
 	}
+	private List<Paquet> toListPaquet(List<List<PositionGps2>> listList) {
+		List<Paquet> listP = new ArrayList<Paquet>();
+		int numero=0;
+		for(List<PositionGps2> list: listList) {
+			Paquet paquet = new Paquet(list,this.dirRoot,this.dirImages,numero++);
+			listP.add(paquet);
+		}
+		return listP;
+	}
+	
 
 	private void createDirectories() {
 		for(Paquet paquet : listPaquets) {
@@ -74,33 +61,8 @@ public class ProcessSubsets {
 		
 	}
 
-	private void initListPaquets() {
-		
-		for(PositionGps2 position : listPositions) {
-			for (Paquet paquet : listPaquets) {
-				if (paquet.containsPosition(position)) {
-					paquet.listPositions.add(position);
-				}
-			}
-		}
-	}
+	
 
-	private void initMinMAx() {
-		xMin = listPositions.getFirst().getX();
-		xMax = xMin;
-		yMax = listPositions.getFirst().getY();
-		yMin = yMax;
-		for (PositionGps2 pos : listPositions) {
-			if (pos.getX() > xMax)
-				xMax = pos.getX();
-			if (pos.getX() < xMin)
-				xMin = pos.getX();
-			if (pos.getY() < yMin)
-				yMin = pos.getY();
-			if (pos.getY() > yMax)
-				yMax = pos.getY();
-		}
-
-	}
+	
 
 }

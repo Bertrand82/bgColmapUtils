@@ -33,6 +33,7 @@ echo "bg=data max_image_size=$max_image_size"
 test -d "$BG_WORK/images"
 test -d "$BG_WORK/sparse/0"
 
+
 "$COLMAP" model_analyzer --path /data/BG/sparse/0
 SPARSE_ROOT=$BG_WORK/sparse
 for m in "$SPARSE_ROOT"/*; do
@@ -57,5 +58,8 @@ echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
   "$COLMAP_CMD" model_analyzer --path "$m"
   echo
 done
+
+"$COLMAP_CMD" model_analyzer --path "$BG_WORK/sparse/0"
+
 # "$COLMAP"  --help
 # "$COLMAP" patch_match_stereo --help
