@@ -15,15 +15,19 @@ for d in paquet_*/; do
   [ -d "$d" ] || continue
   dossier="${d%/}"
   log "Début itération: dossier=$dossier"
-  echo "bg=data Dossier=${d%/}"
+  echo "bg=data Dossier=$dossier"
+
+  start_ts=$(date +%s)
 
   (
     cd "$d" || exit 1
     ./processDensePaquet.sh
-  ) || {
-    echo "Erreur dans $d" >&2
-    exit 1
-  }
-  echo "Pause 30s fin de traitement $dossier"
+  ) || { echo "Erreur dans $d" >&2; exit 1; }
+
+  end_ts=$(date +%s)
+  duree=$(( end_ts - start_ts ))
+
+  log "Fin itération: dossier=$dossier duree=${duree}s"
+  echo "Pause 30s fin de traitement $dossier  duree : ${duree}"
   sleep 30
 done

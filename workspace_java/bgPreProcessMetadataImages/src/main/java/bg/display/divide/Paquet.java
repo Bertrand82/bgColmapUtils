@@ -35,7 +35,7 @@ public class Paquet {
 	}
 	public void createDirectorie(File dir) {
 		try {
-			File dirRoot = new File(dir,"paquet_"+numero);
+			File dirRoot = new File(dir,"paquet_"+String.format("%03d", numero));
 			File dirSparse = new File(dir,"sparse");
 			File dirSparse0 = new File(dirSparse,"0");
 			Set<String> listImages = getSetImages();
