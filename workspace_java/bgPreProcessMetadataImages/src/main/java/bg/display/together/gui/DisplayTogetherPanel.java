@@ -433,12 +433,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	
 	private void processDossierCleanPaquets() {
 		System.out.println("Clean paquets ");
-		File dirSparse2 = UtilSwingChooseDoosier.chooseDossierSparse(dirSources, "DirSparse", this);
-		if (dirSparse2==null) {
-			return;
-		}
-		this.dirSources =dirSparse2;
-	    for(File f : dirSparse2.listFiles()) {
+	
+	    for(File f : this.dirSources.listFiles()) {
 	    	System.out.println("-------"+f.getName());
 	    	if (f.isDirectory() && f.getName().startsWith("paquet_")) {
 	    		try {
