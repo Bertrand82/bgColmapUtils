@@ -66,6 +66,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		public int nbPointsExtraitsMax = 100;
 		public int nbSeq = 6;
 		public int nbProx = 6;
+		public int taillePaquet=20;
 	}
 
 	/**
@@ -453,7 +454,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	
 	private void processSparse2(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
-		int paquetSize=20;
+		int paquetSize=this.paramsConfiguration.taillePaquet;
 		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,this.listPositions);
 		// Lots de 100 images
 	}

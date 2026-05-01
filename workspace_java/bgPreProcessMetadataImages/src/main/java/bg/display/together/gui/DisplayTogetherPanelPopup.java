@@ -7,71 +7,73 @@ import bg.display.together.gui.DisplayTogetherPanel.ParamsConfiguration;
 
 public class DisplayTogetherPanelPopup {
 
-    // Petit conteneur de paramètres (modifiable)
+  public static void showPopup(Component parent, ParamsConfiguration parametres) {
+    JTextField tfPoints1 = new JTextField(String.valueOf(parametres.nbPointsExtraitsMax), 6);
+    JTextField tfPoints2 = new JTextField(String.valueOf(parametres.taillePaquet), 6);
 
-    public static void showPopup(Component parent, ParamsConfiguration parametres) {
-        JTextField tfPoints = new JTextField(String.valueOf(parametres.nbPointsExtraitsMax), 4); // 4 colonnes (≈ 4 chars)
-        JSpinner spSeq  = new JSpinner(new SpinnerNumberModel(parametres.nbSeq, 0, 9999, 1));
-        JSpinner spProx = new JSpinner(new SpinnerNumberModel(parametres.nbProx, 0, 9999, 1));
+    JSpinner spSeq  = new JSpinner(new SpinnerNumberModel(parametres.nbSeq, 0, 9999, 1));
+    JSpinner spProx = new JSpinner(new SpinnerNumberModel(parametres.nbProx, 0, 9999, 1));
 
-        JPanel form = new JPanel(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(6, 6, 6, 6);
-        c.anchor = GridBagConstraints.WEST;
+    // Formulaire en GridLayout: 4 lignes, 2 colonnes (Label / Champ)
+    JPanel form = new JPanel(new GridLayout(0, 2, 10, 8));
+    form.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        c.gridx = 0; c.gridy = 0;
-        form.add(new JLabel("Nombre de points extrait :"), c);
-        c.gridx = 1;
-        form.add(tfPoints, c);
+    form.add(new JLabel("Nombre de points extrait :"));
+    form.add(tfPoints1);
 
-        c.gridx = 0; c.gridy = 1;
-        form.add(new JLabel("Nombre d'images séquentielles :"), c);
-        c.gridx = 1;
-        form.add(spSeq, c);
+    form.add(new JLabel("Taille paquet :"));
+    form.add(tfPoints2);
 
-        c.gridx = 0; c.gridy = 2;
-        form.add(new JLabel("Nombre d'images à proximité :"), c);
-        c.gridx = 1;
-        form.add(spProx, c);
+    form.add(new JLabel("Nombre d'images séquentielles :"));
+    form.add(spSeq);
 
-        JDialog dlg = new JDialog(SwingUtilities.getWindowAncestor(parent), "Paramètres", Dialog.ModalityType.APPLICATION_MODAL);
+    form.add(new JLabel("Nombre d'images à proximité :"));
+    form.add(spProx);
 
-        JButton btCancel = new JButton("Cancel");
-        JButton btApply  = new JButton("Apply and close");
+    JDialog dlg = new JDialog(
+        SwingUtilities.getWindowAncestor(parent),
+        "Paramètres",
+        Dialog.ModalityType.APPLICATION_MODAL
+    );
 
-        btCancel.addActionListener(e -> dlg.dispose());
+    JButton btCancel = new JButton("Cancel");
+    JButton btApply  = new JButton("Apply and close");
 
-        btApply.addActionListener(e -> {
-            // parsing minimal + robustesse simple
-            try {
-                int points = Integer.parseInt(tfPoints.getText().trim());
-                int seq    = (Integer) spSeq.getValue();
-                int prox   = (Integer) spProx.getValue();
+    btCancel.addActionListener(e -> dlg.dispose());
 
-                parametres.nbPointsExtraitsMax = points;
-                parametres.nbSeq    = seq;
-                parametres.nbProx   = prox;
+    btApply.addActionListener(e -> {
+      try {
+        int points = Integer.parseInt(tfPoints1.getText().trim());
+        int taillePaquet = Integer.parseInt(tfPoints2.getText().trim());
+        int seq  = (Integer) spSeq.getValue();
+        int prox = (Integer) spProx.getValue();
 
-                dlg.dispose();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(dlg, "Le nombre de points doit être un entier.", "Erreur", JOptionPane.ERROR_MESSAGE);
-                tfPoints.requestFocusInWindow();
-                tfPoints.selectAll();
-            }
-        });
+        parametres.nbPointsExtraitsMax = points;
+        parametres.taillePaquet = taillePaquet; // manquait dans ton code original
+        parametres.nbSeq = seq;
+        parametres.nbProx = prox;
 
-        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttons.add(btCancel);
-        buttons.add(btApply);
+        dlg.dispose();
+      } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(
+            dlg,
+            "Les champs numériques doivent être des entiers.",
+            "Erreur",
+            JOptionPane.ERROR_MESSAGE
+        );
+      }
+    });
 
-        dlg.getContentPane().setLayout(new BorderLayout());
-        dlg.getContentPane().add(form, BorderLayout.CENTER);
-        dlg.getContentPane().add(buttons, BorderLayout.SOUTH);
+    JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    buttons.add(btCancel);
+    buttons.add(btApply);
 
-        dlg.pack();
-        dlg.setLocationRelativeTo(parent);
-        dlg.setVisible(true);
-    }
+    dlg.getContentPane().setLayout(new BorderLayout());
+    dlg.getContentPane().add(form, BorderLayout.CENTER);
+    dlg.getContentPane().add(buttons, BorderLayout.SOUTH);
 
-
+    dlg.pack();
+    dlg.setLocationRelativeTo(parent);
+    dlg.setVisible(true);
+  }
 }
