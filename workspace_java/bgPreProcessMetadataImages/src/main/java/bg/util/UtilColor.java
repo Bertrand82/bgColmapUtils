@@ -6,7 +6,7 @@ public final class UtilColor {
 
   public static Color colorFor(int index1to1000) {
     if (index1to1000 < 1 || index1to1000 > 1000) {
-      throw new IllegalArgumentException("index must be in [1..1000]");
+      index1to1000=index1to1000 % 1000;
     }
 
     int x = index1to1000;

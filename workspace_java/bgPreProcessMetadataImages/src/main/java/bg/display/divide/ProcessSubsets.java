@@ -19,9 +19,11 @@ public class ProcessSubsets {
 	int nbTotalImages = 0;
 	private List<PositionGps2> listPositions;
 	List<Paquet> listPaquets = new ArrayList<Paquet>();
-	
-
 	public ProcessSubsets(File dirRoot, int paquetSize) {
+		this(dirRoot,paquetSize,PositionGps2Factory.getListGpsPositionFromDirImages(new File(dirRoot, "images")));
+	}
+
+	public ProcessSubsets(File dirRoot, int paquetSize, List<PositionGps2> listPositions_) {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;

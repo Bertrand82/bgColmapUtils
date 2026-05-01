@@ -119,7 +119,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JCheckBox checkBoxShowPaquets= new JCheckBox("paquets");
 	MetaDatasCsv metaDataCsv;
 	File dirSources;
-	File dirSparse;
+	File dirSparse_;
 	final SablierSwing sablierSwing;
 	final JFrame frame;
 
@@ -426,16 +426,17 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	
 	private void processDossierSparse() {
 		System.out.println("processDossierSparse");
-		chooseDossierSparse();
+		
+		this.processSparse2(dirSources);
 	}
 	
 	private void processDossierCleanPaquets() {
 		System.out.println("Clean paquets ");
-		File dirSparse2 = UtilSwingChooseDoosier.chooseDossierSparse(dirSparse, "DirSparse", this);
+		File dirSparse2 = UtilSwingChooseDoosier.chooseDossierSparse(dirSources, "DirSparse", this);
 		if (dirSparse2==null) {
 			return;
 		}
-		this.dirSparse =dirSparse2;
+		this.dirSources =dirSparse2;
 	    for(File f : dirSparse2.listFiles()) {
 	    	System.out.println("-------"+f.getName());
 	    	if (f.isDirectory() && f.getName().startsWith("paquet_")) {
@@ -449,49 +450,14 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	    }
 	}
 	
-	private void processSparse(File dirSparse) {
+	private void processSparse2(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
-		int paquetSize=100;
-		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize);
+		int paquetSize=20;
+		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,this.listPositions);
 		// Lots de 100 images
 	}
 	
-	private void chooseDossierSparse() {
-		System.out.println("choose Dossier sources");
-		JFileChooser chooser = new JFileChooser();
-		chooser.setDialogTitle("Choisir le dossier source");
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setMultiSelectionEnabled(false);
-
-		// Optionnel : partir du dernier dossier choisi
-		if (UtilFile.existsDir(dirSparse)) {
-			chooser.setCurrentDirectory(dirSparse);
-		} else {
-			String dirPath = ""
-					+ PropertiesGlobal.getProperties().getProperty("DirSparse", System.getProperty("user.home"));
-			File file = new File(dirPath);
-
-			chooser.setCurrentDirectory(file);
-		}
-
-		int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
-		if (result == JFileChooser.APPROVE_OPTION) {
-			dirSparse = chooser.getSelectedFile();
-			PropertiesGlobal.saveProperty("DirSparse", dirSparse.getAbsolutePath());
-			// Exemple : feedback utilisateur
-			this.labelLog.setText(dirSparse.getAbsolutePath());
-			try {
-				this.processSparse(dirSparse);
-			
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				this.repaint();
-			}
-		}
-	}
-
+	
 
 	
 
