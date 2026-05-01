@@ -27,7 +27,7 @@ public class ProcessSubsets {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;
-		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
+		this.listPositions =listPositions_;
 		
 		List<List<PositionGps2>> listList =UtilPositionGps2.extractPaquets(listPositions,paquetSize);
 		this.listPaquets=toListPaquet(listList);

@@ -363,6 +363,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			// g.fillOval(1, 1, bean.px, bean.py);
 			if (showPaquets) {
 				g.setColor(bean.gps.getColor());
+				g.fillRect(bean.px, bean.py, 10, 10);
 			}
 			g.fillRect(bean.px, bean.py, 3, 3);
 		}
