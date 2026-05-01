@@ -1,5 +1,6 @@
 package bg.util;
 
+import java.awt.Color;
 import java.time.LocalDateTime;
 
 /** Résultat (compatible Java 8, pas de record). */
@@ -13,6 +14,8 @@ public class PositionGps2 {
     private final double x;
     private final double y;
     private final LocalDateTime date; // null si absente
+    private int numeroPaquet = -1;
+    Color color = Color.RED;
    
     public LocalDateTime getDate() {
 		return date;
@@ -77,4 +80,25 @@ public class PositionGps2 {
 
         return EARTH_RADIUS_METERS * latRad;
     }
+
+
+
+	public int getNumeroPaquet() {
+		return numeroPaquet;
+	}
+
+
+
+	public void setNumeroPaquet(int numeroPaquet) {
+		this.numeroPaquet = numeroPaquet;
+		this.color = UtilColor.colorFor(numeroPaquet);
+	}
+
+
+
+	public Color getColor() {
+		
+		return color;
+	}
+    
 }

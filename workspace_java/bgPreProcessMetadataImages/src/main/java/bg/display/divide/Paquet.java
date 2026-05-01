@@ -63,4 +63,10 @@ public class Paquet {
 		}
 		return setImages;
 	}
+	public void updateReferenceNumeroPaquet() {
+		for(PositionGps2 pg: this.listPositions) {
+			pg.setNumeroPaquet(numero);
+		}
+		
+	}
 }

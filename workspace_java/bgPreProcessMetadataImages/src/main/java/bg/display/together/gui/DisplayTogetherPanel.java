@@ -116,6 +116,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JMenuItem buttonDebug = new JMenuItem("debug");
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
+	JCheckBox checkBoxShowPaquets= new JCheckBox("paquets");
 	MetaDatasCsv metaDataCsv;
 	File dirSources;
 	File dirSparse;
@@ -172,6 +173,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
+		checkBoxShowPaquets.addActionListener(e -> canvas.repaint());
 		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
 		JMenuItem menuItemProcessRapportFromLog = new JMenuItem("process Log");
 		menuItemConfigExtraction.addActionListener(e -> DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
@@ -193,6 +195,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuBar.add(buttonExtractData);
 
 		menuBar.add(checkBoxImagesCorrected);
+		menuBar.add(checkBoxShowPaquets);
 
 		this.add(canvas, BorderLayout.CENTER);
 		this.add(previewImage, BorderLayout.WEST);
@@ -355,8 +358,12 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		if (this.imageMap != null) {
 			g.drawImage(imageMap, 0, 0, xxMaxPixel_, yyMaxPixel_, null);
 		}
+		boolean showPaquets = checkBoxShowPaquets.isSelected();
 		for (PositionBean2 bean : this.listBeans) {
 			// g.fillOval(1, 1, bean.px, bean.py);
+			if (showPaquets) {
+				g.setColor(bean.gps.getColor());
+			}
 			g.fillRect(bean.px, bean.py, 3, 3);
 		}
 		if (checkBoxImagesCorrected.isSelected()) {
