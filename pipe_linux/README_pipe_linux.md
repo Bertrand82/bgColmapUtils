@@ -150,11 +150,13 @@ Si dans chaque dense_i tu as bien un sparse/ (copié ou subset) correspondant au
 colmap model_analyzer \
   --path /chemin/vers/sparse/0
 
+## DONE
+- batch de surveillance machine: ram + temperature
+- réconciliation modèles 3D
+
 ## TODO
 - outil de spécification de trajectoires
 - test images satellites ou Google
-- réconciliation modèles 3D
 - outil d'exploitation des logs COLMAP
 - Recuperer images depuis un drone
-- batch de surveillance machine: ram + temperature
 
