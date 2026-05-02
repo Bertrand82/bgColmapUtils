@@ -14,8 +14,8 @@ echo "bg=data PDAL=$PDAL step=translate_to_las IN=$IN OUT_LAS=$OUT_LAS date=$(da
 
 py3dtiles="/home/bertrand/venv/py3dtiles/bin/py3dtiles"
 echo "bg=data step=py3dtiles state="start" file=tiles_fused py3dtiles=$py3dtiles date=$(date -Is)"
-
-"$py3dtiles" convert "$OUT_LAS" --out tiles_fused --overwrite --spec-version 1.0 --color_scale 256
+# /home/bertrand/venv/py3dtiles/bin/py3dtiles convert fused.las --out tiles_fused2--overwrite --spec-version 1.0 --color_scale 256
+"$py3dtiles" convert "$OUT_LAS" --out tiled_fused --overwrite --spec-version 1.0 --color_scale 256
 echo "bg=data step=py3dtiles state="done" file=tiles_fused date=$(date -Is)"
 
 echo "bg=data  step=fin date=$(date -Is)"

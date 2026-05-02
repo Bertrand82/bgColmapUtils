@@ -88,6 +88,11 @@ echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
   --PoissonMeshing.point_weight 1 \
   --PoissonMeshing.color 1 \
   --PoissonMeshing.num_threads 4
+  
+
+OUT_LAS="fused.las"
+echo "bg=colmap process="PDAL" PDAL=$PDAL step=translate_to_las IN=$IN OUT_LAS=$OUT_LAS date=$(date -Is)"
+"$PDAL" translate "$DENSE_DIR/fused.ply" "$OUT_LAS"
 
 echo "bg=colmap process=dense  etape=FIN   date=$(date -Is)"
 echo "bg=data fused.ply=$DENSE_DIR/fused.ply"
