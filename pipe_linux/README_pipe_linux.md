@@ -133,23 +133,37 @@ Writing photometric output for DJI_20260207181546_0080_D.JPG
   - 2- Je fais image_undistorter les 2000 images
   - 3- J'extraie 20 fois 100 images de ./dense/images dans ./dense_i/images (i de 1 à 20)
   - 4-Je lance patch_match_stereo puis stereo_fusion sur dense_i
-  - 5 - J'ai 20 fusion_i.PLY : Comment je les fusionne ?
+  - 5 - J'ai 20 fusion_i.PLY : 
+  - Q Question Comment je les fusionne ?
 
   - Point crucial avant de fusionner
-Tes fusion_i.ply seront dans le même repère uniquement si chaque dense_i utilise le même sparse/poses que le global (ou un sous-modèle cohérent extrait du global).
-Si dans chaque dense_i tu as bien un sparse/ (copié ou subset) correspondant aux images du batch, alors oui: fusion = concat + dédup.
-  - Fusion en ligne de commande (recommandé) : PDAL
+    - Tes fusion_i.ply seront dans le même repère uniquement si chaque dense_i utilise le même sparse/poses que le global (ou un sous-modèle cohérent extrait du global).
+  - oui: fusion = concat + dédup.
+  - R Fusion en ligne de commande (recommandé) : PDAL
 
-```bash 
-  colmap model_subset \
-  --input_path "$BG_WORK/sparse/0" \
-  --output_path "$BG_WORK/sparse/subset" \
-  --image_list_path "$BG_WORK/image_list.txt"
-```
+
 ## Indicateur qualité modelisation
 colmap model_analyzer \
   --path /chemin/vers/sparse/0
+  
+## Prompt visualisation 
 
+  - Visualiser fused.ply (COLMAP dense point cloud) sur un site web en 3D avec CesiumJS + 3D Tiles
+  - J'ai un fichier fused.ply en sortie de colmap (un nuage de points dense)
+  - Je veux le visualiser sur un site web en 3D
+  - Q : Comment je fais
+  - R1 Conversion fused.ply → fused.laz (recommandé): pdal translate fused.ply fused.laz
+  - R2 Vérifier rapidement : pdal info fused.laz | head
+  - R3 Convertir LAZ → 3D Tiles (tileset.json + .pnts)
+    - avec 3d-tiles-tools (Node.js) 
+    - installation 
+     ```bash sudo apt-get install -y nodejs npm
+		npm i -g 3d-tiles-tools```
+	- execution
+	 ```bash 3d-tiles-tools tiler --input fused.laz --output tiles_fused --format pnts ```
+	- Servir les tuiles en HTTP (obligatoire)
+	- Viewer web CesiumJS (minimal)
+  
 ## DONE
 - batch de surveillance machine: ram + temperature
 - réconciliation modèles 3D
@@ -157,6 +171,7 @@ colmap model_analyzer \
 ## TODO
 - outil de spécification de trajectoires
 - test images satellites ou Google
-- outil d'exploitation des logs COLMAP
+- outil d'exploitation des logs COLMAP ( ajustage)
 - Recuperer images depuis un drone
+- Convertis en 3D Tiles + viewer CesiumJS.
 
