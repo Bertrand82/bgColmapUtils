@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Viewer 3D Tiles (tiled_fused.json) - fond blanc</title>
+
+  <!-- CesiumJS -->
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.127/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.127/Build/Cesium/Cesium.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; background: #fff; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    #cesiumContainer { position: absolute; inset: 0; background: #fff; }
+
+    #toolbar {
+      position: absolute;
+      z-index: 10;
+      top: 10px; left: 10px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    #toolbar input[type="number"] { width: 120px; padding: 6px 8px; }
+    #toolbar button { padding: 7px 10px; cursor: pointer; }
+    #status { font-size: 12px; opacity: 0.85; max-width: 55vw; }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <strong>tiled_fused.json</strong>
+
+    <label>
+      Zoom (hauteur caméra, m)
+      <input id="zoomInput" type="number" min="0.1" step="1" value="100" />
+    </label>
+    <button id="applyZoomBtn">Appliquer</button>
+    <button id="fitBtn">Centrer</button>
+
+    <!-- optionnel: blanc total (cache le globe) -->
+    <label style="margin-left:6px; font-size:12px; opacity:.9;">
+      <input id="flatWhite" type="checkbox" />
+      Blanc total (sans globe)
+    </label>
+
+    <span id="status">Chargement…</span>
+  </div>
+
+  <div id="cesiumContainer"></div>
+
+  <script>
+    const TILESET_URL = './tiled_fused.json';
+
+    const statusEl = document.getElementById('status');
+    const zoomInput = document.getElementById('zoomInput');
+    const applyZoomBtn = document.getElementById('applyZoomBtn');
+    const fitBtn = document.getElementById('fitBtn');
+    const flatWhite = document.getElementById('flatWhite');
+
+    function setStatus(msg) { statusEl.textContent = msg; }
+
+    const viewer = new Cesium.Viewer('cesiumContainer', {
+      animation: false,
+      timeline: false,
+      baseLayerPicker: true,
+      geocoder: false,
+      homeButton: false,
+      navigationHelpButton: false,
+      infoBox: false,
+      selectionIndicator: false,
+      shadows: false,
+      shouldAnimate: false,
+    });
+
+    // Fond blanc (ciel) + globe blanc
+    viewer.scene.backgroundColor = Cesium.Color.WHITE;
+    viewer.scene.skyBox = undefined;          // supprime le skybox (étoiles)
+    viewer.scene.skyAtmosphere = undefined;   // supprime l'atmosphère bleue
+    viewer.scene.globe.baseColor = Cesium.Color.WHITE;
+
+    // Désactive aussi le "fog" et les effets qui peuvent teinter le fond
+    viewer.scene.fog.enabled = false;
+
+    // Option "blanc total"
+    flatWhite.addEventListener('change', () => {
+      const on = flatWhite.checked;
+      viewer.scene.globe.show = !on; // si on coche, on cache le globe => fond blanc uniforme
+    });
+
+    let tileset;
+
+    async function loadTileset() {
+      setStatus(`Chargement de ${TILESET_URL} …`);
+      try {
+        tileset = await Cesium.Cesium3DTileset.fromUrl(TILESET_URL, {
+          maximumScreenSpaceError: 8,
+          dynamicScreenSpaceError: true,
+        });
+
+        viewer.scene.primitives.add(tileset);
+        await tileset.readyPromise;
+
+        setStatus('Tileset chargé. Centrage…');
+        await viewer.zoomTo(tileset);
+
+        setStatus('OK (molette=zoom, clic droit=rotation, clic gauche=pan).');
+      } catch (e) {
+        console.error(e);
+        setStatus(`Erreur: ${e?.message ?? String(e)}`);
+      }
+    }
+
+    function zoomToHeight(heightMeters) {
+      if (!tileset || !tileset.boundingSphere) return;
+
+      const center = tileset.boundingSphere.center;
+      const carto = Cesium.Cartographic.fromCartesian(center);
+
+      const destination = Cesium.Cartesian3.fromRadians(
+        carto.longitude,
+        carto.latitude,
+        carto.height + heightMeters
+      );
+
+      viewer.camera.flyTo({ destination, duration: 0.6 });
+    }
+
+    applyZoomBtn.addEventListener('click', () => {
+      const h = Number(zoomInput.value);
+      if (!Number.isFinite(h) || h <= 0) return;
+      zoomToHeight(h);
+    });
+
+    zoomInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') applyZoomBtn.click();
+    });
+
+    fitBtn.addEventListener('click', async () => {
+      if (!tileset) return;
+      await viewer.zoomTo(tileset);
+    });
+
+    loadTileset();
+  </script>
+</body>
+</html>

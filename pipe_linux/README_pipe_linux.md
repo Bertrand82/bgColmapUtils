@@ -164,6 +164,36 @@ colmap model_analyzer \
 	- Servir les tuiles en HTTP (obligatoire)
 	- Viewer web CesiumJS (minimal)
   
+## Installer pipe pour convertir en tiles
+
+```
+sudo apt update
+sudo apt install -y python3-venv python3-pip
+
+python3 -m venv ~/venv/py3dtiles
+source ~/venv/py3dtiles/bin/activate
+pip install -U pip wheel
+pip install py3dtiles
+```
+
+## Convertir en tiles :
+```bash
+~/workspaceCpp/PDAL/build/bin/pdal translate merged.ply fused.las
+```
+puis
+
+```bash
+/home/bertrand/venv/py3dtiles/bin/py3dtiles convert fused.las --out tiles_fused --overwrite --spec-version 1.0
+```
+## Visualiser les tiles 
+Serveur local:
+```bash
+cd tiles_fused
+python3 -m http.server 8000
+```
+Voir dans 
+  - Cesium Sandcastle (rapide si tu as internet) Ouvre https://sandcastle.cesium.com/
+
 ## DONE
 - batch de surveillance machine: ram + temperature
 - réconciliation modèles 3D

@@ -19,3 +19,8 @@ echo "bg=data PDAL=$PDAL step=translate_to_las  OUT_LAS=$OUT_LAS"
 "$PDAL info $OUT | head" 
 
 
+py3dtiles=/home/bertrand/venv/py3dtiles/bin/py3dtiles
+echo "bg=data py3dtiles=$py3dtiles"
+# pip install -U "py3dtiles[las]" // Installer le support las pour py3dtiles eventuellement
+# /home/bertrand/venv/py3dtiles/bin/py3dtiles convert fused.las --out tiles_fused --overwrite --spec-version 1.0
+"$py3dtiles convert fused.las --out tiles_fused --overwrite --spec-version 1.0"
