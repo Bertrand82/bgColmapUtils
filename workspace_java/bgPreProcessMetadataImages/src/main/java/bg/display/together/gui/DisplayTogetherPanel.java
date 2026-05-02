@@ -156,7 +156,11 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
 			@Override
 			protected void done() {
-				System.err.println("sssssssssstop dialog");
+				File fileImages = new File(dirTargetOut,"images");
+				if (fileImages.exists()  ) {
+					System.out.println("Nb Images " + fileImages.listFiles().length );
+				}
+				System.err.println("sssssssssstop dialog ");
 				sablierSwing.stop();
 			}
 		};
@@ -548,14 +552,14 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		};
 		sw.execute();
 	}
-
+	File dirTargetOut;
 	private void extractDataProcess() {
 		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
-		File dirTarget = UtilCreateDirPopups.createDirectoryPopup(this);
-		dirTarget.mkdirs();
-		File dirTargetImages = new File(dirTarget, "images");
+		dirTargetOut = UtilCreateDirPopups.createDirectoryPopup(this);
+		dirTargetOut.mkdirs();
+		File dirTargetImages = new File(dirTargetOut, "images");
 		dirTargetImages.mkdirs();
 		// Copier les images
 		int i = 0;
@@ -593,7 +597,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				metadataCsv += bean.positionMetaData.toString2_csv() + "\n";
 			}
 		}
-		File metadataCsvFile = new File(dirTarget, "metadataCSV.txt");
+		File metadataCsvFile = new File(dirTargetOut, "metadataCSV.txt");
 		System.out.println("file " + metadataCsvFile.getName() + "  exists " + metadataCsvFile.exists());
 		if (metadataCsvFile.exists()) {
 			boolean deleted = metadataCsvFile.delete();
@@ -627,7 +631,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		HashSet<PaireMetadata2> paires = consolidationPaire(hashTableClosest);
 		System.out.println("Nb de paires :" + paires.size());
 		try {
-			exportListPaires(dirTarget, paires);
+			exportListPaires(dirTargetOut, paires);
 		} catch (Exception e) {
 			log("Exception " + e.getMessage());
 			e.printStackTrace();
@@ -648,6 +652,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		w.close();
 		System.out.println("nb paires " + setPairesUniques.size());
 		System.out.println("Fichier ecrit dans " + fileOut.getPath());
+		
 	}
 
 	private List<PositionMetaData2> getListPositionMetaData2() {

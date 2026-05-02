@@ -91,6 +91,7 @@ echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
   
 
 OUT_LAS="fused.las"
+PDAL="$HOME/workspaceCpp/PDAL/build/bin/pdal"
 echo "bg=colmap process="PDAL" PDAL=$PDAL step=translate_to_las OUT_LAS=$OUT_LAS date=$(date -Is)"
 "$PDAL" translate "$DENSE_DIR/fused.ply" "$OUT_LAS"
 

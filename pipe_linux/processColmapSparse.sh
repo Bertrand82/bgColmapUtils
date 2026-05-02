@@ -88,18 +88,55 @@ echo "bg=colmap process=sparse etape=mapper  date=$(date -Is)"
 echo "bg=colmap process=sparse etape=model_converter_PLY  date=$(date -Is)"
 
 # Export PLY
-"$COLMAP_CMD" model_converter \
-  --input_path "$BG_WORK/sparse/0" \
-  --output_path "$BG_WORK/sparse/0/points3D.ply" \
-  --output_type PLY
+SPARSE_ROOT="$BG_WORK/sparse"
+found_any=0
+echo "BG SPARSE_ROOT =$SPARSE_ROOT "
+for model_dir in "$SPARSE_ROOT"/*; do
+  [[ -d "$model_dir" ]] || continue
+  model_name="$(basename "$model_dir")"
 
-# Export TXT (cameras.txt / images.txt / points3D.txt)
-echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
+  # Option: ne garder que les dossiers qui sont des entiers
+  if [[ ! "$model_name" =~ ^[0-9]+$ ]]; then
+    echo "bg  model_name =$model_name step=skip" 
+    continue
+  fi
+  echo "bg  model_name =$model_name step=loop" 
+  # Détecte si un modèle COLMAP existe dans ce dossier
+  has_bin=0
+  [[ -f "$model_dir/cameras.bin" && -f "$model_dir/images.bin" && -f "$model_dir/points3D.bin" ]] && has_bin=1
+  has_txt=0
+  [[ -f "$model_dir/cameras.txt" && -f "$model_dir/images.txt" && -f "$model_dir/points3D.txt" ]] && has_txt=1
 
-"$COLMAP_CMD" model_converter \
-  --input_path "$BG_WORK/sparse/0" \
-  --output_path "$BG_WORK/sparse/0" \
-  --output_type TXT
+  if [[ $has_bin -eq 0 && $has_txt -eq 0 ]]; then
+    echo "bg=colmap process=sparse model=$model_name etape=skip reason=no_model_files dir=$model_dir date=$(date -Is)"
+    continue
+  fi
+
+  found_any=1
+  echo "bg=colmap process=sparse model=$model_name etape=export_start dir=$model_dir date=$(date -Is)"
+
+  # Export PLY
+  "$COLMAP_CMD" model_converter \
+    --input_path "$model_dir" \
+    --output_path "$model_dir/points3D.ply" \
+    --output_type PLY
+
+  # Export TXT (cameras.txt / images.txt / points3D.txt)
+  "$COLMAP_CMD" model_converter \
+    --input_path "$model_dir" \
+    --output_path "$model_dir" \
+    --output_type TXT
+
+
+
+  echo "bg=colmap process=sparse model=$model_name etape=export_done dir=$model_dir date=$(date -Is)"
+done
+
+if [[ $found_any -eq 0 ]]; then
+  echo "bg=WARNING process=sparse etape=export_models_none reason=no_sparse_models_found root=$SPARSE_ROOT date=$(date -Is)"
+fi
+
+echo "bg=colmap process=sparse etape=export_models_end date=$(date -Is)"
   
 echo "bg=colmap process=sparse etape=model_analyzer  date=$(date -Is)"
   

@@ -1,65 +1,58 @@
-#!/usr/bin/env bash
-set -euo pipefail
+# --- Export pour tous les modèles sparse/* (0,1,2,...) ---
+echo "bg=colmap process=sparse etape=export_models_start date=$(date -Is)"
 
-# Usage:
-#   BG_WORK=/data/BG ./dense_poisson.sh
-# Expects:
-#   $BG_WORK/images
-#   $BG_WORK/sparse/0   (COLMAP sparse model)
-# Produces:
-#   $BG_WORK/dense/fused.ply
-#   $BG_WORK/dense/mesh_poisson.ply
+shopt -s nullglob
 
-COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
-COLMAP_CMD=$COLMAP
-BG_WORK=/data/BG
-# max_image_size=4032
-max_image_size=1512
-DENSE_DIR="$BG_WORK/dense"
-LOG_DIR="$DENSE_DIR/logs"
-mkdir -p "$DENSE_DIR" "$LOG_DIR"
+COLMAP_CMD="/home/bertrand/workspaceCpp/colmap/build/src/colmap/exe/colmap"
+BG_WORK="/data/BG"
+SPARSE_ROOT="$BG_WORK/sparse"
 
-LOG_FILE="$LOG_DIR/dense_$(date +%Y%m%d_%H%M%S).log"
-exec > >(tee -a "$LOG_FILE") 2>&1
+found_any=0
+echo "BG SPARSE_ROOT =$SPARSE_ROOT "
+for model_dir in "$SPARSE_ROOT"/*; do
+  [[ -d "$model_dir" ]] || continue
+  model_name="$(basename "$model_dir")"
 
-echo "COLMAP: $COLMAP"
-"$COLMAP" --version || true
-echo "bg=data BG_WORK=$BG_WORK"
-echo "bg=data dense dir: $DENSE_DIR"
-echo "bg=data LOG_FILE=$LOG_FILE"
-echo "bg=data max_image_size=$max_image_size"
+  # Option: ne garder que les dossiers qui sont des entiers
+  if [[ ! "$model_name" =~ ^[0-9]+$ ]]; then
+    echo "bg  model_name =$model_name step=skip" 
+    continue
+  fi
+  echo "bg  model_name =$model_name step=loop" 
+  # Détecte si un modèle COLMAP existe dans ce dossier
+  has_bin=0
+  [[ -f "$model_dir/cameras.bin" && -f "$model_dir/images.bin" && -f "$model_dir/points3D.bin" ]] && has_bin=1
+  has_txt=0
+  [[ -f "$model_dir/cameras.txt" && -f "$model_dir/images.txt" && -f "$model_dir/points3D.txt" ]] && has_txt=1
 
-# Basic sanity checks
-test -d "$BG_WORK/images"
-test -d "$BG_WORK/sparse/0"
+  if [[ $has_bin -eq 0 && $has_txt -eq 0 ]]; then
+    echo "bg=colmap process=sparse model=$model_name etape=skip reason=no_model_files dir=$model_dir date=$(date -Is)"
+    continue
+  fi
 
+  found_any=1
+  echo "bg=colmap process=sparse model=$model_name etape=export_start dir=$model_dir date=$(date -Is)"
 
-"$COLMAP" model_analyzer --path /data/BG/sparse/0
-SPARSE_ROOT=$BG_WORK/sparse
-for m in "$SPARSE_ROOT"/*; do
-  [ -d "$m" ] || continue
-  [ -f "$m/cameras.bin" ] || continue
-  [ -f "$m/images.bin" ]  || continue
-  [ -f "$m/points3D.bin" ]|| continue
+  # Export PLY
+  "$COLMAP_CMD" model_converter \
+    --input_path "$model_dir" \
+    --output_path "$model_dir/points3D.ply" \
+    --output_type PLY
 
-"$COLMAP_CMD" model_converter \
-  --input_path "$m" \
-  --output_path "$m/points3D.ply" \
-  --output_type PLY
+  # Export TXT (cameras.txt / images.txt / points3D.txt)
+  "$COLMAP_CMD" model_converter \
+    --input_path "$model_dir" \
+    --output_path "$model_dir" \
+    --output_type TXT
 
-# Export TXT (cameras.txt / images.txt / points3D.txt)
-echo "bg=colmap process=sparse etape=model_converter_TXT  date=$(date -Is)"
+  # Analyse
+  "$COLMAP_CMD" model_analyzer --path "$model_dir"
 
-"$COLMAP_CMD" model_converter \
-  --input_path "$m" \
-  --output_path "$m" \
-  --output_type TXT
-  echo "=== Model: $m ==="
-  "$COLMAP_CMD" model_analyzer --path "$m"
-  echo
+  echo "bg=colmap process=sparse model=$model_name etape=export_done dir=$model_dir date=$(date -Is)"
 done
 
-"$COLMAP_CMD" model_analyzer --path "$BG_WORK/sparse/0"
+if [[ $found_any -eq 0 ]]; then
+  echo "bg=colmap process=sparse etape=export_models_none reason=no_sparse_models_found root=$SPARSE_ROOT date=$(date -Is)"
+fi
 
-# "$COLMAP"  --help
-# "$COLMAP" patch_match_stereo --help
+echo "bg=colmap process=sparse etape=export_models_end date=$(date -Is)"
