@@ -43,12 +43,12 @@ for d in paquet_*/; do
       echo
     } >>"$ERRORS_LOG"
 
-    # continuer avec le paquet suivant
-    sleep 5
+    # continuer avec le paquet suivant    
     continue
   fi
 
   log "OK: dossier=$dossier duree=${duree}s (log $paquet_log)"
-  echo "Pause 30s fin de traitement $dossier  duree : ${duree}"
-  sleep 30
+  SLEEP_FIN=5
+  echo "Pause $SLEEP_FIN secondes fin de traitement $dossier  duree : ${duree}"
+  sleep $SLEEP_FIN
 done

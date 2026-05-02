@@ -169,7 +169,7 @@ colmap model_analyzer \
 - réconciliation modèles 3D
 
 ## TODO
-- outil de spécification de trajectoires
+- outil de visualisation 3D et de spécification de trajectoires
 - test images satellites ou Google
 - outil d'exploitation des logs COLMAP ( ajustage)
 - Recuperer images depuis un drone
