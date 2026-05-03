@@ -49,6 +49,16 @@ for d in paquet_*/; do
 
   log "OK: dossier=$dossier duree=${duree}s (log $paquet_log)"
   SLEEP_FIN=5
-  echo "Pause $SLEEP_FIN secondes fin de traitement $dossier  duree : ${duree}"
+  echo "bg=colmap process=chapeau  etape=process.end   date=$(date -Is)"
+  echo "bg=colmap process=mergePLY  etape=process.end   date=$(date -Is)"
+  ./processMergePLY.sh
+  echo "bg=colmap process=PlyToLaz  etape=process.end   date=$(date -Is)"
+  ./processPlyToLaz.sh
+  echo "bg=colmap process=MergePlyToLaz  etape=process.end   date=$(date -Is)"
+  ./processMergePLYtoLaz.sh
+  echo "bg=colmap process=LasToPotree  etape=process.end   date=$(date -Is)"
+  ./processLasToPotree.sh
+  
+  echo "bg=colmap process=chapeau  etape=fin Pause=$SLEEP_FIN dossier=$dossier  duree : ${duree}"
   sleep $SLEEP_FIN
 done
