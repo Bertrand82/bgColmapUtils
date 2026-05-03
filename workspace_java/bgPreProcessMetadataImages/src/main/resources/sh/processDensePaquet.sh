@@ -10,7 +10,8 @@ BG_WORK="$(readlink -f -- "$SCRIPT_DIR/..")"
 echo "BG_WORK=$BG_WORK"
 # max_image_size=4032
 # max_image_size=1512
-max_image_size=2024
+# max_image_size=2024 // working par paquet de 20 images
+max_image_size=4000
 DENSE_DIR="$SCRIPT_DIR/dense"
 LOG_DIR="$DENSE_DIR/logs"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"

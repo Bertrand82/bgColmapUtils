@@ -2,6 +2,7 @@ package bg.display.divide;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class ProcessSubsets {
 			System.out.println(i+++" paquet ---> "+paquet);
 		}
 		createDirectories();
-		try {
+		try {// processColmapSparseLocal.sh
+			UtilCopyBg.copyResourceToDir("sh/processColmapSparseLocal.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePLY.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePoissonPLY.sh", this.dirRoot.toPath(), true);
@@ -72,8 +74,12 @@ public class ProcessSubsets {
 			for(Paquet paquet : listPaquets) {
 				paquet.createDirectorie_(this.dirRoot,colmapSubsetBuilder);
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (NoSuchFileException e) {
+			System.err.println("Message :"+e.getMessage());
+			System.err.println("Le traitement sparse doit être excuté ");
+			e.printStackTrace();
+		}catch (IOException e) {
+			
 			e.printStackTrace();
 		}
 		
