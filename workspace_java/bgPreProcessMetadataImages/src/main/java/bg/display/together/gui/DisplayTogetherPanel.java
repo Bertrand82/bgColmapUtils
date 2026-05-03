@@ -54,6 +54,7 @@ import bg.util.PositionMetaData2Factory;
 import bg.util.PositionMetaData2UtilCloser;
 import bg.util.PropertiesGlobal;
 import bg.util.SablierSwing;
+import bg.util.UtilCopyBg;
 import bg.util.UtilCreateDirPopups;
 import bg.util.UtilFile;
 import bg.util.UtilSwingChooseDoosier;
@@ -636,7 +637,19 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			log("Exception " + e.getMessage());
 			e.printStackTrace();
 		}
+		exportFileSh(dirTargetOut);
 
+	}
+
+	private void exportFileSh(File dirTargetOut2) {
+		try {
+			UtilCopyBg.copyResourceToDir("sh/processColmapSparseLocal.sh", dirTargetOut2.toPath(), true);
+			UtilCopyBg.copyResourceToDir("sh/processColmapDenseLocal.sh", dirTargetOut2.toPath(), true);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void exportListPaires(File fileDirOut, HashSet<PaireMetadata2> setPairesUniques) throws Exception {

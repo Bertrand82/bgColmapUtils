@@ -39,8 +39,7 @@ public class ProcessSubsets {
 			System.out.println(i+++" paquet ---> "+paquet);
 		}
 		createDirectories();
-		try {// processColmapSparseLocal.sh
-			UtilCopyBg.copyResourceToDir("sh/processColmapSparseLocal.sh", this.dirRoot.toPath(), true);
+		try {
 			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePLY.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePoissonPLY.sh", this.dirRoot.toPath(), true);
