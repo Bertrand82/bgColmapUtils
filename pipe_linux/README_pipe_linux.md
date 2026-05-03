@@ -185,7 +185,7 @@ puis
 ```bash
 /home/bertrand/venv/py3dtiles/bin/py3dtiles convert fused.las --out tiles_fused --overwrite --spec-version 1.0
 ```
-## Visualiser les tiles 
+## Visualiser les tiles avec Cesium
 Serveur local:
 ```bash
 cd tiles_fused
@@ -193,6 +193,94 @@ python3 -m http.server 8000
 ```
 Voir dans 
   - Cesium Sandcastle (rapide si tu as internet) Ouvre https://sandcastle.cesium.com/
+
+## Visualisateur
+
+  - py3dtiles
+
+    - Gratuit, open-source
+    - Techno : Python
+    - Note (1-4) : 2/4
+    - Viewer :
+        - Aucun viewer officiel integre (outil de conversion CLI)
+        - Usage typique : visualiser avec CesiumJS (3D Tiles) ou tout viewer compatible 3D Tiles
+ 
+    - Commentaire : Conversion locale LAS/LAZ/PLY vers 3D Tiles. Peu de controle fin du pavage/LOD selon version.
+
+- Cesium ion
+
+    - Payant (quota gratuit limite), proprietaire (SaaS)
+    - Techno : Cloud / API
+    - Note (1-4) : 4/4
+    - Viewer :
+        - Visualisation via Cesium (web) et ecosysteme Cesium
+        - On recupere un tileset 3D Tiles pret a etre consomme (CesiumJS, Cesium for Unreal, etc.)
+    
+    - Commentaire : Generation de 3D Tiles optimisee (LOD/streaming). Necessite upload et token, moins adapte au 100% offline.
+
+- Potree
+
+    - Gratuit, open-source
+    - Techno : JavaScript (WebGL)
+    - Note (1-4) : 4/4
+    - Viewer :
+       - Potree Viewer (web) : oui, c'est le produit principal
+       - Fonctionne avec donnees converties au format Potree (octree)
+    
+    - Commentaire : Viewer web de nuages de points tres performant (octree). Pas du 3D Tiles mais excellent pour la visu.
+
+  - PotreeConverter
+
+    - Gratuit, open-source
+    - Techno : C++ (CLI)
+    - Note (1-4) : 4/4
+    - Viewer :
+        - Potree (Potree Viewer) pour visualiser le resultat
+
+    - Commentaire : Conversion LAS/LAZ/PLY/XYZ vers format Potree (octree). Permet souvent un pavage fin (spacing/levels).
+
+  - Entwine (EPT)
+
+     - Gratuit, open-source
+     - Techno : C++ (CLI)
+     - Note (1-4) : 4/4
+     - Viewer :
+        - CesiumJS peut consommer certains flux/convertis, mais EPT n'est pas du 3D Tiles
+        - Viewers/clients varies selon pipeline (EPT est surtout un format de diffusion/pipeline)
+     
+     - Commentaire : Generation EPT (octree) pour gros nuages, bon LOD/tiling. EPT != 3D Tiles.
+
+  - COPC + PDAL
+
+     - Gratuit, open-source
+     - Techno : C++ (PDAL) + ecosysteme
+     - Note (1-4) : 3/4
+     - Viewer :
+         - Pas de viewer "COPC officiel" unique
+         - Options : viewers SIG/nuages de points selon outils, ou conversion vers Potree/3D Tiles pour la visu web
+     - Commentaire : COPC est un LAZ hierarchique optimise (stockage/streaming). Pas du 3D Tiles directement, mais excellent format pivot.
+
+  - deck.gl (PointCloudLayer)
+
+     - Gratuit, open-source
+     - Techno : JavaScript / TypeScript
+     - Note (1-4) : 3/4
+     - Commentaire : Brique de rendu web (WebGL) pour points. Pas un pipeline complet de conversion/3D Tiles.
+     - Viewer :
+        - deck.gl lui-meme sert de couche de rendu (integrable dans une appli web)
+        - Pas un viewer "cles en main" complet (c'est une librairie)
+  
+
+- ArcGIS (Online/Enterprise)
+
+     - Payant, proprietaire
+     - Techno : Stack ESRI (web + serveur)
+     - Note (1-4) : 3/4
+     - Viewer :
+        - ArcGIS Pro (desktop), Scene Viewer (web), etc.
+        - Viewer integre a la plateforme ESRI
+     
+     - Commentaire : Publication SIG industrielle (scenes 3D/points). Integre mais couteux et moins flexible pour du 3D Tiles controle.
 
 ## DONE
 - batch de surveillance machine: ram + temperature

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Viewer 3D Tiles local (tiled_fused.json) - fond blanc</title>
+  <title>Viewer 3D Tiles local (tileset.json) - fond blanc</title>
 
   <!-- CesiumJS -->
   <link href="https://cesium.com/downloads/cesiumjs/releases/1.127/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
@@ -33,7 +33,7 @@
 
 <body>
   <div id="toolbar">
-    <strong>tiled_fused.json</strong>
+    <strong>tileset.json</strong>
 
     <label title="Pas de zoom (mètres / unités de la scène). Si c'est trop grand, mets 0.1 ou 0.01.">
       Zoom (pas)
@@ -50,7 +50,7 @@
   <div id="cesiumContainer"></div>
 
   <script>
-    const TILESET_URL = './tiled_fused.json';
+    const TILESET_URL = './tileset.json';
 
     const statusEl = document.getElementById('status');
     const zoomStepEl = document.getElementById('zoomStep');

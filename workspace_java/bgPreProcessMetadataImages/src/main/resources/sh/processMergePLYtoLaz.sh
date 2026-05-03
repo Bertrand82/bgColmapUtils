@@ -13,7 +13,7 @@ for d in paquet_*/; do
   [ -d "$d" ] || continue
   echo "bg=data Dossier=${d%/}"
 
-  fichierLAS="${d%/}/dense/fused.las"
+  fichierLAS="${d%/}/fused.las"
   if [[ -f "$fichierLAS" ]]; then
     echo "bg=data + $fichierLAS"
     files+=("$fichierLAS")
