@@ -61,7 +61,7 @@ echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --PatchMatchStereo.max_image_size $max_image_size \
-  --PatchMatchStereo.cache_size 6 \
+  --PatchMatchStereo.cache_size 12 \
   --PatchMatchStereo.num_threads 1 \
   --PatchMatchStereo.num_iterations 3 \
   --PatchMatchStereo.allow_missing_files 1 \
@@ -77,7 +77,7 @@ echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"
   --StereoFusion.use_cache 1 \
   --StereoFusion.cache_size 8 \
   --StereoFusion.num_threads 4 \
-  --StereoFusion.check_num_images 10 \
+  --StereoFusion.check_num_images 16 \
   --StereoFusion.max_image_size $max_image_size
 
 echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"

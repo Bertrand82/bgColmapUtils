@@ -1,8 +1,10 @@
 ### Pour demarrer serveur:
 
+Attention : python3 ne marche pas pour les gros nuages de points. Utiliser npx
+
+
 ```bash
-cd /potree_cloud
-python3 -m http.server 8000
+npx http-server -p 8000 --cors
 ```
 
 ### Pour voir la place restant sur le disque

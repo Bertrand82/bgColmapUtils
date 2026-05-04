@@ -67,7 +67,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		public int nbPointsExtraitsMax = 100;
 		public int nbSeq = 6;
 		public int nbProx = 6;
-		public int taillePaquet=20;
+		public int taillePaquet=30;
 	}
 
 	/**
