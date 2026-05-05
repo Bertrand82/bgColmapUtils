@@ -12,7 +12,7 @@
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap stereo_fusion --help
 ```
   - 60 images en 4032: ca plante pendant dense/patch_match_stereo 
-  - Image size : 4000, sparse de 2000 images , paquet 50 , l'etape fusion echoue (Trop longue arret apres 10 heures)
+  - Image size : 4000, sparse de 2000 images , paquet 50 , l'etape fusion échoue (Trop longue arret apres 10 heures)
   
 ## Plantage par manque de mémoire
 
