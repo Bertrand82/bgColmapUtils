@@ -65,8 +65,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 	public static class ParamsConfiguration {
 		public int nbPointsExtraitsMax = 100;
-		public int nbSeq = 6;
-		public int nbProx = 6;
+		public int nbSeq = 7;
+		public int nbProx = 8;
 		public int taillePaquet=30;
 	}
 
@@ -540,7 +540,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			@Override
 			protected Void doInBackground() throws Exception {
 				sablierSwing.start("Ecriture Data", "Ecriture");
-				extractDataProcess();
+				extractDataProcessInBackGround();
 				return null;
 			}
 
@@ -554,7 +554,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		sw.execute();
 	}
 	File dirTargetOut;
-	private void extractDataProcess() {
+	private void extractDataProcessInBackGround() {
 		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
 		// Créer un directory
