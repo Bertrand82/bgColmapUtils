@@ -433,8 +433,27 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	
 	private void processDossierSparse() {
 		System.out.println("processDossierSparse");
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				sablierSwing.start("initialisation paquets", "Init");
+				processSparseBackGround(dirSources);
+				return null;
+			}
+
+			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+			@Override
+			protected void done() {
+				File fileImages = new File(dirTargetOut,"images");
+				if (fileImages.exists()  ) {
+					System.out.println("Nb Images " + fileImages.listFiles().length );
+				}
+				System.err.println("sssssssssstop dialog ");
+				sablierSwing.stop();
+			}
+		};
+		sw.execute();
 		
-		this.processSparse2(dirSources);
 	}
 	
 	private void processDossierCleanPaquets() {
@@ -453,7 +472,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	    }
 	}
 	
-	private void processSparse2(File dirSparse) {
+	private void processSparseBackGround(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
 		int paquetSize=this.paramsConfiguration.taillePaquet;
 		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,this.listPositions);
