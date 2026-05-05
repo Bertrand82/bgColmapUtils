@@ -20,7 +20,7 @@ for d in paquet_*/; do
 
   start_ts=$(date +%s)
   log "Début itération: dossier=$dossier"
-  echo "bg=data Dossier=$dossier"
+  echo "bg=chapeau step=debut_process_dossier Dossier=$dossier date=$(date -Is)"
 
   paquet_log="$LOG_DIR/${dossier}.log"
 
@@ -32,7 +32,7 @@ for d in paquet_*/; do
 
   end_ts=$(date +%s)
   duree=$(( end_ts - start_ts ))
-
+  echo "bg=chapeau step=fin_process_dossier Dossier=$dossier date=$(date -Is) duree=$(duree)"
   if [ $rc -ne 0 ]; then
     log "ECHEC: dossier=$dossier rc=$rc duree=${duree}s (voir $paquet_log)" | tee -a "$ERRORS_LOG" >&2
 
@@ -42,12 +42,12 @@ for d in paquet_*/; do
       tail -n 80 "$paquet_log"
       echo
     } >>"$ERRORS_LOG"
-
+	log "bg=chapeau step=fin_KO dossier=$dossier duree=${duree}s (log $paquet_log)"
     # continuer avec le paquet suivant    
     continue
   fi
 
-  log "OK: dossier=$dossier duree=${duree}s (log $paquet_log)"
+  log "bg=chapeau step=fin_OK dossier=$dossier duree=${duree}s (log $paquet_log)"
   SLEEP_FIN=5
   echo "bg=colmap process=chapeau  etape=process.end   date=$(date -Is)"
   echo "bg=colmap process=mergePLY  etape=process.end   date=$(date -Is)"
