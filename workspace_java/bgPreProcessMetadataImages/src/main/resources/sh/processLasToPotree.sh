@@ -15,8 +15,9 @@ echo "bg=data POTREE=$POTREE step=generatePotree FILE_LAS=$FILE_LAS DIR_OUT=$DIR
 mkdir -p $DIR_OUT
 
 "$POTREE" --help 
-
-"$POTREE" "$FILE_LAS" -o "$DIR_OUT" --generate-page fused
+# ~/workspaceCpp/PotreeConverter/build/PotreeConverter --help
+"$POTREE" "$FILE_LAS" -o "$DIR_OUT" --generate-page fused --method poisson --projection
+"$POTREE" "$FILE_LAS" -o "$DIR_OUT"_poisson_average --generate-page fused --method poisson_average --projection
 
 
 

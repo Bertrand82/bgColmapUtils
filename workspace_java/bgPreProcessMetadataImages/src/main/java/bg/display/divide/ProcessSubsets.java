@@ -39,6 +39,7 @@ public class ProcessSubsets {
 			System.out.println(i+++" paquet ---> "+paquet);
 		}
 		createDirectories();
+		System.out.println("Copy sh to directory");
 		try {
 			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePLY.sh", this.dirRoot.toPath(), true);
@@ -47,10 +48,11 @@ public class ProcessSubsets {
 			UtilCopyBg.copyResourceToDir("sh/processMergePLYtoLaz.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processLasToPotree.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/README.md", this.dirRoot.toPath(), false);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Copy done");
 	}
 	private List<Paquet> toListPaquet(List<List<PositionGps2>> listList) {
 		List<Paquet> listP = new ArrayList<Paquet>();
