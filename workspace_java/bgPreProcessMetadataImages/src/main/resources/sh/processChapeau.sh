@@ -13,7 +13,7 @@ log() {
 }
 
 
-
+# DEBUT BOUCLE
 for d in paquet_*/; do
   [ -d "$d" ] || continue
   dossier="${d%/}"
@@ -48,8 +48,15 @@ for d in paquet_*/; do
   fi
 
   log "bg=chapeau step=fin_OK dossier=$dossier duree=${duree}s (log $paquet_log)"
-  SLEEP_FIN=5
   echo "bg=colmap process=chapeau  etape=process.end   date=$(date -Is)"
+  SLEEP_FIN=5
+  echo SLEEP $SLEEP_FIN
+  sleep $SLEEP_FIN
+  
+done
+
+# FIN  BOUCLE
+
   echo "bg=colmap process=mergePLY  etape=process.end   date=$(date -Is)"
   ./processMergePLY.sh
   echo "bg=colmap process=PlyToLaz  etape=process.end   date=$(date -Is)"
@@ -58,7 +65,4 @@ for d in paquet_*/; do
   ./processMergePLYtoLaz.sh
   echo "bg=colmap process=LasToPotree  etape=process.end   date=$(date -Is)"
   ./processLasToPotree.sh
-  
   echo "bg=colmap process=chapeau  etape=fin Pause=$SLEEP_FIN dossier=$dossier  duree : ${duree}"
-  sleep $SLEEP_FIN
-done
