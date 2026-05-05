@@ -12,6 +12,7 @@
 ~/workspaceCpp/colmap/build/src/colmap/exe/colmap stereo_fusion --help
 ```
   - 60 images en 4032: ca plante pendant dense/patch_match_stereo 
+  - Image size : 4000, sparse de 2000 images , paquet 50 , l'etape fusion echoue (Trop longue arret apres 10 heures)
   
 ## Plantage par manque de mémoire
 
@@ -41,6 +42,7 @@ du -h --max-depth=2 /data | sort -h | tail -n 20
 ## Paramètres
 - `--StereoFusion.max_image_size 1600` : 1600 = taille max de la plus grande longueur en pixel
 - `1600` : 200 images ; 27 mn
+-  `max_image_size 1600 4000` 3 paquets de 30 images +10 : 1h30
 
 
 #### Terminal
@@ -186,7 +188,7 @@ puis
 /home/bertrand/venv/py3dtiles/bin/py3dtiles convert fused.las --out tiles_fused --overwrite --spec-version 1.0
 ```
 ## Visualiser les tiles avec Cesium
-Serveur local:
+Serveur local:(Attention serveur pyton ne marche pas pour les gros nuage de point), utiliser npx
 ```bash
 cd tiles_fused
 python3 -m http.server 8000
@@ -282,14 +284,19 @@ Voir dans
      
      - Commentaire : Publication SIG industrielle (scenes 3D/points). Integre mais couteux et moins flexible pour du 3D Tiles controle.
 
+## Echec
+
+
 ## DONE
 - batch de surveillance machine: ram + temperature
 - réconciliation modèles 3D
+- Convertis en 3D Tiles Cesium + viewer CesiumJS.
+- Convertis en 3D Tiles PotreeConverter 
 
 ## TODO
 - outil de visualisation 3D et de spécification de trajectoires
 - test images satellites ou Google
 - outil d'exploitation des logs COLMAP ( ajustage)
 - Recuperer images depuis un drone
-- Convertis en 3D Tiles + viewer CesiumJS.
+
 

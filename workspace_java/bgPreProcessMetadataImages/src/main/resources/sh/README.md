@@ -1,4 +1,4 @@
-### Pour demarrer serveur:
+### Pour demarrer serveur http :
 
 Attention : python3 ne marche pas pour les gros nuages de points. Utiliser npx
 
