@@ -11,13 +11,17 @@ echo "bg=data OUT=$OUT"
 ply_files=()
 for d in paquet_*/; do
   [ -d "$d" ] || continue
-  echo "bg=data Dossier=${d%/}"
+  dossier="${d%/}"
+  echo "bg=data dossier=$dossier"
+  echo "bg=processMergePLY step=debut_process Dossier=$dossier date=$(date -Is)"
 
   fichierPLY="${d%/}/dense/fused.ply"
   if [[ -f "$fichierPLY" ]]; then
     echo "bg=data + $fichierPLY"
     ply_files+=("$fichierPLY")
+    echo "bg=processMergePLY step=mergePLY Dossier=$dossier date=$(date -Is)"
   else
+    echo "bg=processMergePLY step=mergePLYWarning Dossier=$dossier date=$(date -Is) warning=FilePlYAbsent"
     echo "bg=data ! manquant: $fichierPLY" >&2
   fi
 done

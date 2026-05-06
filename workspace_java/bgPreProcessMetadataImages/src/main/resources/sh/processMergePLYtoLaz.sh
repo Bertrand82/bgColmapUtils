@@ -17,8 +17,9 @@ for d in paquet_*/; do
   if [[ -f "$fichierLAS" ]]; then
     echo "bg=data + $fichierLAS"
     files+=("$fichierLAS")
+    echo "bg=processMergePLYtoLaz step=fetchFiles  fichierLAS=$fichierLAS"
   else
-    echo "bg=data ! manquant: $fichierLAS" >&2
+    echo "bg=processMergePLYtoLaz step=fetchFiles  fichierLAS=$fichierLAS  warning=manquant"
   fi
 done
 
