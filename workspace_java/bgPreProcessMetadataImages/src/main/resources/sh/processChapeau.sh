@@ -19,7 +19,7 @@ for d in paquet_*/; do
   dossier="${d%/}"
  
   # Skip si fused.ply existe déjà dans le dossier
-  if [ -f "$dossier/fused.ply" ]; then
+  if [ -f "$dossier/fused.las" ]; then
     log "SKIP: dossier=$dossier car fichier $dossier/fused.ply déjà présent"
     echo "bg=chapeau step=skip_process_dossier Dossier=$dossier reason=fused.ply_exists date=$(date -Is)"
     continue

@@ -4,7 +4,7 @@ set -euo pipefail
 #!/usr/bin/env bash
 
  # Skip si fused.ply existe déjà dans le dossier
-if [ -f "fused.ply" ]; then
+if [ -f "fused.las" ]; then
   echo "Le fichier fused.ply existe, arrêt du traitement."
   exit 0
 fi
