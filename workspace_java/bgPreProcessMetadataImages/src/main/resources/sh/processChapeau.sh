@@ -32,7 +32,7 @@ for d in paquet_*/; do
 
   end_ts=$(date +%s)
   duree=$(( end_ts - start_ts ))
-  echo "bg=chapeau step=fin_process_dossier Dossier=$dossier date=$(date -Is) duree=$(duree)"
+  echo "bg=chapeau step=fin_process_dossier Dossier=$dossier date=$(date -Is) duree=$duree"
   if [ $rc -ne 0 ]; then
     log "ECHEC: dossier=$dossier rc=$rc duree=${duree}s (voir $paquet_log)" | tee -a "$ERRORS_LOG" >&2
 
@@ -50,19 +50,18 @@ for d in paquet_*/; do
   log "bg=chapeau step=fin_OK dossier=$dossier duree=${duree}s (log $paquet_log)"
   echo "bg=colmap process=chapeau  etape=process.end   date=$(date -Is)"
   SLEEP_FIN=5
-  echo SLEEP $SLEEP_FIN
+  echo SLEEP $SLEEP_FIN secondes
   sleep $SLEEP_FIN
   
 done
 
 # FIN  BOUCLE
 
-  echo "bg=colmap process=mergePLY  etape=process.end   date=$(date -Is)"
+  echo "bg=colmap process=chapeau  etape=mergePLY     date=$(date -Is)"
   ./processMergePLY.sh
-  echo "bg=colmap process=PlyToLaz  etape=process.end   date=$(date -Is)"
+  echo "bg=colmap process=chapeau  etape=PlyToLaz    date=$(date -Is)"
   ./processPlyToLaz.sh
-  echo "bg=colmap process=MergePlyToLaz  etape=process.end   date=$(date -Is)"
+  echo "bg=colmap process=chapeau  etape=MergePlyToLaz    date=$(date -Is)"
   ./processMergePLYtoLaz.sh
-  echo "bg=colmap process=LasToPotree  etape=process.end   date=$(date -Is)"
+  echo "bg=colmap process=chapeau  etape=LasToPotree     date=$(date -Is)"
   ./processLasToPotree.sh
-  echo "bg=colmap process=chapeau  etape=fin Pause=$SLEEP_FIN dossier=$dossier  duree : ${duree}"

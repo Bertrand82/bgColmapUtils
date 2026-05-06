@@ -298,5 +298,7 @@ Voir dans
 - test images satellites ou Google
 - outil d'exploitation des logs COLMAP ( ajustage)
 - Recuperer images depuis un drone
+- Estimateur de durée (traitement de 1 paquet de 25 images, 4 iterations, 30 mn)
+- Faire un filtre qui vire toutes les images isolées
 
 

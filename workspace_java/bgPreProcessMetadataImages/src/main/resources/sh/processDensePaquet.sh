@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+#!/usr/bin/env bash
+
+if [ -f "fused.ply" ]; then
+  echo "Le fichier fused.ply existe, arrêt du traitement."
+  exit 0
+fi
+
+echo "Le fichier fused.ply n'existe pas, on continue."
+
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 
 SCRIPT_PATH="$(readlink -f -- "${BASH_SOURCE[0]}")"

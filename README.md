@@ -3,7 +3,7 @@ Pipeline for generating a 3D model from a list of images
 See pipe_aws
 
 
-## Install (ubuntu, debian)
+## Install docker (ubuntu, debian)
 
 ```bash
 sudo apt-get install -y docker.io
@@ -15,7 +15,6 @@ sudo apt-get install -y sqlite3
 ### Create  "shared" group
 ```bash
 sudo groupadd -f shared
-
 sudo usermod -aG shared ubuntu
 sudo usermod -aG shared bertrand
 ```
