@@ -5,10 +5,11 @@ set -euo pipefail
  # Skip si fused.ply existe déjà dans le dossier
 if [ -f "fused.las" ]; then
   echo "Le fichier fused.ply existe, le repertoire a été traité, arrêt du traitement."
+  echo "bg=processDensePaquet step=annulation" cause=file_used.ply_existe
   exit 0
 fi
 
-echo "bg=processDensePaquet Le fichier fused.ply n'existe pas, on continue."
+
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 
@@ -21,6 +22,9 @@ echo "BG_WORK=$BG_WORK"
 # max_image_size=1512
 # max_image_size=2024 // working par paquet de 20 images
 max_image_size=4000
+PatchMatchStereo_num_threads=2
+PatchMatchStereo_num_iterations=3
+PatchMatchStereo_cache_size=16
 DENSE_DIR="$SCRIPT_DIR/dense"
 LOG_DIR="$DENSE_DIR/logs"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"
@@ -34,6 +38,12 @@ echo "bg=processDensePaquet BG_WORK=$BG_WORK"
 echo "bg=processDensePaquet DENSE_DIR=$DENSE_DIR"
 echo "bg=processDensePaquet LOG_FILE=$LOG_FILE"
 echo "bg=processDensePaquet max_image_size=$max_image_size"
+echo "bg=processDensePaquet PatchMatchStereo_num_threads=$PatchMatchStereo_num_threads"
+echo "bg=processDensePaquet PatchMatchStereo_num_iterations=$PatchMatchStereo_num_iterations"
+echo "bg=processDensePaquet PatchMatchStereo_cache_size=$PatchMatchStereo_cache_size"
+
+
+
 echo "bg=processDensePaquet SCRIPT_DIR=$SCRIPT_DIR"
 
 
@@ -70,9 +80,9 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
   --PatchMatchStereo.max_image_size $max_image_size \
-  --PatchMatchStereo.cache_size 12 \
-  --PatchMatchStereo.num_threads 2 \
-  --PatchMatchStereo.num_iterations 3 \
+  --PatchMatchStereo.cache_size $PatchMatchStereo_cache_size \
+  --PatchMatchStereo.num_threads $PatchMatchStereo_num_threads \
+  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations \
   --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
   

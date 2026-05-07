@@ -81,14 +81,16 @@ public class LogProcess {
 
 		String[] items = line.split(" ");
 		for (String tok : items) {
+			int i = tok.indexOf("=");
 			if ((tok.startsWith("etape=")) || (tok.startsWith("step="))){
-				etape = tok.substring("etape=".length());
+				
+				etape = tok.substring(i+1,tok.length());
 			} else if (tok.startsWith("date=")) {
 				String sDate = tok.substring("date=".length());
 				date = OffsetDateTime.parse(sDate);
 			} else if (tok.startsWith("bg=")){
 			} else {
-				int i = tok.indexOf("=");
+				
 				if (i > 0) {
 					String variableName = tok.substring(0, i);
 					String variableValue = tok.substring(i , tok.length());
