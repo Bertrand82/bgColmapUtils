@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-#!/usr/bin/env bash
 
  # Skip si fused.ply existe déjà dans le dossier
 if [ -f "fused.las" ]; then
-  echo "Le fichier fused.ply existe, arrêt du traitement."
+  echo "Le fichier fused.ply existe, le repertoire a été traité, arrêt du traitement."
   exit 0
 fi
 
-echo "Le fichier fused.ply n'existe pas, on continue."
+echo "bg=processDensePaquet Le fichier fused.ply n'existe pas, on continue."
 
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 
@@ -31,16 +30,16 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP: $COLMAP"
 "$COLMAP" --version || true
-echo "bg=data BG_WORK=$BG_WORK"
-echo "bg=data DENSE_DIR=$DENSE_DIR"
-echo "bg=data LOG_FILE=$LOG_FILE"
-echo "bg=data max_image_size=$max_image_size"
-echo "bg=data SCRIPT_DIR=$SCRIPT_DIR"
+echo "bg=processDensePaquet BG_WORK=$BG_WORK"
+echo "bg=processDensePaquet DENSE_DIR=$DENSE_DIR"
+echo "bg=processDensePaquet LOG_FILE=$LOG_FILE"
+echo "bg=processDensePaquet max_image_size=$max_image_size"
+echo "bg=processDensePaquet SCRIPT_DIR=$SCRIPT_DIR"
 
 
 mkdir -p "$SCRIPT_DIR/sparse/0" "$LOG_DIR"
 
-echo "bg=colmap process=dense  etape=model_converter   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  etape=model_converter  comment=converti_bin_en_txt date=$(date -Is)"
 $COLMAP model_converter \
   --input_path "$SCRIPT_DIR" \
   --output_path "$SCRIPT_DIR/sparse/0" \
@@ -55,7 +54,7 @@ $COLMAP model_converter \
   		fi
 	done
 
-  echo "bg=colmap process=dense  etape=image_undistorter   date=$(date -Is)"
+  echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date -Is)"
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
   --input_path "$SCRIPT_DIR/sparse/0" \
@@ -66,7 +65,7 @@ $COLMAP model_converter \
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
 
-echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(date -Is)"
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -78,7 +77,7 @@ echo "bg=colmap process=dense  etape=patch_match_stereo   date=$(date -Is)"
  # --PatchMatchStereo.num_samples 10
   
 
-echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  etape=stereo_fusion   date=$(date -Is)"
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -90,7 +89,7 @@ echo "bg=colmap process=dense  etape=stereo_fusion   date=$(date -Is)"
   --StereoFusion.check_num_images 16 \
   --StereoFusion.max_image_size $max_image_size
 
-echo "bg=colmap process=dense  etape=poisson_mesher   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  etape=poisson_mesher   date=$(date -Is)"
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
   --output_path "$DENSE_DIR/mesh_poisson.ply" \
@@ -106,9 +105,9 @@ PDAL="$HOME/workspaceCpp/PDAL/build/bin/pdal"
 echo "bg=colmap process="PDAL" PDAL=$PDAL step=translate_to_las OUT_LAS=$OUT_LAS date=$(date -Is)"
 "$PDAL" translate "$DENSE_DIR/fused.ply" "$OUT_LAS"
 
-echo "bg=colmap process=dense  etape=FIN   date=$(date -Is)"
-echo "bg=data fused.ply=$DENSE_DIR/fused.ply"
-echo "bg=data mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
+echo "bg=processDensePaquet process=dense  etape=FIN   date=$(date -Is)"
+echo "bg=processDensePaquet fused.ply=$DENSE_DIR/fused.ply"
+echo "bg=processDensePaquet mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
 
 
 

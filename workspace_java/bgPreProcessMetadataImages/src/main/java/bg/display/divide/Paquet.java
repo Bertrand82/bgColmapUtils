@@ -36,9 +36,6 @@ public class Paquet {
 	}
 	public void createDirectorie_(File dir,ColmapSubsetBuilder colmapSubsetBuilder) {
 		try {
-			
-			
-			
 				System.out.print("createDirectorie "+paquetName+" start ");
 				File dirRootPaquet = new File(dir,paquetName);
 				//dirSparse0.mkdirs();

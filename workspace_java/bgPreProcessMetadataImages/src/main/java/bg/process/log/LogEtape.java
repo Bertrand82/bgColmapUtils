@@ -34,11 +34,14 @@ public class LogEtape {
 	}
 	
 	public String toString() {
-		String duration_str = (duration==null)? " - ":""+duration.toSeconds();
+		String duration_str = (duration==null)? " - ":""+String.format("%02d:%02d:%02d",
+        duration.toHours(),
+        duration.toMinutesPart(),
+        duration.toSecondsPart());
 		String s = "etape="+UtilString.toString(name,30);
 		s += " | duree =";
 		s +=  UtilString.toString(duration_str,10);
-		s+=" secondes";
+		s+=" ";
 		return s;
 	}
 }
