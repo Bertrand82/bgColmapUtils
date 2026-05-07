@@ -118,6 +118,7 @@ echo "bg=colmap process="PDAL" PDAL=$PDAL step=translate_to_las OUT_LAS=$OUT_LAS
 echo "bg=processDensePaquet process=dense  etape=FIN   date=$(date -Is)"
 echo "bg=processDensePaquet fused.ply=$DENSE_DIR/fused.ply"
 echo "bg=processDensePaquet mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
-
+nb_images=$(find "$SCRIPT_DIR/dense/images" -maxdepth 1 -type f | wc -l)
+echo "bg=processDensePaquet nb_images=$nb_images"
 
 
