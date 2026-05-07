@@ -38,12 +38,15 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import bg.display.divide.ProcessSubsets;
 import bg.metadata.MetaDatasCsv;
+import bg.process.log.LogFactory;
 import bg.process.log.LogProcess;
 import bg.util.PaireMetadata2;
 import bg.util.PositionBean2;
@@ -116,6 +119,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
 	JMenuItem buttonDossierSources = new JMenuItem("Open Repository Source Images");
 	JMenuItem buttonDebug = new JMenuItem("debug");
+	JMenuItem buttonAnalyseLog = new JMenuItem("Analyse Log");
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
 	JCheckBox checkBoxShowPaquets= new JCheckBox("paquets");
@@ -172,6 +176,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e -> debug());
+		buttonAnalyseLog.addActionListener(e ->analyseLog());
 		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
 		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
 		buttonDossierSparsesCreatePaquets.addActionListener(e -> processDossierSparse());
@@ -194,6 +199,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuFile.add(buttonDossierSources);
 		menuFile.add(buttonDossierSparsesCreatePaquets);
 		menuFile.add(buttonDossierCleanSparsePaquets);
+		menuFile.add(buttonAnalyseLog);
 
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
@@ -832,5 +838,24 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				
 			}
 		}
+	}
+	private void analyseLog() {
+		System.out.println("AnalyseLog");
+		String analyse  = LogFactory.process(this.dirSources);
+		JTextArea textArea = new JTextArea(analyse);
+		  textArea.setEditable(false);
+		  textArea.setLineWrap(true);
+		  textArea.setWrapStyleWord(true);
+		  textArea.setCaretPosition(0); // démarre en haut
+
+		  JScrollPane scrollPane = new JScrollPane(textArea);
+		  scrollPane.setPreferredSize(new Dimension(900, 600)); // ajuste taille popup
+
+		  JOptionPane.showMessageDialog(
+		      this.frame,
+		      scrollPane,
+		      "Analyse Log",
+		      JOptionPane.INFORMATION_MESSAGE
+		  );
 	}
 }

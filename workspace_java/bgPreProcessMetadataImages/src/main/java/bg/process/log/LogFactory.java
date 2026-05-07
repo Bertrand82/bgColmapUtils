@@ -7,18 +7,21 @@ import java.util.List;
 
 public class LogFactory {
 
-	public static void process(File dirRoot) {
+	public static String  process(File dirRoot) {
 		File dirLog = new File(dirRoot,"logs");
-		System.out.println("dirRoot : exists: "+dirRoot.exists());
-		System.out.println("dirLog : exists: "+dirLog.exists());
+		String s= "";
+		s+="dirRoot : exists: "+dirRoot.exists()+"\n";
+		s+="dirLog : exists: "+dirLog.exists()+"\n";
 		List<File> listFiles =Arrays.asList(dirLog.listFiles());
 		listFiles.sort(Comparator.comparing(File::getName, String.CASE_INSENSITIVE_ORDER));
 		for (File fileLog : listFiles) {
-			System.out.println("-------------------------------------"+fileLog.getName());
+			s+="-------------------------------------"+fileLog.getName()+"\n";
 			LogProcess logProcess = new LogProcess(fileLog);
-			System.out.println(""+logProcess.toString());
-			System.out.println("-------------------------------------");
+			s+=""+logProcess.toString()+"\n";
+			s+="-------------------------------------"+"\n";
 		}
+		System.out.println(s);
+		return s;
 	}
 
 }
