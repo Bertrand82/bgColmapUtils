@@ -22,7 +22,6 @@ for d in paquet_*/; do
     echo "bg=processMergePLY step=mergePLY Dossier=$dossier date=$(date -Is)"
   else
     echo "bg=processMergePLY step=mergePLYWarning Dossier=$dossier date=$(date -Is) warning=FilePlYAbsent"
-    echo "bg=data ! manquant: $fichierPLY" >&2
   fi
 done
 

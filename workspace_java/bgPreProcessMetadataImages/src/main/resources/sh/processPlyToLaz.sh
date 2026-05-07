@@ -7,10 +7,12 @@ OUT_LAZ="fused.laz"
 OUT_LAS="fused.las"
 
 echo "bg=data PDAL=$PDAL step=translate_to_laz IN=$IN OUT_LAZ=$OUT_LAZ date=$(date -Is)"
-"$PDAL" translate "$IN" "$OUT_LAZ"
+# OLD "$PDAL" translate "$IN" "$OUT_LAZ"
+"$PDAL" translate "$IN" "$OUT_LAZ"  --filters.transformation.matrix="1 0 0 0  0 1 0 0  0 0 -1 0  0 0 0 1"   filters.transformation
 
 echo "bg=data PDAL=$PDAL step=translate_to_las IN=$IN OUT_LAS=$OUT_LAS date=$(date -Is)"
-"$PDAL" translate "$IN" "$OUT_LAS"
+# "$PDAL" translate "$IN" "$OUT_LAS"
+"$PDAL" translate "$IN" "$OUT_LAS"  --filters.transformation.matrix="1 0 0 0  0 1 0 0  0 0 -1 0  0 0 0 1"   filters.transformation
 
 py3dtiles="/home/bertrand/venv/py3dtiles/bin/py3dtiles"
 echo "bg=data step=py3dtiles state="start" file=tiles_fused py3dtiles=$py3dtiles date=$(date -Is)"

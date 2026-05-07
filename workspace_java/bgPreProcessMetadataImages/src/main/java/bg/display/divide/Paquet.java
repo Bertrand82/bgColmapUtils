@@ -47,7 +47,7 @@ public class Paquet {
 				colmapSubsetBuilder.processPaquet( dirRootPaquet.toPath(), listImages);
 				File fileImages = new File(dirRootPaquet,"images.txt");
 				System.out.print("  fileImages exists :"+fileImages.exists()+" size "+fileImages.length()+" copy sh to dir ");
-				UtilCopyBg.copyResourceToDir("sh/processDensePaquet.sh", dirRootPaquet.toPath(),true);
+				UtilCopyBg.copyResourcesToDir("paquet", dirRootPaquet.toPath());
 				System.out.println("createDirectorie "+paquetName+" done");
 			
 		} catch (Exception e) {
