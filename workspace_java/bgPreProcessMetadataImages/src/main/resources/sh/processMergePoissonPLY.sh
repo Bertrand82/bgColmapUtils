@@ -4,32 +4,32 @@ set -euo pipefail
 PDAL=~/workspaceCpp/PDAL/build/bin/pdal
 OUT="merged_poisson.ply"
 
-echo "bg=data PDAL=$PDAL"
-echo "bg=data OUT=$OUT"
+echo "bg=processMergePoissonPLY PDAL=$PDAL"
+echo "bg=processMergePoissonPLY OUT=$OUT"
 
 # On collecte les PLY existants
 ply_files=()
 for d in paquet_*/; do
   [ -d "$d" ] || continue
-  echo "bg=data Dossier=${d%/}"
+  echo "bg=processMergePoissonPLY Dossier=${d%/}"
 
   fichierPLY="${d%/}/dense/mesh_poisson.ply"
   if [[ -f "$fichierPLY" ]]; then
-    echo "bg=data + $fichierPLY"
+    echo "bg=processMergePoissonPLY + $fichierPLY"
     ply_files+=("$fichierPLY")
   else
-    echo "bg=data ! manquant: $fichierPLY" >&2
+    echo "bg=processMergePoissonPLY ! manquant: $fichierPLY" >&2
   fi
 done
 
 # Vérif: au moins 1 fichier
 if (( ${#ply_files[@]} == 0 )); then
-  echo "bg=error Aucun fichier PLY trouvé (paquet_*/dense/fused.ply)" >&2
+  echo "bg=processMergePoissonPLY error= Aucun fichier PLY trouvé (paquet_*/dense/fused.ply)" >&2
   exit 1
 fi
 
 # Générer un pipeline PDAL
-echo "bg=pdal process=merge  etape=merge  date=$(date -Is)"
+echo "bg=processMergePoissonPLY process=merge  etape=merge  date=$(date -Is)"
 tmp_json="$(mktemp /tmp/pdal-merge-XXXXXX.json)"
 trap 'rm -f "$tmp_json"' EXIT
 
@@ -56,9 +56,9 @@ trap 'rm -f "$tmp_json"' EXIT
 }
 EOF
 } > "$tmp_json"
-echo "bg=pdal process=merge  etape=pipeline  date=$(date -Is)"
-echo "bg=data Pipeline=$tmp_json"
+echo "bg=processMergePoissonPLY process=merge  etape=pipeline  date=$(date -Is)"
+echo "bg=processMergePoissonPLY Pipeline=$tmp_json"
 "$PDAL" pipeline "$tmp_json"
-echo "bg=pdal process=merge  etape=fin  date=$(date -Is)"
-echo "bg=data OK merged -> $OUT"
+echo "bg=processMergePoissonPLY process=merge  etape=fin  date=$(date -Is)"
+echo "bg=processMergePoissonPLY OK merged -> $OUT"
 

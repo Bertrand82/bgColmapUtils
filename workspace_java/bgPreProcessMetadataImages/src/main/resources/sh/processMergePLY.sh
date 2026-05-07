@@ -59,9 +59,9 @@ trap 'rm -f "$tmp_json"' EXIT
 }
 EOF
 } > "$tmp_json"
-echo "bg=pdal process=merge  etape=pipeline  date=$(date -Is)"
-echo "bg=data Pipeline=$tmp_json"
+echo "bg=processMergePLY process=merge  etape=pipeline  date=$(date -Is)"
+echo "bg=processMergePLY Pipeline=$tmp_json"
 "$PDAL" pipeline "$tmp_json"
-echo "bg=pdal process=merge  etape=fin  date=$(date -Is)"
-echo "bg=data OK merged -> $OUT"
+echo "bg=processMergePLY process=merge  etape=fin  date=$(date -Is)"
+echo "bg=processMergePLY OK merged -> $OUT"
 
