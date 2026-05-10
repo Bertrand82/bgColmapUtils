@@ -3,7 +3,7 @@ set -euo pipefail
 
 PDAL=~/workspaceCpp/PDAL/build/bin/pdal
 OUT_MERGED="merged_open3D.ply"
-OUT_POISSON ="merged_open3D_poisson_mesh.ply"
+OUT_POISSON="merged_open3D_poisson_mesh.ply"
 COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 BGOpen3D=~/workspaceCpp/bgOpen3D/build/bgOpen3D
 
@@ -37,7 +37,7 @@ fi
 # Générer un pipeline BgOpen3D pour fusionner les PLY
 
  
-echo "bg=processMergePoissonPLY Pipeline généré: $pipeline_file"  
+echo "bg=processMergePoissonPLY ply_files: ${#ply_files[@]} fichiers à fusionner"  
 
 
 # Exécuter le merge BgOpen3D
