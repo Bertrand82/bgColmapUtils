@@ -143,6 +143,15 @@ Writing photometric output for DJI_20260207181546_0080_D.JPG
   - oui: fusion = concat + dédup.
   - R Fusion en ligne de commande (recommandé) : PDAL
 
+## Prompt fusion Open3D
+
+Avec Open3D, en cpp, je voudrai merger, fusionner plusieurs fichiers PLY issus de colmap. ils sont déjà dans le même repère
+et le même système de coordonnées, et une simple concaténation suffit . Je voudrai que la liste de fichier soit passé en argument, ainsi que le nom du fichier de sortie.
+Les fonctionnalités sont les suivantes:
+prend une liste de fichiers .ply en arguments
+les charge
+les concatène simplement
+écrit un fichier de sortie
 
 ## Indicateur qualité modelisation
 colmap model_analyzer \
@@ -284,7 +293,7 @@ Voir dans
      
      - Commentaire : Publication SIG industrielle (scenes 3D/points). Integre mais couteux et moins flexible pour du 3D Tiles controle.
 
-## Echec
+
 
 
 ## DONE
@@ -292,11 +301,11 @@ Voir dans
 - réconciliation modèles 3D
 - Convertis en 3D Tiles Cesium + viewer CesiumJS.
 - Convertis en 3D Tiles PotreeConverter 
+- outil d'exploitation des logs COLMAP ( ajustage)
 
 ## TODO
 - outil de visualisation 3D et de spécification de trajectoires
 - test images satellites ou Google
-- outil d'exploitation des logs COLMAP ( ajustage)
 - Recuperer images depuis un drone
 - Estimateur de durée (traitement de 1 paquet de 25 images, 4 iterations, 30 mn)
 - Faire un filtre qui vire toutes les images isolées
