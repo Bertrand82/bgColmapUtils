@@ -3,9 +3,11 @@ set -euo pipefail
 
 PDAL=~/workspaceCpp/PDAL/build/bin/pdal
 OUT="merged_poisson.ply"
+COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 
 echo "bg=processMergePoissonPLY PDAL=$PDAL"
 echo "bg=processMergePoissonPLY OUT=$OUT"
+echo "bg=processMergePoissonPLY COLMAP=$COLMAP"
 
 # On collecte les PLY existants
 ply_files=()
@@ -56,9 +58,22 @@ trap 'rm -f "$tmp_json"' EXIT
 }
 EOF
 } > "$tmp_json"
+
+echo "bg=processMergePoissonPLY tmp_json=$tmp_json"
+echo "bg=processMergePoissonPLY Pipeline contenu:"
+cat "$tmp_json"
+
 echo "bg=processMergePoissonPLY process=merge  etape=pipeline  date=$(date -Is)"
-echo "bg=processMergePoissonPLY Pipeline=$tmp_json"
-"$PDAL" pipeline "$tmp_json"
+# "$PDAL" pipeline "$tmp_json"
+echo "bg=processDensePaquet process=dense  etape=poisson_mesher   date=$(date -Is)"
+"$COLMAP" poisson_mesher \
+  --input_path "merged.ply" \
+  --output_path "$OUT" \
+  --PoissonMeshing.depth 11 \
+  --PoissonMeshing.trim 10 \
+  --PoissonMeshing.point_weight 1 \
+  --PoissonMeshing.color 1 \
+  --PoissonMeshing.num_threads 4
 echo "bg=processMergePoissonPLY process=merge  etape=fin  date=$(date -Is)"
 echo "bg=processMergePoissonPLY OK merged -> $OUT"
 

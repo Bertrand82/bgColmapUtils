@@ -120,5 +120,6 @@ echo "bg=processDensePaquet fused.ply=$DENSE_DIR/fused.ply"
 echo "bg=processDensePaquet mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
 nb_images=$(find "$SCRIPT_DIR/dense/images" -maxdepth 1 -type f | wc -l)
 echo "bg=processDensePaquet nb_images=$nb_images"
-
+echo bg suppresion de stereo : $DENSE_DIR/stereo
+rm -rf --one-file-system $DENSE_DIR/stereo
 

@@ -12,12 +12,12 @@ Remarque : le fichier metadataCSV.txt est généré par l'application java :bg.d
   - base SQLite COLMAP (database.db)
   - CSV metadataCSV.txt avec 7 colonnes: imageName, xx, yy, zz, yaw, pitch, roll
 - Sortie:
-  - lignes écrites dans la table pose_priors
+  - lignes écrites dans la table pose_priors de sqlite
 
 ## Build
 
 Prerequis:
-- CMake >= 3.16
+- CMake version >= 3.16
 - Compilateur C++17
 - SQLite3 (dev)
 - Eigen3
