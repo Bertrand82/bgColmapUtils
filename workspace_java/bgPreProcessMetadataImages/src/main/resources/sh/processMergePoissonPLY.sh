@@ -42,7 +42,7 @@ echo "bg=processMergePoissonPLY ply_files: ${#ply_files[@]} fichiers à fusionne
 
 # Exécuter le merge BgOpen3D
 echo "bg=processMergePoissonPLY Exécution du pipeline BgOpen3D..."
-"$BGOpen3D" --merge "$OUT_MERGED" "${ply_files[@]}"  
+# "$BGOpen3D" --merge "$OUT_MERGED" "${ply_files[@]}"  
 
 # Vérifier que le fichier de sortie a été créé
 if [[ -f "$OUT_MERGED" ]]; then
@@ -54,7 +54,7 @@ fi
 
 #Executer le Poisson reconstruction
 echo "bg=processMergePoissonPLY Exécution du Poisson reconstruction..."
-"$BGOpen3D" --poisson "$OUT_POISSON" "$OUT_MERGED"  
+"$BGOpen3D" --poisson --auto-depth "$OUT_POISSON" "$OUT_MERGED"  
 
 # Vérifier que le fichier de sortie a été créé
 if [[ -f "$OUT_POISSON" ]]; then
