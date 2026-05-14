@@ -71,6 +71,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		public int nbSeq = 7;
 		public int nbProx = 8;
 		public int taillePaquet=30;
+		public Double recouvrementPaquets=0.1;
 	}
 
 	/**
@@ -481,7 +482,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	private void processSparseBackGround(File dirSparse) {
 		System.out.println("processSparse "+dirSparse.getAbsolutePath());
 		int paquetSize=this.paramsConfiguration.taillePaquet;
-		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,this.listPositions);
+		double tauxRecouvrementPaquets = this.paramsConfiguration.recouvrementPaquets;
+		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
 		// Lots de 100 images
 	}
 	

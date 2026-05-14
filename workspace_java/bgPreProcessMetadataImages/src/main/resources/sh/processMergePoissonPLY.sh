@@ -44,6 +44,7 @@ echo "bg=processMergePoissonPLY ply_files=${#ply_files[@]} "
 
 
 # Exécuter le merge BgOpen3D
+
 echo "bg=processMergePoissonPLY step=merge date=$(date -Is)"
 "$BGOpen3D" --merge "$OUT_MERGED" "${ply_files[@]}"  
 
@@ -52,7 +53,7 @@ echo "bg=processMergePoissonPLY step=post-merge date=$(date -Is)"
 "$BGOpen3D" --post-merge --dedup-eps 0.005 --voxel 0.005 "$OUT_MERGED" "$OUT_MERGED_FILTRED"  
 
 
-
+echo "bg=processMergePoissonPLY  step=BgOpen3DMergeFin date=$(date -Is)"
 # Vérifier que le fichier de sortie a été créé
 if [[ -f "$OUT_MERGED" ]]; then
   echo "bg=processMergePoissonPLY Succès: fichier de sortie créé: $OUT_MERGED date=$(date -Is)"

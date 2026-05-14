@@ -10,6 +10,7 @@ public class DisplayTogetherPanelPopup {
   public static void showPopup(Component parent, ParamsConfiguration parametres) {
     JTextField tfPoints1 = new JTextField(String.valueOf(parametres.nbPointsExtraitsMax), 6);
     JTextField tfPoints2 = new JTextField(String.valueOf(parametres.taillePaquet), 6);
+    JTextField tfRecouvrement = new JTextField(String.valueOf(parametres.recouvrementPaquets), 6);
 
     JSpinner spSeq  = new JSpinner(new SpinnerNumberModel(parametres.nbSeq, 0, 9999, 1));
     JSpinner spProx = new JSpinner(new SpinnerNumberModel(parametres.nbProx, 0, 9999, 1));
@@ -29,6 +30,10 @@ public class DisplayTogetherPanelPopup {
 
     form.add(new JLabel("Nombre d'images à proximité :"));
     form.add(spProx);
+    
+    form.add(new JLabel("Recouvrement des paquets (entre 0 et 1) :"));
+    form.add(tfRecouvrement);
+
 
     JDialog dlg = new JDialog(
         SwingUtilities.getWindowAncestor(parent),
@@ -45,13 +50,15 @@ public class DisplayTogetherPanelPopup {
       try {
         int points = Integer.parseInt(tfPoints1.getText().trim());
         int taillePaquet = Integer.parseInt(tfPoints2.getText().trim());
-        int seq  = (Integer) spSeq.getValue();
+        int nbSeq  = (Integer) spSeq.getValue();
         int prox = (Integer) spProx.getValue();
+        double recouvrementPaquet =Double.parseDouble(tfRecouvrement.getText().trim());
 
         parametres.nbPointsExtraitsMax = points;
         parametres.taillePaquet = taillePaquet; // manquait dans ton code original
-        parametres.nbSeq = seq;
+        parametres.nbSeq = nbSeq;
         parametres.nbProx = prox;
+        parametres.recouvrementPaquets=recouvrementPaquet;
 
         dlg.dispose();
       } catch (NumberFormatException ex) {

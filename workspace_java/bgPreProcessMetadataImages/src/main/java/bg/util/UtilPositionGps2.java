@@ -36,19 +36,21 @@ public class UtilPositionGps2 {
 		return new MinMaxBounds(xMin, yMin, xMax, yMax);
 	}
 
-	public static List<List<PositionGps2>> extractPaquets(List<PositionGps2> listAllPositions, int paquetSize) {
+	public static List<List<PositionGps2>> extractPaquets(List<PositionGps2> listAllPositions, int paquetSize,double tauxRecouvrement) {
 		List<List<PositionGps2>> listList = new ArrayList<List<PositionGps2>>();
 		List<BeanPositionGps2> listCurrent = initListBeanPosition(listAllPositions);
 		while (listCurrent.size() > 0) {
 			System.out.println("listCurrent size : "+listCurrent.size());
 			BeanPositionGps2 pPLusAuNord = getPositionGpsNordestBeans(listCurrent);
 			initDistance(listCurrent, pPLusAuNord);
-			listCurrent.sort(Comparator.comparingDouble(BeanPositionGps2::getDistance));
-			List<BeanPositionGps2> firstN = new ArrayList<>(
+			listCurrent.sort(Comparator.comparingDouble(BeanPositionGps2::getDistance2));			
+			List<BeanPositionGps2> firstN2 = new ArrayList<>(	
 					listCurrent.subList(0, Math.min(paquetSize, listCurrent.size())));
-			List<PositionGps2> firsNSimple = toListPostions(firstN);
+			List<PositionGps2> firsNSimple = toListPostions(firstN2);
 			listList.add(firsNSimple);
-			listCurrent.subList(0, Math.min(firstN.size(), listCurrent.size())).clear();
+			int taillePaquetCurrent =  Math.min(firstN2.size(), listCurrent.size());
+			int tailleRemoved = (int) (taillePaquetCurrent*(1-tauxRecouvrement));
+			listCurrent.subList(0, tailleRemoved).clear();;
 		}
 		return listList;
 	}
@@ -103,19 +105,26 @@ public class UtilPositionGps2 {
 
 	public static class BeanPositionGps2 {
 		PositionGps2 position;
-		double distance;
+		double distanceAbs;
+		double distance2;
 
 		public BeanPositionGps2(PositionGps2 p) {
 			this.position = p;
 		}
 
 		public void initDistance(BeanPositionGps2 pt) {
-			this.distance = Math.abs(pt.position.getX() - position.getX())
-					+ Math.abs(pt.position.getY() - position.getY());
+			double dx = pt.position.getX() - position.getX();
+			double dy = pt.position.getY() - position.getY();
+			this.distanceAbs = Math.abs(dx)
+					+ Math.abs(dy);
+			distance2 = dx*dx+dy*dy;
 		}
 
-		public double getDistance() {
-			return distance;
+		public double getDistanceAbs() {
+			return distanceAbs;
+		}
+		public double getDistance2() {
+			return distance2;
 		}
 
 	}
