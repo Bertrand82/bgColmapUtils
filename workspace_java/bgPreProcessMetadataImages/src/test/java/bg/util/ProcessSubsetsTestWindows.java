@@ -9,7 +9,8 @@ public class ProcessSubsetsTestWindows {
 	public static void main(String[] args) {
 		System.err.println("ProcessSubsetTest ");
 		File dir = new File ("C:\\Users\\bertr\\data\\BG");
-		ProcessSubsets processSubset = new ProcessSubsets(dir, 20);
+		ProcessSubsets processSubset = new ProcessSubsets(dir, 20,0.2);
+	System.out.println(processSubset.traceSubset());
 	}
 
 }

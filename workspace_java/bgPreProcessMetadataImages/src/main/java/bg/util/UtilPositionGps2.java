@@ -39,8 +39,9 @@ public class UtilPositionGps2 {
 	public static List<List<PositionGps2>> extractPaquets(List<PositionGps2> listAllPositions, int paquetSize,double tauxRecouvrement) {
 		List<List<PositionGps2>> listList = new ArrayList<List<PositionGps2>>();
 		List<BeanPositionGps2> listCurrent = initListBeanPosition(listAllPositions);
-		while (listCurrent.size() > 0) {
-			System.out.println("listCurrent size : "+listCurrent.size());
+		int dn = (int) (paquetSize*tauxRecouvrement );
+		while (listCurrent.size() > dn) {
+			System.out.print("extractPaquets listCurrent size : "+listCurrent.size());
 			BeanPositionGps2 pPLusAuNord = getPositionGpsNordestBeans(listCurrent);
 			initDistance(listCurrent, pPLusAuNord);
 			listCurrent.sort(Comparator.comparingDouble(BeanPositionGps2::getDistance2));			

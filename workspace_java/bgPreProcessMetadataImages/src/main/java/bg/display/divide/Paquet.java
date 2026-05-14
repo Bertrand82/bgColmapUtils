@@ -16,7 +16,7 @@ public class Paquet {
 	File dirImages;
 	String paquetName;
 	int numero;
-
+	public List<PositionGps2> listPositions = new ArrayList<PositionGps2>();
 
 
 	public Paquet(List<PositionGps2> list, File dirImages, int numero) {
@@ -28,7 +28,7 @@ public class Paquet {
 		
 	}
 
-	private List<PositionGps2> listPositions = new ArrayList<PositionGps2>();
+	
 	
 	
 	public String toString() {

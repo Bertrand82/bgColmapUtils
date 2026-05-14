@@ -18,19 +18,22 @@ public class ProcessSubsets {
 	File dirRoot;
 	File dirImages;
 	int nbTotalImages = 0;
+	int  paquetSize;
+	double tauxRecouvrement;
 	private List<PositionGps2> listPositions;
 	List<Paquet> listPaquets = new ArrayList<Paquet>();
-	public ProcessSubsets(File dirRoot, int paquetSize,double tauxRecouvrement) {
-		this(dirRoot,paquetSize,tauxRecouvrement,PositionGps2Factory.getListGpsPositionFromDirImages(new File(dirRoot, "images")));
+	public ProcessSubsets(File dirRoot, int paquetSize,double tauxRecouvrement_) {
+		this(dirRoot,paquetSize,tauxRecouvrement_,PositionGps2Factory.getListGpsPositionFromDirImages(new File(dirRoot, "images")));
 	}
 
-	public ProcessSubsets(File dirRoot, int paquetSize,double tauxRecouvrement, List<PositionGps2> listPositions_) {
+	public ProcessSubsets(File dirRoot, int paquetSize_,double tauxRecouvrement_, List<PositionGps2> listPositions_) {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;
 		this.listPositions =listPositions_;
-		
-		List<List<PositionGps2>> listList =UtilPositionGps2.extractPaquets(listPositions,paquetSize);
+		this.paquetSize=paquetSize_;
+		this.tauxRecouvrement=tauxRecouvrement_;
+		List<List<PositionGps2>> listList =UtilPositionGps2.extractPaquets(listPositions,paquetSize,tauxRecouvrement);
 		this.listPaquets=toListPaquet(listList);
 	
 		System.out.println(" Total position  size "+listPositions.size());
@@ -84,6 +87,25 @@ public class ProcessSubsets {
 			e.printStackTrace();
 		}
 		
+	}
+
+	public String traceSubset() {
+		String s=" ProcessSubset trace \n ";
+		s+=" nbTotalImages: "+this.nbTotalImages+"\n";
+		s+= " listPositions size :"+this.listPositions.size()+"\n";
+		s+= " listPAquets size :"+this.listPaquets.size()+"\n";
+		s +=" paquetSize :"+this.paquetSize+"\n";
+		s+= " nb Toatal Images In Paquets "+getNbImagesInPaquets()+"\n";
+		return s;
+		
+	}
+
+	private int getNbImagesInPaquets() {
+		int nb =0;
+		for (Paquet paq : listPaquets) {
+			nb += paq.listPositions.size();
+		}
+		return nb;
 	}
 
 	
