@@ -48,6 +48,8 @@ echo "bg=processDensePaquet SCRIPT_DIR=$SCRIPT_DIR"
 
 
 mkdir -p "$SCRIPT_DIR/sparse/0" "$LOG_DIR"
+echo "bg=processDensePaquet step=RemoveDense"
+rm -rf ./dense/*
 
 echo "bg=processDensePaquet process=dense  etape=model_converter  comment=converti_bin_en_txt date=$(date -Is)"
 $COLMAP model_converter \
@@ -63,6 +65,8 @@ $COLMAP model_converter \
     			printf '%s\tMISSING\n' "$p"
   		fi
 	done
+	
+#Suppression du repertoire dense 
 
   echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date -Is)"
 "$COLMAP" image_undistorter \
@@ -82,8 +86,8 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
   --PatchMatchStereo.max_image_size $max_image_size \
   --PatchMatchStereo.cache_size $PatchMatchStereo_cache_size \
   --PatchMatchStereo.num_threads $PatchMatchStereo_num_threads \
-  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations \
-  --PatchMatchStereo.allow_missing_files 1 \
+  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations 
+ # --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
   
 
@@ -122,4 +126,5 @@ nb_images=$(find "$SCRIPT_DIR/dense/images" -maxdepth 1 -type f | wc -l)
 echo "bg=processDensePaquet nb_images=$nb_images"
 echo bg suppresion de stereo : $DENSE_DIR/stereo
 rm -rf --one-file-system $DENSE_DIR/stereo
+echo "bg=processDensePaquet   etape=FIN   date=$(date -Is)"
 

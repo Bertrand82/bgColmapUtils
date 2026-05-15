@@ -117,6 +117,8 @@ Un hang GPU répété sous charge peut aussi être :
 - undervolt/overclock
 
 #### 5 Changement de driver
+
+```
 sudo apt update
 sudo apt install nvidia-driver-580
 sudo apt remove nvidia-driver-580-open
@@ -125,10 +127,16 @@ sudo reboot
 nvidia-smi
 dpkg -l | grep nvidia-driver
 modinfo nvidia | head
-
+```
 Writing photometric output for DJI_20260207181546_0080_D.JPG
 [0;31mE20260427 20:57:02.104234 22683 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/gpu_mat.h:24
 89 occurence de  "Writing photometric output for"
+ Désactiver le firmware GSP (souvent efficace) Désactiver le firmware GSP (souvent efficace)
+ 
+#### 6 Nouveau plantage inexpliqué de Nvidia
+  - Changement du driver (ça plante encore)
+  - deActivation du GSP (ça marche enfin !!!! sur des paquets de 30 images)
+  
 ## Prompt fusion 
 
   - 1-Je fais un sparse des 2000 images : feature_extractor, matches_importer, mapper
