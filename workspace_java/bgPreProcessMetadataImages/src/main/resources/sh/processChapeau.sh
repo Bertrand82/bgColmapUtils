@@ -63,7 +63,8 @@ for d in paquet_*/; do
 done
 
 # FIN  BOUCLE
-
+echo "bg=colmap process=chapeau  etape=copyPoisson     date=$(date -Is)"
+ ./copy_mesh_poisson.sh
   echo "bg=colmap process=chapeau  etape=mergePLY     date=$(date -Is)"
   ./processMergePLY.sh
   echo "bg=colmap process=chapeau  etape=PlyToLaz    date=$(date -Is)"
