@@ -134,7 +134,7 @@ Writing photometric output for DJI_20260207181546_0080_D.JPG
  Désactiver le firmware GSP (souvent efficace) Désactiver le firmware GSP (souvent efficace)
  
 #### 6 Nouveau plantage inexpliqué de Nvidia
-  - Changement du driver (ça plante encore)
+  - Changement du driver (ça plante encore)  NVIDIA-SMI 580.142   Driver Version: 580.142  CUDA Version: 13.0 
   - deActivation du GSP (ça marche enfin !!!! sur des paquets de 30 images)
   
 ## Prompt fusion 
