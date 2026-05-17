@@ -64,12 +64,12 @@ done
 
 # FIN  BOUCLE
 echo "bg=colmap process=chapeau  etape=copyPoisson     date=$(date -Is)"
- ./copy_mesh_poisson.sh
-  echo "bg=colmap process=chapeau  etape=mergePLY     date=$(date -Is)"
-  ./processMergePLY.sh
-  echo "bg=colmap process=chapeau  etape=PlyToLaz    date=$(date -Is)"
-  ./processPlyToLaz.sh
-  echo "bg=colmap process=chapeau  etape=MergePlyToLaz    date=$(date -Is)"
-  ./processMergePLYtoLaz.sh
-  echo "bg=colmap process=chapeau  etape=LasToPotree     date=$(date -Is)"
-  ./processLasToPotree.sh
+./copy_mesh_poisson.sh
+echo "bg=colmap process=chapeau  etape=mergePLY     date=$(date -Is)"
+./processMergePLY.sh
+echo "bg=colmap process=chapeau  etape=PlyToLaz    date=$(date -Is)"
+./processPlyToLaz.sh
+echo "bg=colmap process=chapeau  etape=MergePlyToLaz    date=$(date -Is)"
+./processMergePLYtoLaz.sh
+echo "bg=colmap process=chapeau  etape=LasToPotree     date=$(date -Is)"
+./processLasToPotree.sh
