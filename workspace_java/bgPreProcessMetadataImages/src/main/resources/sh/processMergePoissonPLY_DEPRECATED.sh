@@ -73,6 +73,6 @@ else
   echo "bg=processMergePoissonPLY Échec: fichier de sortie non créé: $OUT_POISSON date=$(date -Is)" >&2
   exit 1
 fi  
-echo "bg=processMergePoissonPLY step=fin date=$(date -Is)" >&2
+echo "bg=processMergePoissonPLY step=fin OUT_POISSON=$OUT_POISSON date=$(date -Is)" >&2
   
 

@@ -46,7 +46,7 @@ public class ProcessSubsets {
 		try {
 			UtilCopyBg.copyResourceToDir("sh/processChapeau.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePLY.sh", this.dirRoot.toPath(), true);
-			UtilCopyBg.copyResourceToDir("sh/processMergePoissonPLY.sh", this.dirRoot.toPath(), true);
+			//UtilCopyBg.copyResourceToDir("sh/processMergePoissonPLY_DEPRECATED.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processPlyToLaz.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processMergePLYtoLaz.sh", this.dirRoot.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processLasToPotree.sh", this.dirRoot.toPath(), true);

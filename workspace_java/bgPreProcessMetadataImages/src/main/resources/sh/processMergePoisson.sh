@@ -26,7 +26,7 @@ echo "bg=processMergePoisson Fichiers trouvés :"
 for f in "${MESH_FILES[@]}"; do
   echo "bg=processMergePoisson  $f"
 done
-echo "bg=processMergePoisson step=start"
+echo "bg=processMergePoisson step=start date=$(date -Is)"
 
 "$BGOpen3D" --mergeMesh --weld-eps "$WELD_EPS" "$OUTPUT_MESH" "${MESH_FILES[@]}"
-echo "bg=processMergePoisson step=done OUTPUT_MESH=$OUTPUT_MESH"
+echo "bg=processMergePoisson step=done OUTPUT_MESH=$OUTPUT_MESH date=$(date -Is)"
