@@ -46,3 +46,7 @@
 
 # Build artifacts
 build/
+*images.txt
+*points3D.txt
+*frames.txt
+*database.db
