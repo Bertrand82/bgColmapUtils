@@ -67,6 +67,7 @@ public class ProcessSubsets2 {
 			List<PositionGps2> list = getListPositions(listI);
 			Paquet paquet = new Paquet(list, dirImages, i++);
 			listPa.add(paquet);
+			paquet.updateReferenceNumeroPaquet();
 		}
 		return listPa;
 	}

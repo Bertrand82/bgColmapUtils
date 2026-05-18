@@ -15,7 +15,7 @@ public class PositionGps2 {
     private final double y;
     private final LocalDateTime date; // null si absente
     private int numeroPaquet = -1;
-    Color color = Color.BLACK;
+    private Color color = Color.BLACK;
    
     public LocalDateTime getDate() {
 		return date;
