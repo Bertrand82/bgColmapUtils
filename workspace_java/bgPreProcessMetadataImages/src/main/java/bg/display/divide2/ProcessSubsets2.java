@@ -75,9 +75,9 @@ public class ProcessSubsets2 {
 		List<PositionGps2> lPositions = new ArrayList<PositionGps2>();
 		for (ImageId imageId : listI) {
 			System.err.println("imageId "+imageId);
-			File imageFile = new File(dirImages, ""+imageId.name);
-			if (imageFile.exists()) {
-				PositionGps2 position = PositionGps2Factory.extractPosition(imageFile);
+			PositionGps2 position = getPositionFromList(imageId);
+			if (position!= null) {
+				
 				lPositions.add(position);
 			}
 		}
@@ -85,6 +85,14 @@ public class ProcessSubsets2 {
 		return lPositions;
 	}
 
+	private PositionGps2 getPositionFromList(ImageId imageId) {
+		for (PositionGps2 pGps2 : this.listPositions) {
+			if (pGps2.getImageName().equals(imageId.name)) {
+				return pGps2;
+			}
+		}
+		return null;
+	}
 	private List<List<ImageId>> getListListImages(List<List<Integer>> packets) {
 		List<List<ImageId>> listes = new ArrayList<List<ImageId>>();
 		for (List<Integer> listInteger : packets) {
