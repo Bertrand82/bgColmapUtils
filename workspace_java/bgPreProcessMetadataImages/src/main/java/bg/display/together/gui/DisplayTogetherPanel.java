@@ -44,7 +44,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import bg.display.divide1.ProcessSubsets;
+import bg.display.divide1.ProcessSubsets_1;
+import bg.display.divide2.ProcessSubsets2;
 import bg.metadata.MetaDatasCsv;
 import bg.process.log.LogFactory;
 import bg.process.log.LogProcess;
@@ -116,7 +117,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JLabel labelLog = new JLabel("");
 	JButton buttonVisualiserImages = new JButton("Select Images");
 	JButton buttonExtractData = new JButton("extract Data");
-	JMenuItem buttonDossierSparsesCreatePaquets = new JMenuItem("Create Sparse paquets");
+	JMenuItem buttonDossierSparsesCreatePaquets_1 = new JMenuItem("Create Sparse paquets 1");
+	JMenuItem buttonDossierSparsesCreatePaquets_2 = new JMenuItem("Create Sparse paquets 2");
 	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
 	JMenuItem buttonDossierSources = new JMenuItem("Open Repository Source Images");
 	JMenuItem buttonDebug = new JMenuItem("debug");
@@ -180,7 +182,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonAnalyseLog.addActionListener(e ->analyseLog());
 		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
 		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
-		buttonDossierSparsesCreatePaquets.addActionListener(e -> processDossierSparse());
+		buttonDossierSparsesCreatePaquets_1.addActionListener(e -> processDossierSparse_1());
+		buttonDossierSparsesCreatePaquets_2.addActionListener(e -> processDossierSparse_2());
 		buttonDossierCleanSparsePaquets.addActionListener(e->processDossierCleanPaquets());
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
@@ -198,7 +201,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
 		menuFile.add(buttonDossierSources);
-		menuFile.add(buttonDossierSparsesCreatePaquets);
+		menuFile.add(buttonDossierSparsesCreatePaquets_1);
+		menuFile.add(buttonDossierSparsesCreatePaquets_2);
 		menuFile.add(buttonDossierCleanSparsePaquets);
 		menuFile.add(buttonAnalyseLog);
 
@@ -438,13 +442,37 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 	}
 	
-	private void processDossierSparse() {
-		System.out.println("processDossierSparse");
+	private void processDossierSparse_1() {
+		System.out.println("processDossierSparse 1");
 		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
 			@Override
 			protected Void doInBackground() throws Exception {
 				sablierSwing.start("initialisation paquets", "Init");
-				processSparseBackGround(dirSources);
+				processSparseBackGround_1(dirSources);
+				return null;
+			}
+
+			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
+			@Override
+			protected void done() {
+				File fileImages = new File(dirTargetOut,"images");
+				if (fileImages.exists()  ) {
+					System.out.println("Nb Images " + fileImages.listFiles().length );
+				}
+				System.err.println("sssssssssstop dialog ");
+				sablierSwing.stop();
+			}
+		};
+		sw.execute();
+		
+	}
+	private void processDossierSparse_2() {
+		System.out.println("processDossierSparse 2");
+		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
+			@Override
+			protected Void doInBackground() throws Exception {
+				sablierSwing.start("initialisation paquets", "Init");
+				processSparseBackGround_2(dirSources);
 				return null;
 			}
 
@@ -479,12 +507,24 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	    }
 	}
 	
-	private void processSparseBackGround(File dirSparse) {
-		System.out.println("processSparse "+dirSparse.getAbsolutePath());
+	private void processSparseBackGround_1(File dirSparse) {
+		System.out.println("processSparse 1 "+dirSparse.getAbsolutePath());
 		int paquetSize=this.paramsConfiguration.taillePaquet;
 		double tauxRecouvrementPaquets = this.paramsConfiguration.recouvrementPaquets;
-		ProcessSubsets processSubsets= new ProcessSubsets(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
+		ProcessSubsets_1 processSubsets= new ProcessSubsets_1(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
 		// Lots de 100 images
+	}
+	private void processSparseBackGround_2(File dirSparse) {
+		try {
+			System.out.println("processSparse 2 "+dirSparse.getAbsolutePath());
+			int paquetSize=this.paramsConfiguration.taillePaquet;
+			double tauxRecouvrementPaquets = this.paramsConfiguration.recouvrementPaquets;
+			ProcessSubsets2 processSubsets= new ProcessSubsets2(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
+			// Lots de 100 images
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

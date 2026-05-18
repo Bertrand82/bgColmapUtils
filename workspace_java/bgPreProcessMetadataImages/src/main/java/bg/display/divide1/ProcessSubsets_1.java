@@ -14,7 +14,7 @@ import bg.util.UtilCopyBg;
 import bg.util.UtilPositionGps2;
 import bg.util.UtilPositionGps2.MinMaxBounds;
 
-public class ProcessSubsets {
+public class ProcessSubsets_1 {
 
 	
 	File dirRoot;
@@ -24,13 +24,13 @@ public class ProcessSubsets {
 	double tauxRecouvrement;
 	private List<PositionGps2> listPositions;
 	List<Paquet> listPaquets = new ArrayList<Paquet>();
-	public ProcessSubsets(File dirRoot, int paquetSize,double tauxRecouvrement_) {
+	public ProcessSubsets_1(File dirRoot, int paquetSize,double tauxRecouvrement_) {
 		this(dirRoot,paquetSize,tauxRecouvrement_,PositionGps2Factory.getListGpsPositionFromDirImages(new File(dirRoot, "images")));
 	}
 	
 	
 
-	public ProcessSubsets(File dirRoot, int paquetSize_,double tauxRecouvrement_, List<PositionGps2> listPositions_) {
+	public ProcessSubsets_1(File dirRoot, int paquetSize_,double tauxRecouvrement_, List<PositionGps2> listPositions_) {
 		this.dirRoot = dirRoot;
 		this.dirImages = new File(dirRoot, "images");
 		this.nbTotalImages = dirImages.listFiles().length;

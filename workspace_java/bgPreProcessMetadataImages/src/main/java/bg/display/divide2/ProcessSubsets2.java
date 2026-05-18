@@ -26,8 +26,13 @@ public class ProcessSubsets2 {
 	final ImagePacketGrouper imagePacketGrouper;
 	final List<List<ImageId>> listListImages;
 	final List<Paquet> listPaquets;
+	private List<PositionGps2> listPositions;
 
 	public ProcessSubsets2(File dir, int paquetSize, double tauxRecouvrement) throws Exception {
+		this(dir,paquetSize,tauxRecouvrement,PositionGps2Factory.getListGpsPositionFromDirImages(new File(dir, "images")));
+	}
+	public ProcessSubsets2(File dir, int paquetSize, double tauxRecouvrement,List<PositionGps2> listPositions) throws Exception {
+		this.listPositions=listPositions;
 		this.dirRoot = dir;
 		this.dirImages = new File(dirRoot, "images");
 		this.dir_sparse = new File(dirRoot, "sparse");

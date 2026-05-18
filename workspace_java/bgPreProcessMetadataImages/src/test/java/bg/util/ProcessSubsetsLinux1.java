@@ -2,14 +2,14 @@ package bg.util;
 
 import java.io.File;
 
-import bg.display.divide1.ProcessSubsets;
+import bg.display.divide1.ProcessSubsets_1;
 
 public class ProcessSubsetsLinux1 {
 
 	public static void main(String[] args) {
 		System.err.println("ProcessSubsetTest ");
 		File dir = new File ("/data/BG");
-		ProcessSubsets processSubset = new ProcessSubsets(dir, 20,0.2);
+		ProcessSubsets_1 processSubset = new ProcessSubsets_1(dir, 20,0.2);
 	}
 
 }
