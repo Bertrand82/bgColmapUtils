@@ -2,7 +2,7 @@ package bg.util;
 
 import java.io.File;
 
-import bg.display.divide.ProcessSubsets;
+import bg.display.divide1.ProcessSubsets;
 
 public class ProcessSubsetsLinux {
 

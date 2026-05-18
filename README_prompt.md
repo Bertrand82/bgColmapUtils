@@ -206,3 +206,20 @@ En Europe, des programmes comme Horizon Europe ou France 2030 financent l’inno
 Question pour toi :
 
 As-tu déjà identifié un secteur ou un type de client qui t’intéresse particulièrement ? Ou veux-tu que je t’aide à prioriser les opportunités en fonction de ta situation (ressources, réseau, etc.) ?
+
+
+## Rerouper les images
+je voudrai a partir des points3D généré par colmap sparse, regrouper les images par paquets de n images ayant le maximum de points communs
+
+Chaque point 3D est observé par plusieurs images,donc deux images sont “proches” si elles observent beaucoup de mêmes points 3D.
+
+Tu peux définir un score entre images i, j :
+
+  - brut : nombre de points 3D communs
+  - normalisé : IoU / Jaccard / overlap ratio
+  
+Puis tu crées des groupes de n images avec un algorithme glouton :
+
+  - choisir une image graine
+  - ajouter successivement l’image qui maximise le score avec le groupe courant
+  - répéter jusqu’à n

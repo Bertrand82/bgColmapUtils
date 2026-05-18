@@ -2,15 +2,17 @@ package bg.util;
 
 import java.io.File;
 
-import bg.display.divide.ProcessSubsets;
+import bg.display.divide1.ProcessSubsets;
 
 public class ProcessSubsetsTestWindows {
 
 	public static void main(String[] args) {
 		System.err.println("ProcessSubsetTest ");
-		File dir = new File ("C:\\Users\\bertr\\data\\BG");
-		ProcessSubsets processSubset = new ProcessSubsets(dir, 20,0.2);
-	System.out.println(processSubset.traceSubset());
+		File dir = new File("C:\\Users\\bertr\\data\\BG");
+		int paquetSize = 20;
+		double tauxRecouvrement = 0.2;
+		ProcessSubsets processSubset = new ProcessSubsets(dir, paquetSize, tauxRecouvrement);
+		System.out.println(processSubset.traceSubset());
 	}
 
 }
