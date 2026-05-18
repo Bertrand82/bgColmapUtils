@@ -4,7 +4,7 @@ import java.io.File;
 
 import bg.display.divide1.ProcessSubsets;
 
-public class ProcessSubsetsTestWindows {
+public class ProcessSubsetsTestWindows1 {
 
 	public static void main(String[] args) {
 		System.err.println("ProcessSubsetTest ");

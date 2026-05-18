@@ -34,7 +34,7 @@ public class Paquet {
 	public String toString() {
 		return " Paquet name :"+paquetName+" | size :"+listPositions.size()+" images";
 	}
-	@Deprecated
+
 	public void createDirectorie_(File dir,ColmapSubsetBuilder colmapSubsetBuilder) {
 		try {
 				System.out.print("createDirectorie "+paquetName+" start ");

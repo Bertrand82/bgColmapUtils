@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bg.display.divide.common.Paquet;
+import bg.display.divide1.ColmapSubsetBuilder;
 import bg.util.PositionGps2;
 import bg.util.PositionGps2Factory;
 import bg.util.UtilPositionGps2;
@@ -16,7 +17,7 @@ public class ProcessSubsets2 {
 	final int nbTotalImages;
 	final int paquetSize;
 	final double tauxRecouvrement;
-	final File dir_0;
+	final File dir_sparse_0;
 	final File dir_sparse;
 	final File fileImages;
 	final File filePoints3D;
@@ -30,9 +31,9 @@ public class ProcessSubsets2 {
 		this.dirRoot = dir;
 		this.dirImages = new File(dirRoot, "images");
 		this.dir_sparse = new File(dirRoot, "sparse");
-		this.dir_0 = new File(dir_sparse, "0");
-		this.fileImages = new File(dir_0, "images.txt");
-		this.filePoints3D = new File(dir_0, "points3D.txt");
+		this.dir_sparse_0 = new File(dir_sparse, "0");
+		this.fileImages = new File(dir_sparse_0, "images.txt");
+		this.filePoints3D = new File(dir_sparse_0, "points3D.txt");
 		this.nbTotalImages = (dirImages.exists() ? dirImages.list().length : 0);
 		this.paquetSize = paquetSize;
 		this.tauxRecouvrement = tauxRecouvrement;
@@ -43,6 +44,15 @@ public class ProcessSubsets2 {
 		List<List<Integer>> packets = imagePacketGrouper.buildPackets(paquetSize);
 		listListImages = getListListImages(packets);
 		listPaquets = getListPaquets(listListImages);
+		processPaquets();
+	}
+
+	private void processPaquets() throws Exception{
+		ColmapSubsetBuilder colmapSubsetBuilder= new ColmapSubsetBuilder(this.dir_sparse_0.toPath());
+		for(Paquet paquet : this.listPaquets) {
+			paquet.createDirectorie_(this.dirRoot,colmapSubsetBuilder);
+		}
+		
 	}
 
 	private List<Paquet> getListPaquets(List<List<ImageId>> listListImages2) {
@@ -87,7 +97,7 @@ public class ProcessSubsets2 {
 	public String traceSubset() {
 		String trace = "";
 		trace += this.toString() + "\n";
-		trace += "Nb de paquets " + listListImages.size();
+		trace += "Nb de paquets ::" + listListImages.size()+"\n";
 		int i = 0;
 		for (List<ImageId> li : listListImages) {
 			trace += i++ + " size: " + li.size() + " " + li + "\n";
@@ -98,7 +108,7 @@ public class ProcessSubsets2 {
 	@Override
 	public String toString() {
 		return "ProcessSubsets2 [dirRoot=" + dirRoot + ", dirImages=" + dirImages + ", nbTotalImages=" + nbTotalImages
-				+ ", paquetSize=" + paquetSize + ", tauxRecouvrement=" + tauxRecouvrement + ", dir_0=" + dir_0
+				+ ", paquetSize=" + paquetSize + ", tauxRecouvrement=" + tauxRecouvrement + ", dir_0=" + dir_sparse_0
 				+ ", dir_sparse=" + dir_sparse + ", fileImages=" + fileImages + ", filePoints3D=" + filePoints3D
 				+ ", colmapImagesReader=" + colmapImagesReader + ", colmapPoints3DReader=" + colmapPoints3DReader + "]";
 	}
