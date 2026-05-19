@@ -223,3 +223,31 @@ Puis tu crées des groupes de n images avec un algorithme glouton :
   - choisir une image graine
   - ajouter successivement l’image qui maximise le score avec le groupe courant
   - répéter jusqu’à n
+  
+## Alternatives a colmap
+EN terme de qualité , est ce qu'il y a des alternatives de meilleures qualité de rendu  à colmap ? 
+Fait moi un tableau avec colmap et les alternatives en lignes , et des en colonnes: 
+  - Alignement / poses caméra / sparse
+  - Nuage dense
+  - Mesh
+  - Texture
+  - Robustesse sur scènes difficiles
+  - Facilité pour obtenir un beau résultat sans beaucoup régler
+  
+## Amelioration qualité 
+
+Voila mes étapes du traitement "dense" de colmap:
+  - colmap image_undistorter
+  - colmap patch_match_stereo
+  - colmap stereo_fusion
+  - colmap poisson_mesher 
+Quelle est la plus critique pour la qualité finale du rendu ?
+
+
+Voilà les parametres de patch_match_stereo:
+  - max_image_size=4000
+  - PatchMatchStereo_num_threads=2
+  - PatchMatchStereo_num_iterations=3
+  - PatchMatchStereo_cache_size=16
+
+Qu'est ce que je peux ameliorer ?

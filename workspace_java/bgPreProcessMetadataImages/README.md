@@ -27,3 +27,19 @@ Merci de préciser pour chaque solution :
 Si possible, donne aussi :
   - la solution la plus robuste pour automatiser ça dans un script.
   
+## Changement Version CUDA et drivers NVIDIA
+
+Penser à recompiler colmap après une mise à jour du driver nvidia
+Pour recompiler colmap: 
+	- S'assurer nvcc (nvidia cc) est installé ( >nvcc --version)
+	
+
+## Pour passer ubuntu en mode terminal 
+
+La carte nvidia semble mieux marcher et plus vite sans le mode graphique.
+'''
+sudo systemctl stop gdm
+'''
+
+
+  

@@ -86,7 +86,8 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
   --PatchMatchStereo.max_image_size $max_image_size \
   --PatchMatchStereo.cache_size $PatchMatchStereo_cache_size \
   --PatchMatchStereo.num_threads $PatchMatchStereo_num_threads \
-  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations 
+  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations \
+  --PatchMatchStereo.geom_consistency true
  # --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
   
