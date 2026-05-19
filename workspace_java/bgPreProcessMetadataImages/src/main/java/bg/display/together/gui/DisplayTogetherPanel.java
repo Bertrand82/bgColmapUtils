@@ -523,6 +523,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			// Lots de 100 images
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			this.log(e.getMessage());
 			e.printStackTrace();
 		}
 	}
