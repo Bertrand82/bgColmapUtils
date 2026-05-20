@@ -20,18 +20,22 @@ Arrêter l’interface graphique pour cette session.
 Depuis un terminal, lance :
 
 ```bash
-sudo systemctl isolate multi-user.target
+sudo systemctl stop gdm3
 ```
 
 
 Pour relancer l’interface graphique :
 
 ```bash
-sudo systemctl isolate graphical.target
+sudo systemctl start gdm3
 ```
 
 ## Pour avoir un terminal ssh qui n'arrete pas le process si la liaison est coupé
 
 ```bash
 tmux
+tmux new -s bg
+tmux ls
+tmux attach -t bg
+tmux a -t bg
 ```

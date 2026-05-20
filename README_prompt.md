@@ -241,7 +241,7 @@ Voila mes étapes du traitement "dense" de colmap:
   - colmap patch_match_stereo
   - colmap stereo_fusion
   - colmap poisson_mesher 
-Quelle est la plus critique pour la qualité finale du rendu ?
+Quelle est la plus critique pour la qualité finale du rendu s?
 
 
 Voilà les parametres de patch_match_stereo:
