@@ -7,7 +7,7 @@
 Ce repository rassemble les utilitaires necessaires à la mise en oeuvre de colmap , et aux traitements de lots d'images.
 
 Il comprend : 
-  - bgPreProcessMetadataImages: Utilitaires java qui permet de créer des lots d'images , avec les scripts sh permettant de les traiter 
+  - bgPreProcessMetadataImages: Utilitaires java qui permet de créer des lots d'images , avec les scripts sh permettant de les traiter. Les scripts sont le projet java. 
   - bgPosePriorsProvider: Utilitaire en C permettant de traiter les pose (les positions de la camera) et de les injecter dans le db colmap
   - Des scripts sh utilisables sur les machines aws. Je n'utilise plus de machines aws (pas de budget) mais le les garde au cas ou ca redeviendrai utile
 
