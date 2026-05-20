@@ -41,7 +41,10 @@ for d in paquet_*/; do
 
   end_ts=$(date +%s)
   duree=$(( end_ts - start_ts ))
-  echo "bg=chapeau step=fin_process_dossier Dossier=$dossier date=$(date -Is) duree=$duree"
+  duree_heures=$(( duree / 3600 ))
+  duree_minutes=$(( (duree % 3600) / 60 ))
+  duree_secondes=$(( duree % 60 ))
+  echo "bg=chapeau step=fin_process_dossier Dossier=$dossier date=$(date -Is) duree=$duree_heures h: $duree_minutes mn"
 
   if [ "$rc" -ne 0 ]; then
     log "ECHEC: dossier=$dossier rc=$rc duree=${duree}s (voir $paquet_log)" | tee -a "$ERRORS_LOG" >&2

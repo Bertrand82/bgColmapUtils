@@ -78,7 +78,9 @@ $COLMAP model_converter \
   --num_threads 4
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
-
+  
+nvidia-smi
+sleep 10 
 echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(date -Is)"
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
@@ -89,8 +91,9 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
   --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations 
  # --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
-  
-
+ 
+nvidia-smi 
+sleep 10 
 echo "bg=processDensePaquet process=dense  etape=stereo_fusion   date=$(date -Is)"
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
@@ -102,7 +105,9 @@ echo "bg=processDensePaquet process=dense  etape=stereo_fusion   date=$(date -Is
   --StereoFusion.num_threads 4 \
   --StereoFusion.check_num_images 16 \
   --StereoFusion.max_image_size $max_image_size
-
+  
+  
+sleep 10
 echo "bg=processDensePaquet process=dense  etape=poisson_mesher   date=$(date -Is)"
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
