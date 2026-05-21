@@ -93,7 +93,7 @@ public class ProcessSubsets_1 {
 		}
 		
 	}
-	
+	@Deprecated
 	public void createDirectorie(Paquet paquet,File dir,ColmapSubsetBuilder colmapSubsetBuilder) {
 		try {
 				System.out.print("createDirectorie "+paquet.paquetName+" start ");
