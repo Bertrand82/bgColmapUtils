@@ -39,3 +39,7 @@ tmux ls
 tmux attach -t bg
 tmux a -t bg
 ```
+### Param nvidia
+```bash
+nvidia-smi
+```
