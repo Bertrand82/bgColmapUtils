@@ -2,17 +2,9 @@
 set -euo pipefail
 
 
- # Skip si fused.ply existe déjà dans le dossier
-if [ -f "fused.las" ]; then
-  echo "Le fichier fused.ply existe, le repertoire a été traité, arrêt du traitement."
-  echo "bg=processDensePaquet step=annulation" cause=file_used.ply_existe
-  exit 0
-fi
 
 
-COLMAP_EXE_PATH=~/workspaceCpp/colmap/build/src/colmap/exe
-COLMAP=$COLMAP_EXE_PATH/colmap
-export COLMAP_EXE_PATH
+COLMAP=~/workspaceCpp/colmap/build/src/colmap/exe/colmap
 
 SCRIPT_PATH="$(readlink -f -- "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname -- "$SCRIPT_PATH")"
@@ -27,10 +19,10 @@ PatchMatchStereo_num_threads=2
 PatchMatchStereo_num_iterations=3
 PatchMatchStereo_cache_size=16
 DENSE_DIR="$SCRIPT_DIR/dense"
-LOG_DIR="$DENSE_DIR/logs"
+LOG_DIR="$SCRIPT_DIR"
 mkdir -p "$DENSE_DIR" "$LOG_DIR"
 
-LOG_FILE="$LOG_DIR/dense_$(date +%Y%m%d_%H%M%S).log"
+LOG_FILE="$LOG_DIR/debug.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "COLMAP: $COLMAP"
@@ -45,41 +37,11 @@ echo "bg=processDensePaquet PatchMatchStereo_cache_size=$PatchMatchStereo_cache_
 
 
 
-echo "bg=processDensePaquet SCRIPT_DIR=$SCRIPT_DIR"
+echo "bg=debug SCRIPT_DIR=$SCRIPT_DIR"
 
 
 mkdir -p "$SCRIPT_DIR/sparse/0" "$LOG_DIR"
-echo "bg=processDensePaquet step=RemoveDense"
-rm -rf ./dense/*
 
-echo "bg=processDensePaquet process=dense  etape=model_converter  comment=converti_bin_en_txt date=$(date -Is)"
-$COLMAP model_converter \
-  --input_path "$SCRIPT_DIR" \
-  --output_path "$SCRIPT_DIR/sparse/0" \
-  --output_type BIN
-  
-  	for f in images.bin points3D.bin cameras.bin; do
-  		p="$SCRIPT_DIR/sparse/0/$f"
-  		if [ -f "$p" ]; then
-   				 printf '%s\t%s bytes\n' "$p" "$(stat -c '%s' "$p")"
-  		else
-    			printf '%s\tMISSING\n' "$p"
-  		fi
-	done
-	
-
-
-echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date -Is)"
-"$COLMAP" image_undistorter \
-  --image_path "$BG_WORK/images" \
-  --input_path "$SCRIPT_DIR/sparse/0" \
-  --output_path "$DENSE_DIR" \
-  --output_type COLMAP \
-  --max_image_size $max_image_size \
-  --num_threads 4
-  # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
-  # --max_image_size 2000
-echo "bg=processDensePaquet process=dense  etape=image_undistorter  step=done date=$(date -Is)"
 
 nvidia-smi
 sleep 10 
@@ -87,16 +49,12 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
-  --PatchMatchStereo.max_image_size $max_image_size \
-  --PatchMatchStereo.cache_size $PatchMatchStereo_cache_size \
-  --PatchMatchStereo.num_threads $PatchMatchStereo_num_threads \
-  --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations \
-  --PatchMatchStereo.geom_consistency true \
-  --PatchMatchStereo.filter_min_ncc 0.05 \
-  --PatchMatchStereo.filter_min_triangulation_angle 1 \
-  --PatchMatchStereo.filter_min_num_consistent 1
-
-#  --PatchMatchStereo.filter 1
+  --PatchMatchStereo.max_image_size 4000 \
+  --PatchMatchStereo.cache_size 16 \
+  --PatchMatchStereo.num_threads 2 \
+  --PatchMatchStereo.num_iterations 3 \
+  --PatchMatchStereo.geom_consistency 1 \
+  --PatchMatchStereo.filter 1
 
 
  # --PatchMatchStereo.allow_missing_files 1 \
@@ -114,11 +72,7 @@ echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  da
   --StereoFusion.cache_size 8 \
   --StereoFusion.num_threads 4 \
   --StereoFusion.check_num_images 16 \
-  --StereoFusion.max_image_size $max_image_size \
-  --StereoFusion.min_num_pixels 3 \
-  --StereoFusion.max_reproj_error 4 \
-  --StereoFusion.max_depth_error 0.02 \
-  --StereoFusion.max_normal_error 20
+  --StereoFusion.max_image_size 4000
   
 echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="done"  date=$(date -Is)"
   
