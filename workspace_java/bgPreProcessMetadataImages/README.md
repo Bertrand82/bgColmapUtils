@@ -41,5 +41,9 @@ Merci de préciser pour chaque solution :
 Si possible, donne aussi :
   - la solution la plus robuste pour automatiser ça dans un script.
   
+## commande linux
 
+nvidia-smi
+watch -n 1 nvidia-smi
+nvidia-smi -q
   

@@ -80,3 +80,13 @@ vendor   : NVIDIA Corporation                                                   
  Ne marche pas , il faut open
  ## installation nvidia-driver-595-open 
  Il faut imperativement que --PatchMatchStereo.geom_consistency 1 , sinon ca plante
+ 
+ Avec la nouvelle version 12.8 de Cuda, ca ne marche plus du tout.
+ 
+ Je met a jour colmap depuis git
+ J'ai recuperé la version courante main . Ca marche beaucoup mieux (la fusion trouve des images, c'est un bug referencé par colmap mais copilot m'a laissé pataugé toute une journée)
+ Erreur /plantage dans patchMatch 
+  Copilot conseille de prendre une release:4.04
+git fetch --tags
+git checkout 4.0.4
+ 
