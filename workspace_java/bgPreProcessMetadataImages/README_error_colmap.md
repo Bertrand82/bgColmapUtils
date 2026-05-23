@@ -85,8 +85,10 @@ vendor   : NVIDIA Corporation                                                   
  
  Je met a jour colmap depuis git
  J'ai recuperé la version courante main . Ca marche beaucoup mieux (la fusion trouve des images, c'est un bug referencé par colmap mais copilot m'a laissé pataugé toute une journée)
- Erreur /plantage dans patchMatch 
+ Erreur /plantage dans patchMatch : patch_match_stereo
   Copilot conseille de prendre une release:4.04
 git fetch --tags
 git checkout 4.0.4
  
+## Question copilot:
+ Est ce qu'il y a des issue colmap 4.04 sur des crashes inexpliqués pendant dans des patch_match_stereo avec CUDA 12.8
