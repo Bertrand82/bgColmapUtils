@@ -91,11 +91,7 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
   --PatchMatchStereo.cache_size $PatchMatchStereo_cache_size \
   --PatchMatchStereo.num_threads $PatchMatchStereo_num_threads \
   --PatchMatchStereo.num_iterations $PatchMatchStereo_num_iterations \
-  --PatchMatchStereo.geom_consistency true \
-  --PatchMatchStereo.filter_min_ncc 0.05 \
-  --PatchMatchStereo.filter_min_triangulation_angle 1 \
-  --PatchMatchStereo.filter_min_num_consistent 1
-
+  --PatchMatchStereo.geom_consistency true 
 #  --PatchMatchStereo.filter 1
 
 
@@ -114,11 +110,7 @@ echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  da
   --StereoFusion.cache_size 8 \
   --StereoFusion.num_threads 4 \
   --StereoFusion.check_num_images 16 \
-  --StereoFusion.max_image_size $max_image_size \
-  --StereoFusion.min_num_pixels 3 \
-  --StereoFusion.max_reproj_error 4 \
-  --StereoFusion.max_depth_error 0.02 \
-  --StereoFusion.max_normal_error 20
+  --StereoFusion.max_image_size $max_image_size
   
 echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="done"  date=$(date -Is)"
   
