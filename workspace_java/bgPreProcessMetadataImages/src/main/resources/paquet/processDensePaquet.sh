@@ -22,8 +22,9 @@ echo "BG_WORK=$BG_WORK"
 # max_image_size=4032
 # max_image_size=1512bg
 # max_image_size=2024 // working par paquet de 20 images
+#max_image_size=1500
 max_image_size=4000
-PatchMatchStereo_num_threads=2
+PatchMatchStereo_num_threads=4
 PatchMatchStereo_num_iterations=3
 PatchMatchStereo_cache_size=16
 DENSE_DIR="$SCRIPT_DIR/dense"
@@ -82,7 +83,7 @@ echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date
 echo "bg=processDensePaquet process=dense  etape=image_undistorter  step=done date=$(date -Is)"
 
 nvidia-smi
-sleep 10 
+sleep 5
 echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(date -Is)"
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
@@ -99,7 +100,7 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
  # --PatchMatchStereo.num_samples 10
 echo "bg=processDensePaquet process=dense  etape=patch_match_stereo  step="done" date=$(date -Is)"
 nvidia-smi 
-sleep 10 
+sleep 5
 echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  date=$(date -Is)"
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
@@ -114,7 +115,7 @@ echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  da
   
 echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="done"  date=$(date -Is)"
   
-sleep 10
+sleep 5
 echo "bg=processDensePaquet process=dense  etape=poisson_mesher step="start"  date=$(date -Is)"
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
