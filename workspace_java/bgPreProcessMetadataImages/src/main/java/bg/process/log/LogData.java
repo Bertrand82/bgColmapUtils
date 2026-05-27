@@ -25,6 +25,15 @@ public class LogData {
 		}
 		return true;
 	}
+	public int valueAsInt() {
+		
+		try {
+			return Integer.parseInt((""+value).trim());
+		} catch (Exception e) {
+			System.err.println("Exception "+this.value+"  "+e.getMessage());
+			return -1;
+		}
+	}
 
 	
 }

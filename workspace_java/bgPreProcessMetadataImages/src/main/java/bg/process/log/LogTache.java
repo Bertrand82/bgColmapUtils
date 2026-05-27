@@ -44,4 +44,8 @@ public class LogTache {
 		s+=" ";
 		return s;
 	}
+	
+	public double duree_en_seconde() {
+		return  (double) duration.getSeconds();
+	}
 }

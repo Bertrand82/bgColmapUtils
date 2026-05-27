@@ -14,6 +14,8 @@ import bg.util.UtilString;
 
 public class LogProcess {
 
+	int nbImages;
+
 	private File dirLog;
 
 	private File fileLog;
@@ -26,9 +28,9 @@ public class LogProcess {
 
 	public LogProcess(File fileLog) {
 		if (fileLog.isDirectory()) {
-			this.dirLog=fileLog;
+			this.dirLog = fileLog;
 			this.fileLog = getFileLogFromDirectory(this.dirLog);
-		}else {
+		} else {
 			this.dirLog = fileLog.getParentFile();
 			this.fileLog = fileLog;
 		}
@@ -36,7 +38,7 @@ public class LogProcess {
 	}
 
 	private File getFileLogFromDirectory(File dirLog2) {
-		for(File file :dirLog2.listFiles()) {
+		for (File file : dirLog2.listFiles()) {
 			if (file.getName().endsWith(".log")) {
 				return file;
 			}
@@ -46,11 +48,13 @@ public class LogProcess {
 
 	String lastLine;
 	String lastLine_Z_1;
+	LogTache tacheStereoFusion;
+	LogTache tachePatchMatchStereo;
 
 	private void init() {
 
 		try {
-			System.out.println("file Log "+fileLog.getName());
+			System.out.println("file Log " + fileLog.getName());
 			BufferedReader br = new BufferedReader(new FileReader(fileLog));
 
 			String line;
@@ -72,11 +76,44 @@ public class LogProcess {
 			}
 
 			initListEtapes();
+			this.nbImages = getNbImages();
+			this.tachePatchMatchStereo = getTacheByName("patch_match_stereo");
+			this.tacheStereoFusion = getTacheByName("stereo_fusion");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	private LogTache getTacheByName(String name) {
+		for (LogTache logT : listTaches) {
+			if (logT.name.equals(name)) {
+				return logT;
+			}
+		}
+		System.err.println("------------- No tache : "+name +"  in : "+listTaches.size()+" taches ");
+		return null;
+	}
+
+	private int getNbImages() {
+		LogData dataNbImages = getDataByName("nb_images");
+		if (dataNbImages==null) {
+			System.err.println("no dataImages!!!!!!!!! ");
+			return -1;
+		}else {
+				return dataNbImages.valueAsInt();
+		}
+		
+	}
+	
+	private LogData getDataByName(String name) {
+		for (LogData data : this.listData) {
+			if (data.name.equalsIgnoreCase("nb_images")) {
+				return data;
+			}
+		}
+		return null;
 	}
 
 	private void initListEtapes() {
@@ -93,30 +130,34 @@ public class LogProcess {
 	private void initLineProcessBg(String line) {
 		String tache = null;
 		OffsetDateTime date = null;
+		String step = "";
 
 		String[] items = line.split(" ");
 		for (String tok : items) {
 			int i = tok.indexOf("=");
-			if ((tok.startsWith("tache=")) || (tok.startsWith("task="))){
-				
-				tache = tok.substring(i+1,tok.length());
+			if ((tok.startsWith("tache=")) || (tok.startsWith("task="))) {
+
+				tache = tok.substring(i + 1, tok.length());
 			} else if (tok.startsWith("date=")) {
 				String sDate = tok.substring("date=".length());
 				date = OffsetDateTime.parse(sDate);
-			} else if (tok.startsWith("bg=")){
+			} else if (tok.startsWith("step=")) {
+				step = tok.substring("step=".length());
+
+			} else if (tok.startsWith("bg=")) {
 			} else {
-				
+
 				if (i > 0) {
 					String variableName = tok.substring(0, i);
-					String variableValue = tok.substring(i , tok.length());
-					LogData logData = new LogData(variableName, variableValue,tok);
+					String variableValue = tok.substring(i+1, tok.length());
+					LogData logData = new LogData(variableName, variableValue, tok);
 					if (logData.isPertinent()) {
-					this.listData.add(logData);
+						this.listData.add(logData);
 					}
 				}
 			}
 		}
-		if (tache != null) {
+		if (tache != null && (!step.equals("done"))) {
 			this.tacheCurrent = createTache(tache, date);
 			this.listTaches.add(tacheCurrent);
 		}
@@ -142,7 +183,7 @@ public class LogProcess {
 	public String toString() {
 		String s = "Rapport " + fileLog.getAbsolutePath() + "\n";
 		s += " fileSparseLog " + UtilFile.toString(fileLog) + "\n";
-		s+= toStringLogData();
+		s += toStringLogData();
 		s += toStringListEtapes();
 		return s;
 	}
@@ -151,14 +192,18 @@ public class LogProcess {
 		String s = "Rapport " + fileLog.getAbsolutePath() + "\n";
 		s += " fileSparseLog " + UtilFile.toString(fileLog) + "\n";
 		s += grep + " \n";
-		s += "Nb etapes : "+listTaches.size()+"\n";
-		s += "Nb data   : " +listData.size()+"\n";
+		s += "Nb etapes : " + listTaches.size() + "\n";
+		s += "Nb data   : " + listData.size() + "\n";
 		s += toStringListEtapes();
-		s += "Last line Z_1:" + this.lastLine_Z_1 + "\n";
-		s += "Last line    :" + this.lastLine + "\n";
+		s += " Nombre Images :" + this.nbImages +"\n";
+		if (nbImages != 0) {
+			s += " Duree patch_match_stereo par image :"
+					+ this.tachePatchMatchStereo.duree_en_seconde() / this.nbImages +"\n";
+			s += " Duree stereo_fusion   par image :" + this.tacheStereoFusion.duree_en_seconde() / this.nbImages+"\n";
+		}
 		return s;
 	}
-	
+
 	private String toStringLogData() {
 		String s = "";
 		for (LogData datas : listData) {
