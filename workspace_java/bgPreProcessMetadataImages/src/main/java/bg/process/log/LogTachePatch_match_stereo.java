@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogEtapePatch_match_stereo extends LogEtape{
+public class LogTachePatch_match_stereo extends LogTache{
 	private static final Pattern P = Pattern.compile(
 		      "Processing\\s+view\\s+(\\d+)\\s*/\\s*(\\d+)\\s+for\\s+([^=\\s]+)"
 		  );
@@ -25,10 +25,10 @@ public class LogEtapePatch_match_stereo extends LogEtape{
 		}
     	
     }
-	LogEtapePatch_match_stereo(String name_,OffsetDateTime date_){
+	LogTachePatch_match_stereo(String name_,OffsetDateTime date_){
 		super(name_,date_);
 	}
-	List<ProcessingView> listProcessingView = new ArrayList<LogEtapePatch_match_stereo.ProcessingView>();
+	List<ProcessingView> listProcessingView = new ArrayList<LogTachePatch_match_stereo.ProcessingView>();
 	ProcessingView processingViewCurrent;
 
 	public void processLinePatchMatchStereo(String line) {

@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 
 import bg.util.UtilString;
 
-public class LogEtape {
+public class LogTache {
 
 	
 	public String name ;
@@ -14,12 +14,12 @@ public class LogEtape {
 	Duration duration;
 	
 	
-	public  LogEtape(String name_,OffsetDateTime date_) {
+	public  LogTache(String name_,OffsetDateTime date_) {
 		this.name = name_;
 		this.date = date_;
 	}
 
-	public void setDuration(LogEtape etape) {
+	public void setDuration(LogTache etape) {
 		if (etape== null) {
 			return;
 		}
@@ -38,7 +38,7 @@ public class LogEtape {
         duration.toHours(),
         duration.toMinutesPart(),
         duration.toSecondsPart());
-		String s = "etape="+UtilString.toString(name,30);
+		String s = "tache="+UtilString.toString(name,30);
 		s += " | duree =";
 		s +=  UtilString.toString(duration_str,10);
 		s+=" ";

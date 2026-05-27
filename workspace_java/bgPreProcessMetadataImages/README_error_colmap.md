@@ -84,11 +84,49 @@ vendor   : NVIDIA Corporation                                                   
  Avec la nouvelle version 12.8 de Cuda, ca ne marche plus du tout.
  
  Je met a jour colmap depuis git
- J'ai recuperé la version courante main . Ca marche beaucoup mieux (la fusion trouve des images, c'est un bug referencé par colmap mais copilot m'a laissé pataugé toute une journée)
- Erreur /plantage dans patchMatch : patch_match_stereo
-  Copilot conseille de prendre une release:4.04
+ J'ai recuperé la version courante de colmap (branche main) . Ca marche beaucoup mieux (la fusion trouve des images, c'est un bug referencé par colmap mais copilot m'a laissé pataugé toute une journée)
+  - Erreur /plantage dans patchMatch : patch_match_stereo
+  - Copilot conseille de prendre une release:4.04
 git fetch --tags
 git checkout 4.0.4
+  - Meme plantage pendant patch_match_stereo (Nb Thread : 2, taille paquet:
+  - diminution size max de 4000 à 2000: Ca plante
+  - diminution  size max  de 2000 à 1500 : Ca plante : E20260523 14:55:52.121922  4692 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/gpu_mat.h:188 - unspecified launch failure
+  - diminution de  size max  1500 à 1000 : Ca plaante  cudacc.cc:51]  Sweep 3: 0.2769s, 
+  - diminution de nombre de thread de 2 à 1 --> ca plante:  cudacc.cc:51 Mais ca dure un peu plus longtemps
+  - Diminution de la taille des paquets d'images : de 30 à 20 : Ca plante . E20260523 17:02:37.369056 55997 cudacc.cc:78] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/patch_match_cuda.cu:1491 - unspecified launch failure
+  
+  Re-installation de nvidia-driver-580-open
+  Installation cuda 13.2
+  Recompilation colmap
+  A l'execution: E20260524 12:14:50.534783  3679 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/patch_match_cuda.cu:1682 - the provided PTX was compiled with an unsupported toolchain.terminate called after throwing an instance of 'colmap::AggregateException'
+  Le PTX est un langage intermediaire pour CUDA (ecrit par nvcc)
+  Re-installation de CUDA 13.0 et installation de nvcc 13.0 ((Cuda Compiler driver))
+  Ca plante au 5eme Paquets de 30 images
+   Je re-installe nvidia-driver-595-open
+	sudo apt install -y nvidia-driver-595-open
+ 	sudo apt install -y cuda-toolkit-13-0
+ 	
+ 	Ca plante encore
+ 	Je plonge dans le bios:
+ 	Je remet les valeurs usine. Je galère pour enlever SecureBoot
+ 	Ca marche! Plus de plantage. Retour à size_max=4000; Taille paquet: 30
+ 
  
 ## Question copilot:
  Est ce qu'il y a des issue colmap 4.04 sur des crashes inexpliqués pendant dans des patch_match_stereo avec CUDA 12.8
+ avec E20260523 14:55:52.121922  4692 cudacc.cc:59] CUDA error at /home/bertrand/workspaceCpp/colmap/src/colmap/mvs/gpu_mat.h:188 - unspecified launch failure
+ 
+### Demarche d'investigation en cas de probemes :
+  - Ce sont les datas (images ici) ou les outils (colmap, cuda, driver,carte) ou les requete sur les outils (PatchMatchStereo.max_image_size,PatchMatchStereo.cache_size,PatchMatchStereo.num_threads,PatchMatchStereo.num_iterations,PatchMatchStereo.geom_consistency ...)? Remarque : copilot suspecte d'abord les images (les data) puis les requetes sur les outils, et n'interroge pas trop les versions utilisés. Colmap est manifestement pas très stable.
+   - Les outils : Recenser tous les logiciels et leurs versions (ici colmap, cuda, driver nvidia)
+   
+   
+## SecureBoot enabled
+https://www.asus.com/fr/support/faq/1049829/
+Je ne saurai pas le refaire. J'ai pataugé 1 heure
+voir photo dans telephone
+BIOS>UEFI BIOS Utility -Advanced Mode
+Boot>Secure Boot Menu
+Attention, si l'on met les param par defaut, on enable secureBoot, l'on ne peut plus installer ce qui vient de nvidia (driver)
+
