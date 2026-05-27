@@ -25,9 +25,23 @@ public class LogProcess {
 	List<LogData> listData = new ArrayList<LogData>();
 
 	public LogProcess(File fileLog) {
-		this.dirLog = fileLog.getParentFile();
-		this.fileLog = fileLog;
+		if (fileLog.isDirectory()) {
+			this.dirLog=fileLog;
+			this.fileLog = getFileLogFromDirectory(this.dirLog);
+		}else {
+			this.dirLog = fileLog.getParentFile();
+			this.fileLog = fileLog;
+		}
 		init();
+	}
+
+	private File getFileLogFromDirectory(File dirLog2) {
+		for(File file :dirLog2.listFiles()) {
+			if (file.getName().endsWith(".log")) {
+				return file;
+			}
+		}
+		return null;
 	}
 
 	String lastLine;
@@ -36,6 +50,7 @@ public class LogProcess {
 	private void init() {
 
 		try {
+			System.out.println("file Log "+fileLog.getName());
 			BufferedReader br = new BufferedReader(new FileReader(fileLog));
 
 			String line;
@@ -136,6 +151,8 @@ public class LogProcess {
 		String s = "Rapport " + fileLog.getAbsolutePath() + "\n";
 		s += " fileSparseLog " + UtilFile.toString(fileLog) + "\n";
 		s += grep + " \n";
+		s += "Nb etapes : "+listEtape.size()+"\n";
+		s += "Nb data   : " +listData.size()+"\n";
 		s += toStringListEtapes();
 		s += "Last line Z_1:" + this.lastLine_Z_1 + "\n";
 		s += "Last line    :" + this.lastLine + "\n";
@@ -153,7 +170,7 @@ public class LogProcess {
 	private String toStringListEtapes() {
 		String s = "";
 		for (LogEtape etape : listEtape) {
-			s += "" + etape + "\n";
+			s += " -- " + etape + "\n";
 		}
 		return s;
 	}

@@ -13,6 +13,7 @@ log() {
 }
 
 # DEBUT BOUCLE
+log "bg=chapeau step=debut_process_chapeau  date=$(date -Is)" 
 for d in paquet_*/; do
   [ -d "$d" ] || continue
   dossier="${d%/}"
@@ -25,7 +26,7 @@ for d in paquet_*/; do
   fi
 
   start_ts=$(date +%s)
-  log "Début itération: dossier=$dossier"
+  log "bg=chapeau step=debut_process dossier=$dossier date=$(date -Is)" 
   echo "bg=chapeau step=debut_process_dossier Dossier=$dossier date=$(date -Is)"
 
   paquet_log="$LOG_DIR/${dossier}.log"
@@ -67,7 +68,7 @@ for d in paquet_*/; do
   sleep "$SLEEP_FIN"
 done
 # FIN BOUCLE
-
+log "bg=chapeau step=fin_process_chapeau dossier=$dossier date=$(date -Is)" 
 echo "bg=colmap process=chapeau etape=copyPoisson date=$(date -Is)"
 ./copy_mesh_poisson.sh
 

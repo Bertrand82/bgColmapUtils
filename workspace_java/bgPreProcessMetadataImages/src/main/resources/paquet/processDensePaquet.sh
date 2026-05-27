@@ -53,7 +53,7 @@ mkdir -p "$SCRIPT_DIR/sparse/0" "$LOG_DIR"
 echo "bg=processDensePaquet step=RemoveDense"
 rm -rf ./dense/*
 
-echo "bg=processDensePaquet process=dense  etape=model_converter  comment=converti_bin_en_txt date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=model_converter  comment=converti_bin_en_txt date=$(date -Is)"
 $COLMAP model_converter \
   --input_path "$SCRIPT_DIR" \
   --output_path "$SCRIPT_DIR/sparse/0" \
@@ -70,7 +70,7 @@ $COLMAP model_converter \
 	
 
 
-echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=image_undistorter  step=start date=$(date -Is)"
 "$COLMAP" image_undistorter \
   --image_path "$BG_WORK/images" \
   --input_path "$SCRIPT_DIR/sparse/0" \
@@ -80,11 +80,11 @@ echo "bg=processDensePaquet process=dense  etape=image_undistorter   date=$(date
   --num_threads 4
   # Optionnel (si supporté par ton build, recommandé pour aller plus vite):
   # --max_image_size 2000
-echo "bg=processDensePaquet process=dense  etape=image_undistorter  step=done date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=image_undistorter  step=done date=$(date -Is)"
 
 nvidia-smi
 sleep 5
-echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=patch_match_stereo  step=start date=$(date -Is)"
 "$COLMAP" patch_match_stereo \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -98,10 +98,10 @@ echo "bg=processDensePaquet process=dense  etape=patch_match_stereo   date=$(dat
 
  # --PatchMatchStereo.allow_missing_files 1 \
  # --PatchMatchStereo.num_samples 10
-echo "bg=processDensePaquet process=dense  etape=patch_match_stereo  step="done" date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=patch_match_stereo  step=done date=$(date -Is)"
 nvidia-smi 
 sleep 5
-echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=stereo_fusion  step=start  date=$(date -Is)"
 "$COLMAP" stereo_fusion \
   --workspace_path "$DENSE_DIR" \
   --workspace_format COLMAP \
@@ -113,10 +113,10 @@ echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="start"  da
   --StereoFusion.check_num_images 16 \
   --StereoFusion.max_image_size $max_image_size
   
-echo "bg=processDensePaquet process=dense  etape=stereo_fusion  step="done"  date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=stereo_fusion  step=done  date=$(date -Is)"
   
 sleep 5
-echo "bg=processDensePaquet process=dense  etape=poisson_mesher step="start"  date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=poisson_mesher step=start  date=$(date -Is)"
 "$COLMAP" poisson_mesher \
   --input_path "$DENSE_DIR/fused.ply" \
   --output_path "$DENSE_DIR/mesh_poisson.ply" \
@@ -126,18 +126,18 @@ echo "bg=processDensePaquet process=dense  etape=poisson_mesher step="start"  da
   --PoissonMeshing.color 1 \
   --PoissonMeshing.num_threads 4
   
-echo "bg=processDensePaquet process=dense  etape=poisson_mesher  step="done" date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=poisson_mesher  step=done date=$(date -Is)"
 OUT_LAS="fused.las"
 PDAL="$HOME/workspaceCpp/PDAL/build/bin/pdal"
-echo "bg=colmap process="PDAL" PDAL=$PDAL step=translate_to_las OUT_LAS=$OUT_LAS date=$(date -Is)"
+echo "bg=colmap process="PDAL" PDAL=$PDAL task=translate_to_las OUT_LAS=$OUT_LAS step=start  date=$(date -Is)"
 "$PDAL" translate "$DENSE_DIR/fused.ply" "$OUT_LAS"
 
-echo "bg=processDensePaquet process=dense  etape=FIN   date=$(date -Is)"
+echo "bg=processDensePaquet process=dense  task=FIN   date=$(date -Is)"
 echo "bg=processDensePaquet fused.ply=$DENSE_DIR/fused.ply"
 echo "bg=processDensePaquet mesh_poisson.ply=$DENSE_DIR/mesh_poisson.ply"
 nb_images=$(find "$SCRIPT_DIR/dense/images" -maxdepth 1 -type f | wc -l)
 echo "bg=processDensePaquet nb_images=$nb_images"
 echo bg suppresion de stereo : $DENSE_DIR/stereo
 rm -rf --one-file-system $DENSE_DIR/stereo
-echo "bg=processDensePaquet   etape=FIN   date=$(date -Is)"
+echo "bg=processDensePaquet   task=FIN   step=done date=$(date -Is)"
 

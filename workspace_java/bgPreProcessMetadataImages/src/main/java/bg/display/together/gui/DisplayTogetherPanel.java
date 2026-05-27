@@ -872,9 +872,10 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			
 			this.labelLog.setText(dirSources_.getAbsolutePath());
 			try {
-				System.out.println("ProcessLog No implemented yet"+dirSources_.getAbsolutePath());
+				System.out.println("ProcessLog dirSources :"+dirSources_.getAbsolutePath());
 				LogProcess logProcess = new LogProcess(dirSources_);
-				System.out.println(""+logProcess);
+				System.out.println("logProcess toString ::: "+logProcess);
+				System.out.println("logProcess toString ::: "+logProcess.toStringVerbose());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
