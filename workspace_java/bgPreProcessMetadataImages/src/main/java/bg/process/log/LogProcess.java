@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public class LogProcess {
 	LogTache tacheCurrent = null;
 	List<LogTache> listTaches = new ArrayList<LogTache>();
 	List<LogData> listData = new ArrayList<LogData>();
+	public static File dirStatsRuntime = new File("stats-runtime");
 
 	public LogProcess(File fileLog) {
 		if (fileLog.isDirectory()) {
@@ -35,15 +38,27 @@ public class LogProcess {
 			this.fileLog = fileLog;
 		}
 		init();
+		this.storeResult(dirStatsRuntime);
 	}
 
+
 	private File getFileLogFromDirectory(File dirLog2) {
-		for (File file : dirLog2.listFiles()) {
-			if (file.getName().endsWith(".log")) {
-				return file;
-			}
-		}
-		return null;
+		File[] files = dirLog2.listFiles();
+	    if (files == null) {
+	        return null;
+	    }
+
+	    File oldestFile = null;
+
+	    for (File file : files) {
+	        if (file.isFile() && file.getName().endsWith(".log")) {
+	            if (oldestFile == null || file.lastModified() < oldestFile.lastModified()) {
+	                oldestFile = file;
+	            }
+	        }
+	    }
+
+	    return oldestFile;
 	}
 
 	String lastLine;
@@ -126,6 +141,8 @@ public class LogProcess {
 		}
 
 	}
+	OffsetDateTime dateFirst = null;
+	OffsetDateTime dateLast = null;
 
 	private void initLineProcessBg(String line) {
 		String tache = null;
@@ -141,6 +158,10 @@ public class LogProcess {
 			} else if (tok.startsWith("date=")) {
 				String sDate = tok.substring("date=".length());
 				date = OffsetDateTime.parse(sDate);
+				if (dateFirst == null) {
+					dateFirst=date;
+				}
+				dateLast=date;
 			} else if (tok.startsWith("step=")) {
 				step = tok.substring("step=".length());
 
@@ -190,6 +211,8 @@ public class LogProcess {
 
 	public String toStringVerbose() {
 		String s = "Rapport " + fileLog.getAbsolutePath() + "\n";
+		s+= "dateFirst "+dateFirst+"\n";
+		s+= "dateLast "+dateLast+"\n";
 		s += " fileSparseLog " + UtilFile.toString(fileLog) + "\n";
 		s += grep + " \n";
 		s += "Nb etapes : " + listTaches.size() + "\n";
@@ -197,9 +220,13 @@ public class LogProcess {
 		s += toStringListEtapes();
 		s += " Nombre Images :" + this.nbImages +"\n";
 		if (nbImages != 0) {
+			if (this.tachePatchMatchStereo != null) {
 			s += " Duree patch_match_stereo par image :"
 					+ this.tachePatchMatchStereo.duree_en_seconde() / this.nbImages +"\n";
+			}
+			if (this.tacheStereoFusion != null) {
 			s += " Duree stereo_fusion   par image :" + this.tacheStereoFusion.duree_en_seconde() / this.nbImages+"\n";
+			}
 		}
 		return s;
 	}
@@ -218,6 +245,22 @@ public class LogProcess {
 			s += " -- " + etape + "\n";
 		}
 		return s;
+	}
+	
+
+	private void storeResult(File dirStatsRuntime2) {
+		try {
+			String sTexte = this.toStringVerbose();
+			String fileName = "stat_"+this.dateFirst+"__"+this.dateLast+".text";
+			
+			File stat = new File(dirStatsRuntime2,fileName);
+			Files.writeString(stat.toPath(), sTexte);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 	}
 
 }

@@ -10,8 +10,8 @@ public class LogFactory {
 	public static String  process(File dirRoot) {
 		File dirLog = new File(dirRoot,"logs");
 		String s= "";
-		s+="dirRoot : exists: "+dirRoot.exists()+"\n";
-		s+="dirLog : exists: "+dirLog.exists()+"\n";
+		s+="dirRoot : exists: "+dirRoot.exists()+"  "+dirRoot.getAbsolutePath()+"\n";
+		s+="dirLog : exists: "+dirLog.exists()+"  "+dirLog.getAbsolutePath()+"\n";
 		List<File> listFiles =Arrays.asList(dirLog.listFiles());
 		listFiles.sort(Comparator.comparing(File::getName, String.CASE_INSENSITIVE_ORDER));
 		for (File fileLog : listFiles) {

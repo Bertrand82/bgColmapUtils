@@ -21,6 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -505,6 +506,16 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				}
 	    	}
 	    }
+	    File dirLogs = new File(dirSources,"logs");
+	    if (dirLogs.exists()) {
+	    	File dirLogArchive = new File(dirSources,"logs_archive_"+new Date());
+	    	try {
+				Files.move(dirLogs.toPath(), dirLogArchive.toPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
 	}
 	
 	private void processSparseBackGround_1(File dirSparse) {
@@ -884,7 +895,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		}
 	}
 	private void analyseLog() {
-		System.out.println("AnalyseLog");
+		System.out.println("AnalyseLog ");
 		String analyse  = LogFactory.process(this.dirSources);
 		JTextArea textArea = new JTextArea(analyse);
 		  textArea.setEditable(false);

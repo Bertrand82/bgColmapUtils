@@ -10,6 +10,7 @@ public class LogTache {
 
 	
 	public String name ;
+	
 	OffsetDateTime date = null;
 	Duration duration;
 	
@@ -46,6 +47,9 @@ public class LogTache {
 	}
 	
 	public double duree_en_seconde() {
+		if (duration ==null) {
+			return -1.00d;
+		}
 		return  (double) duration.getSeconds();
 	}
 }
