@@ -222,10 +222,10 @@ public class LogProcess {
 		if (nbImages != 0) {
 			if (this.tachePatchMatchStereo != null) {
 			s += " Duree patch_match_stereo par image :"
-					+ this.tachePatchMatchStereo.duree_en_seconde() / this.nbImages +"\n";
+					+ (this.tachePatchMatchStereo.duree_en_seconde() / this.nbImages) +"\n";
 			}
 			if (this.tacheStereoFusion != null) {
-			s += " Duree stereo_fusion   par image :" + this.tacheStereoFusion.duree_en_seconde() / this.nbImages+"\n";
+			s += " Duree stereo_fusion   par image :" + (this.tacheStereoFusion.duree_en_seconde() / this.nbImages)+"\n";
 			}
 		}
 		return s;
