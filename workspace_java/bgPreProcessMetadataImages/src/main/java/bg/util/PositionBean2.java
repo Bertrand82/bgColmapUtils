@@ -40,7 +40,7 @@ public class PositionBean2 {
 		if (listPointsInterret.size() == 0) {
 			return 0;
 		}
-		int distance = distance(listPointsInterret.getFirst());
+		int distance = distance(listPointsInterret.get(0));
 		for (Point ppp : listPointsInterret) {
 			int d1 = distance(ppp);
 			if (d1 < distance) {
