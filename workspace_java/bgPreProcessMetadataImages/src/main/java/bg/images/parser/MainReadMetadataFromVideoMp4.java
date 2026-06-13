@@ -28,7 +28,7 @@ public class MainReadMetadataFromVideoMp4 {
     public static void main(String[] args) throws Exception {
         String path = args.length > 0
                 ? args[0]
-                : "D:\\aws_drones_images\\video_test"; // chemin par défaut pour tests locaux
+                : "."; // utilise le répertoire courant par défaut
 
         File input = new File(path);
         if (!input.exists()) {
