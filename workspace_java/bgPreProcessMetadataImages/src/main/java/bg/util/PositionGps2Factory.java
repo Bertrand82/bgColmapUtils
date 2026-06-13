@@ -19,13 +19,29 @@ import com.drew.metadata.exif.GpsDirectory;
 
 public final class PositionGps2Factory {
 
-    
+    /** File extensions handled as video files. */
+    private static final java.util.Set<String> VIDEO_EXTENSIONS =
+            new java.util.HashSet<>(java.util.Arrays.asList("mp4", "mov", "MP4", "MOV"));
 
     /**
-     * Extrait latitude/longitude et altitude (si présente) depuis l'EXIF GPS.
+     * Extrait latitude/longitude et altitude (si présente).
+     * Pour les fichiers vidéo (.mp4, .mov) délègue à {@link Mp4GpsExtractor}
+     * qui tente plusieurs sources (QuickTime, XMP, EXIF, exiftool).
+     *
      * @return null si aucune info GPS exploitable.
      */
     public static PositionGps2 extractPosition(File imageFile)  {
+        if (imageFile == null || !imageFile.exists()) return null;
+
+        String name = imageFile.getName();
+        int dot = name.lastIndexOf('.');
+        if (dot >= 0) {
+            String ext = name.substring(dot + 1);
+            if (VIDEO_EXTENSIONS.contains(ext)) {
+                return Mp4GpsExtractor.extractFromVideoFile(imageFile);
+            }
+        }
+
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(imageFile);
            
