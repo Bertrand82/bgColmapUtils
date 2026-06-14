@@ -49,6 +49,9 @@ public class PositionGps2 {
         s+=  " | lon= "+String.format("%07.4f", longitude);
         s+=  " | z = "+String.format("%7.4f ", altitudeMeters);
         s += " date: "+date;
+        s += " | "+toDegreMinuteSeconde(latitude, true);
+        s += "   "+toDegreMinuteSeconde(longitude, false);
+        s += " | "+toGoogleMapFormat(latitude, longitude);
         return s;
     }
     /**
@@ -99,6 +102,28 @@ public class PositionGps2 {
 	public Color getColor() {
 		
 		return color;
+	}
+	
+	public static String toDegreMinuteSeconde(double value, boolean isLatitude) {
+	    double absValue = Math.abs(value);
+
+	    int degrees = (int) absValue;
+	    double minutesFull = (absValue - degrees) * 60;
+	    int minutes = (int) minutesFull;
+	    double seconds = (minutesFull - minutes) * 60;
+
+	    String direction;
+	    if (isLatitude) {
+	        direction = value >= 0 ? "N" : "S";
+	    } else {
+	        direction = value >= 0 ? "E" : "W";
+	    }
+
+	    return String.format("%d°%d'%2.2f\" %s", degrees, minutes, seconds, direction);
+	}
+	
+	public static String toGoogleMapFormat(double latitude, double longitude) {
+	    return String.format(java.util.Locale.US, "%.6f,%.6f", latitude, longitude);
 	}
     
 }

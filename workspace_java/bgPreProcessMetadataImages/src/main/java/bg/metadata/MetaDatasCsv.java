@@ -19,12 +19,12 @@ public class MetaDatasCsv {
 			BufferedReader br = new BufferedReader(fr);
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				MetaData iv = new MetaData(line);
-				File fileImage = new File(dirImages, iv.fileName);
+				MetaData metadataIV = new MetaData(line);
+				File fileImage = new File(dirImages, metadataIV.fileName);
 				if (fileImage.exists()) {
-					listMetaData.add(iv);
+					listMetaData.add(metadataIV);
 				}
-				listMetaDataAll.add(iv);
+				listMetaDataAll.add(metadataIV);
 			}
 		}
 	}

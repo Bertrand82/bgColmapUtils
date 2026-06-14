@@ -95,10 +95,13 @@ public final class PositionGps2Factory {
     		if (gps == null) {
     			System.err.println("gps is null "+fImage.getName());
     		}else {
+    			System.out.println("gps ::: "+fImage.getName()+"  "+gps);
     			listA.add(gps);
     		}
     	}
     	return listA;
     }
+    
+   
   
 }
