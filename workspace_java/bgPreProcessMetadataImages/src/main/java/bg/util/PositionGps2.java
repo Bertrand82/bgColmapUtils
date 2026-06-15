@@ -51,7 +51,7 @@ public class PositionGps2 {
         s += " date: "+date;
         s += " | "+toDegreMinuteSeconde(latitude, true);
         s += "   "+toDegreMinuteSeconde(longitude, false);
-        s += " | "+toGoogleMapFormat(latitude, longitude);
+        s += " |googleMap : "+toGoogleMapFormat(latitude, longitude);
         return s;
     }
     /**
@@ -79,7 +79,7 @@ public class PositionGps2 {
      * Attention: Mercator diverge vers +/- infini aux pôles. On clamp la latitude.
      */
     public static Double getY_process(double latitude) {
-         double latRad = Math.toRadians(latitude);
+         double latRad = -1*Math.toRadians(latitude);
 
         return EARTH_RADIUS_METERS * latRad;
     }

@@ -12,7 +12,7 @@ public class MapProvider implements Runnable {
 	MapProviderListener listener;
 
 	public MapProvider(double longMax, double longMin, double latMax, double latMin, MapProviderListener listener) {
-		this(longMax, longMin, latMax, latMin,listener, 16);
+		this(longMax, longMin, latMax, latMin,listener, 16);// 16
 	}
 
 	public MapProvider(double longMax, double longMin, double latMax, double latMin, MapProviderListener listener, int zoom) {
@@ -23,6 +23,7 @@ public class MapProvider implements Runnable {
 		this.latMin = latMin;
 		this.zoom = zoom;
 		this.listener=listener;
+		System.out.println("MapProvider Init "+this);
 		Thread thr = new Thread(this);
 		thr.start();
 	}
@@ -36,9 +37,9 @@ public class MapProvider implements Runnable {
 		try {
 			BufferedImage img = UtilMap.fetchBbox(latMin, longMin, latMax, longMax, zoom);
 			if (this.listener==null) {
-				System.err.println("Warning no listener for image ");
+				System.err.println("MapProvider Warning no listener for image ");
 			}else {
-			this.listener.updateMapImage(img);
+				this.listener.updateMapImage(img);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -47,4 +48,11 @@ public class MapProvider implements Runnable {
 
 	}
 
+	@Override
+	public String toString() {
+		return "MapProvider [longMax=" + longMax + ", longMin=" + longMin + ", latMax=" + latMax + ", latMin=" + latMin
+				+ ", zoom=" + zoom + ", listener=" + listener + "]";
+	}
+
+	
 }

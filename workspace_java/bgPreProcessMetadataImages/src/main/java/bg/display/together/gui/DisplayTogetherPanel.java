@@ -108,7 +108,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	double yMax = 0;
 	int xxMaxPixel_ = 0;
 	int yyMaxPixel_ = 0;
-	double longMax, longMin, latMax, latMin;
+	double longitudeMax, longitudeMin, latitudeMax, latitudeMin;
 	File dirImages;
 	double scale = 0.1d;
 	private static int Point_R = 8;
@@ -290,8 +290,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		PositionGps2 first = listPositions.get(0);
 		xMin = xMax = first.getX();
 		yMin = yMax = first.getY();
-		longMax = longMin = first.getLongitude();
-		latMax = latMin = first.getLatitude();
+		longitudeMax = longitudeMin = first.getLongitude();
+		latitudeMax = latitudeMin = first.getLatitude();
 		first.getLongitude();
 		for (PositionGps2 gps : listPositions) {
 			double x = gps.getX();
@@ -310,23 +310,23 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			if (y > yMax) {
 				yMax = y;
 			}
-			if (longitude > longMax) {
-				longMax = longitude;
+			if (longitude > longitudeMax) {
+				longitudeMax = longitude;
 			}
-			if (longitude < longMin) {
-				longMin = longitude;
+			if (longitude < longitudeMin) {
+				longitudeMin = longitude;
 			}
-			if (latitude > latMax) {
-				latMax = latitude;
+			if (latitude > latitudeMax) {
+				latitudeMax = latitude;
 			}
-			if (latitude < latMin) {
-				latMin = latitude;
+			if (latitude < latitudeMin) {
+				latitudeMin = latitude;
 			}
 		}
-		System.out.println("longMax " + longMax);
-		System.out.println("longMin " + longMin);
-		System.out.println("latMax" + latMax);
-		System.out.println("latMin" + latMin);
+		System.out.println("longitudeMax " + longitudeMax);
+		System.out.println("longitudeMin " + longitudeMin);
+		System.out.println("latitudeMax" + latitudeMax);
+		System.out.println("latitudeMin" + latitudeMin);
 		scale = Math.min(w, h) / Math.max((yMax - yMin), (xMax - xMin));
 		xxMaxPixel_ = (int) (scale * (xMax - xMin));
 		yyMaxPixel_ = (int) (scale * (yMax - yMin));
@@ -339,7 +339,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			bean.updatePosition(duree_ms, xMin, yMin);
 			this.listBeans.add(bean);
 		}
-		MapProvider mapProvider = new MapProvider(longMax, longMin, latMax, latMin, this);
+		MapProvider mapProvider = new MapProvider(longitudeMax, longitudeMin, latitudeMax, latitudeMin, this);
 		this.labelNbDePoints.setText("" + this.listBeans.size());
 		this.resizeInit();
 		SwingUtilities.invokeLater(() -> canvas.repaint());
@@ -374,6 +374,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		g.fillRect(0, 0, w, h);
 		g.setColor(Color.RED);
 		if (this.imageMap != null) {
+			// bg ERROR . Il faut afficher uniquement la map entre longMAx et Min et latMax et min
 			g.drawImage(imageMap, 0, 0, xxMaxPixel_, yyMaxPixel_, null);
 		}
 		boolean showPaquets = checkBoxShowPaquets.isSelected();

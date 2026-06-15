@@ -56,11 +56,12 @@ public class UtilMap {
 	    }
 	    public static BufferedImage fetchBbox(double latMin, double lonMin, double latMax, double lonMax, int zoom)
 		            throws IOException, InterruptedException {
-            System.err.println("latMin "+latMin+" latMAx"+latMax);
+            System.err.println("latMin "+latMin+" latMAx"+latMax+"   delta : "+deltaMetre(latMin,latMax));
 	        // Web Mercator clamp
 	        latMin = clamp(latMin, -85.0511, 85.0511);
 	        latMax = clamp(latMax, -85.0511, 85.0511);
-	        System.err.println("latMin "+latMin+" latMAx"+latMax);
+	        System.err.println("   delta Latitude (metres) "+deltaMetre(latMin, latMax));
+	        System.err.println("   delta Longitude (metres) "+deltaMetre(lonMin, lonMax));
 		       
 	        // coins -> tuiles
 	        int xMin = lonToTileX(lonMin, zoom)-1;
@@ -70,6 +71,8 @@ public class UtilMap {
 
 	        int tilesW = xMax - xMin + 1;
 	        int tilesH = yMax - yMin + 1;
+	        System.out.println(" tilesW "+tilesW);
+	        System.out.println(" tilesH "+tilesH);
 
 	        if (tilesW <= 0 || tilesH <= 0) {
 	            throw new IllegalArgumentException("Invalid bbox or zoom: tilesW=" + tilesW + " tilesH=" + tilesH);
@@ -80,11 +83,11 @@ public class UtilMap {
 	                    "). Reduce bbox or zoom (guard limit=400).");
 	        }
 
-	        BufferedImage stitched = new BufferedImage(tilesW * TILE_SIZE, tilesH * TILE_SIZE, BufferedImage.TYPE_INT_ARGB);
-	        Graphics2D g = stitched.createGraphics();
+	        BufferedImage imageStitched = new BufferedImage(tilesW * TILE_SIZE, tilesH * TILE_SIZE, BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D g = imageStitched.createGraphics();
 	        try {
 	            g.setColor(Color.WHITE);
-	            g.fillRect(0, 0, stitched.getWidth(), stitched.getHeight());
+	            g.fillRect(0, 0, imageStitched.getWidth(), imageStitched.getHeight());
                 System.err.println("xMin :"+xMin+"  xMax: "+xMax);
                 System.err.println("yMin :"+yMin+"  yMax: "+yMax);
 	             for (int x = xMin; x <= xMax; x++) {
@@ -104,21 +107,32 @@ public class UtilMap {
 	        double pxMax = lonToPixelX(lonMax, zoom) - (double) xMin * TILE_SIZE;
 	        double pyMin = latToPixelY(latMax, zoom) - (double) yMin * TILE_SIZE;
 	        double pyMax = latToPixelY(latMin, zoom) - (double) yMin * TILE_SIZE;
-
+	        double dPx = pxMax - pxMin;
+	        double dPy = pyMax - pyMin;
+	        System.out.println(" dPx :"+dPx+"  dPy : "+dPy);
 	        int cropX = (int) Math.floor(pxMin);
 	        int cropY = (int) Math.floor(pyMin);
 	        int cropW = (int) Math.ceil(pxMax - pxMin);
 	        int cropH = (int) Math.ceil(pyMax - pyMin);
 
-	        cropX = clampInt(cropX, 0, stitched.getWidth() - 1);
-	        cropY = clampInt(cropY, 0, stitched.getHeight() - 1);
-	        cropW = clampInt(cropW, 1, stitched.getWidth() - cropX);
-	        cropH = clampInt(cropH, 1, stitched.getHeight() - cropY);
-
-	        return stitched.getSubimage(cropX, cropY, cropW, cropH);
+	        cropX = clampInt(cropX, 0, imageStitched.getWidth() - 1);
+	        cropY = clampInt(cropY, 0, imageStitched.getHeight() - 1);
+	        cropW = clampInt(cropW, 1, imageStitched.getWidth() - cropX);
+	        cropH = clampInt(cropH, 1, imageStitched.getHeight() - cropY);
+	        System.out.println(" cropW "+cropW+"  cropH "+cropH);
+	        BufferedImage imageCrop = imageStitched.getSubimage(cropX, cropY, cropW, cropH);
+	        File outputLog = new File("target/imageCrop_"+System.currentTimeMillis()+".png");
+	        boolean isWrited = ImageIO.write(imageCrop, "png", outputLog);
+	        System.out.println("debug : "+outputLog.getAbsolutePath()+"  exists "+outputLog.exists()+"  isWrited: "+isWrited);
+	        return imageCrop;
 	    }
 
-	    private static BufferedImage getTileCached(int z, int x, int y) throws IOException, InterruptedException {
+	    private static double deltaMetre(double latMin, double latMax) {
+	        double earthRadius = 6_371_000.0; // mètres
+	        double deltaRad = Math.toRadians(latMax - latMin);
+	        return Math.abs(deltaRad * earthRadius);
+	    }
+		private static BufferedImage getTileCached(int z, int x, int y) throws IOException, InterruptedException {
 	        Path file = CACHE_DIR.resolve(Paths.get(Integer.toString(z), Integer.toString(x), y + ".png"));
 	       System.err.println("getTileCached : "+file);
 	        if (Files.exists(file)) {
