@@ -12,8 +12,10 @@ public class MapProvider implements Runnable {
 	MapProviderListener listener;
 
 	public MapProvider(double longMax, double longMin, double latMax, double latMin, MapProviderListener listener) {
-		this(longMax, longMin, latMax, latMin,listener, 16);// 16
+		this(longMax, longMin, latMax, latMin,listener, getZoom(longMax,longMin,latMax,latMin));// 16 valeur pour miami // 19 pour rue Cariben // 20 : erreur 400
 	}
+
+	
 
 	public MapProvider(double longMax, double longMin, double latMax, double latMin, MapProviderListener listener, int zoom) {
 		super();
@@ -27,6 +29,30 @@ public class MapProvider implements Runnable {
 		Thread thr = new Thread(this);
 		thr.start();
 	}
+	
+	private static int getZoom(double longitudeMax2, double longitudeMin2, double latitudeMax2, double latitudeMin2) {
+		double dx = delta_metre( latitudeMax2, latitudeMin2);
+		double dy = delta_metre( longitudeMax2,longitudeMin2);
+		double dMin = Math.min(dx, dy);
+		int zoom;
+		if (dMin < 50.0) {
+			zoom = 19;
+		}else if (dMin <100.0) {
+			zoom =18;
+		}else if (dMin <500.0) {
+			zoom =17;
+		}else {
+			zoom =16;
+		}
+		return zoom;
+	}
+
+	private static double delta_metre(double latitudeMax2, double latitudeMin2) {
+	    final double EARTH_RADIUS = 6_371_000.0; // mètres
+	    double deltaRadians = Math.toRadians(latitudeMax2 - latitudeMin2);
+	    return Math.abs(deltaRadians * EARTH_RADIUS);
+	}
+
 
 	@Override
 	public void run() {

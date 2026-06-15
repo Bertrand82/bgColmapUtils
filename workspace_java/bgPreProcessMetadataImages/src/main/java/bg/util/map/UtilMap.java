@@ -52,7 +52,7 @@ public class UtilMap {
 	     * @param zoom  0..19
 	     */
 	    public static BufferedImage fetchBbox(double latMin, double lonMin, double latMax, double lonMax) throws Exception{
-	    	return fetchBbox(latMin, lonMin, latMax, lonMax,16);
+	    	return fetchBbox(latMin, lonMin, latMax, lonMax,17);
 	    }
 	    public static BufferedImage fetchBbox(double latMin, double lonMin, double latMax, double lonMax, int zoom)
 		            throws IOException, InterruptedException {
@@ -64,10 +64,10 @@ public class UtilMap {
 	        System.err.println("   delta Longitude (metres) "+deltaMetre(lonMin, lonMax));
 		       
 	        // coins -> tuiles
-	        int xMin = lonToTileX(lonMin, zoom)-1;
-	        int xMax = lonToTileX(lonMax, zoom)+1;
-	        int yMin = latToTileY(latMax, zoom)-1; // north
-	        int yMax = latToTileY(latMin, zoom)+1; // south
+	        int xMin = lonToTileX(lonMin, zoom);
+	        int xMax = lonToTileX(lonMax, zoom);
+	        int yMin = latToTileY(latMax, zoom); // north
+	        int yMax = latToTileY(latMin, zoom); // south
 
 	        int tilesW = xMax - xMin + 1;
 	        int tilesH = yMax - yMin + 1;
