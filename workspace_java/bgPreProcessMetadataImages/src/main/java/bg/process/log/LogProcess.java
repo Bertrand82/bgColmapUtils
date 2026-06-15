@@ -225,7 +225,8 @@ public class LogProcess {
 					+ (this.tachePatchMatchStereo.duree_en_seconde() / this.nbImages) +"\n";
 			}
 			if (this.tacheStereoFusion != null) {
-			s += " Duree stereo_fusion   par image :" + (this.tacheStereoFusion.duree_en_seconde() / this.nbImages)+"\n";
+			double duree_secondes=(this.tacheStereoFusion.duree_en_seconde() / this.nbImages);
+			s += " Duree stereo_fusion   par image :" + (duree_secondes)+" secondes"+"\n";
 			}
 		}
 		return s;
