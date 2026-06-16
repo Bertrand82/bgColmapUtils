@@ -101,30 +101,35 @@ public class UtilVerticaliseImage {
         File outFile = new File(dirOut, fImage.getName());
 
         // Write rotated pixels into a byte array first
-        ByteArrayOutputStream pixelBytes = new ByteArrayOutputStream();
-        boolean ok = ImageIO.write(dst, format, pixelBytes);
-        if (!ok) {
-            throw new IOException("Aucun writer ImageIO pour le format : " + format);
+        byte[] pixelBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            boolean ok = ImageIO.write(dst, format, baos);
+            if (!ok) {
+                throw new IOException("Aucun writer ImageIO pour le format : " + format);
+            }
+            pixelBytes = baos.toByteArray();
         }
 
         // Embed original EXIF metadata into the output file
         if (metadata instanceof JpegImageMetadata jpegMetadata && jpegMetadata.getExif() != null) {
             TiffOutputSet outputSet = jpegMetadata.getExif().getOutputSet();
+            if (outputSet != null) {
+                // Update orientation to Normal (1) since the image has been physically rotated
+                TiffOutputDirectory rootDirectory = outputSet.getOrCreateRootDirectory();
+                rootDirectory.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+                rootDirectory.add(TiffTagConstants.TIFF_TAG_ORIENTATION, (short) TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL);
 
-            // Update orientation to Normal (1) since the image has been physically rotated
-            TiffOutputDirectory rootDirectory = outputSet.getOrCreateRootDirectory();
-            rootDirectory.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
-            rootDirectory.add(TiffTagConstants.TIFF_TAG_ORIENTATION, (short) TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL);
+                try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
+                    new ExifRewriter().updateExifMetadataLossless(
+                            new ByteArrayInputStream(pixelBytes), out, outputSet);
+                }
+                return outFile;
+            }
+        }
 
-            try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
-                new ExifRewriter().updateExifMetadataLossless(
-                        new ByteArrayInputStream(pixelBytes.toByteArray()), out, outputSet);
-            }
-        } else {
-            // No EXIF available – write the rotated pixels directly
-            try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
-                out.write(pixelBytes.toByteArray());
-            }
+        // No EXIF available or outputSet is null – write the rotated pixels directly
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
+            out.write(pixelBytes);
         }
 
         return outFile;
