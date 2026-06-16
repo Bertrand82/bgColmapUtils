@@ -234,7 +234,7 @@ public final class PositionGps2FactoryApache {
         }
     }
 
-    private static String safeStringValue(TiffField field) {
+    public static String safeStringValue(TiffField field) {
         if (field == null) {
             return null;
         }
