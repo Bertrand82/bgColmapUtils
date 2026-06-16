@@ -38,8 +38,10 @@ public class UtilVerticaliseImage {
 				
 				try {
 					PositionGps2 gps= PositionGps2FactoryApache.extractPosition(fImage);
-					System.out.println(" gps :"+fImage.getName()+"    "+gps);
-					verticaliseImage(fImage, dirOut);
+					System.out.println(" gps Old:"+fImage.getName()+"    "+gps);
+					File fIo = verticaliseImage(fImage, dirOut);
+					PositionGps2 gpsNew= PositionGps2FactoryApache.extractPosition(fImage);
+					System.out.println(" gps New:"+fImage.getName()+"    "+gpsNew);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -55,10 +57,10 @@ public class UtilVerticaliseImage {
 		return false;
 	}
 
-	private static void verticaliseImage(File fImage, File dirOut) throws Exception{
+	private static File verticaliseImage(File fImage, File dirOut) throws Exception{
 		ImageMetadata metadata = Imaging.getMetadata(fImage);
 		if (!(metadata instanceof JpegImageMetadata jpegMetadata)) {
-            return ;
+            throw new Exception("Pb with JpegImageMetadata !!!! ");
         }
 		String orientation = null;
 		TiffField orientationField =
@@ -71,29 +73,21 @@ public class UtilVerticaliseImage {
         }
         PositionGps2.ORIENTATIONS orientaionEnum = PositionGps2.ORIENTATIONS.getORIENTATION(orientation);
         System.out.println("  ->>>----- "+fImage.getName()+"   orientation :"+orientation+"  "+PositionGps2.ORIENTATIONS.getORIENTATION(orientation));
-		copyImageWithOrientation(fImage, dirOut, null, jpegMetadata)
+		File f =copyImageWithOrientation(fImage, dirOut, orientaionEnum, jpegMetadata);
+		return f;
 	}
 	
     private static File copyImageWithOrientation(File fImage, File dirOut, PositionGps2.ORIENTATIONS orientation,ImageMetadata metadata ) throws Exception {
-        if (fImage == null || !fImage.exists()) {
-            throw new IllegalArgumentException("fImage est null ou n'existe pas");
-        }
-        if (dirOut == null) {
-            throw new IllegalArgumentException("dirOut est null");
-        }
-        if (!dirOut.exists() && !dirOut.mkdirs()) {
-            throw new IOException("Impossible de créer le répertoire de sortie : " + dirOut);
-        }
+       
 
         BufferedImage src = ImageIO.read(fImage);
-        if (src == null) {
-            throw new IOException("Impossible de lire l'image : " + fImage);
-        }
+        
 
         BufferedImage dst =null;
         int angle_degre = orientation.angle_degre;
         if (angle_degre == 0) {
-        	copyToDirectory(fImage,dirOut);
+        	File f = copyToDirectory(fImage,dirOut);
+        	return f;
         } else {
         	 dst = rotate90Clockwise(src);
         }
@@ -106,7 +100,7 @@ public class UtilVerticaliseImage {
             throw new IOException("Aucun writer ImageIO pour le format : " + format);
         }
 
-        return outFile;
+        return  outFile;
     }
 	
 	
