@@ -75,9 +75,9 @@ public class UtilVerticaliseImage {
                 jpegMetadata.findExifValueWithExactMatch(TiffTagConstants.TIFF_TAG_ORIENTATION);
         if (orientationField != null) {
             orientation = PositionGps2FactoryApache.safeStringValue(orientationField);
-            if (orientation == null) {
-                orientation = orientationField.getValueDescription();
-            }
+        }
+        if (orientation == null) {
+            orientation = orientationField.getValueDescription();
         }
         PositionGps2.ORIENTATIONS orientaionEnum = PositionGps2.ORIENTATIONS.getORIENTATION(orientation);
         System.out.println("  ->>>----- "+fImage.getName()+"   orientation :"+orientation+"  "+PositionGps2.ORIENTATIONS.getORIENTATION(orientation));
@@ -95,7 +95,7 @@ public class UtilVerticaliseImage {
             return f;
         }
 
-        BufferedImage dst = rotate90Clockwise(src);
+        BufferedImage dst = rotate(src,angle_degre);
 
         String format = getFormatName(fImage.getName());
         File outFile = new File(dirOut, fImage.getName());
@@ -136,7 +136,7 @@ public class UtilVerticaliseImage {
     }
 	
 	
-	private static BufferedImage rotate90Clockwise(BufferedImage src) {
+	private static BufferedImage rotate(BufferedImage src,int angle_degre) {
         int width = src.getWidth();
         int height = src.getHeight();
 
@@ -150,7 +150,7 @@ public class UtilVerticaliseImage {
 
             AffineTransform transform = new AffineTransform();
             transform.translate(height, 0);
-            transform.rotate(Math.toRadians(90));
+            transform.rotate(Math.toRadians(angle_degre));
 
             g2d.drawImage(src, transform, null);
         } finally {
