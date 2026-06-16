@@ -4,8 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -15,8 +20,11 @@ import javax.imageio.ImageIO;
 import org.apache.commons.imaging.Imaging;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
+import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
 import org.apache.commons.imaging.formats.tiff.TiffField;
 import org.apache.commons.imaging.formats.tiff.constants.TiffTagConstants;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputDirectory;
+import org.apache.commons.imaging.formats.tiff.write.TiffOutputSet;
 
 public class UtilVerticaliseImage {
 
@@ -77,30 +85,54 @@ public class UtilVerticaliseImage {
 		return f;
 	}
 	
-    private static File copyImageWithOrientation(File fImage, File dirOut, PositionGps2.ORIENTATIONS orientation,ImageMetadata metadata ) throws Exception {
-       
+    private static File copyImageWithOrientation(File fImage, File dirOut, PositionGps2.ORIENTATIONS orientation, ImageMetadata metadata) throws Exception {
 
         BufferedImage src = ImageIO.read(fImage);
-        
 
-        BufferedImage dst =null;
         int angle_degre = orientation.angle_degre;
         if (angle_degre == 0) {
-        	File f = copyToDirectory(fImage,dirOut);
-        	return f;
-        } else {
-        	 dst = rotate90Clockwise(src);
+            File f = copyToDirectory(fImage, dirOut);
+            return f;
         }
+
+        BufferedImage dst = rotate90Clockwise(src);
 
         String format = getFormatName(fImage.getName());
         File outFile = new File(dirOut, fImage.getName());
 
-        boolean ok = ImageIO.write(dst, format, outFile);
-        if (!ok) {
-            throw new IOException("Aucun writer ImageIO pour le format : " + format);
+        // Write rotated pixels into a byte array first
+        byte[] pixelBytes;
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            boolean ok = ImageIO.write(dst, format, baos);
+            if (!ok) {
+                throw new IOException("Aucun writer ImageIO pour le format : " + format);
+            }
+            pixelBytes = baos.toByteArray();
         }
 
-        return  outFile;
+        // Embed original EXIF metadata into the output file
+        if (metadata instanceof JpegImageMetadata jpegMetadata && jpegMetadata.getExif() != null) {
+            TiffOutputSet outputSet = jpegMetadata.getExif().getOutputSet();
+            if (outputSet != null) {
+                // Update orientation to Normal (1) since the image has been physically rotated
+                TiffOutputDirectory rootDirectory = outputSet.getOrCreateRootDirectory();
+                rootDirectory.removeField(TiffTagConstants.TIFF_TAG_ORIENTATION);
+                rootDirectory.add(TiffTagConstants.TIFF_TAG_ORIENTATION, (short) TiffTagConstants.ORIENTATION_VALUE_HORIZONTAL_NORMAL);
+
+                try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
+                    new ExifRewriter().updateExifMetadataLossless(
+                            new ByteArrayInputStream(pixelBytes), out, outputSet);
+                }
+                return outFile;
+            }
+        }
+
+        // No EXIF available or outputSet is null – write the rotated pixels directly
+        try (OutputStream out = new BufferedOutputStream(new FileOutputStream(outFile))) {
+            out.write(pixelBytes);
+        }
+
+        return outFile;
     }
 	
 	
