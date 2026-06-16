@@ -1,16 +1,12 @@
 package bg.images.parser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.metadata.Metadata;
-
-import bg.util.PositionGps2Factory;
 import bg.metadata.MetaData;
 import bg.metadata.MetaDatasCsv;
 import bg.util.PositionGps2;
+import bg.util.PositionGps2Factory;
 
 
 public class ProcessGPSFromJPG {

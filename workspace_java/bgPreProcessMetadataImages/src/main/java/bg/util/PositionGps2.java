@@ -16,6 +16,13 @@ public class PositionGps2 {
     private final LocalDateTime date; // null si absente
     private int numeroPaquet = -1;
     private Color color = Color.BLACK;
+    String orientation = null;
+	String gpsImgDirection = null;
+	String gpsImgDirectionRef = null;
+	String yaw = null;
+	String pitch = null;
+	String roll = null;
+
    
     public LocalDateTime getDate() {
 		return date;
@@ -23,7 +30,7 @@ public class PositionGps2 {
 
 	
 
-    public PositionGps2(double latitude, double longitude, Double altitudeMeters,LocalDateTime takenAt, String imageName) {
+    public PositionGps2(double latitude, double longitude, Double altitudeMeters,LocalDateTime takenAt, String imageName,String orientation,	String gpsImgDirection,String gpsImgDirectionRef,String yaw,String pitch,String roll) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitudeMeters = altitudeMeters;
@@ -31,7 +38,12 @@ public class PositionGps2 {
         this.imageName=imageName;
         this.x = getX_process();
         this.y = getY_process();
-        
+        this.orientation = orientation;
+        this.gpsImgDirection = gpsImgDirection;
+        this.gpsImgDirectionRef=gpsImgDirectionRef;
+        this.yaw =yaw;
+        this.pitch=pitch;
+        this.roll =roll;
     }
 
     public double getLatitude() { return latitude; }
@@ -52,6 +64,12 @@ public class PositionGps2 {
         s += " | "+toDegreMinuteSeconde(latitude, true);
         s += "   "+toDegreMinuteSeconde(longitude, false);
         s += " |googleMap : "+toGoogleMapFormat(latitude, longitude);
+        s += " orientaion : "+orientation;
+        s += " gpsImgDirection "+this.gpsImgDirection;
+        s += " gpsImgDirectionRef "+this.gpsImgDirectionRef;
+        s += " yaw "+this.yaw;
+        s += " pitch "+this.pitch;
+        s+= " roll "+this.roll;
         return s;
     }
     /**

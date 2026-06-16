@@ -69,14 +69,12 @@ public class UtilMap {
 	        int yMin = latToTileY(latMax, zoom); // north
 	        int yMax = latToTileY(latMin, zoom); // south
 
-	        int tilesW = xMax - xMin + 1;
-	        int tilesH = yMax - yMin + 1;
+	        int tilesW = xMax - xMin +1;
+	        int tilesH = yMax - yMin +1 ;
 	        System.out.println(" tilesW "+tilesW);
 	        System.out.println(" tilesH "+tilesH);
 
-	        if (tilesW <= 0 || tilesH <= 0) {
-	            throw new IllegalArgumentException("Invalid bbox or zoom: tilesW=" + tilesW + " tilesH=" + tilesH);
-	        }
+	      
 	        // garde-fou anti “scraping involontaire”
 	        if ((long) tilesW * (long) tilesH > 400) {
 	            throw new IllegalArgumentException("Too many tiles (" + (tilesW * tilesH) +
