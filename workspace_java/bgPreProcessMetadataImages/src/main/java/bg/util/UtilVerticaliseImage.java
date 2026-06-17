@@ -18,6 +18,7 @@ import java.nio.file.StandardCopyOption;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.imaging.Imaging;
+import org.apache.commons.imaging.ImagingException;
 import org.apache.commons.imaging.common.ImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;
 import org.apache.commons.imaging.formats.jpeg.exif.ExifRewriter;
@@ -47,8 +48,8 @@ public class UtilVerticaliseImage {
 				try {
 					PositionGps2 gps= PositionGps2FactoryApache.extractPosition(fImage);
 					System.out.println(" gps Old:"+fImage.getName()+"    "+gps);
-					File fIo = verticaliseImage(fImage, dirOut);
-					PositionGps2 gpsNew= PositionGps2FactoryApache.extractPosition(fImage);
+					File fIo = copyAndVerticalise(fImage, dirOut);
+					PositionGps2 gpsNew= PositionGps2FactoryApache.extractPosition(fIo);
 					System.out.println(" gps New:"+fImage.getName()+"    "+gpsNew);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -64,25 +65,38 @@ public class UtilVerticaliseImage {
 		}
 		return false;
 	}
-
-	private static File verticaliseImage(File fImage, File dirOut) throws Exception{
-		ImageMetadata metadata = Imaging.getMetadata(fImage);
-		if (!(metadata instanceof JpegImageMetadata jpegMetadata)) {
-            throw new Exception("Pb with JpegImageMetadata !!!! ");
-        }
-		String orientation = null;
-		TiffField orientationField =
-                jpegMetadata.findExifValueWithExactMatch(TiffTagConstants.TIFF_TAG_ORIENTATION);
-        if (orientationField != null) {
-            orientation = PositionGps2FactoryApache.safeStringValue(orientationField);
-        }
-        if (orientation == null) {
-            orientation = orientationField.getValueDescription();
-        }
-        PositionGps2.ORIENTATIONS orientaionEnum = PositionGps2.ORIENTATIONS.getORIENTATION(orientation);
-        System.out.println("  ->>>----- "+fImage.getName()+"   orientation :"+orientation+"  "+PositionGps2.ORIENTATIONS.getORIENTATION(orientation));
-		File f =copyImageWithOrientation(fImage, dirOut, orientaionEnum, jpegMetadata);
-		return f;
+	/**
+	 * Copy l'image et verticalise l'image à partir des metasdatas
+	 * @param fImage
+	 * @param dirOut
+	 * @return
+	 * @throws Exception
+	 */
+	public static File copyAndVerticalise(File fImage, File dirOut) {
+		try {
+			ImageMetadata metadata = Imaging.getMetadata(fImage);
+			if (!(metadata instanceof JpegImageMetadata jpegMetadata)) {
+				File targetFile = new File(dirOut,fImage.getName());
+				Files.copy(fImage.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+				return targetFile;
+			}
+			String orientation = null;
+			TiffField orientationField =
+			        jpegMetadata.findExifValueWithExactMatch(TiffTagConstants.TIFF_TAG_ORIENTATION);
+			if (orientationField != null) {
+			    orientation = PositionGps2FactoryApache.safeStringValue(orientationField);
+			}
+			if (orientation == null) {
+			    orientation = orientationField.getValueDescription();
+			}
+			PositionGps2.ORIENTATIONS orientaionEnum = PositionGps2.ORIENTATIONS.getORIENTATION(orientation);
+			System.out.println("  ->>>----- "+fImage.getName()+"   orientation :"+orientation+"  "+PositionGps2.ORIENTATIONS.getORIENTATION(orientation));
+			File f =copyImageWithOrientation(fImage, dirOut, orientaionEnum, jpegMetadata);
+			return f;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
 	}
 	
     private static File copyImageWithOrientation(File fImage, File dirOut, PositionGps2.ORIENTATIONS orientation, ImageMetadata metadata) throws Exception {
@@ -187,5 +201,7 @@ public class UtilVerticaliseImage {
 
 	        return targetPath.toFile();
 	    }
+
+	 
 	
 }

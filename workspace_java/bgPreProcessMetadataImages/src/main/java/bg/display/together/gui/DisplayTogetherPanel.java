@@ -63,6 +63,7 @@ import bg.util.UtilCopyBg;
 import bg.util.UtilCreateDirPopups;
 import bg.util.UtilFile;
 import bg.util.UtilSwingChooseDoosier;
+import bg.util.UtilVerticaliseImage;
 import bg.util.map.MapProvider;
 import bg.util.map.MapProviderListener;
 
@@ -634,6 +635,19 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		sw.execute();
 	}
 	File dirTargetOut;
+	/**
+	 * Exporte les données correspondant aux images actuellement sélectionnées.
+	 *
+	 * <p>Cette méthode réalise le traitement complet d'extraction vers un dossier cible :
+	 * elle crée l'arborescence de sortie, copie et réoriente les images sélectionnées,
+	 * génère un fichier de métadonnées CSV, calcule les paires d'images proches pour
+	 * le matching, puis écrit les fichiers de sortie nécessaires au traitement externe
+	 * (notamment match.txt et les scripts shell associés).</p>
+	 *
+	 * <p>Le traitement s'appuie sur {@code listBeansSelected}, qui doit avoir été
+	 * initialisée au préalable. Les paramètres de proximité et de séquencement utilisés
+	 * pour générer les paires proviennent de {@code paramsConfiguration}.</p>
+	 */
 	private void extractDataProcessInBackGround() {
 		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
@@ -658,24 +672,26 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				if (destFile.exists()) {
 					System.out.println("file already exists " + imageName);
 				} else {
-					Files.copy(src, destPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-
+					//Files.copy(src, destPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+                    UtilVerticaliseImage.copyAndVerticalise(imageFile, dirTargetImages);
 					System.out.println("Copié: " + src + " -> " + i + "/" + listBeansSelected.size() + "   durée : "
 							+ (System.currentTimeMillis() - timeStart));
 				}
 				log("copied " + i + " / " + this.listBeansSelected.size());
-			} catch (IOException e) {
+			} catch (Exception e) {
 				System.err.println("Erreur copie " + src + " -> " + destPath + " : " + e.getMessage());
 
 				log("copy pb : " + imageName + " Exception !!! " + e.getMessage());
 			}
 		}
 		// Copier / générer les metaDatas
-		String metadataCsv = "";
+		String metadataCsvStr = "";
 		for (PositionBean2 bean : this.listBeansSelected) {
-			System.out.println("g metaData :" + bean.positionMetaData);
-			if (bean.positionMetaData != null) {
-				metadataCsv += bean.positionMetaData.toString2_csv() + "\n";
+			System.out.println("g metaData : positionMetaData" + bean.positionMetaData+"  gps: "+bean.gps);
+			if (bean.positionMetaData == null) {
+				metadataCsvStr += bean.gps.toString2_csv()+" \n";
+			} else {
+				metadataCsvStr += bean.positionMetaData.toString2_csv() + "\n";
 			}
 		}
 		File metadataCsvFile = new File(dirTargetOut, "metadataCSV.txt");
@@ -685,7 +701,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			System.out.println("file " + metadataCsvFile.getName() + "  deleted " + deleted);
 		}
 		try {
-			Files.writeString(metadataCsvFile.toPath(), metadataCsv, StandardCharsets.UTF_8,
+			Files.writeString(metadataCsvFile.toPath(), metadataCsvStr, StandardCharsets.UTF_8,
 					StandardOpenOption.CREATE_NEW);
 			System.out.println("file " + metadataCsvFile.getName() + " generated ");
 		} catch (Exception e) {

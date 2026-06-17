@@ -71,9 +71,9 @@ public final class PositionGps2FactoryDrew {
             String orientation = null;
             String gpsImgDirection = null;
             String gpsImgDirectionRef = null;
-            String yaw = null;
-            String pitch = null;
-            String roll = null;
+            Double yaw = null;
+            Double pitch = null;
+            Double roll = null;
 
             ExifSubIFDDirectory subIfdDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
             ExifIFD0Directory ifd0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
@@ -201,13 +201,20 @@ public final class PositionGps2FactoryDrew {
                 .trim();
     }
 
-    private static String getAngleFromUserComment(String userComment, String key) {
+    private static Double getAngleFromUserComment(String userComment, String key) {
         if (userComment == null || key == null) {
             return null;
         }
 
         Pattern pattern = Pattern.compile(key + "\\s*:\\s*([-+]?\\d+(?:\\.\\d+)?)");
         Matcher matcher = pattern.matcher(userComment);
-        return matcher.find() ? matcher.group(1) : null;
+        String s = matcher.find() ? matcher.group(1) : null;
+        Double v = null;
+        try {
+			v = Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			
+		}
+        return v;
     }
 }

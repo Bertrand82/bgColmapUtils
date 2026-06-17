@@ -38,17 +38,17 @@ public class PositionGps2 {
 	String orientation = null;
 	String gpsImgDirection = null;
 	String gpsImgDirectionRef = null;
-	String yaw = null;
-	String pitch = null;
-	String roll = null;
+	Double yaw = null;
+	Double pitch = null;
+	Double roll = null;
 
 	public LocalDateTime getDate() {
 		return date;
 	}
 
 	public PositionGps2(double latitude, double longitude, Double altitudeMeters, LocalDateTime takenAt,
-			String imageName, String orientation, String gpsImgDirection, String gpsImgDirectionRef, String yaw,
-			String pitch, String roll) {
+			String imageName, String orientation, String gpsImgDirection, String gpsImgDirectionRef, Double yaw,
+			Double pitch, Double roll) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.altitudeMeters = altitudeMeters;
@@ -176,4 +176,24 @@ public class PositionGps2 {
 		return String.format(java.util.Locale.US, "%.6f,%.6f", latitude, longitude);
 	}
 
-}
+	
+		public String toString2_csv() {
+			double x_ =this.getX();
+			double y_ = this.getY();
+			double z_ =this.getAltitudeMeters();
+		    return String.format(
+		    		
+		            java.util.Locale.US,
+		            "%s,%.2f,%.2f,%.2f,%.4f,%.4f,%.4f",
+		            imageName,
+		            x_,
+		            y_,
+		            z_,
+		            yaw,
+		            pitch,
+		            roll
+		    );
+		}
+	}
+
+

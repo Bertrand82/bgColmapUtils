@@ -51,9 +51,9 @@ public final class PositionGps2FactoryApache {
             String orientation = null;
             String gpsImgDirection = null;
             String gpsImgDirectionRef = null;
-            String yaw = null;
-            String pitch = null;
-            String roll = null;
+            Double yaw = null;
+            Double pitch = null;
+            Double roll = null;
 
             // GPS
             TiffImageMetadata.GpsInfo gpsInfo = exif.getGpsInfo();
@@ -140,9 +140,9 @@ public final class PositionGps2FactoryApache {
                 String userComment = decodeExifUserComment(bytes);
 
                 if (userComment != null) {
-                    yaw = getAngleFromUserComment(userComment, "Yaw");
-                    pitch = getAngleFromUserComment(userComment, "Pitch");
-                    roll = getAngleFromUserComment(userComment, "Roll");
+                    yaw = getAngleFromUserCommentAsDouble(userComment, "Yaw");
+                    pitch = getAngleFromUserCommentAsDouble(userComment, "Pitch");
+                    roll = getAngleFromUserCommentAsDouble(userComment, "Roll");
                 }
             }
 
@@ -166,7 +166,21 @@ public final class PositionGps2FactoryApache {
         }
     }
 
-    private static Double extractDoubleValue(TiffField field) {
+    private static Double getAngleFromUserCommentAsDouble(String userComment, String tag) {
+		String s = getAngleFromUserComment( userComment,  tag);
+		Double v = null;
+		if (s == null) {
+			return null;
+		}
+		try {
+			v= Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			
+		}
+		return v;
+	}
+
+	private static Double extractDoubleValue(TiffField field) {
         if (field == null) {
             return null;
         }
