@@ -34,7 +34,7 @@ public class PositionMetaData2 {
 		this.yaw = this.positionGps.yaw;
 		this.pitch= this.positionGps.pitch;
 		this.roll = this.positionGps.roll;
-		CorrectionResult cr  = MetaDataPositionCorrector.compute(xx, yy, zz, yaw, pitch, gpsPosition);
+		CorrectionResult cr  = MetaDataPositionCorrector.compute(imageName,xx, yy, zz, yaw, pitch, gpsPosition);
 		this.xCorrected = cr.getxCorrected();
 		this.yCorrected =cr.getyCorrected();
 		

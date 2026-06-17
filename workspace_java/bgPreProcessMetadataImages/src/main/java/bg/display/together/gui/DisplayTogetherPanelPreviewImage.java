@@ -62,8 +62,12 @@ public class DisplayTogetherPanelPreviewImage extends JPanel{
 		try {
 			this.label.setToolTipText(gps.getImageName());
 			this.canvasMiniaturePrevious2.currentImage=this.canvasMiniaturePrevious1.currentImage;
+			this.canvasMiniaturePrevious2.gps=this.canvasMiniaturePrevious1.gps;
+
 			this.canvasMiniaturePrevious1.currentImage=this.canvasMiniature.currentImage;
+			this.canvasMiniaturePrevious1.gps = this.canvasMiniature.gps;
 			this.canvasMiniature.currentImage = ImageIO.read(fileImage);
+			this.canvasMiniature.gps = gps;
 			this.canvasMiniature.setPreferredSize(new Dimension(200,200));
 			this.canvasMiniature.repaint();
 			this.canvasMiniaturePrevious1.repaint();
@@ -76,8 +80,19 @@ public class DisplayTogetherPanelPreviewImage extends JPanel{
 	}
 	
 	class CanvasMiniature extends Canvas{
+		CanvasMiniature(){
+			super();
+			addMouseListener(new java.awt.event.MouseAdapter() {
+				@Override
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					System.out.println("Clic sur la miniature : gps: " +gps);
+				}
+			});
+			
+		}
 		private static final long serialVersionUID = 1L;
 		public Image currentImage;
+		public PositionGps2 gps;
 		
 		public void paint(Graphics g) {
 			this.paintImageMiniature(g);

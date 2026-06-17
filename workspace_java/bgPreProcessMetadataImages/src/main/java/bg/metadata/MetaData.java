@@ -118,6 +118,7 @@ public class MetaData {
 	public void applyCorrectedPosition(PositionGps2 positionGps) {
 		MetaDataPositionCorrector.CorrectionResult result =
 				MetaDataPositionCorrector.compute(
+						this.fileName,
 						this.x,
 						this.y,
 						this.z,

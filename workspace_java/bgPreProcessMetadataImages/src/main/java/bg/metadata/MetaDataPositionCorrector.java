@@ -18,6 +18,7 @@ public final class MetaDataPositionCorrector {
 	}
 
 	public static CorrectionResult compute(
+			String fileName,
 			double x,
 			double y,
 			double z,
@@ -26,6 +27,7 @@ public final class MetaDataPositionCorrector {
 			PositionGps2 positionGps) {
 
 		return compute(
+				 fileName,
 				x,
 				y,
 				z,
@@ -37,6 +39,7 @@ public final class MetaDataPositionCorrector {
 	}
 
 	public static CorrectionResult compute(
+			String fileName,
 			double x,
 			double y,
 			double z,
@@ -59,11 +62,14 @@ public final class MetaDataPositionCorrector {
 			xx = positionGps.getX_process();
 			yy = positionGps.getY_process();
 		}
+		double yaw_degre = yaw*180/Math.PI;
 		// hauteur de 5 metres par default
 		double hauteur =(altitudeSol==DEFAULT_ALTITUDE_SOL)? 5.0d : (zz - altitudeSol);
 		double delta = hauteur * Math.cos(Math.toRadians(pitch));
-		double xCorrected = xx + delta * Math.cos(yaw);
-		double yCorrected = yy + delta * Math.sin(yaw);
+		// x est associé à la longitude 
+		double xCorrected = xx  + delta * Math.sin(yaw);
+		// y est associé à la latitude (0 sur l'equateur)
+		double yCorrected = yy- delta * Math.cos(yaw);
 		double rView = Math.abs(hauteur * Math.sin(Math.toRadians(angleOuvertureCamera_degre)));
 
 		return new CorrectionResult(xCorrected, yCorrected, rView);
