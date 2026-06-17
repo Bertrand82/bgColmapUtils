@@ -2,6 +2,9 @@ package bg.util;
 
 import java.time.LocalDateTime;
 
+import bg.metadata.MetaDataPositionCorrector;
+import bg.metadata.MetaDataPositionCorrector.CorrectionResult;
+
 public class PositionMetaData2 {
 
 	private  Double altitudeMeters; // null si absente
@@ -20,9 +23,20 @@ public class PositionMetaData2 {
 	private PositionGps2 positionGps;;
 	
 	
-	public PositionMetaData2(String fileName, PositionGps2 gpsPosition) {
-		this.imageName=fileName;
+	public PositionMetaData2( PositionGps2 gpsPosition) {
+		this.imageName=gpsPosition.getImageName();
 		this.positionGps=gpsPosition;
+		this.xx = this.positionGps.getX();
+		this.yy = this.positionGps.getY();
+		this.zz = this.positionGps.getAltitudeMeters();
+		this.altitudeMeters=zz;
+		this.yaw = this.positionGps.yaw;
+		this.pitch= this.positionGps.pitch;
+		this.roll = this.positionGps.roll;
+		CorrectionResult cr  = MetaDataPositionCorrector.compute(xx, yy, zz, yaw, pitch, gpsPosition);
+		this.xCorrected = cr.getxCorrected();
+		this.yCorrected =cr.getyCorrected();
+		
 	}
 	public double getrView() {
 		return rView;

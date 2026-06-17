@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PositionBean2 {
 	public PositionGps2 gps;
-	public PositionMetaData2 positionMetaData;
+	private PositionMetaData2 positionMetaData;
 	public int px; // Position afficher dans Panel en pixel
 	public int py;
 	public int pxCorrected;
@@ -55,5 +55,15 @@ public class PositionBean2 {
 		return Math.abs(px - pp.x) + Math.abs(py - pp.y);
 
 	}
+
+	public PositionMetaData2 getPositionMetaData() {
+		if (this.positionMetaData == null) {
+			this.positionMetaData= new PositionMetaData2( gps);
+			
+		}
+		return positionMetaData;
+	}
+	
+	
 
 }

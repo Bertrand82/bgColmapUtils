@@ -148,6 +148,32 @@ public class PositionGps2 {
 		this.numeroPaquet = numeroPaquet;
 		this.color = UtilColor.colorFor(numeroPaquet);
 	}
+	
+	
+
+	public String getGpsImgDirection() {
+		return gpsImgDirection;
+	}
+
+	public String getGpsImgDirectionRef() {
+		return gpsImgDirectionRef;
+	}
+
+	public Double getYaw() {
+		return yaw;
+	}
+
+	public Double getPitch() {
+		return pitch;
+	}
+
+	public Double getRoll() {
+		return roll;
+	}
+
+	public void setOrientation(String orientation) {
+		this.orientation = orientation;
+	}
 
 	public Color getColor() {
 

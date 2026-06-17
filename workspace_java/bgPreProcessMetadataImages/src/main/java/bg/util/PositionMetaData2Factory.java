@@ -11,7 +11,7 @@ public class PositionMetaData2Factory {
 		if (metaData == null) {
 			return null;
 		}
-		PositionMetaData2 pos = new PositionMetaData2(metaData.fileName,pGps2);
+		PositionMetaData2 pos = new PositionMetaData2(pGps2);
 		pos.setxCorrected(metaData.xCorrected);
 		pos.setyCorrected(metaData.yCorrected);
 		pos.setrView(metaData.rView);
@@ -27,13 +27,15 @@ public class PositionMetaData2Factory {
 		return pos;
 	}
 
-	public static PositionMetaData2 extractPosition(PositionGps2 pGps2, List<MetaData> listMetaData) {
+	public static PositionMetaData2 extractPosition(PositionGps2 pGps2, List<MetaData> listMetaData2) {
 		String imageName=pGps2.getImageName();
-		MetaData metaData = getMetaData(listMetaData, imageName);
+		MetaData metaData = getMetaData(listMetaData2, imageName);
 		if (metaData==null) {
-			System.err.println("metadAta is null "+imageName+"   size: "+listMetaData.size());
+			System.err.println("metadAta3 is null "+imageName+"   size: "+listMetaData2.size());
+			metaData = new MetaData(pGps2);
+			metaData.applyCorrectedPosition(pGps2);
 		}else {
-			metaData.updatePositionCorrectedn(pGps2);
+			metaData.applyCorrectedPosition(pGps2);
 		}
 		
 		return extractPosition(metaData,pGps2);

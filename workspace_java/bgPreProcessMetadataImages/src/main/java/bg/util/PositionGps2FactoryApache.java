@@ -168,16 +168,17 @@ public final class PositionGps2FactoryApache {
 
     private static Double getAngleFromUserCommentAsDouble(String userComment, String tag) {
 		String s = getAngleFromUserComment( userComment,  tag);
-		Double v = null;
+		Double v_r = null;
 		if (s == null) {
 			return null;
 		}
 		try {
-			v= Double.parseDouble(s);
+			double v_d= Double.parseDouble(s);
+			v_r = Math.toRadians(v_d);
 		} catch (NumberFormatException e) {
 			
 		}
-		return v;
+		return v_r;
 	}
 
 	private static Double extractDoubleValue(TiffField field) {

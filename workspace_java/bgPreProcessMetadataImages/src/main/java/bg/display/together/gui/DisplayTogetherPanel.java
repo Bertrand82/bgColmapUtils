@@ -47,6 +47,7 @@ import javax.swing.SwingWorker;
 
 import bg.display.divide1.ProcessSubsets_1;
 import bg.display.divide2.ProcessSubsets2;
+import bg.metadata.MetaData;
 import bg.metadata.MetaDatasCsv;
 import bg.process.log.LogFactory;
 import bg.process.log.LogProcess;
@@ -332,13 +333,18 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		xxMaxPixel_ = (int) (scale * (xMax - xMin));
 		yyMaxPixel_ = (int) (scale * (yMax - yMin));
 		for (PositionGps2 gps : listPositions) {
+			 try {
+				List<MetaData> listMetaData = metaDataCsv.getListMetaDataAll();
+				PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps,
+						listMetaData);
 
-			PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps,
-					metaDataCsv.getListMetaDataAll());
-
-			PositionBean2 bean = new PositionBean2(gps, pMetaData);
-			bean.updatePosition(duree_ms, xMin, yMin);
-			this.listBeans.add(bean);
+				PositionBean2 bean = new PositionBean2(gps, pMetaData);
+				bean.updatePosition(duree_ms, xMin, yMin);
+				this.listBeans.add(bean);
+			 } catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			 }
 		}
 		MapProvider mapProvider = new MapProvider(longitudeMax, longitudeMin, latitudeMax, latitudeMin, this);
 		this.labelNbDePoints.setText("" + this.listBeans.size());
@@ -390,7 +396,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		if (checkBoxImagesCorrected.isSelected()) {
 			g.setColor(Color.BLUE);
 			for (PositionBean2 bean : this.listBeans) {
-				if (bean.positionMetaData == null) {
+				if (bean.getPositionMetaData() == null) {
 					g.fillRect(bean.pxCorrected, bean.pyCorrected, 1, 1);
 				} else {
 					g.fillRect(bean.pxCorrected, bean.pyCorrected, 3, 3);
@@ -595,9 +601,9 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		this.listBeansSelected = new ArrayList<>();
 		for (PositionBean2 pb : listBeans) {
 			boolean isSelected = false;
-			if (pb.positionMetaData == null) {
+			if (pb.getPositionMetaData() == null) {
 			} else {
-				isSelected = listImagesSelected.contains(pb.positionMetaData.getImageName());
+				isSelected = listImagesSelected.contains(pb.getPositionMetaData().getImageName());
 			}
 			if (isSelected) {
 				this.listBeansSelected.add(pb);
@@ -687,11 +693,11 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		// Copier / générer les metaDatas
 		String metadataCsvStr = "";
 		for (PositionBean2 bean : this.listBeansSelected) {
-			System.out.println("g metaData : positionMetaData" + bean.positionMetaData+"  gps: "+bean.gps);
-			if (bean.positionMetaData == null) {
+			System.out.println("g metaData : positionMetaData" + bean.getPositionMetaData()+"  gps: "+bean.gps);
+			if (bean.getPositionMetaData() == null) {
 				metadataCsvStr += bean.gps.toString2_csv()+" \n";
 			} else {
-				metadataCsvStr += bean.positionMetaData.toString2_csv() + "\n";
+				metadataCsvStr += bean.getPositionMetaData().toString2_csv() + "\n";
 			}
 		}
 		File metadataCsvFile = new File(dirTargetOut, "metadataCSV.txt");
@@ -713,7 +719,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		System.out.println("listPositionMetaDAta size " + listPositionMetaDAta.size());
 		Hashtable<PositionMetaData2, Set<PositionMetaData2>> hashTableClosest = new Hashtable<PositionMetaData2, Set<PositionMetaData2>>();
 		for (PositionBean2 beanPosition : this.listBeansSelected) {
-			PositionMetaData2 position0 = beanPosition.positionMetaData;
+			PositionMetaData2 position0 = beanPosition.getPositionMetaData();
 			if (position0 == null) {
 
 			} else {
@@ -767,10 +773,10 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	private List<PositionMetaData2> getListPositionMetaData2() {
 		List<PositionMetaData2> list = new ArrayList<PositionMetaData2>();
 		for (PositionBean2 beanPosition : this.listBeansSelected) {
-			if (beanPosition.positionMetaData == null) {
-				System.err.println("Warning positionMetaData is null " + beanPosition);
+			if (beanPosition.getPositionMetaData() == null) {
+				System.err.println("Warning2 positionMetaData is null . Should never happen" + beanPosition);				
 			} else {
-				list.add(beanPosition.positionMetaData);
+				list.add(beanPosition.getPositionMetaData());
 			}
 
 		}
@@ -797,11 +803,13 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	}
 
 	private void debug() {
-		this.labelLog.setText("debug listBeansSelected.size :" + this.listBeansSelected.size());
+		this.labelLog.setText("debug listBeansSelected.size :" + this.listBeansSelected.size()+" / "+listBeans.size());
+		System.out.println("debug listBeansSelected.size :"+this.listBeansSelected.size());
+		System.out.println("debug listBeans.size :"+this.listBeans.size());
 		int i = 0;
 		for (PositionBean2 pb2 : this.listBeansSelected) {
 			String s = String.format("%2d  - ", i++);
-			System.out.println(s + pb2.positionMetaData.toString());
+			System.out.println(s + pb2.getPositionMetaData().toString());
 		}
 	}
 

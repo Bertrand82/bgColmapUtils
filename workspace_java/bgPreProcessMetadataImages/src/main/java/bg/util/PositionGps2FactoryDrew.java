@@ -209,12 +209,13 @@ public final class PositionGps2FactoryDrew {
         Pattern pattern = Pattern.compile(key + "\\s*:\\s*([-+]?\\d+(?:\\.\\d+)?)");
         Matcher matcher = pattern.matcher(userComment);
         String s = matcher.find() ? matcher.group(1) : null;
-        Double v = null;
+        Double v_radient = null;
         try {
-			v = Double.parseDouble(s);
+			double v_degre = Double.parseDouble(s);
+			v_radient= Math.toRadians(v_degre);
 		} catch (NumberFormatException e) {
 			
 		}
-        return v;
+        return v_radient;
     }
 }
