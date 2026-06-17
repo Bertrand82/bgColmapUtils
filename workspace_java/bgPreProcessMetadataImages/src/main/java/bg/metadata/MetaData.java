@@ -16,7 +16,8 @@ import bg.util.PositionGps2Factory;
 public class MetaData {
 
 	private static final Pattern SEQ = Pattern.compile("^DJI_\\d{14}_(\\d+)_.*$", Pattern.CASE_INSENSITIVE);
-	private static final Pattern TS14 = Pattern.compile("(\\d{14})");
+	private static final Pattern TS14_DEPRECATED = Pattern.compile("(\\d{14})");
+	private static final Pattern TS14 = Pattern.compile("(\\d{14}|\\d{8}_\\d{6})");
 	private static final DateTimeFormatter TS14_FORMAT = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
 	public String line;
@@ -43,6 +44,9 @@ public class MetaData {
 		parseLine(line);
 		this.numeroSequence = extractSequenceNumberFromFileName(fileName);
 		this.date = extractDateTimeFromFilename(fileName);
+		if (date == null) {
+			System.err.println("No Date from file!!! ");
+		}
 	}
 
 	public MetaData(PositionGps2 pGps2) {
@@ -93,8 +97,17 @@ public class MetaData {
 		if (!m.find()) {
 			return null;
 		}
-		String ts = m.group(1);
-		return LocalDateTime.parse(ts, TS14_FORMAT);
+		String ts = m.group(1).replace("_", "");
+		LocalDateTime date = null;
+		try {
+			date = LocalDateTime.parse(ts, TS14_FORMAT);
+		} catch (Exception e) {
+			
+		}
+		if (date == null) {
+			System.err.println("Ecchec parsage");
+		}
+		return date;
 	}
 
 	public File getFileImageIn(File dir) {
