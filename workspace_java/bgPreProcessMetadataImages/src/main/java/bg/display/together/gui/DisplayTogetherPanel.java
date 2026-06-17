@@ -725,9 +725,13 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			} else {
 				int nDate = this.paramsConfiguration.nbSeq;
 				int nDistance = this.paramsConfiguration.nbProx;
-				Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0,
-						listPositionMetaDAta, nDate, nDistance);
-				hashTableClosest.put(position0, setPosition);
+				try {
+					Set<PositionMetaData2> setPosition = PositionMetaData2UtilCloser.searchClosest(position0,
+							listPositionMetaDAta, nDate, nDistance);
+					hashTableClosest.put(position0, setPosition);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		System.out.println("HashTable closest " + hashTableClosest.size());

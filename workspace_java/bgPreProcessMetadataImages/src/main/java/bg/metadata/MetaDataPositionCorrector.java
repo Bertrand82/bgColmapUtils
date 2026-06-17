@@ -10,7 +10,7 @@ import bg.util.PositionGps2;
  */
 public final class MetaDataPositionCorrector {
 
-	private static final double DEFAULT_ALTITUDE_SOL = 0.0;
+	private static final double DEFAULT_ALTITUDE_SOL = -1.0;
 	private static final double DEFAULT_CAMERA_FOV_DEGREES = 60.0;
 
 	private MetaDataPositionCorrector() {
@@ -44,7 +44,7 @@ public final class MetaDataPositionCorrector {
 			double pitch,
 			PositionGps2 positionGps,
 			double altitudeSol,
-			double angleOuvertureCamera) {
+			double angleOuvertureCamera_degre) {
 
 		double zz;
 		double xx;
@@ -57,14 +57,14 @@ public final class MetaDataPositionCorrector {
 		} else {
 			zz = positionGps.getAltitudeMeters();
 			xx = positionGps.getX_process();
-			yy = positionGps.getY();
+			yy = positionGps.getY_process();
 		}
-
-		double hauteur = zz - altitudeSol;
+		// hauteur de 5 metres par default
+		double hauteur =(altitudeSol==DEFAULT_ALTITUDE_SOL)? 5.0d : (zz - altitudeSol);
 		double delta = hauteur * Math.cos(Math.toRadians(pitch));
-		double xCorrected = xx + delta * Math.cos(Math.toRadians(yaw));
-		double yCorrected = yy + delta * Math.sin(Math.toRadians(yaw));
-		double rView = Math.abs(hauteur * Math.sin(Math.toRadians(angleOuvertureCamera)));
+		double xCorrected = xx + delta * Math.cos(yaw);
+		double yCorrected = yy + delta * Math.sin(yaw);
+		double rView = Math.abs(hauteur * Math.sin(Math.toRadians(angleOuvertureCamera_degre)));
 
 		return new CorrectionResult(xCorrected, yCorrected, rView);
 	}

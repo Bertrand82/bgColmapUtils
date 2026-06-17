@@ -24,6 +24,7 @@ public class PositionMetaData2 {
 	
 	
 	public PositionMetaData2( PositionGps2 gpsPosition) {
+		this.date = gpsPosition.getDate();
 		this.imageName=gpsPosition.getImageName();
 		this.positionGps=gpsPosition;
 		this.xx = this.positionGps.getX();
@@ -195,8 +196,12 @@ public class PositionMetaData2 {
 		}
 		return Math.abs(xCorrected-metaData0.xCorrected)+Math.abs(yCorrected-metaData0.yCorrected);
 	}
-	public int dateTo(PositionMetaData2 metaData0) {		
-		return Math.abs(date.compareTo(date));
+	public int dateTo(PositionMetaData2 metaData0) {
+		if (date == null) {
+			System.err.println(" PositionMetaData dateTo Should not happen : date is null");
+			return 0;
+		}
+		return Math.abs(date.compareTo(metaData0.date));
 	}
 	
 	
