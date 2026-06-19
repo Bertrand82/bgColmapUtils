@@ -48,4 +48,10 @@ public class PropertiesGlobal {
 		saveProperties("maj "+key+" : "+value);
 		
 	}
+
+
+	public static File getFile(String key) {
+		String path =""+ getProperties().getProperty(key,System.getProperty("user.dir"));
+		return new File(path);
+	}
 }

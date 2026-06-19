@@ -74,8 +74,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		public int nbPointsExtraitsMax = 100;
 		public int nbSeq = 7;
 		public int nbProx = 8;
-		public int taillePaquet=30;
-		public Double recouvrementPaquets=0.2;
+		public int taillePaquet = 30;
+		public Double recouvrementPaquets = 0.2;
 	}
 
 	/**
@@ -123,14 +123,17 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JMenuItem buttonDossierSparsesCreatePaquets_1 = new JMenuItem("Create Sparse paquets 1");
 	JMenuItem buttonDossierSparsesCreatePaquets_2 = new JMenuItem("Create Sparse paquets 2");
 	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
-	JMenuItem buttonDossierSources = new JMenuItem("Open Repository Source Images");
+
+	JMenuItem buttonDossierSourcesSparse = new JMenuItem("Source Images for sparse");
+	JMenuItem buttonDossierSourcesDense = new JMenuItem("Source Images for dense");
 	JMenuItem buttonDebug = new JMenuItem("debug");
 	JMenuItem buttonAnalyseLog = new JMenuItem("Analyse Log");
 	JMenuItem buttonLoadSelected = new JMenuItem("Open metadataCsv.txt");
 	JCheckBox checkBoxImagesCorrected = new JCheckBox("corrected");
-	JCheckBox checkBoxShowPaquets= new JCheckBox("paquets");
+	JCheckBox checkBoxShowPaquets = new JCheckBox("paquets");
 	MetaDatasCsv metaDataCsv;
-	File dirSources;
+	File dirSourcesSparse_;
+	File dirSourcesDense;
 	File dirSparse_;
 	final SablierSwing sablierSwing;
 	final JFrame frame;
@@ -143,7 +146,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	}
 
 	private void initData(File dir) throws Exception {
-		dirSources = dir;
+		dirSourcesSparse_ = dir;
+		dirSourcesDense = PropertiesGlobal.getFile("dirSourcesDense");
 		dirImages = new File(dir, "images");
 		String trace = "dirImages exists : " + dirImages.exists() + "  " + dirImages.getAbsolutePath();
 		System.out.println(trace);
@@ -167,9 +171,9 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
 			@Override
 			protected void done() {
-				File fileImages = new File(dirTargetOut,"images");
-				if (fileImages.exists()  ) {
-					System.out.println("Nb Images " + fileImages.listFiles().length );
+				File fileImages = new File(dirTargetOut, "images");
+				if (fileImages.exists()) {
+					System.out.println("Nb Images " + fileImages.listFiles().length);
 				}
 				System.err.println("sssssssssstop dialog ");
 				sablierSwing.stop();
@@ -182,12 +186,13 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		this.setLayout(new BorderLayout());
 		buttonDebug.addActionListener(e -> debug());
-		buttonAnalyseLog.addActionListener(e ->analyseLog());
+		buttonAnalyseLog.addActionListener(e -> analyseLog());
 		buttonLoadSelected.addActionListener(e -> actionLoadSelected());
-		buttonDossierSources.addActionListener(e_ -> chooseDossierSource());
-		buttonDossierSparsesCreatePaquets_1.addActionListener(e -> processDossierSparse_1());
-		buttonDossierSparsesCreatePaquets_2.addActionListener(e -> processDossierSparse_2());
-		buttonDossierCleanSparsePaquets.addActionListener(e->processDossierCleanPaquets());
+		buttonDossierSourcesSparse.addActionListener(e_ -> chooseDossierSourceSparse());
+		buttonDossierSourcesDense.addActionListener(e_ -> chooseDossierSourceDense());
+		buttonDossierSparsesCreatePaquets_1.addActionListener(e -> processInitDossierDense_1());
+		buttonDossierSparsesCreatePaquets_2.addActionListener(e -> processInitDossierDense_2());
+		buttonDossierCleanSparsePaquets.addActionListener(e -> processDossierCleanPaquets());
 		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
@@ -203,7 +208,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuEdit.add(menuItemProcessRapportFromLog);
 		menuFile.add(buttonDebug);
 		menuFile.add(buttonLoadSelected);
-		menuFile.add(buttonDossierSources);
+		menuFile.add(buttonDossierSourcesSparse);
+		menuFile.add(buttonDossierSourcesDense);
 		menuFile.add(buttonDossierSparsesCreatePaquets_1);
 		menuFile.add(buttonDossierSparsesCreatePaquets_2);
 		menuFile.add(buttonDossierCleanSparsePaquets);
@@ -281,7 +287,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			System.err.println("dir : " + dirImages.getAbsolutePath() + "  doen't exists ");
 			return;
 		}
-		
+
 		this.listPositions = PositionGps2Factory.getListGpsPositionFromDirImages(dirImages);
 
 		long duree_ms = System.currentTimeMillis() - timeStart;
@@ -333,18 +339,17 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		xxMaxPixel_ = (int) (scale * (xMax - xMin));
 		yyMaxPixel_ = (int) (scale * (yMax - yMin));
 		for (PositionGps2 gps : listPositions) {
-			 try {
+			try {
 				List<MetaData> listMetaData = metaDataCsv.getListMetaDataAll();
-				PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps,
-						listMetaData);
+				PositionMetaData2 pMetaData = PositionMetaData2Factory.extractPosition(gps, listMetaData);
 
 				PositionBean2 bean = new PositionBean2(gps, pMetaData);
 				bean.updatePosition(duree_ms, xMin, yMin);
 				this.listBeans.add(bean);
-			 } catch (Exception e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			 }
+			}
 		}
 		MapProvider mapProvider = new MapProvider(longitudeMax, longitudeMin, latitudeMax, latitudeMin, this);
 		this.labelNbDePoints.setText("" + this.listBeans.size());
@@ -381,7 +386,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		g.fillRect(0, 0, w, h);
 		g.setColor(Color.RED);
 		if (this.imageMap != null) {
-			// bg ERROR . Il faut afficher uniquement la map entre longMAx et Min et latMax et min
+			// bg ERROR . Il faut afficher uniquement la map entre longMAx et Min et latMax
+			// et min
 			g.drawImage(imageMap, 0, 0, xxMaxPixel_, yyMaxPixel_, null);
 		}
 		boolean showPaquets = checkBoxShowPaquets.isSelected();
@@ -450,95 +456,99 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		this.canvas.repaint();
 
 	}
-	
-	private void processDossierSparse_1() {
+
+	private void processInitDossierDense_1() {
 		System.out.println("processDossierSparse 1");
 		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
 			@Override
 			protected Void doInBackground() throws Exception {
 				sablierSwing.start("initialisation paquets", "Init");
-				processSparseBackGround_1(dirSources);
+				processSparseBackGround_1(dirSourcesDense);
 				return null;
 			}
 
 			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
 			@Override
 			protected void done() {
-				File fileImages = new File(dirTargetOut,"images");
-				if (fileImages.exists()  ) {
-					System.out.println("Nb Images " + fileImages.listFiles().length );
+				File fileImages = new File(dirTargetOut, "images");
+				if (fileImages.exists()) {
+					System.out.println("Nb Images " + fileImages.listFiles().length);
 				}
 				System.err.println("sssssssssstop dialog ");
 				sablierSwing.stop();
 			}
 		};
 		sw.execute();
-		
+
 	}
-	private void processDossierSparse_2() {
+
+	private void processInitDossierDense_2() {
 		System.out.println("processDossierSparse 2");
 		SwingWorker<Void, Void> sw = new SwingWorker<Void, Void>() {
 			@Override
 			protected Void doInBackground() throws Exception {
 				sablierSwing.start("initialisation paquets", "Init");
-				processSparseBackGround_2(dirSources);
+				processSparseBackGround_2(dirSourcesDense);
 				return null;
 			}
 
 			// LIGNE 2 (remplace ss.stop() en fin): fermer quand c'est fini
 			@Override
 			protected void done() {
-				File fileImages = new File(dirTargetOut,"images");
-				if (fileImages.exists()  ) {
-					System.out.println("Nb Images " + fileImages.listFiles().length );
+				File fileImages = new File(dirTargetOut, "images");
+				if (fileImages.exists()) {
+					System.out.println("Nb Images " + fileImages.listFiles().length);
 				}
 				System.err.println("sssssssssstop dialog ");
 				sablierSwing.stop();
 			}
 		};
 		sw.execute();
-		
+
 	}
-	
+
 	private void processDossierCleanPaquets() {
 		System.out.println("Clean paquets ");
-	
-	    for(File f : this.dirSources.listFiles()) {
-	    	System.out.println("-------"+f.getName());
-	    	if (f.isDirectory() && f.getName().startsWith("paquet_")) {
-	    		try {
+
+		for (File f : this.dirSourcesDense.listFiles()) {
+			System.out.println("-------" + f.getName());
+			if (f.isDirectory() && f.getName().startsWith("paquet_")) {
+				try {
 					UtilFile.deleteDirRecursive(f);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	    	}
-	    }
-	    File dirLogs = new File(dirSources,"logs");
-	    if (dirLogs.exists()) {
-	    	File dirLogArchive = new File(dirSources,"logs_archive_"+new Date());
-	    	try {
+			}
+		}
+		File dirLogs = new File(dirSourcesDense, "logs");
+		if (dirLogs.exists()) {
+			File dirLogArchive = new File(dirSourcesDense, "logs_archive_" + new Date());
+			try {
 				Files.move(dirLogs.toPath(), dirLogArchive.toPath());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    }
+		}
 	}
-	
+
 	private void processSparseBackGround_1(File dirSparse) {
-		System.out.println("processSparse 1 "+dirSparse.getAbsolutePath());
-		int paquetSize=this.paramsConfiguration.taillePaquet;
+		System.out.println("processSparse 1 " + dirSparse.getAbsolutePath());
+		int paquetSize = this.paramsConfiguration.taillePaquet;
 		double tauxRecouvrementPaquets = this.paramsConfiguration.recouvrementPaquets;
-		ProcessSubsets_1 processSubsets= new ProcessSubsets_1(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
+		ProcessSubsets_1 processSubsets = new ProcessSubsets_1(dirSparse, paquetSize, tauxRecouvrementPaquets,
+				this.listPositions);
 		// Lots de 100 images
 	}
+
 	private void processSparseBackGround_2(File dirSparse) {
 		try {
-			System.out.println("processSparse 2 "+dirSparse.getAbsolutePath());
-			int paquetSize=this.paramsConfiguration.taillePaquet;
+			System.out.println("processSparse 2 " + dirSparse.getAbsolutePath());
+			int paquetSize = this.paramsConfiguration.taillePaquet;
 			double tauxRecouvrementPaquets = this.paramsConfiguration.recouvrementPaquets;
-			ProcessSubsets2 processSubsets= new ProcessSubsets2(dirSparse,paquetSize,tauxRecouvrementPaquets,this.listPositions);
+			ProcessSubsets2 processSubsets = new ProcessSubsets2(dirSparse, paquetSize, tauxRecouvrementPaquets,
+					this.listPositions);
 			// Lots de 100 images
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -546,12 +556,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			e.printStackTrace();
 		}
 	}
-	
-	
 
-	
-
-	private void chooseDossierSource() {
+	private void chooseDossierSourceSparse() {
 		System.out.println("choose Dossier sources");
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Choisir le dossier source");
@@ -560,8 +566,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		chooser.setMultiSelectionEnabled(false);
 
 		// Optionnel : partir du dernier dossier choisi
-		if (UtilFile.existsDir(dirSources)) {
-			chooser.setCurrentDirectory(dirSources);
+		if (UtilFile.existsDir(dirSourcesSparse_)) {
+			chooser.setCurrentDirectory(dirSourcesSparse_);
 		} else {
 			String dirPath = ""
 					+ PropertiesGlobal.getProperties().getProperty("DirSource", System.getProperty("user.home"));
@@ -572,12 +578,12 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		int result = chooser.showOpenDialog(SwingUtilities.getWindowAncestor(this)); // ou this
 		if (result == JFileChooser.APPROVE_OPTION) {
-			dirSources = chooser.getSelectedFile();
-			PropertiesGlobal.saveProperty("DirSource", dirSources.getAbsolutePath());
+			dirSourcesSparse_ = chooser.getSelectedFile();
+			PropertiesGlobal.saveProperty("DirSource", dirSourcesSparse_.getAbsolutePath());
 			// Exemple : feedback utilisateur
-			this.labelLog.setText(dirSources.getAbsolutePath());
+			this.labelLog.setText(dirSourcesSparse_.getAbsolutePath());
 			try {
-				this.initData(dirSources);
+				this.initData(dirSourcesSparse_);
 				this.repaint();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -585,6 +591,13 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				this.repaint();
 			}
 		}
+	}
+
+	private void chooseDossierSourceDense() {
+		this.dirSourcesDense = UtilSwingChooseDoosier.chooseDossierSparse(dirSourcesDense, "dirSourcesDense",
+				buttonDossierSourcesDense);
+		PropertiesGlobal.saveProperty("dirSourcesDense", this.dirSourcesDense.getAbsolutePath());
+		System.out.println("DirSourceDense " + this.dirSourcesDense.getAbsolutePath());
 	}
 
 	private void selectionnerImagesFirsts() {
@@ -640,19 +653,26 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		};
 		sw.execute();
 	}
+
 	File dirTargetOut;
+
 	/**
 	 * Exporte les données correspondant aux images actuellement sélectionnées.
 	 *
-	 * <p>Cette méthode réalise le traitement complet d'extraction vers un dossier cible :
-	 * elle crée l'arborescence de sortie, copie et réoriente les images sélectionnées,
-	 * génère un fichier de métadonnées CSV, calcule les paires d'images proches pour
-	 * le matching, puis écrit les fichiers de sortie nécessaires au traitement externe
-	 * (notamment match.txt et les scripts shell associés).</p>
+	 * <p>
+	 * Cette méthode réalise le traitement complet d'extraction vers un dossier
+	 * cible : elle crée l'arborescence de sortie, copie et réoriente les images
+	 * sélectionnées, génère un fichier de métadonnées CSV, calcule les paires
+	 * d'images proches pour le matching, puis écrit les fichiers de sortie
+	 * nécessaires au traitement externe (notamment match.txt et les scripts shell
+	 * associés).
+	 * </p>
 	 *
-	 * <p>Le traitement s'appuie sur {@code listBeansSelected}, qui doit avoir été
-	 * initialisée au préalable. Les paramètres de proximité et de séquencement utilisés
-	 * pour générer les paires proviennent de {@code paramsConfiguration}.</p>
+	 * <p>
+	 * Le traitement s'appuie sur {@code listBeansSelected}, qui doit avoir été
+	 * initialisée au préalable. Les paramètres de proximité et de séquencement
+	 * utilisés pour générer les paires proviennent de {@code paramsConfiguration}.
+	 * </p>
 	 */
 	private void extractDataProcessInBackGround() {
 		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
@@ -678,8 +698,9 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 				if (destFile.exists()) {
 					System.out.println("file already exists " + imageName);
 				} else {
-					//Files.copy(src, destPath, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
-                    UtilVerticaliseImage.copyAndVerticalise(imageFile, dirTargetImages);
+					// Files.copy(src, destPath, StandardCopyOption.REPLACE_EXISTING,
+					// StandardCopyOption.COPY_ATTRIBUTES);
+					UtilVerticaliseImage.copyAndVerticalise(imageFile, dirTargetImages);
 					System.out.println("Copié: " + src + " -> " + i + "/" + listBeansSelected.size() + "   durée : "
 							+ (System.currentTimeMillis() - timeStart));
 				}
@@ -693,9 +714,9 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		// Copier / générer les metaDatas
 		String metadataCsvStr = "";
 		for (PositionBean2 bean : this.listBeansSelected) {
-			System.out.println("g metaData : positionMetaData" + bean.getPositionMetaData()+"  gps: "+bean.gps);
+			System.out.println("g metaData : positionMetaData" + bean.getPositionMetaData() + "  gps: " + bean.gps);
 			if (bean.getPositionMetaData() == null) {
-				metadataCsvStr += bean.gps.toString2_csv()+" \n";
+				metadataCsvStr += bean.gps.toString2_csv() + " \n";
 			} else {
 				metadataCsvStr += bean.getPositionMetaData().toString2_csv() + "\n";
 			}
@@ -751,11 +772,11 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		try {
 			UtilCopyBg.copyResourceToDir("sh/processColmapSparseLocal.sh", dirTargetOut2.toPath(), true);
 			UtilCopyBg.copyResourceToDir("sh/processColmapDenseLocal.sh", dirTargetOut2.toPath(), true);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void exportListPaires(File fileDirOut, HashSet<PaireMetadata2> setPairesUniques) throws Exception {
@@ -771,14 +792,14 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		w.close();
 		System.out.println("nb paires " + setPairesUniques.size());
 		System.out.println("Fichier ecrit dans " + fileOut.getPath());
-		
+
 	}
 
 	private List<PositionMetaData2> getListPositionMetaData2() {
 		List<PositionMetaData2> list = new ArrayList<PositionMetaData2>();
 		for (PositionBean2 beanPosition : this.listBeansSelected) {
 			if (beanPosition.getPositionMetaData() == null) {
-				System.err.println("Warning2 positionMetaData is null . Should never happen" + beanPosition);				
+				System.err.println("Warning2 positionMetaData is null . Should never happen" + beanPosition);
 			} else {
 				list.add(beanPosition.getPositionMetaData());
 			}
@@ -807,9 +828,10 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	}
 
 	private void debug() {
-		this.labelLog.setText("debug listBeansSelected.size :" + this.listBeansSelected.size()+" / "+listBeans.size());
-		System.out.println("debug listBeansSelected.size :"+this.listBeansSelected.size());
-		System.out.println("debug listBeans.size :"+this.listBeans.size());
+		this.labelLog
+				.setText("debug listBeansSelected.size :" + this.listBeansSelected.size() + " / " + listBeans.size());
+		System.out.println("debug listBeansSelected.size :" + this.listBeansSelected.size());
+		System.out.println("debug listBeans.size :" + this.listBeans.size());
 		int i = 0;
 		for (PositionBean2 pb2 : this.listBeansSelected) {
 			String s = String.format("%2d  - ", i++);
@@ -883,7 +905,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		return null;
 	}
 
-	private  void processLog() {
+	private void processLog() {
 		System.out.println("ProcessLog");
 		this.labelLog.setText("actionLoadSelected");
 		String dirRootChooserPath = PropertiesGlobal.getProperties().getProperty("DirSourceLog",
@@ -909,37 +931,33 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		if (result == JFileChooser.APPROVE_OPTION) {
 			dirSources_ = chooser.getSelectedFile();
 			PropertiesGlobal.saveProperty("DirSourceLog", dirSources_.getAbsolutePath());
-			
+
 			this.labelLog.setText(dirSources_.getAbsolutePath());
 			try {
-				System.out.println("ProcessLog dirSources :"+dirSources_.getAbsolutePath());
+				System.out.println("ProcessLog dirSources :" + dirSources_.getAbsolutePath());
 				LogProcess logProcess = new LogProcess(dirSources_);
-				System.out.println("logProcess toString ::: "+logProcess);
-				System.out.println("logProcess toString ::: "+logProcess.toStringVerbose());
+				System.out.println("logProcess toString ::: " + logProcess);
+				System.out.println("logProcess toString ::: " + logProcess.toStringVerbose());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
+
 			}
 		}
 	}
+
 	private void analyseLog() {
 		System.out.println("AnalyseLog ");
-		String analyse  = LogFactory.process(this.dirSources);
+		String analyse = LogFactory.process(this.dirSourcesSparse_);
 		JTextArea textArea = new JTextArea(analyse);
-		  textArea.setEditable(false);
-		  textArea.setLineWrap(true);
-		  textArea.setWrapStyleWord(true);
-		  textArea.setCaretPosition(0); // démarre en haut
+		textArea.setEditable(false);
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setCaretPosition(0); // démarre en haut
 
-		  JScrollPane scrollPane = new JScrollPane(textArea);
-		  scrollPane.setPreferredSize(new Dimension(900, 600)); // ajuste taille popup
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		scrollPane.setPreferredSize(new Dimension(900, 600)); // ajuste taille popup
 
-		  JOptionPane.showMessageDialog(
-		      this.frame,
-		      scrollPane,
-		      "Analyse Log",
-		      JOptionPane.INFORMATION_MESSAGE
-		  );
+		JOptionPane.showMessageDialog(this.frame, scrollPane, "Analyse Log", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
