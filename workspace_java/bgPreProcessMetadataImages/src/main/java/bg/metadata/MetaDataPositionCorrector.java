@@ -22,8 +22,8 @@ public final class MetaDataPositionCorrector {
 			double x,
 			double y,
 			double z,
-			double yaw,
-			double pitch,
+			Double yaw,
+			Double pitch,
 			PositionGps2 positionGps) {
 
 		return compute(
@@ -43,36 +43,41 @@ public final class MetaDataPositionCorrector {
 			double x,
 			double y,
 			double z,
-			double yaw,
-			double pitch,
+			Double yaw,
+			Double pitch,
 			PositionGps2 positionGps,
-			double altitudeSol,
-			double angleOuvertureCamera_degre) {
+			Double altitudeSol,
+			Double angleOuvertureCamera_degre) {
 
 		double zz;
 		double xx;
 		double yy;
 
-		if (positionGps == null) {
-			zz = z + 50;
-			xx = x;
-			yy = y;
-		} else {
-			zz = positionGps.getAltitudeMeters();
-			xx = positionGps.getX_process();
-			yy = positionGps.getY_process();
-		}
-		double yaw_degre = yaw*180/Math.PI;
-		// hauteur de 5 metres par default
-		double hauteur =(altitudeSol==DEFAULT_ALTITUDE_SOL)? 5.0d : (zz - altitudeSol);
-		double delta = hauteur * Math.cos(Math.toRadians(pitch));
-		// x est associé à la longitude 
-		double xCorrected = xx  + delta * Math.sin(yaw);
-		// y est associé à la latitude (0 sur l'equateur)
-		double yCorrected = yy- delta * Math.cos(yaw);
-		double rView = Math.abs(hauteur * Math.sin(Math.toRadians(angleOuvertureCamera_degre)));
+		try {
+			if (positionGps == null) {
+				zz = z + 50;
+				xx = x;
+				yy = y;
+			} else {
+				zz = positionGps.getAltitudeMeters();
+				xx = positionGps.getX_process();
+				yy = positionGps.getY_process();
+			}
+			double yaw_degre = yaw*180/Math.PI;
+			// hauteur de 5 metres par default
+			double hauteur =(altitudeSol==DEFAULT_ALTITUDE_SOL)? 5.0d : (zz - altitudeSol);
+			double delta = hauteur * Math.cos(Math.toRadians(pitch));
+			// x est associé à la longitude 
+			double xCorrected = xx  + delta * Math.sin(yaw);
+			// y est associé à la latitude (0 sur l'equateur)
+			double yCorrected = yy- delta * Math.cos(yaw);
+			double rView = Math.abs(hauteur * Math.sin(Math.toRadians(angleOuvertureCamera_degre)));
 
-		return new CorrectionResult(xCorrected, yCorrected, rView);
+			return new CorrectionResult(xCorrected, yCorrected, rView);
+		} catch (Exception e) {
+			System.err.println("metadata compute exception : "+e.getMessage());
+			return new CorrectionResult(x, y, 20);
+		}
 	}
 
 	public static final class CorrectionResult {

@@ -16,10 +16,10 @@ public class PositionMetaData2 {
 	private Double angleOuvertureCamera = 60.0d;
 	private Double xCorrected;
 	private Double yCorrected;
-	private double rView;
-	private double pitch;
-	private double yaw;
-	private double roll;
+	private Double rView;
+	private Double pitch;
+	private Double yaw;
+	private Double roll;
 	private PositionGps2 positionGps;;
 	
 	
@@ -110,19 +110,19 @@ public class PositionMetaData2 {
 	public double getPitch() {
 		return pitch;
 	}
-	public void setPitch(double pitch) {
+	public void setPitch(Double pitch) {
 		this.pitch = pitch;
 	}
 	public double getYaw() {
 		return yaw;
 	}
-	public void setYaw(double yaw) {
+	public void setYaw(Double yaw) {
 		this.yaw = yaw;
 	}
 	public double getRoll() {
 		return roll;
 	}
-	public void setRoll(double roll) {
+	public void setRoll(Double roll) {
 		this.roll = roll;
 	}
 	@Override
@@ -198,7 +198,7 @@ public class PositionMetaData2 {
 	}
 	public int dateTo(PositionMetaData2 metaData0) {
 		if (date == null) {
-			System.err.println(" PositionMetaData dateTo Should not happen : date is null");
+			System.err.println(" PositionMetaData dateTo Should not happen : date is null "+metaData0);
 			return 0;
 		}
 		return Math.abs(date.compareTo(metaData0.date));

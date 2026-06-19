@@ -142,6 +142,10 @@ public class MetaData {
 		this.xCorrected = result.getxCorrected();
 		this.yCorrected = result.getyCorrected();
 		this.rView = result.getrView();
+		this.x= positionGps.getX();
+		this.y =positionGps.getY();
+		this.z = positionGps.getAltitudeMeters();
+		this.date = positionGps.getDate();
 	}
 
 	/**

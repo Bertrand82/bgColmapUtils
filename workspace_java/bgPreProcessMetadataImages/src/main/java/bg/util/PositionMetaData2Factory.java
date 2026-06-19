@@ -38,7 +38,11 @@ public class PositionMetaData2Factory {
 			metaData.applyCorrectedPosition(pGps2);
 		}
 		
-		return extractPosition(metaData,pGps2);
+		PositionMetaData2 pmd2 = extractPosition(metaData,pGps2);
+		if (pmd2.getDate()==null) {
+			System.err.println("Should never hapen date is null!!  gpsDate :"+pGps2.getDate());
+		}
+		return pmd2;
 	}
 
 	private static MetaData getMetaData(List<MetaData> listMetaData, String fileName) {

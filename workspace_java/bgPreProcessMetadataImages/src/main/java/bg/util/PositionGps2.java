@@ -27,6 +27,19 @@ public class PositionGps2 {
 	private final double latitude;
 	private final double longitude;
 	private final Double altitudeMeters; // null si absente
+	public void setYaw(Double yaw) {
+		this.yaw = yaw;
+	}
+
+	public void setPitch(Double pitch) {
+		this.pitch = pitch;
+	}
+
+	public void setRoll(Double roll) {
+		this.roll = roll;
+	}
+
+
 	private final String imageName;
 	// Rayon moyen de la Terre (m)
 	private static final double EARTH_RADIUS_METERS = 6371008.8;
