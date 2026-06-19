@@ -25,9 +25,9 @@ public class MetaData {
 	public double x;
 	public double y;
 	public double z;
-	public double yaw;
-	public double pitch;
-	public double roll;
+	public Double yaw;
+	public Double pitch;
+	public Double roll;
 
 	public int numeroSequence;
 	public LocalDateTime date;
