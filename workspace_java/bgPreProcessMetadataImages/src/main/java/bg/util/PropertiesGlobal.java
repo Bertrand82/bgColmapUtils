@@ -54,4 +54,16 @@ public class PropertiesGlobal {
 		String path =""+ getProperties().getProperty(key,System.getProperty("user.dir"));
 		return new File(path);
 	}
+
+
+	public static int getPropertyAsInt(String key,int defaultValue) {
+		try {
+			String iString = getProperties().getProperty(key,""+ defaultValue);
+			return Integer.parseInt(iString);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return defaultValue;
+		}
+	}
 }

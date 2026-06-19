@@ -70,13 +70,6 @@ import bg.util.map.MapProviderListener;
 
 public class DisplayTogetherPanel extends JPanel implements MapProviderListener {
 
-	public static class ParamsConfiguration {
-		public int nbPointsExtraitsMax = 100;
-		public int nbSeq = 7;
-		public int nbProx = 8;
-		public int taillePaquet = 30;
-		public Double recouvrementPaquets = 0.2;
-	}
 
 	/**
 	 * 
@@ -118,8 +111,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	PositionBean2 beanSelected = null;
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
-	JButton buttonVisualiserImages = new JButton("Select Images");
-	JButton buttonExtractData = new JButton("extract Data");
+	JButton buttonSelectImages = new JButton("Select Images "+this.paramsConfiguration.nbPointsExtraitsMax);
+	JButton buttonExtractData = new JButton("Init Sparse Dir");
 	JMenuItem buttonDossierSparsesCreatePaquets_1 = new JMenuItem("Create Sparse paquets 1");
 	JMenuItem buttonDossierSparsesCreatePaquets_2 = new JMenuItem("Create Sparse paquets 2");
 	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
@@ -193,14 +186,14 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonDossierSparsesCreatePaquets_1.addActionListener(e -> processInitDossierDense_1());
 		buttonDossierSparsesCreatePaquets_2.addActionListener(e -> processInitDossierDense_2());
 		buttonDossierCleanSparsePaquets.addActionListener(e -> processDossierCleanPaquets());
-		buttonVisualiserImages.addActionListener(e -> selectionnerImagesFirsts());
+		buttonSelectImages.addActionListener(e -> selectionnerImagesFirsts());
 		buttonExtractData.addActionListener(e -> extractData());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		checkBoxShowPaquets.addActionListener(e -> canvas.repaint());
 		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
 		JMenuItem menuItemProcessRapportFromLog = new JMenuItem("process Log");
-		menuItemConfigExtraction.addActionListener(e -> DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration));
-		menuItemProcessRapportFromLog.addActionListener(e -> processLog());
+		menuItemConfigExtraction.addActionListener(e ->config2());
+		menuItemProcessRapportFromLog.addActionListener(econfig2 -> processLog());
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
 		JMenu menuEdit = new JMenu("Edit");
@@ -217,7 +210,7 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
-		menuBar.add(buttonVisualiserImages);
+		menuBar.add(buttonSelectImages);
 		menuBar.add(buttonExtractData);
 
 		menuBar.add(checkBoxImagesCorrected);
@@ -279,6 +272,12 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		});
 
+	}
+
+	private void config2() {
+		 DisplayTogetherPanelPopup.showPopup(this, paramsConfiguration);
+		this.buttonSelectImages.setText("Selects Max :"+paramsConfiguration.nbPointsExtraitsMax);
+		
 	}
 
 	private void initListPositionsThread() {
@@ -677,6 +676,10 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	private void extractDataProcessInBackGround() {
 		System.out.println("extract data start | listBeansSelected.size :" + this.listBeansSelected.size());
 		this.log("Selected Points :" + this.listBeansSelected.size());
+		if (this.listBeansSelected.size()==0) {
+			System.out.println("ListBeanSelected init");
+			this.selectionnerImagesFirsts();
+		}
 		// Créer un directory
 		dirTargetOut = UtilCreateDirPopups.createDirectoryPopup(this);
 		dirTargetOut.mkdirs();

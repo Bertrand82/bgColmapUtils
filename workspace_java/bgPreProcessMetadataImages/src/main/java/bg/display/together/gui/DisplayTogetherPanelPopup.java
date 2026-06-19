@@ -3,7 +3,7 @@ package bg.display.together.gui;
 import java.awt.*;
 import javax.swing.*;
 
-import bg.display.together.gui.DisplayTogetherPanel.ParamsConfiguration;
+
 
 public class DisplayTogetherPanelPopup {
 
@@ -59,7 +59,7 @@ public class DisplayTogetherPanelPopup {
         parametres.nbSeq = nbSeq;
         parametres.nbProx = prox;
         parametres.recouvrementPaquets=recouvrementPaquet;
-
+        parametres.save();
         dlg.dispose();
       } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(
