@@ -3,6 +3,7 @@ package bg.display.together.gui;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -112,7 +113,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 	JLabel labelNbDePoints = new JLabel("Nb of points:0");
 	JLabel labelLog = new JLabel("");
 	JButton buttonSelectImages = new JButton("Select Images "+this.paramsConfiguration.nbPointsExtraitsMax);
-	JButton buttonExtractData = new JButton("Init Sparse Dir");
+	JButton buttonInitSparse = new JButton("Init Sparse Dir");
+	JButton buttonOpenDir = new JButton("open dir");
 	JMenuItem buttonDossierSparsesCreatePaquets_1 = new JMenuItem("Create Sparse paquets 1");
 	JMenuItem buttonDossierSparsesCreatePaquets_2 = new JMenuItem("Create Sparse paquets 2");
 	JMenuItem buttonDossierCleanSparsePaquets = new JMenuItem("Clean Sparse paquets");
@@ -187,7 +189,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		buttonDossierSparsesCreatePaquets_2.addActionListener(e -> processInitDossierDense_2());
 		buttonDossierCleanSparsePaquets.addActionListener(e -> processDossierCleanPaquets());
 		buttonSelectImages.addActionListener(e -> selectionnerImagesFirsts());
-		buttonExtractData.addActionListener(e -> extractData());
+		buttonInitSparse.addActionListener(e -> extractData());
+		buttonOpenDir.addActionListener(e->openDir());
 		checkBoxImagesCorrected.addActionListener(e -> canvas.repaint());
 		checkBoxShowPaquets.addActionListener(e -> canvas.repaint());
 		JMenuItem menuItemConfigExtraction = new JMenuItem("config");
@@ -211,7 +214,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
 		menuBar.add(buttonSelectImages);
-		menuBar.add(buttonExtractData);
+		menuBar.add(buttonInitSparse);
+		menuBar.add(buttonOpenDir);
 
 		menuBar.add(checkBoxImagesCorrected);
 		menuBar.add(checkBoxShowPaquets);
@@ -272,6 +276,15 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 
 		});
 
+	}
+	Desktop desktop = Desktop.getDesktop();
+	private void openDir() {
+		
+		try {
+			desktop.open(dirSourcesDense);;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void config2() {
@@ -768,6 +781,8 @@ public class DisplayTogetherPanel extends JPanel implements MapProviderListener 
 			e.printStackTrace();
 		}
 		exportFileSh(dirTargetOut);
+		this.dirSourcesDense = dirTargetOut;
+		PropertiesGlobal.saveProperty("dirSourcesDense", dirTargetOut.getPath());
 
 	}
 
